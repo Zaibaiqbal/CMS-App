@@ -21,7 +21,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Vehicle No.</label>
-                                    <input type="text" class="form-control" id="" placeholder="Enter Vehicle No">
+                                    <input type="text" class="form-control" id="" placeholder="Vehicle No">
                                 </div>
 
                             </div>
@@ -42,6 +42,15 @@
 
                             </div>
 
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Weightage</label>
+                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Weightage">
+                                </div>
+
+                                </div>
+
                         
                     </div>
 
@@ -54,7 +63,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Submit changes</button>
+        <button type="button" class="btn btn-primary">Submit</button>
       </div>
       </form>
 

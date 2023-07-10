@@ -43,7 +43,14 @@
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
+
+    <a class="navbar-brand" href="#" style="">
+  
+    <img alt="Logo" src="{{asset('logos/logo.png')}}" width="140px" />
+
+
+  </a>
+    <ul class="navbar-nav ml-3">
    
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('users.list')}}" class="nav-link">Users</a>
