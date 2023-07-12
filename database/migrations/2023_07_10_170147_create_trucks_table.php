@@ -15,12 +15,20 @@ class CreateTrucksTable extends Migration
     {
         Schema::create('trucks', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
+            $table->bigInteger('added_id')->nullable();
 
-            $table->string('vehicle_no')->unique();
+            $table->string('plate_no')->unique();
             $table->string('model')->nullable();
             $table->string('color')->nullable();
-            $table->string('weight')->nullable();
+            $table->string('company')->nullable();
+            $table->string('vin_number')->nullable();
+
+            $table->double('load_capacity')->default(0);
+            $table->string('unit')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('is_deleted')->default(0);
+
             $table->timestamps();
         });
     }

@@ -19,8 +19,15 @@ class CreateUsersTable extends Migration
             $table->string('fname')->nullable();
             $table->string('email')->unique();
             $table->string('contact')->nullable();
+            $table->string('employee_type')->nullable();
+            $table->string('joining_date')->nullable();
+
+            $table->string('contact_person')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('status',['Active','Inactive'])->default('Active');
+            $table->integer('is_deleted')->default(0);
+
             $table->rememberToken();
             $table->timestamps();
         });
