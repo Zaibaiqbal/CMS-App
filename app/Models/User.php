@@ -45,6 +45,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getUserById($id)
+    {
+        return User::where('id',$id)->first();
+    }
+
     public function storeUser($object)
     {
         return DB::transaction(function() use ($object){
@@ -56,7 +61,16 @@ class User extends Authenticatable
             $user->contact = $object['contact_no'];
             $user->email = $object['email'];
             $user->type = $object['user_type'];
-            $user->password = $this->generatePassword();
+            if(isset($object['password']))
+            {
+             $user->password = Hash::make($object['password']);
+
+            }
+            else
+            {
+                $user->password = $this->generatePassword();
+
+            }
 
 
             $user->save();

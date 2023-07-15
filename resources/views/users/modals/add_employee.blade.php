@@ -44,15 +44,6 @@
                                     <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
                             </div>
-                            <div class="col-md-6">
-
-                                @php($label = 'Email')
-                                    @php($name = 'email')
-                                    <label for="exampleInputEmail1">{{$label}} </label>
-                                    <input type="email" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
-
-
-                            </div>
 
                             <div class="col-md-6">
 
@@ -63,6 +54,34 @@
 
 
                             </div>
+                            <div class="col-md-6">
+
+                                @php($label = 'Email')
+                                    @php($name = 'email')
+                                    <label for="exampleInputEmail1">{{$label}} </label>
+                                    <input type="email" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+
+
+                            </div>
+                            <div class="col-md-6">
+
+                              @php($label = 'Password')
+                                  @php($name = 'password')
+                                  <label for="exampleInputEmail1">{{$label}} </label>
+                                  <input type="password" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+
+
+                              </div>
+
+                              <div class="col-md-6">
+
+                                  @php($label = 'Confirm Password')
+                                  @php($name = 'confirm_password')
+                                  <label for="exampleInputEmail1">{{$label}} </label>
+                                  <input type="password" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+
+
+                              </div>
 
                         
                     </div>

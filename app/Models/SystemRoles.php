@@ -112,7 +112,43 @@ class SystemRoles extends Model
         });
     }
 
+
+    public function assignRolesToUser($object)
+    {
+
+        return DB::transaction(function () use ($object){
+
+            $data = ['status' => false , 'message' => ''];
+
+    		$role = new SystemRoles;
+    		$user = new User;
+
+    		$role = $role->getRoleById($object['role_id']);
+
+    		$user = $user->getUserById($object['user_id']);
+
+            if(isset($role->id))
+    		{
+                // $user->syncRoles($this->getUserRoles($user));
+
+                    $user->assignRole($role);
     
+                    return with(true);
+               
+
+    		}
+
+    		return with($data);
+
+        });
+    }
+    
+
+    public function getUserRoles($user)
+    {
+        return $user->hasAllRoles(Role::get());
+    }
+
 
     
 }

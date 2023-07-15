@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SystemRoles;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -65,41 +66,54 @@ class RoleController extends Controller
     {
         try{
 
+            $data = ['status' => false, 'message' => ''];
+
             if($request->isMethod('post'))
             {
+                $request->validate([
 
+                'user' => 'required',
+                'role'       => 'required',
+
+                ]);
+                $form_data = $request->input();
+
+                    $form_data['role_id']       = decrypt($request->role);
+
+                    $form_data['user_id']       = decrypt($request->user);
+
+                    $user = new User;
+
+                    $user = $user->getUserById($form_data['user_id'] );
+
+                    if(isset($user->id))
+                    {
+                        $role = new SystemRoles;
+
+                        $role = $role->assignRolesToUser($form_data);
+
+
+                        if($role)
+                        {
+                            $data = ['status' => true, 'message' => 'Role assigned successfully'];
+                        }
+                    }
+
+                    return $data;
             }
             else
             {
                 $role = new SystemRoles;
+                $user = new User;
+                $user = $user->getUserById(decrypt($request->id));
                 $role_list = $role->getRolesList();
                 return view('roles_and_permissions.modals.assign_roles',[
 
-                    'role_list'   =>  $role_list
+                    'role_list'   =>  $role_list,
+                    'user'          =>  $user,
                 ]);
             }
-            // $request->validate([
-
-            //     'user' => 'required',
-            //     'role'       => 'required',
-
-            // ]);
-
-
-            // $role_id       = decrypt($request->role);
-
-            // $user_id       = decrypt($request->user);
-
-            // $user = new User;
-
-            // $user = $user->getUserById($user_id);
-
-            // if(isset($user->id))
-            // {
-            //    $role = new CustomRole;
-
-            //     return $role->verifyRole($user,$role_id);
-            // }
+         
 
         }
         catch (DecryptException $e)

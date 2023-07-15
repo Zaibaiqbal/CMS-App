@@ -104,7 +104,7 @@
                     <tr>
                       <th>#</th>
                       <th>Name</th>
-                      <th>Created By</th>
+                      {{--<th>Created By</th>--}}
                       <th>Date</th>
                       <th>Action</th>
                     </tr>
@@ -114,7 +114,7 @@
                     <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>{{$rows->name}}</td>
-                      <td>{{$rows->addedBy->name}}</td>
+                     {{-- <td>{{$rows->addedBy->name}}</td>--}}
                       <td>{{$rows->created_at}}</td>
                       <td>
                         <div class="item-action dropdown">

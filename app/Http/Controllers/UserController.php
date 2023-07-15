@@ -37,6 +37,8 @@ class UserController extends Controller
                     'name'  =>  'required',
                     'contact_no'  =>  'required',
                     'email'  =>  'required|unique:users,email',
+                    'password'          =>  'nullable|min:8|max:16|same:confirm_password',
+                    'confirm_password'  =>  'nullable|min:8|max:16|same:password',
                 ]);
                 $form_data = $request->input();
 

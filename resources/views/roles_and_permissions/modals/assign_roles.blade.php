@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                @php($name = 'name')
+                                @php($name = 'role')
                                 @php($label = 'Select Role')
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{{$label}}</label>
@@ -28,7 +28,7 @@
 
                                     @foreach($role_list as $rows)
 
-                                    <option value="{{$rows->id}}">{{$rows->name}}</option>
+                                    <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
 
                                     @endforeach
                                     </select>
@@ -48,6 +48,7 @@
 
       </div>
       <div class="modal-footer">
+        <input type="hidden" name="user" value="{{encrypt($user->id)}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" onclick="submitModalForm(event,this,'#form_add_role','#modal_add_role')">Submit</button>
       </div>
