@@ -107,6 +107,7 @@
                       <th>Father Name</th>
                       <th>Email</th>
                       <th>Contact</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -117,6 +118,22 @@
                       <td>Doe</td>
                       <td>{{$rows->email}}</td>
                       <td>{{$rows->contact}}</td>
+                      <td>
+
+                        <div class="item-action dropdown">
+                            <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
+                            
+                            <div class="dropdown-menu pull-right">
+                {{--
+                            <a href="#" onclick="formModal(event,'{{route('update.role',['id' => encrypt($rows->id)])}}','#modal_update_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+
+                            <div class="dropdown-divider"></div>
+                            --}}
+                            <a  href="#" onclick="formModal(event,'{{route('assign.roles',['id' => encrypt($rows->id)])}}','#modal_assign_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Assign Role</a>
+
+
+
+                      </td>
                     </tr>
                 @endforeach
                   </tbody>

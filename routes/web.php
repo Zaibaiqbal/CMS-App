@@ -36,3 +36,6 @@ Route::match(['get','post'],'updaterole', [App\Http\Controllers\RoleController::
 
 
 Route::match(['get','post'],'assignpermission', [App\Http\Controllers\RoleController::class, 'assignPermissionsToRole'])->name('assign.permissions');
+
+
+Route::match(['get','post'],'assignrole', [App\Http\Controllers\RoleController::class, 'assignRolesToUser'])->name('assign.roles');

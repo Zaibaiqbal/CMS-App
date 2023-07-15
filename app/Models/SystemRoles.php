@@ -28,6 +28,10 @@ class SystemRoles extends Model
         return Permission::whereNotNull('module')->distinct('module')->get();
     }
 
+    public function getRolesList()
+    {
+        return Role::distinct('name')->get();
+    }
 
     public function getRoleById($id)
     {

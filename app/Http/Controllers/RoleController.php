@@ -61,6 +61,54 @@ class RoleController extends Controller
 
 	}
 
+    public function assignRolesToUser(Request $request)
+    {
+        try{
+
+            if($request->isMethod('post'))
+            {
+
+            }
+            else
+            {
+                $role = new SystemRoles;
+                $role_list = $role->getRolesList();
+                return view('roles_and_permissions.modals.assign_roles',[
+
+                    'role_list'   =>  $role_list
+                ]);
+            }
+            // $request->validate([
+
+            //     'user' => 'required',
+            //     'role'       => 'required',
+
+            // ]);
+
+
+            // $role_id       = decrypt($request->role);
+
+            // $user_id       = decrypt($request->user);
+
+            // $user = new User;
+
+            // $user = $user->getUserById($user_id);
+
+            // if(isset($user->id))
+            // {
+            //    $role = new CustomRole;
+
+            //     return $role->verifyRole($user,$role_id);
+            // }
+
+        }
+        catch (DecryptException $e)
+        {
+
+        }
+
+        return 0;
+    }
 
 	public function updateRole(Request $request)
 	{
