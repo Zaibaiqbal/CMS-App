@@ -23,6 +23,9 @@
     <link href="{{ asset('css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" 
+     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -31,6 +34,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
+
+  nav ul li a{
+    color: white !important;
+  }
+
+    </style>
     @yield('page_style')
 </head>
 <body class="">
@@ -41,12 +51,12 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #497eb7;color:white;">
     <!-- Left navbar links -->
 
     <a class="navbar-brand" href="#" style="">
   
-    <img alt="Logo" src="{{asset('logos/logo.png')}}" width="140px" />
+    <img alt="Logo" src="{{asset('logos/logo.png')}}" width="50px" />
 
 
   </a>
@@ -57,6 +67,13 @@
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('trucks.list')}}" class="nav-link">Trucks</a>
+      </li>
+
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('employees.list')}}" class="nav-link">Employees</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('roles.permissions')}}" class="nav-link">Roles & Permissions</a>
       </li>
     </ul>
 
@@ -246,7 +263,16 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-     
+      @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
       @yield('page_body')
 
       </div><!-- /.container-fluid -->
@@ -270,8 +296,7 @@
 
 <!-- ./wrapper -->
         <!-- Scripts -->
-
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <script src="{{ asset('js/jquery-3.7.0.min.js') }}" defer></script>
@@ -282,9 +307,12 @@
     <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
     <script src="{{ asset('js/demo.js') }}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     @yield('page_script')
 

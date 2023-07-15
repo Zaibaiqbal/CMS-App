@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class RoleSeeder extends Seeder
 {
@@ -19,13 +20,10 @@ class RoleSeeder extends Seeder
 
         $count = -1;
 
-        $roles[++$count] = ['name' => 'Super Admin', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()];
+        $roles[++$count] = ['name' => 'Super Admin', 'guard_name' => 'web', 'added_id' => 1,'created_at' => now(), 'updated_at' => now()];
 
 
-        $roles[++$count] = ['name' => 'Customer', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()];
-
-        $roles[++$count] = ['name' => 'Employee', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()];
-
+        $roles[++$count] = ['name' => 'Manager', 'guard_name' => 'web','added_id' => 1,'created_at' => now(), 'updated_at' => now()];
        
         DB::table('roles')->insert($roles);
     }

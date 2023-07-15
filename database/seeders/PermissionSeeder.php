@@ -1,0 +1,52 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+
+class PermissionSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+
+        $count = 0;
+
+        $data[++$count] = [ "module" => "Truck", "name" => "Add Truck", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Truck", "name" => "View Truck", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Truck", "name" => "Update Truck", "guard_name" => "web"];
+
+
+        $data[++$count] = [ "module" => "Client", "name" => "Add Client", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Client", "name" => "View Client", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Client", "name" => "Update Client", "guard_name" => "web"];
+
+
+        $data[++$count] = [ "module" => "Employee", "name" => "Add Employee", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Employee", "name" => "View Employee", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Employee", "name" => "Update Employee", "guard_name" => "web"];
+
+
+        $data[++$count] = [ "module" => "Transaction", "name" => "Add Transaction", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Transaction", "name" => "View Transaction", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Transaction", "name" => "Update Transaction", "guard_name" => "web"];
+
+        Permission::insert($data);
+    }
+}

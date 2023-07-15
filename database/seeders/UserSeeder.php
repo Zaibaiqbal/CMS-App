@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
          $user1 = User::create([
 
             'name'          => "Admin",
-            'email'         => "admin123@cms.net",
+            'email'         => "admin@cms.net",
             'password'      => Hash::make("0987654321"),
             'created_at'    => now(),
             'updated_at'    => now(),
