@@ -79,6 +79,7 @@
                         --}}
                         <!--end::Dropdown-->
                         <!--begin::Button-->
+                        @if(Auth::user()->hasAnyPermission(['All','Add Role']))
           
                         <a data-toggle="modal" data-target="#modal_add_role" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                         <span class="svg-icon svg-icon-md text-white">
@@ -92,7 +93,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>Add Role</a>
-                      
+                      @endif
                         <!--end::Button-->
                 </div>
               
@@ -121,13 +122,17 @@
                             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
                             
                             <div class="dropdown-menu pull-right">
-                
-                            <a href="#" onclick="formModal(event,'{{route('update.role',['id' => encrypt($rows->id)])}}','#modal_update_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                                @if(Auth::user()->hasAnyPermission(['All','Update Role']))
+                    
+                                    <a href="#" onclick="formModal(event,'{{route('update.role',['id' => encrypt($rows->id)])}}','#modal_update_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
 
-                            <div class="dropdown-divider"></div>
-                            <a  href="#" onclick="formModal(event,'{{route('assign.permissions',['id' => encrypt($rows->id)])}}','#modal_assign_permissions','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Assign Permissions</a>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','Assign Permissions']))
 
+                                <div class="dropdown-divider"></div>
+                                <a  href="#" onclick="formModal(event,'{{route('assign.permissions',['id' => encrypt($rows->id)])}}','#modal_assign_permissions','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Assign Permissions</a>
 
+                                @endif
                             </div>
                         </td>
                         </div>

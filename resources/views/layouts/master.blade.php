@@ -14,26 +14,27 @@
   
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
      <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <link href="{{ asset('css/adminlte.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" 
-     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-	
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">	
+    <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">	
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+ 
     <style>
 
   nav ul li a{
@@ -47,7 +48,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="{{asset('logos/logo.png')}}" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -57,24 +58,39 @@
     <a class="navbar-brand" href="#" style="">
   
     <img alt="Logo" src="{{asset('logos/logo.png')}}" width="50px" />
-
-
   </a>
     <ul class="navbar-nav ml-3">
    
+    @if(Auth::user()->hasAnyPermission(['All','View Clients']))
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('users.list')}}" class="nav-link">Users</a>
       </li>
+    @endif
+    @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
+
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('trucks.list')}}" class="nav-link">Trucks</a>
       </li>
+    @endif
+
+    @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
+
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('trucks.list')}}" class="nav-link">Transactions</a>
+      </li>
+    @endif
+    @if(Auth::user()->hasAnyPermission(['All','View Employees']))
 
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('employees.list')}}" class="nav-link">Employees</a>
       </li>
+      @endif
+    @if(Auth::user()->hasAnyPermission(['All','Roles & Permissions']))
+
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('roles.permissions')}}" class="nav-link">Roles & Permissions</a>
       </li>
+      @endif
     </ul>
 
     <!-- Right navbar links -->
@@ -287,25 +303,24 @@
   <!-- /.content-wrapper -->
 
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+   
   </footer>
 
 <!-- ./wrapper -->
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
-    <script src="{{ asset('js/jquery-3.7.0.min.js') }}" defer></script>
+<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('js/adminlte.min.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+ 
     <script src="{{ asset('js/demo.js') }}" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
@@ -314,7 +329,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+
+
     @yield('page_script')
+
 
 </body>
 </html>

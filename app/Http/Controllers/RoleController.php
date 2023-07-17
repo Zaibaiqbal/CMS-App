@@ -73,12 +73,20 @@ class RoleController extends Controller
                 $request->validate([
 
                 'user' => 'required',
-                'role'       => 'required',
+                'role.*'       => 'required',
 
                 ]);
                 $form_data = $request->input();
+                if(isset($form_data['role']))
+                {
+                    foreach($form_data['role'] as $key => $rows)
+                    {
+                    $form_data['role_id'][$key]       = decrypt($rows);
 
-                    $form_data['role_id']       = decrypt($request->role);
+
+                    }
+
+                }
 
                     $form_data['user_id']       = decrypt($request->user);
 

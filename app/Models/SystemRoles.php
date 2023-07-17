@@ -129,7 +129,7 @@ class SystemRoles extends Model
 
             if(isset($role->id))
     		{
-                // $user->syncRoles($this->getUserRoles($user));
+                    $user->syncRoles($this->getUserRoles($user));
 
                     $user->assignRole($role);
     

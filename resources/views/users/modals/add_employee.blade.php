@@ -22,8 +22,9 @@
                                 <div class="form-group">
                                     @php($label = 'CNIC')
                                     @php($name = 'cnic')
-                                    <label for="exampleInputEmail1">{{$label}} </label>
-                                    <input type="text" name="{{$name}}"  placeholder="00000-0000000-0" data-mask="00000-0000000-0" class="form-control" id="">
+                                    <label for="">{{$label}} </label>
+                                    <span id="{{$name}}_error"></span>
+                                    <input type="text" name="{{$name}}"  placeholder="00000-0000000-0" data-mask="00000-0000000-0" class="form-control cnic" id="">
                                 </div>
 
                             </div>
@@ -31,7 +32,10 @@
                                 <div class="form-group">
                                     @php($label = 'Name')
                                     @php($name = 'name')
-                                    <label for="exampleInputEmail1">{{$label}} </label>
+
+                                    <label for="">{{$label}} </label>
+                                    <span id="{{$name}}_error"></span>
+
                                     <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
                                 </div>
@@ -40,7 +44,9 @@
 
                                     @php($label = 'Father Name')
                                     @php($name = 'fname')
-                                    <label for="exampleInputEmail1">{{$label}} </label>
+                                    <label for="">{{$label}} </label>
+                                    <span id="{{$name}}_error"></span>
+
                                     <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
                             </div>
@@ -49,8 +55,10 @@
 
                                     @php($label = 'Contact')
                                     @php($name = 'contact_no')
-                                    <label for="exampleInputEmail1">{{$label}} </label>
-                                    <input type="text" name="{{$name}}" class="form-control" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                                    <label for="">{{$label}} </label>
+                                    <span id="{{$name}}_error"></span>
+
+                                    <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
 
 
                             </div>
@@ -59,6 +67,8 @@
                                 @php($label = 'Email')
                                     @php($name = 'email')
                                     <label for="exampleInputEmail1">{{$label}} </label>
+                                    <span id="{{$name}}_error"></span>
+
                                     <input type="email" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
 
@@ -105,6 +115,7 @@
 </div>
 
 <script type="text/javascript">
-$("input[type=cnic]").mask("00000-0000000-0");
+$('.cnic').mask("00000-0000000-0");
+$('.contact').mask("0000-0000000");
 
 </script>

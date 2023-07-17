@@ -6,7 +6,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users List</h3>
+                <h3 class="card-title">Clients List</h3>
 
                 <div class="card-toolbar">
                         {{--
@@ -79,6 +79,7 @@
                         --}}
                         <!--end::Dropdown-->
                         <!--begin::Button-->
+                        @if(Auth::user()->hasAnyPermission(['All','Add Client']))
           
                         <a data-toggle="modal" data-target="#exampleModal" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                         <span class="svg-icon svg-icon-md">
@@ -92,7 +93,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>Create User</a>
-                      
+                      @endif
                         <!--end::Button-->
                 </div>
              
@@ -114,7 +115,7 @@
                     <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>{{$rows->name}}</td>
-                      <td>Doe</td>
+                      <td>{{$rows->fname}}</td>
                       <td>{{$rows->email}}</td>
                       <td>{{$rows->contact}}</td>
                     </tr>

@@ -22,30 +22,40 @@ class PermissionSeeder extends Seeder
 
         $data[++$count] = [ "module" => "Truck", "name" => "Add Truck", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Truck", "name" => "View Truck", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Truck", "name" => "View Trucks", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Truck", "name" => "Update Truck", "guard_name" => "web"];
 
 
         $data[++$count] = [ "module" => "Client", "name" => "Add Client", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Client", "name" => "View Client", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Client", "name" => "View Clients", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Client", "name" => "Update Client", "guard_name" => "web"];
 
 
         $data[++$count] = [ "module" => "Employee", "name" => "Add Employee", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Employee", "name" => "View Employee", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Employee", "name" => "View Employees", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Employee", "name" => "Update Employee", "guard_name" => "web"];
 
 
         $data[++$count] = [ "module" => "Transaction", "name" => "Add Transaction", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Transaction", "name" => "View Transaction", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Transaction", "name" => "View Transactions", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Transaction", "name" => "Update Transaction", "guard_name" => "web"];
+
+
+        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Add Role", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Update Role", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Assign Role", "guard_name" => "web"];
+        
+        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Assign Permissions", "guard_name" => "web"];
+
 
         Permission::insert($data);
     }

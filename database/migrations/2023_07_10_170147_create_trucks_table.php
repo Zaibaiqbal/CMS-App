@@ -22,7 +22,7 @@ class CreateTrucksTable extends Migration
             $table->string('model')->nullable();
             $table->string('color')->nullable();
             $table->string('company')->nullable();
-            $table->string('vin_number')->nullable();
+            $table->string('vin_no')->nullable();
 
             $table->double('load_capacity')->default(0);
             $table->string('unit')->nullable();

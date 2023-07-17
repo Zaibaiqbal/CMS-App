@@ -1,6 +1,8 @@
-@extends('layouts.master')
+@include('layouts.master')
 
 @section('page_body')
+
+
 
 @endsection
 

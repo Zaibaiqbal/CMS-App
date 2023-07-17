@@ -23,18 +23,21 @@ class UserSeeder extends Seeder
 
          $permission = Permission::create(['name' => 'All']);
 
-         $user1 = User::create([
+         $user = User::create([
 
             'name'          => "Admin",
             'email'         => "admin@cms.net",
+            'type'          => "Super Admin",
             'password'      => Hash::make("0987654321"),
             'created_at'    => now(),
             'updated_at'    => now(),
         ]);
 
-        // $user1->sync(Role::whereIn('name',['Super Admin'])->pluck('id')->toArray());
+        $role = Role::whereIn('name',['Super Admin'])->first();
+        
+        $user->syncRoles(Role::whereIn('name',['Super Admin'])->pluck('id')->toArray());
 
-        // $user1->givePermissionTo('All');
+        $role->givePermissionTo($permission);
 
     }
 }

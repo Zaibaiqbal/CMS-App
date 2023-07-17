@@ -79,6 +79,7 @@
                         --}}
                         <!--end::Dropdown-->
                         <!--begin::Button-->
+    @if(Auth::user()->hasAnyPermission(['All','Add Employee']))
           
                         <a onclick="formModal(event,'{{route('store.employee')}}','#modal_add_employee','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                         <span class="svg-icon svg-icon-md">
@@ -92,7 +93,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>Create Employee</a>
-                      
+                      @endif
                         <!--end::Button-->
                 </div>
              
@@ -124,14 +125,20 @@
                             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
                             
                             <div class="dropdown-menu pull-right">
-                {{--
-                            <a href="#" onclick="formModal(event,'{{route('update.role',['id' => encrypt($rows->id)])}}','#modal_update_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                            @if(Auth::user()->hasAnyPermission(['All','Update Employee']))
+                
+                            <a href="#" onclick="formModal(event,'{{route('update.employee',['id' => encrypt($rows->id)])}}','#modal_update_employee','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                            @endif
+
+                            @if(Auth::user()->hasAnyPermission(['All','Assign Role']))
 
                             <div class="dropdown-divider"></div>
-                            --}}
+
                             <a  href="#" onclick="formModal(event,'{{route('assign.roles',['id' => encrypt($rows->id)])}}','#modal_assign_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Assign Role</a>
 
-
+                            @endif
+                            </div>
+                        </div>
 
                       </td>
                     </tr>

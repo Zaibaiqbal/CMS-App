@@ -11,9 +11,11 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -72,9 +74,7 @@ class User extends Authenticatable
 
             }
 
-
             $user->save();
-
 
         return with($user);
 
@@ -87,24 +87,24 @@ class User extends Authenticatable
         return Hash::make(Str::random(5));
     }
 
-    public function assignCreateUserRole($user, $type)
-    {
-        $role = Role::findOrCreate($type);
-        if (isset($role->id)) {
-            $user->assignRole([$role->id]);
+    // public function assignCreateUserRole($user, $type)
+    // {
+    //     $role = Role::findOrCreate($type);
+    //     if (isset($role->id)) {
+    //         $user->assignRole([$role->id]);
             
-        }
-    }
+    //     }
+    // }
 
-    public function userRoles()
-    {
+    // public function userRoles()
+    // {
 
-        return $this->belongsToMany(Role::class,'role_user','user_id');
-    }
+    //     return $this->belongsToMany(Role::class,'role_user','user_id');
+    // }
 
 
-    public function assignRole($roles = [])
-    {
-        $this->userRoles()->sync($roles);
-    }
+    // public function assignRole($roles = [])
+    // {
+    //     $this->userRoles()->sync($roles);
+    // }
 }

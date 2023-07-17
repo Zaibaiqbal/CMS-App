@@ -79,8 +79,9 @@
                         --}}
                         <!--end::Dropdown-->
                         <!--begin::Button-->
+                        @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
           
-                        <a data-toggle="modal" data-target="#modal_add_truck" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                        <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -92,7 +93,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>Add Truck</a>
-                      
+                      @endif
                         <!--end::Button-->
                 </div>
               
@@ -102,21 +103,37 @@
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Vehicle No</th>
+                      <th>#</th>
+                      <th>Plate No</th>
+                      <th>VIN No</th>
                       <th>Model</th>
                       <th>Color</th>
                       <th>Weight Capacity</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach($trucks_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$rows->name}}</td>
-                      <td>Doe</td>
-                      <td>{{$rows->email}}</td>
-                      <td>{{$rows->contact}}</td>
+                      <td>{{$rows->plate_no}}</td>
+                      <td>{{$rows->vin_no}}</td>
+                      <td>{{$rows->model}}</td>
+                      <td>{{$rows->color}}</td>
+                      <td>{{$rows->load_capacity}}</td>
+                      <td>
+                      <div class="item-action dropdown">
+                            <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
+                            
+                            <div class="dropdown-menu pull-right">
+                            @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
+                
+                            <a href="#" onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                            @endif
+
+                            </div>
+                        </div>
+                      </td>
                     </tr>
                 @endforeach
                   </tbody>
@@ -130,7 +147,7 @@
 
 @endsection
 
-
+<div id="target_modal"></div>
 @section('page_modal')
 @include('trucks.modals.add_truck')
 
