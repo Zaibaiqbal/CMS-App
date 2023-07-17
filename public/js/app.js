@@ -74,7 +74,6 @@ function submitModalForm(event,obj,form_id,form_modal_id)
             // removeLoader();
         },
         error: function(result){
-            alert(result.responseJSON.errors);
 
             var errors = result.responseJSON.errors;
             $.each(errors, function (key, val) {
