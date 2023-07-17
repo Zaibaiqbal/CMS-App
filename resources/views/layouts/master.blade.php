@@ -76,7 +76,7 @@
     @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('trucks.list')}}" class="nav-link">Transactions</a>
+        <a href="{{route('transactions.list')}}" class="nav-link">Transactions</a>
       </li>
     @endif
     @if(Auth::user()->hasAnyPermission(['All','View Employees']))

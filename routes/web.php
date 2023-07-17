@@ -54,4 +54,8 @@ Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController:
 
 Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('permission:All|Update Truck');
 
+
+
+Route::get('transactions', [App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.list')->middleware('permission:All|View Transactions');
+
 });

@@ -51,7 +51,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-2">
 
                                     @php($label = 'Contact')
                                     @php($name = 'contact_no')
@@ -62,7 +62,7 @@
 
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-2">
 
                                 @php($label = 'Email')
                                     @php($name = 'email')
