@@ -6,7 +6,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Transactions List</h3>
+                <h3 class="card-title">Material Types List</h3>
 
                 <div class="card-toolbar">
                         {{--
@@ -79,9 +79,9 @@
                         --}}
                         <!--end::Dropdown-->
                         <!--begin::Button-->
-                        @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
+                        @if(Auth::user()->hasAnyPermission(['All','Add Material Type']))
           
-                        <a href="{{route('store.transaction')}}" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                        <a data-toggle="modal"  data-target="#modal_add_material_type" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -92,7 +92,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>Create Transaction</a>
+                        </span>Add Material Type</a>
                       @endif
                         <!--end::Button-->
                 </div>
@@ -104,25 +104,18 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Client</th>
-                      <th>Truck No</th>
-                      <th>Material Type</th>
-                      <th>Operation Type</th>
-                      <th>In-weight</th>
-                      <th>Out-weight</th>
-                      <th>Status</th>
+                      <th>Name</th>
+                   
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($transactions_list as $rows)
+                    @foreach($material_types_list as $rows)
                     <tr>
                         
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{{$loop->iteration}}</td>
+                     
+                      <td>{{$rows->name}}</td>
                       <td>
                       <div class="item-action dropdown">
                             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
@@ -150,9 +143,8 @@
 
 @endsection
 
-<div id="target_modal"></div>
 @section('page_modal')
-@include('trucks.modals.add_truck')
+@include('material_types.modals.add_material_type')
 
 @endsection
 @section('page_script')

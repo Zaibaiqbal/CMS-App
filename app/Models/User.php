@@ -52,6 +52,13 @@ class User extends Authenticatable
         return User::where('id',$id)->first();
     }
 
+    public function getUserListByType($type)
+    {
+        return  User::where('type', $type)->orderBy('id', 'desc')->get();
+    }
+
+
+    
     public function storeUser($object)
     {
         return DB::transaction(function() use ($object){
@@ -96,11 +103,11 @@ class User extends Authenticatable
     //     }
     // }
 
-    // public function userRoles()
-    // {
+    public function userRoles()
+    {
 
-    //     return $this->belongsToMany(Role::class,'role_user','user_id');
-    // }
+        return $this->belongsToMany(Role::class,'model_has_roles','model_id');
+    }
 
 
     // public function assignRole($roles = [])

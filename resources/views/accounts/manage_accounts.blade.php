@@ -6,7 +6,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Transactions List</h3>
+                <h3 class="card-title">Accounts List</h3>
 
                 <div class="card-toolbar">
                         {{--
@@ -79,9 +79,9 @@
                         --}}
                         <!--end::Dropdown-->
                         <!--begin::Button-->
-                        @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
+                        @if(Auth::user()->hasAnyPermission(['All','Add Account']))
           
-                        <a href="{{route('store.transaction')}}" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                        <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -92,7 +92,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>Create Transaction</a>
+                        </span>Add Account</a>
                       @endif
                         <!--end::Button-->
                 </div>
@@ -105,35 +105,31 @@
                     <tr>
                       <th>#</th>
                       <th>Client</th>
-                      <th>Truck No</th>
-                      <th>Material Type</th>
-                      <th>Operation Type</th>
-                      <th>In-weight</th>
-                      <th>Out-weight</th>
+                      <th>Title</th>
+                      <th>Account No</th>
                       <th>Status</th>
+                     
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($transactions_list as $rows)
+                    @foreach($accounts_list as $rows)
                     <tr>
-                        
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{$rows->user->name}}</td>
+                      <td>{{$rows->title}}</td>
+                      <td>{{$rows->account_number}}</td>
+                      <td>{{$rows->status}}</td>
                       <td>
                       <div class="item-action dropdown">
                             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
                             
                             <div class="dropdown-menu pull-right">
-                                {{--
-                            @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
+                            @if(false && Auth::user()->hasAnyPermission(['All','Update Account']))
                 
-                            <a href="#" onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                            <a href="#" onclick="formModal(event,'{{route('update.account',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                             @endif
-                            --}}
+
                             </div>
                         </div>
                       </td>

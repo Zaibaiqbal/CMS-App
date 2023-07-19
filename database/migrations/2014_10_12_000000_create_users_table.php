@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('contact')->nullable();
             $table->string('employee_type')->nullable();
-            $table->string('type')->nullable();
+            $table->string('type')->default('Client');
             $table->string('joining_date')->nullable();
             $table->string('contact_person')->nullable();
             $table->timestamp('email_verified_at')->nullable();

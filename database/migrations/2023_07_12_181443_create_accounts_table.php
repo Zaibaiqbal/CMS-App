@@ -18,7 +18,7 @@ class CreateAccountsTable extends Migration
             $table->bigInteger('client_id')->nullable();
             $table->integer('account_number')->nullable();
             $table->string('title')->nullable();
-            $table->enum('status',['Active','Suspended'])->nullable('Active');
+            $table->enum('status',['Active','Suspended'])->default('Active');
             $table->integer('is_deleted')->default(0);
 
             $table->timestamps();

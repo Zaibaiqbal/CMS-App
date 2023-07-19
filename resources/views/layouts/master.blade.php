@@ -66,6 +66,19 @@
         <a href="{{route('users.list')}}" class="nav-link">Users</a>
       </li>
     @endif
+
+    @if(Auth::user()->hasAnyPermission(['All','View Accounts']))
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('accounts.list')}}" class="nav-link">Accounts</a>
+      </li>
+    @endif
+
+    @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
+
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="{{route('material.types.list')}}" class="nav-link">Material Types</a>
+    </li>
+    @endif
     @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
 
       <li class="nav-item d-none d-sm-inline-block">

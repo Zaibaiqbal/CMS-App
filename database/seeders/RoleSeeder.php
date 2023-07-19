@@ -22,6 +22,7 @@ class RoleSeeder extends Seeder
 
         $roles[++$count] = ['name' => 'Super Admin', 'guard_name' => 'web', 'added_id' => 1,'created_at' => now(), 'updated_at' => now()];
 
+        $roles[++$count] = ['name' => 'Client', 'guard_name' => 'web','added_id' => 1,'created_at' => now(), 'updated_at' => now()];
 
         $roles[++$count] = ['name' => 'Manager', 'guard_name' => 'web','added_id' => 1,'created_at' => now(), 'updated_at' => now()];
        

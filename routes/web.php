@@ -58,4 +58,17 @@ Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController
 
 Route::get('transactions', [App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.list')->middleware('permission:All|View Transactions');
 
+Route::match(['get','post'],'storetransaction', [App\Http\Controllers\TransactionController::class, 'storeTransaction'])->name('store.transaction')->middleware('permission:All|Create Transaction');
+
+Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::class, 'index'])->name('material.types.list')->middleware('permission:All|View Material Types');
+
+
+Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('permission:All|Add Material Type');
+
+
+
+Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('permission:All|Add Account');
+
+Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.list')->middleware('permission:All|View Accounts');
+
 });
