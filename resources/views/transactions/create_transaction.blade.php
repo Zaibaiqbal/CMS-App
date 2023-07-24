@@ -53,5 +53,17 @@
 
 @endsection
 @section('page_script')
+<script>
 
+var path = "{{ route('searchplateno') }}";
+    $('input.search').typeahead({
+        source:  function (str, process) 
+        {
+          return $.get(path, { str: str }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+</script>
 @endsection

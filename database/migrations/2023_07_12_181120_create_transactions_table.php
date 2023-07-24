@@ -25,9 +25,9 @@ class CreateTransactionsTable extends Migration
 
             $table->string('plate_no')->nullable();
 
-            $table->double('in_weight')->default(0);
+            $table->double('gross_weight')->default(0);
             $table->string('weight_unit')->nullable();
-            $table->double('out_weight')->default(0);
+            $table->double('tare_weight')->default(0);
             $table->double('net_weight')->default(0);
             $table->timestamp('date')->nullable();
             $table->enum('status', ['Open','Close'])->default('Open');

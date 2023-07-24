@@ -155,13 +155,5 @@ function getWeightType(event,obj)
 
     }
 }
-    var path = "{{ route('searchplateno') }}";
-    $('input.search').typeahead({
-        source:  function (str, process) 
-        {
-          return $.get(path, { str: str }, function (data) {
-                return process(data);
-            });
-        }
-    });
+
 </script>
