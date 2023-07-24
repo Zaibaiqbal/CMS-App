@@ -24,7 +24,7 @@ class CreateTrucksTable extends Migration
             $table->string('company')->nullable();
             $table->string('vin_no')->nullable();
 
-            $table->double('load_capacity')->default(0);
+            $table->double('tare_weight')->default(0);
             $table->string('unit')->nullable();
             $table->longText('description')->nullable();
             $table->integer('is_deleted')->default(0);

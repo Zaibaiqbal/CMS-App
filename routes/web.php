@@ -16,6 +16,8 @@ Auth::routes();
 
 
 
+Route::post('userregister', [App\Http\Controllers\UserController::class, 'registerUser'])->name('user.register');
+
 Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/', function () {
@@ -65,10 +67,17 @@ Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::cl
 
 Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('permission:All|Add Material Type');
 
-
-
 Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('permission:All|Add Account');
 
 Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.list')->middleware('permission:All|View Accounts');
+
+
+Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('permission:All');
+
+
+Route::get('approveclient', [App\Http\Controllers\UserController::class, 'approveUser'])->name('approve.client')->middleware('permission:All');
+
+
+Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoSearchPlateNo'])->name('searchplateno');
 
 });

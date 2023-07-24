@@ -29,9 +29,9 @@ class TruckController extends Controller
             $request->validate([
 
                 'plate_no'              => 'required|unique:trucks,plate_no',
-                'vin_no'                => 'required|unique:trucks,plate_no',
+                // 'vin_no'                => 'required|unique:trucks,plate_no',
                 'model'                 => 'required|max:255',
-                'load_capacity'         => 'required|gt:0',
+                'tare_weight'         => 'required|gt:0',
                 'company'               => 'required|max:255',
 
                 ]);

@@ -54,11 +54,15 @@ class User extends Authenticatable
 
     public function getUserListByType($type)
     {
-        return  User::where('type', $type)->orderBy('id', 'desc')->get();
+        return  User::where('user_type', $type)->orderBy('id', 'desc')->get();
     }
 
 
-    
+    public function getUnapproveClients($type)
+    {
+        return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'desc')->get();
+    }
+
     public function storeUser($object)
     {
         return DB::transaction(function() use ($object){
@@ -66,10 +70,11 @@ class User extends Authenticatable
             $user = new User;
             $user->name = $object['name'];
             $user->cnic = $object['cnic'];
-            $user->fname = $object['fname'];
+            // $user->fname = $object['fname'];
             $user->contact = $object['contact_no'];
             $user->email = $object['email'];
-            $user->type = $object['user_type'];
+            $user->user_type = $object['user_type'];
+            
             if(isset($object['password']))
             {
              $user->password = Hash::make($object['password']);

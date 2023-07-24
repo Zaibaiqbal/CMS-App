@@ -66,22 +66,11 @@
                             </div>
 
                             <div class="col-md-6">
-                            @php($label = 'Load Capacity')
-                              @php($name = 'load_capacity')
+                            @php($label = 'Tare Weight')
+                              @php($name = 'tare_weight')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
                                     <span><i class="text-danger">*</i></span>
-                                    <small id="{{$name}}_error" class="text-danger"></small>
-
-                                    <input type="text" name="{{$name}}" class="form-control" placeholder="{{$label}}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                            @php($label = 'Unit')
-                              @php($name = 'unit')
-                                <div class="form-group">
-                                    <label for="">{{$label}}</label>
                                     <small id="{{$name}}_error" class="text-danger"></small>
 
                                     <input type="text" name="{{$name}}" class="form-control" placeholder="{{$label}}">
@@ -93,7 +82,7 @@
                                 @php($name = 'vin_no')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
-                                    <span><i class="text-danger">*</i></span>
+                                    <span><i class="text-danger"></i></span>
                                     <small id="{{$name}}_error" class="text-danger"></small>
 
                                     <input type="text" name="{{$name}}" class="form-control" placeholder="{{$label}}">

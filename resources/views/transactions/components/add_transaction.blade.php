@@ -5,7 +5,7 @@
                 @php($name = 'plate_no')
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
-                <input type="text" name="{{$name}}"  placeholder="{{$label}}"  class="form-control" id="">
+                <input type="text" name="{{$name}}"  placeholder="{{$label}}"  class="form-control auto_search" id="">
             </div>
 
         </div>
@@ -34,7 +34,7 @@
 
         </div>
 
-        <div class="col-md- mb-2">
+        <div class="col-md-6 mb-2">
 
                 @php($label = 'Select Material Type')
                 @php($name = 'material_type')
@@ -50,18 +50,17 @@
 
         </div>
 
-        <div class="col-md- mb-2">
+        <div class="col-md-6 mb-2">
 
             @php($label = 'Select Operation Type')
             @php($name = 'operation_type')
             @php($operation_types = ['Inbound','Outbound'])
-            <label for="">{{$label}} <span class="text-danger">*</span> </label>
+            <label for="">{{$label}} <span class="text-danger"></span> </label>
             <small class="text-danger" id="{{$name}}_error"></small>
 
-            <select name="{{$name}}" id="" class="form-control">
-                <option value="{{encrypt(0)}}">{{$label}}</option>
+            <select name="{{$name}}" id="" class="form-control operation_type" onchange="getWeightType(event,this)">
                 @foreach($operation_types as $rows)
-                    <option value="{{encrypt($rows)}}">{{$rows}}</option>
+                    <option value="{{$rows}}">{{$rows}}</option>
                 @endforeach
             </select>
 
@@ -69,25 +68,22 @@
       
         <div class="col-md-4 mb-2">
 
-            @php($label = 'In-weight')
-                @php($name = 'in_weight')
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+            @php($label = 'Gross Weight')
+                @php($name = 'gross_weight')
+                <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
-                <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
-
+                <input type="text" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">
 
         </div>
-
-
         <div class="col-md-4 mb-2">
 
-            @php($label = 'Out-weight')
-            @php($name = 'out_weight')
-            <label for="">{{$label}} <span class="text-danger">*</span> </label>
+            @php($label = 'Tare Weight')
+            @php($name = 'tare_weight')
+            <label for="" id="tare_label">{{$label}} <span class="text-danger">*</span> </label>
             <small class="text-danger" id="{{$name}}_error"></small>
 
-            <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+            <input type="text" name="{{$name}}" class="form-control" id="tare_input" placeholder="{{$label}}">
 
 
         </div>
@@ -104,6 +100,16 @@
 
         </div>
 
+        <div class="col-md-12">
+            @php($label = 'Note')
+            @php($name = 'note')
+            <div class="form-group">
+                <label for="">{{$label}}</label>
+                <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}">
+                    </textarea>
+            </div>
+        </div>
+
     
 </div>
 
@@ -115,3 +121,47 @@
     </div>
 
 </div>
+
+
+<script>
+
+
+function getWeightType(event,obj)
+{
+    var opertaion_type = $(obj).val();
+
+    if(opertaion_type == "Outbound")
+    {
+        
+        $("#gross_label").text("Tare Weight");
+        $("#gross_input").attr("name", "tare_weight");
+        $("#gross_input").attr("placeholder", "Tare Weight");
+
+        $("#tare_label").text("Gross Weight:");
+        $("#tare_input").attr("name", "gross_weight");
+        $("#tare_input").attr("placeholder", "Gross Weight");
+
+    }
+    else
+    {
+
+        $("#tare_label").text("Tare Weight");
+        $("#tare_input").attr("name", "tare_weight");
+        $("#tare_input").attr("placeholder", "Tare Weight");
+
+        $("#gross_label").text("Gross Weight:");
+        $("#gross_input").attr("name", "gross_weight");
+        $("#gross_input").attr("placeholder", "Gross Weight");
+
+    }
+}
+    var path = "{{ route('searchplateno') }}";
+    $('input.search').typeahead({
+        source:  function (str, process) 
+        {
+          return $.get(path, { str: str }, function (data) {
+                return process(data);
+            });
+        }
+    });
+</script>

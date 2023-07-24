@@ -9,32 +9,38 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-
-  
-  
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">	
+    <link href="{{ asset('css/pcoded-horizontal.min.css') }}" rel="stylesheet">	
+    <link href="{{ asset('css/prism.css') }}" rel="stylesheet">	
+    <link href="{{ asset('css/jquery.mCustomScrollbar.css') }}" rel="stylesheet">	
+    <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
      <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css')}}">
-  <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
-    <link href="{{ asset('css/adminlte.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">	
-    <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">	
-    
+
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <!-- Data Table Css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/data-table/css/buttons.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('icon\themify-icons\themify-icons.css') }}">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('icon\icofont\css\icofont.css') }}">
+    <!-- feather Awesome -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('icon\feather\css\feather.css') }}">
+
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
- 
     <style>
 
   nav ul li a{
@@ -44,305 +50,420 @@
     </style>
     @yield('page_style')
 </head>
-<body class="">
 
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{asset('logos/logo.png')}}" alt="AdminLTELogo" height="60" width="60">
-  </div>
-
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #497eb7;color:white;">
-    <!-- Left navbar links -->
-
-    <a class="navbar-brand" href="#" style="">
-  
-    <img alt="Logo" src="{{asset('logos/logo.png')}}" width="50px" />
-  </a>
-    <ul class="navbar-nav ml-3">
-   
-    @if(Auth::user()->hasAnyPermission(['All','View Clients']))
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('users.list')}}" class="nav-link">Users</a>
-      </li>
-    @endif
-
-    @if(Auth::user()->hasAnyPermission(['All','View Accounts']))
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('accounts.list')}}" class="nav-link">Accounts</a>
-      </li>
-    @endif
-
-    @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
-
-    <li class="nav-item d-none d-sm-inline-block">
-      <a href="{{route('material.types.list')}}" class="nav-link">Material Types</a>
-    </li>
-    @endif
-    @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
-
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('trucks.list')}}" class="nav-link">Trucks</a>
-      </li>
-    @endif
-
-    @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
-
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('transactions.list')}}" class="nav-link">Transactions</a>
-      </li>
-    @endif
-    @if(Auth::user()->hasAnyPermission(['All','View Employees']))
-
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('employees.list')}}" class="nav-link">Employees</a>
-      </li>
-      @endif
-    @if(Auth::user()->hasAnyPermission(['All','Roles & Permissions']))
-
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('roles.permissions')}}" class="nav-link">Roles & Permissions</a>
-      </li>
-      @endif
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
+<body>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
             </div>
-          </form>
         </div>
-      </li>
-
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
-     
-
-
-      <!-- User Account -->
-
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-user"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-
-        @guest
-          @if (Route::has('login'))
-              <li class="nav-item">
-                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-              </li>
-          @endif
-
-          @if (Route::has('register'))
-              <li class="nav-item">
-                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-              </li>
-          @endif
-      @else
-          <span class="dropdown-item dropdown-header">{{ Auth::user()->name }}
-      </span>
-          <div class="dropdown-divider"></div>
-
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-user mr-2"></i>
-            <span class="text-muted text-sm">User Profile</span>
-          </a>
-          <div class="dropdown-divider"></div>
-
-          <a class="dropdown-item dropdown-footer bg-primary" href="{{ route('logout') }}"
-              onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-              {{ __('Logout') }}
-          </a>
-
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-              @csrf
-          </form>
-          <div class="dropdown-divider"></div>
-          @endif
-         
-        </div>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
+    <!-- Pre-loader end -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-      @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+    <div id="pcoded" class="pcoded">
+
+        <div class="pcoded-container">
+            <!-- Menu header start -->
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+
+                    <div class="navbar-logo">
+                        <a class="mobile-menu" id="mobile-collapse" href="#!">
+                            <i class="feather icon-menu"></i>
+                        </a>
+                        <a href="index-1.htm">
+                            <img class="img-fluid" src="{{asset('logos/logo.png')}}" height="90px;" alt="Theme-Logo">
+                        </a>
+                        <a class="mobile-options">
+                            <i class="feather icon-more-horizontal"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-container container-fluid">
+                      
+                        <ul class="nav-right">
+                            <li class="header-notification">
+                                <div class="dropdown-primary dropdown">
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="feather icon-bell"></i>
+                                        <span class="badge bg-c-pink">5</span>
+                                    </div>
+                                    <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <li>
+                                            <h6>Notifications</h6>
+                                            <label class="label label-danger">New</label>
+                                        </li>
+                                        <li>
+                                            <div class="media">
+                                                <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5 class="notification-user">John Doe</h5>
+                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                    <span class="notification-time">30 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="media">
+                                                <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5 class="notification-user">Joseph William</h5>
+                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                    <span class="notification-time">30 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="media">
+                                                <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5 class="notification-user">Sara Soudein</h5>
+                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                    <span class="notification-time">30 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                      
+                            <li class="user-profile header-notification">
+                                <div class="dropdown-primary dropdown">
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="{{asset('images/user.jpg')}}" class="img-radius" alt="User-Profile-Image">
+                                        <span>{{ Auth::user()->name }}</span>
+                                        <i class="feather icon-chevron-down"></i>
+                                    </div>
+                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <li>
+                                            <a class="text-dark"  href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                              document.getElementById('logout-form').submit();"> <i class="feather icon-log-out"></i> 
+                                                {{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                           
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            @endif
+            </nav>
+            <!-- Menu header end -->
+            <div class="pcoded-main-container">
+                <nav class="pcoded-navbar">
+                    <div class="pcoded-inner-navbar">
+                        <ul class="pcoded-item pcoded-left-item">
+                        @if(Auth::user()->hasAnyPermission(['All','View Clients']))
 
-      @yield('page_body')
+                        <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                 
+                                    <span class="pcoded-mtext">Clients</span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="pcoded-hasmenu text-dark">
+                                        <a href="{{route('users.list')}}">
+                                         
+                                            <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Clients</span>
+                                        </a>
+                                      
+                                    </li>
 
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
+                                    <li class="pcoded-hasmenu text-dark">
+                                        <a href="{{route('unapproveclients.list')}}">
+                                          
+                                            <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproed Clients</span>
+                                        </a>
+                                      
+                                    </li>
+                                 
+                                </ul>
+                            </li>
+                              
+                            @endif
+                            @if(Auth::user()->hasAnyPermission(['All','View Accounts']))
 
-  @yield('page_modal')
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('accounts.list')}}" >
+                                    <span class="pcoded-mtext">Accounts</span>
+                                </a>
+                                
+                            </li>
+                            @endif
+                            @if(Auth::user()->hasAnyPermission(['All','View Material Types']))
+
+                            <li class="pcoded-hasmenu">
+                                <a  href="{{route('material.types.list')}}">
+                                    <span class="pcoded-mtext">Material Types</span>
+                                </a>
+                            
+                            </li>
+                            @endif
+                            @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
+
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('trucks.list')}}" >
+                                    <span class="pcoded-mtext">Trucks</span>
+                                </a>
+                             
+                            </li>
+                            @endif
+                            @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
+
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('transactions.list')}}">
+                                    <span class="pcoded-mtext">Transactions</span>
+                                </a>
+                                
+                            </li>
+                            @endif
+                            @if(Auth::user()->hasAnyPermission(['All','View Employees']))
+
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('employees.list')}}">
+                                    <span class="pcoded-mtext">Employees</span>
+                                </a>
+                               
+                            </li>
+                            @endif
+                            @if(Auth::user()->hasAnyPermission(['All','Roles & Permissions']))
+
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('roles.permissions')}}">
+                                    <span class="pcoded-mtext">Roles & Permissions</span>
+                                </a>
+                               
+                            </li>
+                            @endif
+                          
+                        </ul>
+                    </div>
+                </nav>
+                <!-- Sidebar chat start -->
+                <div id="sidebar" class="users p-chat-user showChat">
+                    <div class="had-container">
+                        <div class="card card_main p-fixed users-main">
+                            <div class="user-box">
+                                <div class="chat-inner-header">
+                                    <div class="back_chatBox">
+                                        <div class="right-icon-control">
+                                            <input type="text" class="form-control  search-text" placeholder="Search Friend" id="search-friends">
+                                            <div class="form-icon">
+                                                <i class="icofont icofont-search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-friend-list">
+                                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+                                        <a class="media-left" href="#!">
+                                            <img class="media-object img-radius img-radius" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image ">
+                                            <div class="live-status bg-success"></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="f-13 chat-header">Josephin Doe</div>
+                                        </div>
+                                    </div>
+                                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe" data-toggle="tooltip" data-placement="left" title="Lary Doe">
+                                        <a class="media-left" href="#!">
+                                            <img class="media-object img-radius" src="..\files\assets\images\avatar-2.jpg" alt="Generic placeholder image">
+                                            <div class="live-status bg-success"></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="f-13 chat-header">Lary Doe</div>
+                                        </div>
+                                    </div>
+                                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                                        <a class="media-left" href="#!">
+                                            <img class="media-object img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                                            <div class="live-status bg-success"></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="f-13 chat-header">Alice</div>
+                                        </div>
+                                    </div>
+                                    <div class="media userlist-box" data-id="4" data-status="online" data-username="Alia" data-toggle="tooltip" data-placement="left" title="Alia">
+                                        <a class="media-left" href="#!">
+                                            <img class="media-object img-radius" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
+                                            <div class="live-status bg-success"></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="f-13 chat-header">Alia</div>
+                                        </div>
+                                    </div>
+                                    <div class="media userlist-box" data-id="5" data-status="online" data-username="Suzen" data-toggle="tooltip" data-placement="left" title="Suzen">
+                                        <a class="media-left" href="#!">
+                                            <img class="media-object img-radius" src="..\files\assets\images\avatar-2.jpg" alt="Generic placeholder image">
+                                            <div class="live-status bg-success"></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="f-13 chat-header">Suzen</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sidebar inner chat start-->
+                <div class="showChat_inner">
+                    <div class="media chat-inner-header">
+                        <a class="back_chatBox">
+                            <i class="feather icon-chevron-left"></i> Josephin Doe
+                        </a>
+                    </div>
+                    <div class="media chat-messages">
+                        <a class="media-left photo-table" href="#!">
+                            <img class="media-object img-radius img-radius m-t-5" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
+                        </a>
+                        <div class="media-body chat-menu-content">
+                            <div class="">
+                                <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                                <p class="chat-time">8:20 a.m.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media chat-messages">
+                        <div class="media-body chat-menu-reply">
+                            <div class="">
+                                <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                                <p class="chat-time">8:20 a.m.</p>
+                            </div>
+                        </div>
+                        <div class="media-right photo-table">
+                            <a href="#!">
+                                <img class="media-object img-radius img-radius m-t-5" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chat-reply-box p-b-20">
+                        <div class="right-icon-control">
+                            <input type="text" class="form-control search-text" placeholder="Share Your Thoughts">
+                            <div class="form-icon">
+                                <i class="feather icon-navigation"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sidebar inner chat end-->
+                <div class="pcoded-wrapper">
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    
+                                  <div class="page-header m-t-30">
+                                      <div class="row align-items-end">
+                                          <div class="col-lg-8">
+                                              <div class="page-header-title">
+                                                  <div class="d-inline">
+                                                      <h4>Dashboard</h4>
+                                                    
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-4">
+                                              <div class="page-header-breadcrumb">
+                                                  <ul class="breadcrumb-title">
+                                                      <li class="breadcrumb-item">
+                                                          <a href="index-1.htm">
+                                                              <i class="icofont icofont-home"></i>
+                                                          </a>
+                                                      </li>
+                                                      <li class="breadcrumb-item"><a href="#!">Home</a>
+                                                      </li>
+                                                      <li class="breadcrumb-item"><a href="#!">Dashboard</a>
+                                                      </li>
+                                                      
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <!-- Page body start -->
+                                    <div class="page-body">
+
+                                       @yield('page_body')
 
 
 
-  <!-- /.content-wrapper -->
+                                    </div>
+                                    <!-- Page body end -->
+                                </div>
+                            </div>
+                            <!-- Main-body end -->
+                            <div id="styleSelector">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <footer class="main-footer">
-   
-  </footer>
+    @yield('page_modal')
+ 
 
 <!-- ./wrapper -->
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('js/adminlte.min.js') }}" defer></script>
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
 
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
-    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/menu-hori-fixed.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}" defer></script>
+    <script src="{{ asset('js/pcoded.min.js') }}" defer></script>
+    <script src="{{ asset('js/script.js') }}" defer></script>
  
-    <script src="{{ asset('js/demo.js') }}" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
     <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
 
+    <script src="{{asset('plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{asset('plugins/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+
+<script src="{{asset('plugins/data-table/js/vfs_fonts.js') }}"></script>
+<script src="{{asset('plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{asset('plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{asset('plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
+$('#table_datatable').DataTable();
+</script>
 
     @yield('page_script')
 

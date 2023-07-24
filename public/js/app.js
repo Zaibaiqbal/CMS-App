@@ -85,5 +85,37 @@ function submitModalForm(event,obj,form_id,form_modal_id)
        
     });
 
+}
+
+function formSubmission(event)
+{
+
+    event.preventDefault();
+
+    swal({
+        title: "Are you sure",
+        text: "you want to Approve User",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+
+        if (willDelete)
+        {
+            swal("Your request has been submitted!", {
+                icon: "success",
+            });
+
+			    window.location.href =  $('.delete_submit').attr('href');
+
+
+        }
+        else
+        {
+            swal("Your request has been cancelled!");
+        }
+    });
 
 }
+

@@ -66,8 +66,8 @@
                             </div>
 
                             <div class="col-md-6">
-                            @php($label = 'Load Capacity')
-                              @php($name = 'load_capacity')
+                            @php($label = 'Tare Weight')
+                              @php($name = 'tare_weight')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
                                     <span><i class="text-danger">*</i></span>

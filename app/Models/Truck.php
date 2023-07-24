@@ -18,7 +18,12 @@ class Truck extends Model
 
             $truck = new Truck;
             $truck->plate_no        = $object['plate_no'];
-            $truck->vin_no          = $object['vin_no'];
+            
+            if(isset($object['vin_no']))
+            {
+                $truck->vin_no          = $object['vin_no'];
+
+            }
             $truck->added_id        = Auth::user()->id;
             $truck->company         = $object['company'];
             $truck->model           = $object['model'];

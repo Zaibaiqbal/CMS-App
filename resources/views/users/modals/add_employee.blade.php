@@ -40,6 +40,7 @@
 
                                 </div>
                             </div>
+                            {{--
                             <div class="col-md-6">
 
                                     @php($label = 'Father Name')
@@ -50,7 +51,7 @@
                                     <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
                             </div>
-
+                            --}}
                             <div class="col-md-6 mb-2">
 
                                     @php($label = 'Contact')
