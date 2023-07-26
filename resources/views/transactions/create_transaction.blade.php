@@ -14,7 +14,7 @@
         
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive p-2">
           @include('transactions.components.add_transaction')
 
         </div>
@@ -55,15 +55,44 @@
 @section('page_script')
 <script>
 
-var path = "{{ route('searchplateno') }}";
-    $('input.search').typeahead({
-        source:  function (str, process) 
-        {
-          return $.get(path, { str: str }, function (data) {
-                return process(data);
-            });
-        }
-    });
+    function autoSearchPlateNo(event,tag)
+    {
+        event.preventDefault();
+
+        var route = "{{ route('searchplateno') }}";
+
+        $('input.auto_search_plate_no').typeahead({
+
+            source:  function (search, process) 
+            {
+                $.get(route, { search: search }, function (data) {
+
+                   
+                        return process(data);
+                    });
+            }
+        });
+    }
+
+
+    function autoSearchClientName(event,tag)
+    {
+        event.preventDefault();
+
+        var route = "{{ route('searchclientbyname') }}";
+
+        $('input.auto_search_client_name').typeahead({
+
+            source:  function (search, process) 
+            {
+                $.get(route, { search: search }, function (data) {
+
+                   
+                        return process(data);
+                    });
+            }
+        });
+    }
 
 </script>
 @endsection

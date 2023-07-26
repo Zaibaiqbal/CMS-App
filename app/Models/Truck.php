@@ -12,6 +12,13 @@ class Truck extends Model
 {
     use HasFactory;
 
+
+    public function getTruckByPlateNo($plate_no)
+    {
+        return Truck::where('is_deleted', 0)->where('plate_no',$plate_no)->first();
+
+    }
+
     public function storeTruck($object)
     {
         return DB::transaction(function() use ($object){
@@ -27,6 +34,7 @@ class Truck extends Model
             $truck->added_id        = Auth::user()->id;
             $truck->company         = $object['company'];
             $truck->model           = $object['model'];
+            $truck->tare_weight           = $object['tare_weight'];
 
             if(isset($object['description']))
             {
@@ -37,7 +45,6 @@ class Truck extends Model
             if(isset($object['color']))
             {
                 $truck->color           = $object['color'];
-
                 
             }
 
@@ -46,5 +53,10 @@ class Truck extends Model
             return with($truck);
         });
 
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'client_id')->withDefault();
     }
 }

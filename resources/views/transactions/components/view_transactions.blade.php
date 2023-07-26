@@ -5,20 +5,23 @@
                 <th>Client</th>
                 <th>Plate No</th>
                 <th>Material Type</th>
-                <th>In-weight</th>
-                <th>Out-weight</th>
+                <th>Gross weight</th>
+                <th>Tare weight</th>
+                <th>Net weight</th>
                 <th>Status</th>
             </tr>
             </thead>
             <tbody>
+                @foreach($transaction_list as $rows)
             <tr>
                 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$rows->client->name}}</td>
+                <td>{{$rows->plate_no}}</td>
+                <td>{{$rows->materialType->name}}</td>
+                <td>{{$rows->gross_weight}}</td>
+                <td>{{$rows->tare_weight}}</td>
+                <td>{{$rows->net_weight}}</td>
                 <td>
                 <div class="item-action dropdown">
                     <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
@@ -34,5 +37,7 @@
                 </div>
                 </td>
             </tr>
+
+            @endforeach
             </tbody>
         </table>

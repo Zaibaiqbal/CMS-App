@@ -28,7 +28,7 @@
                       <th>VIN No</th>
                       <th>Model</th>
                       <th>Color</th>
-                      <th>Weight Capacity</th>
+                      <th>Tare Weight</th>
                       <th>Action</th>
                     </tr>
                   </thead>

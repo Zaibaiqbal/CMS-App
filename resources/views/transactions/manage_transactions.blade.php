@@ -28,8 +28,8 @@
                       <th>Truck No</th>
                       <th>Material Type</th>
                       <th>Operation Type</th>
-                      <th>In-weight</th>
-                      <th>Out-weight</th>
+                      <th>Gross weight</th>
+                      <th>Tare weight</th>
                       <th>Status</th>
                     </tr>
                   </thead>

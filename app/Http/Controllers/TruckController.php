@@ -31,7 +31,7 @@ class TruckController extends Controller
                 'plate_no'              => 'required|unique:trucks,plate_no',
                 // 'vin_no'                => 'required|unique:trucks,plate_no',
                 'model'                 => 'required|max:255',
-                'tare_weight'         => 'required|gt:0',
+                'tare_weight'           => 'required|gt:0',
                 'company'               => 'required|max:255',
 
                 ]);
@@ -43,6 +43,21 @@ class TruckController extends Controller
                 if(isset($truck->id))
                 {
                     $data = ['status' => true, 'message' => 'Truck added successfully'];
+
+                    if (isset($request->flag)) 
+                    {
+                        if($request->flag)
+                        {
+                            $data['plate_no']       = $truck->plate_no;
+                            $data['id']             = encrypt($truck->id);
+                            // $data['client_id']      = encrypt($truck->client->id);
+                            // $data['name']           = $truck->client->name;
+                            // $data['contact']        = $truck->client->contact;
+
+                            return $data;
+                        }    
+                     
+                    }
 
                 }
             }
@@ -60,5 +75,24 @@ class TruckController extends Controller
 
         return redirect()->back();
       
+    }
+
+    public function autoSearchPlateNo(Request $request)
+    {
+
+        try
+        {
+            $data = Truck::selectRaw('plate_no')
+                    ->where('plate_no', 'LIKE', '%'. $request->search. '%')
+                    ->get()->pluck('plate_no');
+     
+        return $data;
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
     }
 }

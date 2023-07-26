@@ -54,7 +54,7 @@ class User extends Authenticatable
 
     public function getUserListByType($type)
     {
-        return  User::where('user_type', $type)->orderBy('id', 'desc')->get();
+        return  User::where('user_type', $type)->where('status','Active')->orderBy('id', 'desc')->get();
     }
 
 

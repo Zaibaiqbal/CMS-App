@@ -45,7 +45,6 @@ function submitModalForm(event,obj,form_id,form_modal_id)
 
             if (result.status) {
 
-                // messageToaster('success', result.message, 'Success');
                
                 toastr.options =
                 {
@@ -62,7 +61,11 @@ function submitModalForm(event,obj,form_id,form_modal_id)
 
                     flag = true;
                 }
+                else
+                {
                     location.reload();
+
+                }
                 
                 
 
@@ -89,7 +92,6 @@ function submitModalForm(event,obj,form_id,form_modal_id)
 
 function formSubmission(event)
 {
-
     event.preventDefault();
 
     swal({
@@ -106,16 +108,16 @@ function formSubmission(event)
             swal("Your request has been submitted!", {
                 icon: "success",
             });
-
 			    window.location.href =  $('.delete_submit').attr('href');
-
-
         }
         else
         {
             swal("Your request has been cancelled!");
         }
+
     });
+
+
 
 }
 

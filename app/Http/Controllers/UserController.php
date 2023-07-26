@@ -38,6 +38,28 @@ class UserController extends Controller
         ]);
     }
 
+
+    public function autoSearchByClientName(Request $request)
+    {
+
+        try
+        {
+
+            $data = User::selectRaw("CONCAT(name,' - ',cnic) as client_info")
+                    ->where('name', 'LIKE', '%'. $request->search. '%')
+                    ->where('user_type','Client')
+                    ->get();
+     
+        return $data->;
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
+
     protected function registerUser(Request $request)
     {
 
@@ -163,6 +185,66 @@ class UserController extends Controller
             {
                 return view('users.modals.add_employee');
             }
+
+        }
+        catch(Exception $e)
+        {
+            
+        }
+        return redirect()->back();
+
+    }
+
+
+    public function storeClient(Request $request)
+    {
+
+        try
+        {
+            $data = ['status' => false , 'messge' => ''];
+            if($request->isMethod('post'))
+            {
+                $request->validate([
+
+                    'cnic'   => 'required|unique:users,cnic',
+                    'name'  =>  'required',
+                    'contact_no'  =>  'required',
+                    'email'  =>  'required|unique:users,email',
+                    // 'password'          =>  'nullable|min:8|max:16|same:confirm_password',
+                    // 'confirm_password'  =>  'nullable|min:8|max:16|same:password',
+                ]);
+                $form_data = $request->input();
+
+                $form_data['user_type'] = 'Client';
+
+                $user = new User;
+
+                $user = $user->storeUser($form_data);
+
+                if(isset($user->id))
+                {
+                   $data = ['status' => true , 'message' => 'Client added successfully'];
+
+                   
+                   if (isset($request->flag)) 
+                   {
+                       if($request->flag)
+                       {
+                           $data['name']       = $user->name;
+                           $data['id']             = encrypt($user->id);
+                           // $data['client_id']      = encrypt($truck->client->id);
+                           // $data['name']           = $truck->client->name;
+                           $data['contact']        = $user->contact;
+
+                           return $data;
+                       }    
+                    
+                   }
+                }
+
+                return $data;
+            }
+         
 
         }
         catch(Exception $e)
