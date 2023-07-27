@@ -49,7 +49,7 @@
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
-                                @if(Auth::user()->hasAnyPermission(['All','Update Account']))
+                                @if(false && Auth::user()->hasAnyPermission(['All','Update Account']))
             
                                 <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.account',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                                 @endif
