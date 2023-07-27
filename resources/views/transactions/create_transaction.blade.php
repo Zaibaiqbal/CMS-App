@@ -1,5 +1,50 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Create Transaction
+
+@endsection
+@section('page_style')
+
+<style>
+
+ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
+    width: auto !important;
+    background-color: #eaeaf2 !important;
+
+}
+
+.custom-autocomplete-list {
+    /* Add your custom styles here */
+    /* For example: */
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 0;
+    width: 30% !important;
+  }
+
+  .custom-autocomplete-list li {
+    /* Add your custom styles for each list item here */
+    /* For example: */
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .custom-autocomplete-list li:hover {
+    background-color: #ddd;
+  }
+
+</style>
+@endsection
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('create_transaction') }}
+
+@endsection
+
+
 @section('page_body')
 
 <div class="row">
@@ -55,22 +100,86 @@
 @section('page_script')
 <script>
 
+// $(document).ready(function () {
+//         $("[id*=txtSearch]").autocomplete({
+//             source: function (request, response) {
+//                 $.ajax({
+//                     url: '<%=ResolveUrl("~/Search.ashx") %>' + '?term=' + request.term,
+//                     type: "POST",
+//                     contentType: "application/json; charset=utf-8",
+//                     success: function (data) {
+//                         response($.map(JSON.parse(data), function (item) {
+//                             return {
+//                                 label: item.split('-')[1],
+//                                 val: item.split('-')[0],
+//                                 Country: item.split('-')[2]
+//                             }
+//                         }))
+//                     },
+//                     error: function (response) {
+//                         alert(response.responseText);
+//                     },
+//                     failure: function (response) {
+//                         alert(response.responseText);
+//                     }
+//                 });
+//             },
+//             select: function (e, i) {
+//                 $('[id*=txtId]').val(i.item.val);
+//                 $('[id*=txtCountry]').val(i.item.Country);
+//             },
+//             minLength: 0
+//         });
+//     });
+
     function autoSearchPlateNo(event,tag)
     {
         event.preventDefault();
 
         var route = "{{ route('searchplateno') }}";
 
-        $('input.auto_search_plate_no').typeahead({
+        var formData = {}
 
-            source:  function (search, process) 
-            {
-                $.get(route, { search: search }, function (data) {
+        $('input.auto_search_plate_no').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: route,
+                    type: "GET",
+                    data: {
+                        search: request.term,
+                    },
+                    contentType: "json",
+                    success: function (data) {
 
-                   
-                        return process(data);
-                    });
-            }
+                        response($.map(JSON.parse(data), function (item) {
+                            return {
+                                label: item.plate_no,
+                                val:    item.id,
+                              
+                            }
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+              
+                $('.truck_id').val(i.item.val);
+                $('.auto_search_plate_no').val(i.item.value);
+            },
+            open: function() {
+        // Get the autocomplete list element
+                var autocompleteList = $(this).autocomplete("widget");
+
+                // Add custom CSS class to the list element
+                autocompleteList.addClass("custom-autocomplete-list");
+            },
+            minLength: 2
         });
     }
 
@@ -81,16 +190,47 @@
 
         var route = "{{ route('searchclientbyname') }}";
 
-        $('input.auto_search_client_name').typeahead({
+        $('input.auto_search_client_name').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: route,
+                    type: "GET",
+                    data: {
+                        search: request.term,
+                    },
+                    contentType: "json",
+                    success: function (data) {
 
-            source:  function (search, process) 
-            {
-                $.get(route, { search: search }, function (data) {
+                        response($.map(JSON.parse(data), function (item) {
+                            return {
+                                label: item.client_info,
+                                val: item.id,
 
-                   
-                        return process(data);
-                    });
-            }
+                              
+                            }
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+              
+                $('.user_id').val(i.item.val);
+                $('.auto_search_client_name').val(i.item.value);
+            },
+            open: function() {
+        // Get the autocomplete list element
+                var autocompleteList = $(this).autocomplete("widget");
+
+                // Add custom CSS class to the list element
+                autocompleteList.addClass("custom-autocomplete-list");
+            },
+            minLength: 2
         });
     }
 

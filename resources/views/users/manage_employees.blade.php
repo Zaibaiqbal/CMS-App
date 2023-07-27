@@ -1,5 +1,15 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Employees Management
+
+@endsection
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('employees') }}
+
+@endsection
 @section('page_body')
 
 

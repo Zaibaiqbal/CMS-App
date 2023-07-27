@@ -1,5 +1,18 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Roles & Permissions Management
+
+@endsection
+
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('roles_and_permissions') }}
+
+@endsection
+
+
 @section('page_body')
 
 <div class="row">

@@ -1,5 +1,17 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Accounts Management
+
+@endsection
+
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('accounts') }}
+
+@endsection
+
 @section('page_body')
 
 <div class="row">

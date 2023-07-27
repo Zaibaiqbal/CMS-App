@@ -20,6 +20,9 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('material_type_id')->nullable();
             $table->unsignedInteger('truck_id')->nullable();
             $table->unsignedInteger('account_id')->nullable();
+            $table->string('ticket_no')->nullable();
+            $table->string('job_id')->nullable();
+
             $table->string('client_type')->nullable();
             $table->string('operation_type')->nullable();
 

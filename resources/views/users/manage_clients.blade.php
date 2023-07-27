@@ -1,5 +1,15 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Clients Management
+
+@endsection
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('clients') }}
+
+@endsection
 @section('page_body')
 
 

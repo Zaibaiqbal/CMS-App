@@ -24,14 +24,14 @@
 
         </div>
         <div class="col-md-6">
-                @php($label = 'Select Client')
+                @php($label = 'Client Name')
                 @php($name = 'client')
 
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
                 <div class="input-group">
 
-
+                {{-- 
                 <select name="{{$name}}" id="" class="form-control fstdropdown-select">
 
                 <option value="{{encrypt(0)}}">{{$label}}</option>
@@ -43,8 +43,10 @@
                 @endforeach
 
                 </select>
-               {{-- <input type="text" name="{{$name}}" class="form-control name auto_search_client_name" onkeyup="autoSearchClientName(event,'client')" id="" placeholder="{{$label}}">
-                <input type="hidden" value="{{encrypt(0)}}" name="user_id">
+                --}}
+
+              <input type="text" name="{{$name}}" class="form-control name auto_search_client_name" onkeyup="autoSearchClientName(event,'client')" id="" placeholder="{{$label}}">
+                <input type="hidden" value="" name="user_id"  class="user_id">
 
                 <div class="input-group-append">
                     @if(Auth::user()->hasAnyPermission(['All','Add Clients']))
@@ -54,7 +56,6 @@
                     @endif
 
                 </div>
-                --}}
 
             </div>
         </div>
@@ -66,7 +67,7 @@
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
-                <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                <input type="text" name="{{$name}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
 
 
         </div>

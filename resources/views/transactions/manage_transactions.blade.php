@@ -1,5 +1,17 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Transaction Management
+
+@endsection
+
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('transactions') }}
+
+@endsection
+
 @section('page_body')
 
 <div class="row">
@@ -21,48 +33,47 @@
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
                     <table id="table_datatable" class="table table-striped table-bordered nowrap">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Client</th>
-                      <th>Truck No</th>
-                      <th>Material Type</th>
-                      <th>Operation Type</th>
-                      <th>Gross weight</th>
-                      <th>Tare weight</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($transactions_list as $rows)
-                    <tr>
+                    <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Client</th>
+                          <th>Plate No</th>
+                          <th>Material Type</th>
+                          <th>Gross weight</th>
+                          <th>Tare weight</th>
+                          <th>Net weight</th>
+                          <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($transaction_list as $rows)
+                        <tr>
                         
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <div class="dropdown-primary dropdown">
-                            <div class="" data-toggle="dropdown">
-                            <i class="fa fa-ellipsis-v text-dark"></i>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$rows->client->name}}</td>
+                        <td>{{$rows->plate_no}}</td>
+                        <td>{{$rows->materialType->name}}</td>
+                        <td>{{$rows->gross_weight}}</td>
+                        <td>{{$rows->tare_weight}}</td>
+                        <td>{{$rows->net_weight}}</td>
+                        <td>
+                        <div class="item-action dropdown">
+                            <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
+                            
+                            <div class="dropdown-menu pull-right">
+                                {{--
+                            @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
+                
+                            <a href="#" onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                            @endif
+                            --}}
                             </div>
-                            <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                <li>
-                                @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
-            
-                                <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-                                @endif
-
-                                </li>
-                             
-                            </ul>
                         </div>
-                      </td>
+                        </td>
                     </tr>
-                @endforeach
-                  </tbody>
+
+                    @endforeach
+                    </tbody>
                 </table>
               </div>
               </div>

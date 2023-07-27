@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('page_title')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -192,7 +192,7 @@
                                     <li class="pcoded-hasmenu text-dark">
                                         <a href="{{route('unapproveclients.list')}}">
                                           
-                                            <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproed Clients</span>
+                                            <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Clients</span>
                                         </a>
                                       
                                     </li>
@@ -374,30 +374,14 @@
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     
-                                  <div class="page-header m-t-30">
+                                  <div class="page-header mb-0">
                                       <div class="row align-items-end">
                                           <div class="col-lg-8">
-                                              <div class="page-header-title">
-                                                  <div class="d-inline">
-                                                      <h4>Dashboard</h4>
-                                                    
-                                                  </div>
-                                              </div>
+                                            
                                           </div>
-                                          <div class="col-lg-4">
+                                          <div class="col-lg-4 m-t-20">
                                               <div class="page-header-breadcrumb">
-                                                  <ul class="breadcrumb-title">
-                                                      <li class="breadcrumb-item">
-                                                          <a href="index-1.htm">
-                                                              <i class="icofont icofont-home"></i>
-                                                          </a>
-                                                      </li>
-                                                      <li class="breadcrumb-item"><a href="#!">Home</a>
-                                                      </li>
-                                                      <li class="breadcrumb-item"><a href="#!">Dashboard</a>
-                                                      </li>
-                                                      
-                                                  </ul>
+                                                @yield('page_breadcrumbs')
                                               </div>
                                           </div>
                                       </div>

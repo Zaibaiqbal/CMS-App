@@ -45,12 +45,12 @@ class UserController extends Controller
         try
         {
 
-            $data = User::selectRaw("CONCAT(name,' - ',cnic) as client_info")
+            $data = User::selectRaw("CONCAT(name,' - ',cnic) as client_info , id")
                     ->where('name', 'LIKE', '%'. $request->search. '%')
                     ->where('user_type','Client')
                     ->get();
      
-        return $data->;
+        return json_encode($data);
 
         }
         catch(Exception $e)
@@ -87,6 +87,7 @@ class UserController extends Controller
         $user->save();
 
 
+        $user->assignRole(['Client']);
         if(isset($user->id))
         {
             \Mail::to($user->email)->send(new \App\Mail\RegistrationMail($user));

@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modal_assign_permissions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog " role="document">
+  <div class="modal-dialog modal-lg" style="max-width:1102px !important;" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Assign Permissions</h5>
@@ -52,10 +52,12 @@
                                         
                                         
                                        <td class="text-center">
-                                            <div class="custom-control custom-switch mb-1">
-                                                <input type="checkbox" @if($role->hasPermissionTo($permissions)) checked @endif  onchange="assignPermission(event,'{{Crypt::encrypt($permissions->id)}}','{{Crypt::encrypt($role->id)}}')" class="custom-control-input" id="example-switch-custom{{$uniqid}}" name="example-switch-custom{{$uniqid}}" >
+                                       <div class="checkbox-fade fade-in-primary checkbox">
+                                                                               
+                                                <input type="checkbox" @if($role->hasPermissionTo($permissions)) checked @endif  onchange="assignPermission(event,'{{Crypt::encrypt($permissions->id)}}','{{Crypt::encrypt($role->id)}}')" class="" id="example-switch-custom{{$uniqid}}" name="example-switch-custom{{$uniqid}}" >
                                                 <label class="custom-control-label" for="example-switch-custom{{$uniqid}}"></label>
-                                            </div>
+                                              </div>
+
                                         </td>
 
                                         

@@ -1,5 +1,16 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+View Unapproved Clients
+
+@endsection
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('unapproved_clients') }}
+
+@endsection
+
 @section('page_body')
 
 

@@ -1,5 +1,18 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Material Types Management
+
+@endsection
+
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('material_types') }}
+
+@endsection
+
+
 @section('page_body')
 
 <div class="row">

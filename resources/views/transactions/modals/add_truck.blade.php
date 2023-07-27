@@ -66,7 +66,7 @@ function storeTruck(event,obj,form_id,modal_id)
 			if(result.id)
 		    {
 		    	$("input[name=truck_id]").val(result.id);
-		    	$("input[name=plate_no]").val(result.plate_no);
+		    	$("input[name=plate_no]").val(result.plate_no).attr("readonly",true);
 
           $(modal_id).modal('hide');
           

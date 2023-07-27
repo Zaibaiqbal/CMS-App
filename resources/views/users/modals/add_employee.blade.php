@@ -63,7 +63,7 @@
 
 
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-12 mb-2">
 
                                 @php($label = 'Email')
                                     @php($name = 'email')

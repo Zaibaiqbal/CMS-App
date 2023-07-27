@@ -1,5 +1,17 @@
 @extends('layouts.master')
 
+@section('page_title')
+
+Trucks Management
+
+@endsection
+
+@section('page_breadcrumbs')
+
+{{ Breadcrumbs::render('trucks') }}
+
+@endsection
+
 @section('page_body')
 
 <div class="row">

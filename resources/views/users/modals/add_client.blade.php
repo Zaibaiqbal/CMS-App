@@ -69,7 +69,7 @@ function storeClient(event,obj,form_id,modal_id)
 			if(result.id)
 		    {
 		    	$("input[name=user_id]").val(result.id);
-		    	$("input[name=name]").val(result.name);
+		    	$("input[name=client]").val(result.name).attr("readonly",true);
 		    	$("input[name=contact_no]").val(result.contact);
 
           $(modal_id).modal('hide');

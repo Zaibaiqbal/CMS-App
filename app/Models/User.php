@@ -88,6 +88,9 @@ class User extends Authenticatable
 
             $user->save();
 
+            // $user->assignRole($object['user_type']);
+
+
         return with($user);
 
 

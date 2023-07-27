@@ -82,11 +82,11 @@ class TruckController extends Controller
 
         try
         {
-            $data = Truck::selectRaw('plate_no')
+            $data = Truck::selectRaw('plate_no,id')
                     ->where('plate_no', 'LIKE', '%'. $request->search. '%')
-                    ->get()->pluck('plate_no');
+                    ->get();
      
-        return $data;
+        return json_encode($data);
 
         }
         catch(Exception $e)

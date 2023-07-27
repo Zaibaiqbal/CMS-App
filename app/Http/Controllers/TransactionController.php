@@ -14,7 +14,7 @@ class TransactionController extends Controller
 
         $transactions_list = Transaction::get();
         return view('transactions.manage_transactions',[
-            'transactions_list'  =>  $transactions_list
+            'transaction_list'  =>  $transactions_list
         ]);
     }
 
@@ -26,16 +26,18 @@ class TransactionController extends Controller
 
             if($request->isMethod('post'))
             {
+
                 $form_data   =  $request->input();
+
                 $form_data['material_type']   = decrypt($form_data['material_type']);
                 // $form_data['user_id']   = decrypt($form_data['user_id']);
-                if(isset($form_data['truck_id']))
-                {
-                $form_data['truck_id']   = decrypt($form_data['truck_id']);
+                // if(isset($form_data['truck_id']))
+                // {
+                // $form_data['truck_id']   = decrypt($form_data['truck_id']);
 
 
-                }
-                $form_data['client']   = decrypt($form_data['client']);
+                // }
+                // $form_data['client']   = decrypt($form_data['user_id']);
 
                 $transaction = new Transaction;
 
