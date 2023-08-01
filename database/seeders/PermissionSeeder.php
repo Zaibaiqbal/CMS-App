@@ -20,6 +20,13 @@ class PermissionSeeder extends Seeder
 
         $count = 0;
 
+        $data[++$count] = [ "module" => "Material Type", "name" => "Add Material Type", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Material Type", "name" => "View Material Types", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Material Type", "name" => "Update Material Type", "guard_name" => "web"];
+
+
         $data[++$count] = [ "module" => "Truck", "name" => "Add Truck", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Truck", "name" => "View Trucks", "guard_name" => "web"];
@@ -41,7 +48,14 @@ class PermissionSeeder extends Seeder
         $data[++$count] = [ "module" => "Employee", "name" => "Update Employee", "guard_name" => "web"];
 
 
-        $data[++$count] = [ "module" => "Transaction", "name" => "Add Transaction", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Account", "name" => "Add Account", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Account", "name" => "View Accounts", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Account", "name" => "Update Account", "guard_name" => "web"];
+
+
+        $data[++$count] = [ "module" => "Transaction", "name" => "Create Transaction", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Transaction", "name" => "View Transactions", "guard_name" => "web"];
 
@@ -55,6 +69,8 @@ class PermissionSeeder extends Seeder
         $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Assign Role", "guard_name" => "web"];
         
         $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Assign Permissions", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "User", "name" => "Change Password", "guard_name" => "web"];
 
 
         Permission::insert($data);
