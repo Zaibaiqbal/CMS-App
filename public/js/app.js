@@ -66,8 +66,10 @@ function submitModalForm(event,obj,form_id,form_modal_id)
                     location.reload();
 
                 }
-                
-                
+
+                location.reload();
+
+
 
             } else {
 
@@ -78,6 +80,7 @@ function submitModalForm(event,obj,form_id,form_modal_id)
         },
         error: function(result){
 
+            // alert(result.responseJSON);
             var errors = result.responseJSON.errors;
             $.each(errors, function (key, val) {
 

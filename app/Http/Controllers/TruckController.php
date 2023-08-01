@@ -49,7 +49,7 @@ class TruckController extends Controller
                         if($request->flag)
                         {
                             $data['plate_no']       = $truck->plate_no;
-                            $data['id']             = encrypt($truck->id);
+                            $data['id']             = $truck->id;
                             // $data['client_id']      = encrypt($truck->client->id);
                             // $data['name']           = $truck->client->name;
                             // $data['contact']        = $truck->client->contact;
@@ -76,6 +76,9 @@ class TruckController extends Controller
         return redirect()->back();
       
     }
+
+  
+
 
     public function autoSearchPlateNo(Request $request)
     {

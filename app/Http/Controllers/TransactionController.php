@@ -31,12 +31,14 @@ class TransactionController extends Controller
 
                 $form_data['material_type']   = decrypt($form_data['material_type']);
                 // $form_data['user_id']   = decrypt($form_data['user_id']);
+
                 // if(isset($form_data['truck_id']))
                 // {
-                // $form_data['truck_id']   = decrypt($form_data['truck_id']);
+                //     $form_data['truck_id']   = decrypt($form_data['truck_id']);
 
 
                 // }
+
                 // $form_data['client']   = decrypt($form_data['user_id']);
 
                 $transaction = new Transaction;
@@ -65,7 +67,7 @@ class TransactionController extends Controller
 
                     'material_types'        => $material_type_list,
                     'user_list'             => $user_list,
-                    'transaction_list'      => $transaction_list
+                    'transaction_list'      => $transaction_list->where('status','Open')
 
                 ]);
             }
@@ -78,4 +80,63 @@ class TransactionController extends Controller
         }
 
     }
+
+    public function updateTransaction(Request $request)
+    {
+        try
+        {
+            $data = ['status' => false, 'message' => ''];
+
+            if($request->isMethod('post'))
+            {
+
+                $form_data   =  $request->input();
+
+                // $form_data['material_type']   = decrypt($form_data['material_type']);
+               
+                $form_data['transaction_id']   = decrypt($form_data['transaction_id']);
+
+                $transaction = new Transaction;
+
+                $transaction = $transaction->updateTransaction($form_data);
+
+                if(isset($transaction->id))
+                {
+                    $data = ['status' => true, 'message' => 'Transaction updated successfully'];
+                 
+                }
+
+
+            }
+            else
+            {
+                $material_type = new MaterialType;
+                $user = new User;
+                $transaction = new Transaction;
+
+                $material_type_list = $material_type->getMaterialTypeList();
+                $transaction_list = $transaction->getTransactionByAddedId();
+
+                $transaction = $transaction->getTransactionById(decrypt($request->id));
+                
+                return view('transactions.modals.update_transaction',[
+
+                    'material_types'        => $material_type_list,
+                    'transaction'      => $transaction
+
+                ]);
+            }
+            return $data;
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
+
+
 }
+
+

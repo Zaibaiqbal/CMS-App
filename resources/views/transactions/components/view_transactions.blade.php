@@ -29,12 +29,12 @@
             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
             
             <div class="dropdown-menu pull-right">
-                {{--
-            @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
+                
+            @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
 
-            <a href="#" onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+            <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
             @endif
-            --}}
+            
             </div>
         </div>
         </td>

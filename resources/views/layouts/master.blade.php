@@ -148,6 +148,12 @@
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                    <li>
+                                            <a class="text-dark"  data-target="#modal_change_password" data-toggle="modal" href="#"> <i class="fa fa-lock"></i></i> 
+                                              Change Password
+                                            </a>
+                                           
+                                        </li>
                                         <li>
                                             <a class="text-dark"  href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
@@ -160,6 +166,7 @@
                                             </form>
                                            
                                         </li>
+                                     
                                     </ul>
 
                                 </div>
@@ -408,7 +415,6 @@
     </div>
 
     @yield('page_modal')
- 
 
 <!-- ./wrapper -->
         <!-- Scripts -->
@@ -420,7 +426,6 @@
 
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/menu-hori-fixed.js') }}" defer></script>
     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}" defer></script>
     <script src="{{ asset('js/pcoded.min.js') }}" defer></script>
@@ -438,6 +443,7 @@
     
     <script src="{{asset('plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{asset('plugins/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
 
 <script src="{{asset('plugins/data-table/js/vfs_fonts.js') }}"></script>
 <script src="{{asset('plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -447,6 +453,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
 <script>
 setFstDropdown();
 
@@ -455,6 +462,7 @@ $('#table_datatable').DataTable();
 
     @yield('page_script')
 
+    @include('users.modals.change_password')
 
 </body>
 </html>

@@ -16,6 +16,14 @@ class Transaction extends Model
 
         return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id])->orderby('id','DESC')->get();
     }
+
+    public function getTransactionById($id)
+    {
+
+        return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id,'id' => $id])->first();
+    }
+
+    
     
     public function storeTransaction($object)
     {
@@ -38,9 +46,18 @@ class Transaction extends Model
 
                 $transaction->client_id = $object['user_id'];
 
-                $transaction->gross_weight = $object['gross_weight'];
-                $transaction->tare_weight = $object['tare_weight'];
-                $transaction->net_weight = $object['net_weight'];
+                if(isset( $object['tare_weight']))
+                {
+                    $transaction->tare_weight = $object['tare_weight'];
+
+                }
+                if(isset( $object['gross_weight']))
+                {
+                    $transaction->gross_weight = $object['gross_weight'];
+
+                }
+                // $transaction->gross_weight = $object['gross_weight'];
+                // $transaction->net_weight = $object['net_weight'];
                 $transaction->ticket_no = $this->generateTicketNo();
                 
                 // dd($transaction);
@@ -63,7 +80,54 @@ class Transaction extends Model
 
         });
 
-}
+    }
+
+
+    public function updateTransaction($object)
+    {
+
+        return DB::transaction(function() use ($object){
+          
+            $transaction = Transaction::find($object['transaction_id']);
+
+            if(isset($transaction->id))
+            {
+
+                $transaction->added_id = Auth::user()->id;
+
+                $transaction->gross_weight = $object['gross_weight'];
+                $transaction->tare_weight = $object['tare_weight'];
+                $transaction->net_weight = $object['net_weight'];
+
+                if($transaction->net_weight > 0)
+                {
+                    $transaction->status = 'Close';
+                }
+                
+                // dd($transaction);
+                $transaction->update();
+
+                $driver = new Driver;
+
+                $driver->name  = $object['driver_name'];
+
+                $driver->save();
+
+                $transaction->driver_id  = $driver->id;
+
+                $transaction->update();
+
+
+            }
+
+
+        return with($transaction);
+
+
+        });
+
+    }
+
     public function generateTicketNo()
     {
         $year = date('y');
@@ -77,8 +141,14 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class,'client_id')->withDefault();
     }
-
-
+    public function truck()
+    {
+        return $this->belongsTo(Truck::class,'truck_id')->withDefault();
+    }
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class,'driver_id')->withDefault();
+    }
     public function materialType()
     {
         return $this->belongsTo(MaterialType::class,'material_type_id')->withDefault();

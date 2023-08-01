@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -149,7 +149,56 @@ class UserController extends Controller
         return substr(str_shuffle($string), 0, $chars);
     }
 
+    public function changePassword(Request $request)
+    {
+        try
+        {
+
+            $data = ['status' => false, 'message' => ''];
+            
+            if($request->isMethod('post'))
+            {
+
+                $request->validate([
+                
+                    'old_password' => [
+                        'required', function ($attribute, $value, $fail) {
+                            if (!Hash::check($value, Auth::user()->password)) {
+                                $fail('Old password didn\'t match');
+                            }
+                        },
+                    ],
     
+                    'new_password' => ['required', 'string', 'min:8','max:16','same:confirm_password'],
+    
+                    'confirm_password' => ['required', 'string', 'min:8','max:16','same:new_password'],
+
+                ]);
+                $form_data = $request->input();
+
+                $user = User::find(Auth::user()->id);
+
+                $user->password       = Hash::make(trim($request->new_password));
+    
+                $user->update();
+    
+    
+                return ['status' => true, 'message' => 'Password has updated successfully.'];
+
+            }
+          
+        
+            return $data;
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+        return redirect()->back();
+      
+    }
 
     public function storeEmployees(Request $request)
     {
@@ -232,7 +281,7 @@ class UserController extends Controller
                        if($request->flag)
                        {
                            $data['name']       = $user->name;
-                           $data['id']             = encrypt($user->id);
+                           $data['id']             = $user->id;
                            // $data['client_id']      = encrypt($truck->client->id);
                            // $data['name']           = $truck->client->name;
                            $data['contact']        = $user->contact;

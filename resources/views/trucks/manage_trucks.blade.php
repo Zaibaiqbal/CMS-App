@@ -32,7 +32,7 @@ Trucks Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table class="table table-striped table-bordered nowrap truck_table">
                   <thead>
                     <tr>
                       <th>#</th>

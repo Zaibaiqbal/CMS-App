@@ -87,4 +87,10 @@ Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoS
 
 Route::get('searchclientbyname', [App\Http\Controllers\UserController::class, 'autoSearchByClientName'])->name('searchclientbyname');
 
+
+Route::post('changepassword', [App\Http\Controllers\UserController::class, 'changePassword'])->name('change.password')->middleware('permission:All|Change Password');
+
+Route::match(['get','post'],'updatetransaction', [App\Http\Controllers\TransactionController::class, 'updateTransaction'])->name('update.transaction')->middleware('permission:All|Update Transaction');
+
+
 });
