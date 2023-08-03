@@ -18,14 +18,30 @@ Auth::routes();
 
 Route::post('userregister', [App\Http\Controllers\UserController::class, 'registerUser'])->name('user.register');
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth','verifyrole']], function() {
 
     Route::get('/', function () {
     return view('home');
 });
 
+Route::prefix('client')->group(function(){
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+    Route::get('clientdashboard', function () {
+        return view('clients.dashboard');
+    })->name('clientdashboard');
+
+
+    Route::get('clienttrucks', [App\Http\Controllers\TruckController::class, 'clientTruckList'])->name('client.trucks');
+
+    Route::get('clienttransactions', [App\Http\Controllers\TransactionController::class, 'clientTransactionList'])->name('client.transactions');
+
+    Route::get('clientaccounts', [App\Http\Controllers\AccountController::class, 'clientAccountList'])->name('client.accounts');
+
+});
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('permission:All|View Clients');
 

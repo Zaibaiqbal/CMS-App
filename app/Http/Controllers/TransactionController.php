@@ -6,6 +6,7 @@ use App\Models\MaterialType;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -18,6 +19,17 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function clientTransactionList()
+    {
+
+        $transaction = new Transaction;
+
+        return view('clients.client_transactions.manage_client_transactions',[
+            'transaction_list'  =>  Auth::user()->transactions
+        ]);
+    }
+
+    
     public function storeTransaction(Request $request)
     {
         try

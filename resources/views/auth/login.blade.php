@@ -125,7 +125,7 @@
                                                                             <label class="j-icon-right" for="password">
                                                         <i class="icofont icofont-lock"></i>
                                                     </label>
-                                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                                    <input id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                                                         </div>
                                                                     </div>

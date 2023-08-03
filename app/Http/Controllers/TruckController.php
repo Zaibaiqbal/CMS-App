@@ -16,6 +16,18 @@ class TruckController extends Controller
         ]);
     }
 
+    public function clientTruckList()
+    {
+
+        $truck = new Truck;
+        $trucks_list = $truck->getClientTrucks();
+        // dd($trucks_list);
+        return view('clients.client_trucks.manage_client_trucks',[
+            'trucks_list'  =>  $trucks_list
+        ]);
+    }
+
+
     public function storeTruck(Request $request)
     {
         try

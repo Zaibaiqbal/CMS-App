@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -16,6 +17,18 @@ class AccountController extends Controller
             'accounts_list'  =>  $accounts_list
         ]);
     }
+
+
+    public function clientAccountList()
+    {
+
+        $account = new Account;
+
+        return view('clients.client_accounts.manage_client_accounts',[
+            'accounts_list'  =>  Auth::user()->accounts
+        ]);
+    }
+
 
     public function storeAccount(Request $request)
     {

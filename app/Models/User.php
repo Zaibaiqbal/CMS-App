@@ -116,7 +116,16 @@ class User extends Authenticatable
 
         return $this->belongsToMany(Role::class,'model_has_roles','model_id');
     }
+    public function transactions()
+    {
 
+        return $this->hasMany(Transaction::class,'client_id');
+    }
+    public function accounts()
+    {
+
+        return $this->hasMany(Account::class,'client_id');
+    }
 
     // public function assignRole($roles = [])
     // {

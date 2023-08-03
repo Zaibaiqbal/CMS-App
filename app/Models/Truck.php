@@ -13,6 +13,11 @@ class Truck extends Model
     use HasFactory;
 
 
+    public function getClientTrucks()
+    {
+        return Truck::where('is_deleted', 0)->where('client_id',Auth::user()->id)->get();
+
+    }
     public function getTruckByPlateNo($plate_no)
     {
         return Truck::where('is_deleted', 0)->where('plate_no',$plate_no)->first();
