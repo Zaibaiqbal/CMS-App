@@ -57,7 +57,8 @@ View Unapproved Clients
                                         <li>
 
                                         @if(Auth::user()->hasAnyPermission(['All','Approve Client']))
-                                        <a href="{{route('approve.client',['id'  =>  encrypt($rows->id)])}}"  class="dropdown-item waves-light waves-effect delete_submit" onclick="formSubmission(event)" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Approve</a>
+                                        @php($route = route('approve.user',['id' => encrypt($rows->id)]))
+                                        <a href="#"  class="dropdown-item waves-light waves-effect delete_submit" onclick="formModal(event,'{{$route}}','#modal_approve_user','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Approve</a>
 
                                         @endif
                                         </li>
@@ -83,7 +84,7 @@ View Unapproved Clients
 
 @endsection
 
-
+<div id="target_modal"></div>
 
 @section('page_script')
 

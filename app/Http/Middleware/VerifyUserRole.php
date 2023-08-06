@@ -20,15 +20,21 @@ class VerifyUserRole
         if (\Auth::check()) {
             $user = \Auth::user();
 
-            if ($user->hasRole('Client')) {
+            $roles = $user->userRoles->pluck('name')->toArray();
 
-                return $next($request);
+            if (in_array('Client',$roles)) {
 
-
-            } else {
-
-                return $next($request);
+                
+                    return redirect('clientdashboard');
+            
             }
+            elseif(in_array('Super Admin',$roles))
+            {
+
+                return redirect('/home');
+
+            }
+         
         }
 
         return $next($request);

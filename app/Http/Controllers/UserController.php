@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\User;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -104,35 +106,93 @@ class UserController extends Controller
     {
         try
         {
-            $user_id = decrypt($request->id);
 
-            $user = new User;
-
-            $user  = $user->getUserById($user_id);
-
-            if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
+            if($request->isMethod('post'))
             {
 
-                $user->is_verified        = 1;
-            
-                $user->status    =   'Active';
+                $form_data = $request->input();
 
-                $user->password    = $this->password_generate(8);
-                
-                $user->update();
+                $request->validate([
     
-                if(isset($user->id) && strlen($user->password) > 0)
+                    'user'                  => 'required',
+                    'account_no'              => 'required|max:15|min:0|unique:accounts',
+                    // 'title'                   => 'required|max:255|min:0',
+                   
+    
+                    ]);
+
+                $user_id = decrypt($request->user);
+
+                $user = new User;
+
+                $user  = $user->getUserById($user_id);
+
+                if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
                 {
-                    \Mail::to($user->email)->send(new \App\Mail\ApproveUser($user));
-    
-                     $user->password    = Hash::make($user->password);
+                    if(isset($form_data['account_no']))
+                    {
+                        $account = new Account;
+
+                        $account = $account->storeAccount($form_data);
+
+                        if(isset($account->id))
+                        {
+                            $object['client_id']   =  $user->id;
+                            $object['account_id']   =  $account->id;
+                            
+                            $user_account = new UserAccount;
+
+                            $user_account = $user_account->storeUserAccount($object);
+                        }
+
+
+                    }
+
+                    $user->is_verified        = 1;
                 
+                    $user->status    =   'Active';
+
+                    $user->password    = $this->password_generate(8);
+                    
                     $user->update();
+
+        
+                    if(isset($user->id) && strlen($user->password) > 0)
+                    {
+                        \Mail::to($user->email)->send(new \App\Mail\ApproveUser($user));
+        
+                        $user->password    = Hash::make($user->password);
+                    
+                        $user->update();
+                    }
+
+                }
+
+                if(isset($user->id))
+                {
+                    $data = ['status' => true, 'message' => 'User approved! Email sent successfully.'];
+                }
+        
+                return $data;
+
+            }
+            else
+            {
+                $user_id = decrypt($request->id);
+
+                $user = new User;
+
+                $user  = $user->getUserById($user_id);
+
+                if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
+                {
+
+                return view('users.modals.approve_client',[
+                    'user'  =>  $user
+                ])->render();
                 }
 
             }
-
-            return redirect()->back()->with('message', 'User approved! Email sent successfully.');
 
         }
         catch(Exception $e)

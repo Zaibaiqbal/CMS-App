@@ -14,88 +14,66 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-
-
 Route::post('userregister', [App\Http\Controllers\UserController::class, 'registerUser'])->name('user.register');
 
-Route::group(['middleware' => ['auth','verifyrole']], function() {
-
     Route::get('/', function () {
-    return view('home');
-});
+        return redirect('/home');
+    });
+    
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+    
+    
+Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('auth','permission:All|View Clients');
 
-Route::prefix('client')->group(function(){
+Route::get('trucks', [App\Http\Controllers\TruckController::class, 'index'])->name('trucks.list')->middleware('auth','permission:All|View Trucks');
 
-    Route::get('clientdashboard', function () {
-        return view('clients.dashboard');
-    })->name('clientdashboard');
-
-
-    Route::get('clienttrucks', [App\Http\Controllers\TruckController::class, 'clientTruckList'])->name('client.trucks');
-
-    Route::get('clienttransactions', [App\Http\Controllers\TransactionController::class, 'clientTransactionList'])->name('client.transactions');
-
-    Route::get('clientaccounts', [App\Http\Controllers\AccountController::class, 'clientAccountList'])->name('client.accounts');
-
-});
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('permission:All|View Clients');
-
-Route::get('trucks', [App\Http\Controllers\TruckController::class, 'index'])->name('trucks.list')->middleware('permission:All|View Trucks');
-
-Route::get('employees', [App\Http\Controllers\UserController::class, 'viewAllEmployees'])->name('employees.list')->middleware('permission:All|View Employees');
+Route::get('employees', [App\Http\Controllers\UserController::class, 'viewAllEmployees'])->name('employees.list')->middleware('auth','permission:All|View Employees');
 
 Route::match(['get','post'],'storeemployee', [App\Http\Controllers\UserController::class, 'storeEmployees'])->name('store.employee')->middleware('permission:All|Add Employee');
 
 
-Route::match(['get','post'],'storeclient', [App\Http\Controllers\UserController::class, 'storeClient'])->name('store.client')->middleware('permission:All|Add Client');
+Route::match(['get','post'],'storeclient', [App\Http\Controllers\UserController::class, 'storeClient'])->name('store.client')->middleware('auth','permission:All|Add Client');
 
 
-Route::match(['get','post'],'updateemployee', [App\Http\Controllers\UserController::class, 'updateEmployees'])->name('update.employee')->middleware('permission:All|Update Employee');
+Route::match(['get','post'],'updateemployee', [App\Http\Controllers\UserController::class, 'updateEmployees'])->name('update.employee')->middleware('auth','permission:All|Update Employee');
 
-Route::get('rolespermissions', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.permissions')->middleware('permission:All|Roles & Permissions');
+Route::get('rolespermissions', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.permissions')->middleware('auth','permission:All|Roles & Permissions');
 
-Route::match(['get','post'],'storerole', [App\Http\Controllers\RoleController::class, 'storeRole'])->name('store.role')->middleware('permission:All|Add Role');
-
-
-Route::match(['get','post'],'updaterole', [App\Http\Controllers\RoleController::class, 'updateRole'])->name('update.role')->middleware('permission:All|Update Role');
+Route::match(['get','post'],'storerole', [App\Http\Controllers\RoleController::class, 'storeRole'])->name('store.role')->middleware('auth','permission:All|Add Role');
 
 
-Route::match(['get','post'],'assignpermission', [App\Http\Controllers\RoleController::class, 'assignPermissionsToRole'])->name('assign.permissions')->middleware('permission:All|Assign Permissions');
+Route::match(['get','post'],'updaterole', [App\Http\Controllers\RoleController::class, 'updateRole'])->name('update.role')->middleware('auth','permission:All|Update Role');
 
 
-Route::match(['get','post'],'assignrole', [App\Http\Controllers\RoleController::class, 'assignRolesToUser'])->name('assign.roles')->middleware('permission:All|Assign Role');
+Route::match(['get','post'],'assignpermission', [App\Http\Controllers\RoleController::class, 'assignPermissionsToRole'])->name('assign.permissions')->middleware('auth','permission:All|Assign Permissions');
 
 
-
-Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('permission:All|Add Truck');
-
-Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('permission:All|Update Truck');
+Route::match(['get','post'],'assignrole', [App\Http\Controllers\RoleController::class, 'assignRolesToUser'])->name('assign.roles')->middleware('auth','permission:All|Assign Role');
 
 
 
-Route::get('transactions', [App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.list')->middleware('permission:All|View Transactions');
+Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth','permission:All|Add Truck');
 
-Route::match(['get','post'],'storetransaction', [App\Http\Controllers\TransactionController::class, 'storeTransaction'])->name('store.transaction')->middleware('permission:All|Create Transaction');
+Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('auth','permission:All|Update Truck');
 
-Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::class, 'index'])->name('material.types.list')->middleware('permission:All|View Material Types');
+Route::get('transactions', [App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.list')->middleware('auth','permission:All|View Transactions');
 
+Route::match(['get','post'],'storetransaction', [App\Http\Controllers\TransactionController::class, 'storeTransaction'])->name('store.transaction')->middleware('auth','permission:All|Create Transaction');
 
-Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('permission:All|Add Material Type');
-
-Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('permission:All|Add Account');
-
-Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.list')->middleware('permission:All|View Accounts');
+Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::class, 'index'])->name('material.types.list')->middleware('auth','permission:All|View Material Types');
 
 
-Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('permission:All');
+Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('auth','permission:All|Add Material Type');
+
+Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('auth','permission:All|Add Account');
+
+Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.list')->middleware('auth','permission:All|View Accounts');
 
 
-Route::get('approveclient', [App\Http\Controllers\UserController::class, 'approveUser'])->name('approve.client')->middleware('permission:All');
+Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('auth','permission:All');
+
+
+Route::match(['post','get'],'approveuser', [App\Http\Controllers\UserController::class, 'approveUser'])->name('approve.user')->middleware('auth','permission:All');
 
 
 Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoSearchPlateNo'])->name('searchplateno');
@@ -104,9 +82,17 @@ Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoS
 Route::get('searchclientbyname', [App\Http\Controllers\UserController::class, 'autoSearchByClientName'])->name('searchclientbyname');
 
 
-Route::post('changepassword', [App\Http\Controllers\UserController::class, 'changePassword'])->name('change.password')->middleware('permission:All|Change Password');
+Route::post('changepassword', [App\Http\Controllers\UserController::class, 'changePassword'])->name('change.password')->middleware('auth','permission:All|Change Password');
 
-Route::match(['get','post'],'updatetransaction', [App\Http\Controllers\TransactionController::class, 'updateTransaction'])->name('update.transaction')->middleware('permission:All|Update Transaction');
+Route::match(['get','post'],'updatetransaction', [App\Http\Controllers\TransactionController::class, 'updateTransaction'])->name('update.transaction')->middleware('auth','permission:All|Update Transaction');
 
 
-});
+// Route::get('clientdashboard', function () {
+//     return view('clients.dashboard');
+// })->name('clientdashboard')->middleware('verifyrole');
+
+// Route::get('clienttrucks', [App\Http\Controllers\TruckController::class, 'clientTruckList'])->name('client.trucks')->middleware('verifyrole');
+
+// Route::get('clienttransactions', [App\Http\Controllers\TransactionController::class, 'clientTransactionList'])->name('client.transactions')->middleware('verifyrole');
+
+// Route::get('clientaccounts', [App\Http\Controllers\AccountController::class, 'clientAccountList'])->name('client.accounts')->middleware('verifyrole','auth');

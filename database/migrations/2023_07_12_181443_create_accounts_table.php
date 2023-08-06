@@ -15,9 +15,7 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('client_id')->nullable();
-            $table->integer('account_number')->nullable();
-            $table->string('title')->nullable();
+            $table->integer('account_no')->nullable();
             $table->enum('status',['Active','Suspended'])->default('Active');
             $table->integer('is_deleted')->default(0);
 

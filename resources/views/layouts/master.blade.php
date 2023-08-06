@@ -208,7 +208,7 @@
                             </li>
                               
                             @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Accounts']))
+                            @if(false && Auth::user()->hasAnyPermission(['All','View Accounts']))
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('accounts.list')}}" >
