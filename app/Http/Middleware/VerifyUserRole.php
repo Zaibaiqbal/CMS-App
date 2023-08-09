@@ -22,16 +22,14 @@ class VerifyUserRole
 
             $roles = $user->userRoles->pluck('name')->toArray();
 
-            if (in_array('Client',$roles)) {
+            if (in_array('Client',$roles) || in_array('Contact Person',$roles)) {
 
-                
-                    return redirect('clientdashboard');
+                return redirect('clientdashboard');
             
             }
             elseif(in_array('Super Admin',$roles))
             {
-
-                return redirect('/home');
+                return $next($request);
 
             }
          

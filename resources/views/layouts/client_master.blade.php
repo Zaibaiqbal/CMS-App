@@ -180,8 +180,34 @@
                 <nav class="pcoded-navbar">
                     <div class="pcoded-inner-navbar">
                         <ul class="pcoded-item pcoded-left-item">
+                        {{--
                       
-
+                            <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                    
+                                        <span class="pcoded-mtext">Contact Persons</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                     
+                                        <li class="pcoded-hasmenu text-dark">
+                                            <a href="{{route('users.list')}}">
+                                            
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Clients</span>
+                                            </a>
+                                        
+                                        </li>
+                                       
+                                        <li class="pcoded-hasmenu text-dark">
+                                            <a href="{{route('contactperson.list')}}">
+                                            
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Contact Persons</span>
+                                            </a>
+                                        
+                                        </li>
+                                    
+                                    </ul>
+                            </li>
+                           
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('client.accounts')}}" >
                                     <span class="pcoded-mtext">Accounts</span>
@@ -189,7 +215,16 @@
                                 
                             </li>
                            
-
+                            --}}
+                            @if(Auth::user()->hasRole(['Cient']))
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('contactperson.list')}}">
+                                            
+                                    <span class="pcoded-mtext">Contact Persons</span>
+                                </a>
+                                
+                            </li>
+                            @endif
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('client.trucks')}}" >
                                     <span class="pcoded-mtext">Trucks</span>

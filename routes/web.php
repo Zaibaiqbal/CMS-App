@@ -20,7 +20,7 @@ Route::post('userregister', [App\Http\Controllers\UserController::class, 'regist
         return redirect('/home');
     });
     
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verifyrole');
     
     
 Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('auth','permission:All|View Clients');
@@ -52,7 +52,7 @@ Route::match(['get','post'],'assignrole', [App\Http\Controllers\RoleController::
 
 
 
-Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth','permission:All|Add Truck');
+Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth');
 
 Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('auth','permission:All|Update Truck');
 
@@ -73,7 +73,13 @@ Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'inde
 Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('auth','permission:All');
 
 
+Route::get('unapprovecontactpersons', [App\Http\Controllers\UserController::class, 'viewUnapprovedContactPersons'])->name('unapprovecontactpersons.list')->middleware('auth','permission:All');
+
+
 Route::match(['post','get'],'approveuser', [App\Http\Controllers\UserController::class, 'approveUser'])->name('approve.user')->middleware('auth','permission:All');
+
+
+Route::match(['post','get'],'approvecontactperson', [App\Http\Controllers\UserController::class, 'approveContactPerson'])->name('approve.cotactperson')->middleware('auth','permission:All');
 
 
 Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoSearchPlateNo'])->name('searchplateno');
@@ -87,12 +93,25 @@ Route::post('changepassword', [App\Http\Controllers\UserController::class, 'chan
 Route::match(['get','post'],'updatetransaction', [App\Http\Controllers\TransactionController::class, 'updateTransaction'])->name('update.transaction')->middleware('auth','permission:All|Update Transaction');
 
 
-// Route::get('clientdashboard', function () {
-//     return view('clients.dashboard');
-// })->name('clientdashboard')->middleware('verifyrole');
 
-// Route::get('clienttrucks', [App\Http\Controllers\TruckController::class, 'clientTruckList'])->name('client.trucks')->middleware('verifyrole');
+// CLIENT ROUTES
 
-// Route::get('clienttransactions', [App\Http\Controllers\TransactionController::class, 'clientTransactionList'])->name('client.transactions')->middleware('verifyrole');
 
-// Route::get('clientaccounts', [App\Http\Controllers\AccountController::class, 'clientAccountList'])->name('client.accounts')->middleware('verifyrole','auth');
+Route::get('clientdashboard', function () {
+    return view('clients.dashboard');
+})->name('clientdashboard')->middleware('auth');
+
+Route::get('clienttrucks', [App\Http\Controllers\TruckController::class, 'clientTruckList'])->name('client.trucks')->middleware('auth');
+
+Route::get('clienttransactions', [App\Http\Controllers\TransactionController::class, 'clientTransactionList'])->name('client.transactions')->middleware('auth');
+
+Route::get('clientaccounts', [App\Http\Controllers\AccountController::class, 'clientAccountList'])->name('client.accounts')->middleware('auth');
+
+
+Route::match(['get','post'],'contactpersonlist', [App\Http\Controllers\UserController::class, 'getContactPersonList'])->name('contactperson.list')->middleware('auth');
+
+
+Route::match(['get','post'],'requestcontactperson', [App\Http\Controllers\UserController::class, 'requestContactPerson'])->name('request.contactperson')->middleware('auth');
+
+
+// END CLIENT ROUTES

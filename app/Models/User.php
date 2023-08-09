@@ -63,16 +63,36 @@ class User extends Authenticatable
         return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'desc')->get();
     }
 
+    public function getUnapproveContactPersons($type)
+    {
+
+        return UserAccount::with(['user', 'client'])
+        ->whereHas('user', function ($query) use ($type) {
+
+        $query->where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive']);
+        
+    })->get();
+
+    
+    }
+    
     public function storeUser($object)
     {
         return DB::transaction(function() use ($object){
 
             $user = new User;
             $user->name = $object['name'];
-            $user->cnic = $object['cnic'];
-            // $user->fname = $object['fname'];
+
+            if(isset($object['cnic']))
+            {
+                $user->cnic = $object['cnic'];
+
+            }
+
             $user->contact = $object['contact_no'];
+
             $user->email = $object['email'];
+            
             $user->user_type = $object['user_type'];
             
             if(isset($object['password']))
@@ -83,6 +103,18 @@ class User extends Authenticatable
             else
             {
                 $user->password = $this->generatePassword();
+
+            }
+
+            if(isset($object['account_type']))
+            {
+                $user->account_type = $object['account_type'];
+
+            }
+
+            if(isset($object['status']))
+            {
+                $user->status = $object['status'];
 
             }
 
@@ -127,8 +159,17 @@ class User extends Authenticatable
         return $this->hasMany(Account::class,'client_id');
     }
 
+    // public function userAccounts()
+    // {
+    //     return $this->hasMany(UserAccount::class, 'parent_id');
+    // }
+    public function userAccounts()
+    {
+        return $this->hasMany(UserAccount::class, 'user_id');
+    }
     // public function assignRole($roles = [])
     // {
     //     $this->userRoles()->sync($roles);
     // }
+
 }

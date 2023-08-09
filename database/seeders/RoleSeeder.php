@@ -26,6 +26,8 @@ class RoleSeeder extends Seeder
 
         $roles[++$count] = ['name' => 'Manager', 'guard_name' => 'web','added_id' => 1,'created_at' => now(), 'updated_at' => now()];
        
+        $roles[++$count] = ['name' => 'Contact Person', 'guard_name' => 'web','added_id' => 1,'created_at' => now(), 'updated_at' => now()];
+
         DB::table('roles')->insert($roles);
     }
 }

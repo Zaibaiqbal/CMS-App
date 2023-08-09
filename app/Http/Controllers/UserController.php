@@ -40,6 +40,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function viewUnapprovedContactPersons()
+    {
+        $user = new User;
+
+        $user_list = $user->getUnapproveContactPersons('Contact Person');
+
+        return view('users.view_unapproved_contact_persons',[
+            'user_list'  => $user_list
+        ]);
+    }
 
     public function autoSearchByClientName(Request $request)
     {
@@ -102,7 +112,7 @@ class UserController extends Controller
     }
 
 
-    protected function approveUser(Request $request)
+    public function approveUser(Request $request)
     {
         try
         {
@@ -118,7 +128,6 @@ class UserController extends Controller
                     'account_no'              => 'required|max:15|min:0|unique:accounts',
                     // 'title'                   => 'required|max:255|min:0',
                    
-    
                     ]);
 
                 $user_id = decrypt($request->user);
@@ -137,7 +146,7 @@ class UserController extends Controller
 
                         if(isset($account->id))
                         {
-                            $object['client_id']   =  $user->id;
+                            $object['user_id']   =  $user->id;
                             $object['account_id']   =  $account->id;
                             
                             $user_account = new UserAccount;
@@ -187,9 +196,117 @@ class UserController extends Controller
                 if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
                 {
 
-                return view('users.modals.approve_client',[
-                    'user'  =>  $user
-                ])->render();
+                    return view('users.modals.approve_client',[
+                        'user'  =>  $user
+                    ])->render();
+                }
+
+            }
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+
+    }
+
+    public function approveContactPerson(Request $request)
+    {
+        try
+        {
+
+            if($request->isMethod('post'))
+            {
+
+                $form_data = $request->input();
+
+                $request->validate([
+    
+                    'user_account'                      => 'required',
+                    'account_no'                 => 'required|max:15|min:0',
+                    // 'title'                   => 'required|max:255|min:0',
+                   
+                    ]);
+
+                $user_account = decrypt($request->user_account);
+
+                $user = new UserAccount;
+
+                $user_account  = $user->getUserAccountById($user_account);
+
+                $user = $user_account->user;
+
+                if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
+                {
+                    if(isset($form_data['account_no']))
+                    {
+                        $account = new Account;
+
+                        $account = $account->storeAccount($form_data);
+
+                        if(isset($account->id))
+                        {
+                            $object['user_id']      =  $user->id;
+                            $object['account_id']   =  $account->id;
+                            $object['id']           =  $user_account->id;
+                            
+                            $user_account = new UserAccount;
+
+                            $user_account = $user_account->updateUserAccount($object);
+                        }
+
+
+                    }
+
+                    $user->is_verified        = 1;
+                
+                    $user->status    =   'Active';
+
+                    $user->password    = $this->password_generate(8);
+                    
+                    $user->update();
+
+        
+                    if(isset($user->id) && strlen($user->password) > 0)
+                    {
+                        \Mail::to($user->email)->send(new \App\Mail\ApproveUser($user));
+        
+                        $user->password    = Hash::make($user->password);
+                    
+                        $user->update();
+
+                        $user->assignRole(['Contact Person']);
+
+                    }
+
+                }
+
+                if(isset($user->id))
+                {
+                    $data = ['status' => true, 'message' => 'User approved! Email sent successfully.'];
+                }
+        
+                return $data;
+
+            }
+            else
+            {
+                $user_account_id = decrypt($request->id);
+
+                $user = new UserAccount;
+
+                $user_account  = $user->getUserAccountById($user_account_id);
+
+                if(isset($user_account->id))
+                {
+
+                    return view('users.modals.approve_contact_person',[
+
+                        'user_account'  =>  $user_account
+                    
+                    ])->render();
                 }
 
             }
@@ -372,6 +489,77 @@ class UserController extends Controller
             'user_list'  => $user_list
         ]);
     }
+
+    public function getContactPersonList()
+    {
+        try
+        {
+            $user_account = new UserAccount;
+            $user_list = $user_account->getContactPersonListByClientId();
+
+            return view('clients.contact_persons.manage_contact_persons',[
+                'user_list'   =>  $user_list
+            ]);
+        }
+        catch(Exception $e)
+        {
+
+        }
+    }
+
+    public function requestContactPerson(Request $request)
+    {
+        try
+        {
+            $data = ['status' => false , 'messge' => ''];
+
+            if($request->isMethod('post'))
+            {
+
+                $request->validate([
+
+                    'name'      =>  'required',
+                    'contact_no'   =>  'required|max:13',
+                    'email'     =>  'required|unique:users,email',
+                    'account_type'     =>  'required',
+                   
+                ]);
+                $form_data = $request->input();
+                $form_data['user_type']  = 'Contact Person';
+        
+                $user = new User;
+                $user = $user->storeUser($form_data);
+
+                if(isset($user))
+                {
+                    $object['user_id']  = $user->id;
+                    $object['parent_id']  = Auth::user()->id;
+
+                    $user_account = new UserAccount;
+                    $user_account = $user_account->storeUserAccount($object);
+                
+                    $data = ['status' => true , 'message' => 'Request Generated Successfully'];
+
+                }
+
+                return $data;
+
+            }
+            else
+            {
+
+                return view('clients.contact_persons.modals.add_request_contact_person')->render();
+
+            }
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+        return redirect()->back();
+    }
+
 
     
 }

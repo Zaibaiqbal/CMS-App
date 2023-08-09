@@ -37,6 +37,9 @@ class Truck extends Model
 
             }
             $truck->added_id        = Auth::user()->id;
+
+            $truck->client_id        = Auth::user()->id;
+
             $truck->company         = $object['company'];
             $truck->model           = $object['model'];
             $truck->tare_weight           = $object['tare_weight'];

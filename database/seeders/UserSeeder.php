@@ -27,9 +27,10 @@ class UserSeeder extends Seeder
 
             'name'          => "Admin",
             'email'         => "admin@cms.net",
-            'user_type'          => "Super Admin",
+            'user_type'     => "Super Admin",
             'password'      => Hash::make("0987654321"),
             'is_verified'   =>  1,
+            'status'        =>  "Active",
             'created_at'    => now(),
             'updated_at'    => now(),
         ]);
