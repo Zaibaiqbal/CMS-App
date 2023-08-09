@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendNotification;
 use App\Models\Account;
 use App\Models\User;
 use App\Models\UserAccount;
@@ -72,7 +73,7 @@ class UserController extends Controller
 
     }
 
-    protected function registerUser(Request $request)
+    public function registerUser(Request $request)
     {
 
         $request->validate([
@@ -87,27 +88,13 @@ class UserController extends Controller
         $data = $request->input();
 
         $user = new User;
+        $user = $user->registerUser($data);
 
-        $user->name        = $data['name'];
-        $user->email       = $data['email'];
-        $user->cnic       = $data['cnic'];
-        $user->contact       = $data['contact'];
-
-        // $user->password    = $user->generatePassword();
-        $user->status    =   'Inactive';
-        $user->user_type    =   'Client';
-        $user->save();
-
-
-        $user->assignRole(['Client']);
         if(isset($user->id))
         {
-            \Mail::to($user->email)->send(new \App\Mail\RegistrationMail($user));
+            return redirect()->back()->with('message', 'Email sent successfully!');
 
-        
         }
-
-        return redirect()->back()->with('message', 'Email sent successfully!');
 
     }
 

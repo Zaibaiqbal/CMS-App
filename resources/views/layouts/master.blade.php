@@ -96,44 +96,20 @@
                       
                         <ul class="nav-right">
                             <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
+                                <div class="dropdown-primary dropdown"  onclick="appearNotification();" >
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
-                                        <span class="badge bg-c-pink">5</span>
+                                        <span class="notification_count badge bg-c-pink"></span>
                                     </div>
                                     <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
                                             <h6>Notifications</h6>
                                             <label class="label label-danger">New</label>
                                         </li>
+                                      
                                         <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Joseph William</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center img-radius" src="" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Sara Soudein</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
+                                            <div id="notify_body">
+                                                
                                             </div>
                                         </li>
                                     </ul>
@@ -461,12 +437,100 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
 setFstDropdown();
 
 $('#table_datatable').DataTable();
+
+function loadNotification()
+            {
+                $.get("{{url('loadnotification')}}",function(data){
+
+                    $('.notification_count').hide();
+
+                    if(data.notification_count > 0)
+                    {
+                        $('.notification_count').show();
+
+                        $('.notification_count').html(data.notification_count);
+                    }
+
+                    $('#notify_body').html(data.body);
+
+
+                }).fail(function(data) {
+
+                    messageToaster('error','Try Again.','Failed');
+                });
+            }
+
+            function appearNotification()
+            {
+
+                $.get("{{url('appearnotification')}}",function(data){
+
+                }).fail(function(data) {
+
+                });
+            }
+
+            function seenNotification(event,obj,id)
+            {
+                event.preventDefault();
+
+                $.get("{{url('seennotification')}}",{id:id},function(data){
+
+                    $('.notification_count').hide();
+
+                    if(data.notification_count > 0)
+                    {
+                        $('.notification_count').show();
+
+                        $('.notification_count').html(data.notification_count);
+                    }
+
+                    $('#notify_body').html(data.boy);
+
+                    window.location.href = $(obj).attr('href');
+
+
+                }).fail(function(data) {
+
+                    messageToaster('error','Try Again.','Failed');
+                });
+            }
+
+$(document).ready(function(){
+
+    loadNotification();
+
+    Pusher.logToConsole = true;
+// Enable pusher logging - don't include this in production
+// Pusher.logToConsole = true;
+var user_id = parseInt("{{ Auth::id() }}");
+
+var pusher = new Pusher("{{config('broadcasting.connections.pusher.key')}}", {
+  cluster: "{{config('broadcasting.connections.pusher.options.cluster')}}"
+});
+
+var channel = pusher.subscribe('my-channel');
+
+channel.bind('my-event', function(data) {
+
+    if($.inArray(user_id, data) != -1)
+    {
+        loadNotification();
+
+    }
+
+
+});
+});
+
 </script>
+
+
 
     @yield('page_script')
 

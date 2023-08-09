@@ -93,6 +93,13 @@ Route::post('changepassword', [App\Http\Controllers\UserController::class, 'chan
 Route::match(['get','post'],'updatetransaction', [App\Http\Controllers\TransactionController::class, 'updateTransaction'])->name('update.transaction')->middleware('auth','permission:All|Update Transaction');
 
 
+Route::get('loadnotification',[App\Http\Controllers\NotificationController::class, 'loadNotifications'])->name('loadnotification')->middleware('auth','permission:All');
+
+Route::get('seennotification',[App\Http\Controllers\NotificationController::class, 'seenNotification'])->name('seennotification')->middleware('auth','permission:All');
+
+Route::get('appearnotification',[App\Http\Controllers\NotificationController::class, 'appearNotification'])->name('appearnotification')->middleware('auth','permission:All');
+
+
 
 // CLIENT ROUTES
 

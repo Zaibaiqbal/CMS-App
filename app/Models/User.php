@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Events\SendNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -75,6 +77,17 @@ class User extends Authenticatable
 
     
     }
+
+    public function getUserIdsByPermissions($permission_names = [])
+    {
+
+        return \DB::table('permissions')
+            ->whereIn('permissions.name', $permission_names)
+            ->join('model_has_permissions', 'model_has_permissions.permission_id', '=', 'permissions.id')
+            ->join('users', 'users.id', '=', 'model_has_permissions.model_id')
+            ->select('users.id')->get()->pluck('id');
+    }
+
     
     public function storeUser($object)
     {
@@ -120,8 +133,52 @@ class User extends Authenticatable
 
             $user->save();
 
+            if($user->user_type == "Contact Person")
+            {
+                $user_obj = new User;
+                $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+
+                event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name));
+
+            }
+
             // $user->assignRole($object['user_type']);
 
+
+        return with($user);
+
+
+        });
+    }
+
+      
+    public function registerUser($object)
+    {
+        return DB::transaction(function() use ($object){
+
+            $user = new User;
+
+            $user->name        = $object['name'];
+            $user->email       = $object['email'];
+            $user->cnic       = $object['cnic'];
+            $user->contact       = $object['contact'];
+    
+            // $user->password    = $user->generatePassword();
+            $user->status    =   'Inactive';
+            $user->user_type    =   'Client';
+            $user->save();
+
+            $user->assignRole(['Client']);
+            if(isset($user->id))
+            {
+                $user_obj = new User;
+                $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+    // dd($user_ids);
+                \Mail::to($user->email)->send(new \App\Mail\RegistrationMail($user));
+    
+                event(new SendNotification($user->id,$user_ids,'','unapproveclients',0,'A new client '.$user->name. ' has registered to your system'));
+    
+            }
 
         return with($user);
 

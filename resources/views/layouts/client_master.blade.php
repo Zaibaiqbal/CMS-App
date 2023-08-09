@@ -95,6 +95,7 @@
                     <div class="navbar-container container-fluid">
                       
                         <ul class="nav-right">
+                            {{--
                             <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -139,7 +140,7 @@
                                     </ul>
                                 </div>
                             </li>
-                      
+                            --}}
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -216,7 +217,7 @@
                             </li>
                            
                             --}}
-                            @if(Auth::user()->hasRole(['Cient']))
+                            @if(Auth::user()->hasRole(['Client']))
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('contactperson.list')}}">
                                             

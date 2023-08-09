@@ -39,6 +39,7 @@ class UserSeeder extends Seeder
         
         $user->syncRoles(Role::whereIn('name',['Super Admin'])->pluck('id')->toArray());
 
+        $user->givePermissionTo($permission);
         $role->givePermissionTo($permission);
 
     }
