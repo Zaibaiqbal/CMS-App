@@ -160,7 +160,7 @@ class User extends Authenticatable
 
             $user->name        = $object['name'];
             $user->email       = $object['email'];
-            $user->cnic       = $object['cnic'];
+            // $user->cnic       = $object['cnic'];
             $user->contact       = $object['contact'];
     
             // $user->password    = $user->generatePassword();
@@ -178,9 +178,10 @@ class User extends Authenticatable
     
                 event(new SendNotification($user->id,$user_ids,'','unapproveclients',0,'A new client '.$user->name. ' has registered to your system'));
     
+            return with($user);
+
             }
 
-        return with($user);
 
 
         });

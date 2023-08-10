@@ -78,8 +78,7 @@ class UserController extends Controller
 
         $request->validate([
 
-            'cnic'      => 'required|unique:users,cnic',
-            'name'      =>  'required',
+            'name'      =>  'required|max:255|min:0',
             'contact'   =>  'required|max:13',
             'email'     =>  'required|unique:users,email',
            
@@ -384,6 +383,7 @@ class UserController extends Controller
                 $form_data = $request->input();
 
                 $form_data['user_type'] = 'Employee';
+                $form_data['status'] = 'Active';
                 $user = new User;
 
                 $user = $user->storeUser($form_data);

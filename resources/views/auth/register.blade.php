@@ -76,22 +76,6 @@ $('.contact').mask("0000-0000000");
                                       @csrf  
                                       <div class="j-content">
 
-                                            <div>
-                                                <label class="j-label">CNIC</label>
-                                                @error('cnic')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                                <div class="j-unit">
-                                                    <div class="j-input">
-                                                        <label class="j-icon-right" for="name">
-                                                          <i class="icofont icofont-ui-user"></i>
-                                                      </label>
-                                                      <input id="name" type="text" data-mask="00000-0000000-0" class="form-control @error('cnic') is-invalid @enderror cnic" name="cnic" value="{{ old('cnic') }}" placeholder="00000-0000000-0" required autocomplete="name" autofocus>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <!-- start name -->
                                             <div>
                                                 <label class="j-label">Name</label>
