@@ -10,7 +10,7 @@
                 <input type="hidden" name="truck_id" class="truck_id">
 
                 <input type="text" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="">
-
+{{--
                 <div class="input-group-append">
                     @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
             
@@ -19,6 +19,7 @@
                     @endif
 
                 </div>
+                --}}
             </div>
 
 
