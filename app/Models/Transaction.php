@@ -40,11 +40,18 @@ class Transaction extends Model
                 $transaction->truck_id = $truck->id;
                 $transaction->added_id = Auth::user()->id;
 
+                
+
                 $transaction->plate_no = $truck->plate_no;
-                $transaction->material_type_id = $object['material_type'];
+                // $transaction->material_type_id = $object['material_type'];
                 $transaction->operation_type = $object['operation_type'];
 
                 $transaction->client_id = $object['user_id'];
+                if(isset($object['account']))
+                {
+                    $transaction->account_id = $object['account_id'];
+
+                }
 
                 if(isset( $object['tare_weight']))
                 {
@@ -82,7 +89,6 @@ class Transaction extends Model
 
     }
 
-
     public function updateTransaction($object)
     {
 
@@ -92,12 +98,12 @@ class Transaction extends Model
 
             if(isset($transaction->id))
             {
-
                 $transaction->added_id = Auth::user()->id;
 
                 $transaction->gross_weight = $object['gross_weight'];
                 $transaction->tare_weight = $object['tare_weight'];
                 $transaction->net_weight = $object['net_weight'];
+                $transaction->material_type_id = $object['material_type'];
 
                 if($transaction->net_weight > 0)
                 {
@@ -144,6 +150,11 @@ class Transaction extends Model
     public function truck()
     {
         return $this->belongsTo(Truck::class,'truck_id')->withDefault();
+    }
+
+    public function userAccount()
+    {
+        return $this->belongsTo(UserAccount::class,'account_id')->withDefault();
     }
     public function driver()
     {

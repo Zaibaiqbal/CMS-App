@@ -39,9 +39,33 @@ class TransactionController extends Controller
             if($request->isMethod('post'))
             {
 
+                if($request->operation_type == "Inbound")
+                {
+                    $validation = [
+                        'gross_weight'   =>   'required|gt:0'
+                    ];
+
+                }
+                if($request->operation_type == "Outbound")
+                {
+                    $validation = [
+                        'tare_weight'   =>   'required|gt:0'
+                    ];
+                }
+
+
+                $request->validate($validation+[
+
+                    'user_id'                  => 'required|exists:users,id',
+                    'account'                 => 'required',
+                    'driver_name'                   => 'required|max:255|min:0',
+                    'plate_no'                => 'required|max:255|min:0',
+                    'operation_type'                => 'required',
+                   
+                ]);
                 $form_data   =  $request->input();
 
-                $form_data['material_type']   = decrypt($form_data['material_type']);
+                // $form_data['material_type']   = decrypt($form_data['material_type']);
                 // $form_data['user_id']   = decrypt($form_data['user_id']);
 
                 // if(isset($form_data['truck_id']))
@@ -51,7 +75,7 @@ class TransactionController extends Controller
 
                 // }
 
-                // $form_data['client']   = decrypt($form_data['user_id']);
+                $form_data['account_id']   = decrypt($form_data['account']);
 
                 $transaction = new Transaction;
 
@@ -103,8 +127,8 @@ class TransactionController extends Controller
             {
 
                 $form_data   =  $request->input();
-
-                // $form_data['material_type']   = decrypt($form_data['material_type']);
+// dd($form_data);
+                $form_data['material_type']   = decrypt($form_data['material_type']);
                
                 $form_data['transaction_id']   = decrypt($form_data['transaction_id']);
 

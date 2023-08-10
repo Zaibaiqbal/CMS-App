@@ -43,6 +43,7 @@ Transaction Management
                           <th>Tare weight</th>
                           <th>Net weight</th>
                           <th>Status</th>
+                          <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -56,6 +57,7 @@ Transaction Management
                         <td>{{$rows->gross_weight}}</td>
                         <td>{{$rows->tare_weight}}</td>
                         <td>{{$rows->net_weight}}</td>
+                        <td>{{$rows->status}}</td>
                         <td>
                         <div class="item-action dropdown">
                             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>

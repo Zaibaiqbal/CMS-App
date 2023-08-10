@@ -482,7 +482,7 @@ class UserController extends Controller
         try
         {
             $user_account = new UserAccount;
-            $user_list = $user_account->getContactPersonListByClientId();
+            $user_list = $user_account->getUserAccountListByClientId(Auth::user()->id);
 
             return view('clients.contact_persons.manage_contact_persons',[
                 'user_list'   =>  $user_list

@@ -17,9 +17,9 @@ class UserAccount extends Model
 
     }
 
-    public function getContactPersonListByClientId()
+    public function getUserAccountListByClientId($id)
     {
-        return UserAccount::where('is_deleted',0)->where('parent_id',Auth::user()->id)->get();
+        return UserAccount::where('is_deleted',0)->where('parent_id',$id)->orWhere('user_id',$id)->get();
     }
 
     public function getAccountById($id)

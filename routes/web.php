@@ -99,6 +99,8 @@ Route::get('seennotification',[App\Http\Controllers\NotificationController::clas
 
 Route::get('appearnotification',[App\Http\Controllers\NotificationController::class, 'appearNotification'])->name('appearnotification')->middleware('auth','permission:All');
 
+Route::get('clientaccountlist',[App\Http\Controllers\UserAccountController::class, 'getClientAccountList'])->name('clientaccountlist')->middleware('auth','permission:All');
+
 
 
 // CLIENT ROUTES

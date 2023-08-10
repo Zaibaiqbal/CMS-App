@@ -97,8 +97,9 @@ class TruckController extends Controller
 
         try
         {
-            $data = Truck::selectRaw('plate_no,id')
-                    ->where('plate_no', 'LIKE', '%'. $request->search. '%')
+            $data = Truck::join('users as u','u.id','=','trucks.client_id')
+                    ->selectRaw('trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id')
+                    ->where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
                     ->get();
      
         return json_encode($data);

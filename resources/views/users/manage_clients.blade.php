@@ -20,11 +20,6 @@ Clients Management
             <div class="card-header">
                 <h3 class="card-title">Clients List
 
-                    @if(Auth::user()->hasAnyPermission(['All','Add Client']))
-            
-                        <a data-toggle="modal" data-target="#exampleModal" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
-                    Create User</a>
-                    @endif
                     <!--end::Button-->
                     </h3>
             </div>
@@ -35,7 +30,7 @@ Clients Management
                             <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Father Name</th>
+                            <th>Account No</th>
                             <th>Email</th>
                             <th>Contact</th>
                             </tr>
@@ -45,7 +40,7 @@ Clients Management
                             <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$rows->name}}</td>
-                            <td>{{$rows->fname}}</td>
+                            <td>{{$rows->account}}</td>
                             <td>{{$rows->email}}</td>
                             <td>{{$rows->contact}}</td>
                             </tr>

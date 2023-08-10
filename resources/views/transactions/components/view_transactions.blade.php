@@ -10,11 +10,12 @@
         <th>Tare weight</th>
         <th>Net weight</th>
         <th>Status</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
         @foreach($transaction_list as $rows)
-        <tr>
+        <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
         
         <td>{{$loop->iteration}}</td>
         <td>{{$rows->ticket_no}}</td>
@@ -24,6 +25,7 @@
         <td>{{$rows->gross_weight}}</td>
         <td>{{$rows->tare_weight}}</td>
         <td>{{$rows->net_weight}}</td>
+        <td>{{$rows->status}}</td>
         <td>
         <div class="item-action dropdown">
             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>

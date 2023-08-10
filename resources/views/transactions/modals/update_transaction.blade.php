@@ -33,7 +33,7 @@
 
 
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                         @php($label = 'Client Name')
                         @php($name = 'client')
 
@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 mb-2">
+                <div class="col-md-4 mb-2">
 
                         @php($label = 'Contact')
                         @php($name = 'contact_no')
@@ -57,7 +57,17 @@
 
 
                 </div>
+                <div class="col-md-4 mb-2">
 
+                  @php($label = 'Account')
+                  @php($name = 'account')
+                  <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                  <small class="text-danger" id="{{$name}}_error"></small>
+
+                  <input type="text" name="{{$name}}" value="{{$transaction->userAccount->account->account_no}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+
+
+                  </div>
                 <div class="col-md-6 mb-2">
 
                         @php($label = 'Select Material Type')
@@ -65,10 +75,11 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <select name="{{$name}}" id="" class="form-control" disabled>
+                        <select name="{{$name}}" id="" class="form-control">
+
                             <option value="{{encrypt(0)}}">{{$label}}</option>
                             @foreach($material_types as $rows)
-                                <option @if($transaction->materialType->id == $rows->id) selected value="{{encrypt($rows->id)}}" @endif>{{$rows->name}}</option>
+                                <option  value="{{encrypt($rows->id)}}" >{{$rows->name}}</option>
                             @endforeach
                         </select>
 
@@ -82,7 +93,7 @@
                     <label for="">{{$label}} <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <select name="{{$name}}" id="" class="form-control operation_type" disabled onchange="getWeightType(event,this)">
+                    <select name="{{$name}}" id="" class="form-control operation_type" onchange="getWeightType(event,this)" disabled>
                         @foreach($operation_types as $rows)
                             <option @if($transaction->operation_type == $rows) selected value="{{$rows}}" @endif>{{$rows}}</option>
                         @endforeach

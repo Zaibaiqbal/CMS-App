@@ -155,9 +155,14 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                             return {
                                 label: item.plate_no,
                                 val:    item.id,
-                              
+                                label1: item.name,
+                                val1:    item.user_id,
+                                label2: item.contact,
                             }
+                       
                         }))
+
+                     
                     },
                     error: function (response) {
                         alert(response.responseText);
@@ -171,6 +176,11 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
               
                 $('.truck_id').val(i.item.val);
                 $('.auto_search_plate_no').val(i.item.value);
+                $('.client_name').val(i.item.label1).attr('readonly',true);
+                $('input[name=user_id]').val(i.item.val1);
+                $('input[name=contact_no]').val(i.item.label2);
+
+                getClientAccountList(i.item.val1);
             },
             open: function() {
         // Get the autocomplete list element
@@ -231,6 +241,20 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 autocompleteList.addClass("custom-autocomplete-list");
             },
             minLength: 2
+        });
+    }
+
+    function getClientAccountList(client_id)
+    {
+        var route = "{{url('clientaccountlist')}}";
+
+        $.get(route,{client_id:client_id},function(data)
+        {
+            $('.account_list').html(data);
+
+            document.querySelector('.account_list').fstdropdown.rebind();
+
+
         });
     }
 

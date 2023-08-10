@@ -19,9 +19,47 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                               @php($label = 'Material Type')
                               @php($name = 'type')
+                                <div class="form-group">
+                                    <label for="">{{$label}}</label>
+                                    <span><i class="text-danger">*</i></span>
+                                    <small id="{{$name}}_error" class="text-danger"></small>
+
+                                    <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+                              @php($label = 'Select Client')
+                              @php($name = 'client')
+                                <div class="form-group">
+                                    <label for="">{{$label}}</label>
+                                    <span><i class="text-danger">*</i></span>
+                                    <small id="{{$name}}_error" class="text-danger"></small>
+
+                                    <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+
+                                    <option value="{{encrypt(0)}}">{{$label}}</option>
+
+                                    @foreach($client_list as $rows)
+
+                                    <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
+
+                                    @endforeach
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-12">
+                              @php($label = 'Rate')
+                              @php($name = 'rate')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
                                     <span><i class="text-danger">*</i></span>

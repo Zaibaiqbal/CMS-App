@@ -43,10 +43,6 @@
                 @endforeach
 
                 </select>
-                --}}
-
-              <input type="text" name="{{$name}}" class="form-control name auto_search_client_name" onkeyup="autoSearchClientName(event,'client')" id="" placeholder="{{$label}}">
-                <input type="hidden" value="" name="user_id"  class="user_id">
 
                 <div class="input-group-append">
                     @if(Auth::user()->hasAnyPermission(['All','Add Clients']))
@@ -56,6 +52,11 @@
                     @endif
 
                 </div>
+                --}}
+
+              <input type="text" name="{{$name}}" class="form-control client_name auto_search_client_name" id="" placeholder="{{$label}}">
+                <input type="hidden" value="" name="user_id"  class="user_id">
+
 
             </div>
         </div>
@@ -72,6 +73,25 @@
 
         </div>
 
+        <div class="col-md-6">
+                @php($label = 'Select Account')
+                @php($name = 'account')
+
+                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                <small class="text-danger" id="{{$name}}_error"></small>
+                <div class="input-group">
+
+                <select name="{{$name}}" id="" class="form-control fstdropdown-select account_list">
+
+
+                </select>
+
+
+
+            </div>
+        </div>
+        {{--
+
         <div class="col-md-6 mb-2">
 
                 @php($label = 'Select Material Type')
@@ -87,6 +107,7 @@
                 </select>
 
         </div>
+        --}}
 
         <div class="col-md-6 mb-2">
 
@@ -102,9 +123,8 @@
                 @endforeach
             </select>
 
-            </div>
-      
-        <div class="col-md-4 mb-2">
+        </div>
+        <div class="col-md-6 mb-2">
 
             @php($label = 'Gross Weight')
                 @php($name = 'gross_weight')
@@ -114,6 +134,7 @@
                 <input type="text" onkeyup="calculateNetWeight(event,this)" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">
 
         </div>
+        {{--
         <div class="col-md-4 mb-2">
 
             @php($label = 'Tare Weight')
@@ -138,14 +159,15 @@
 
         </div>
 
+        --}}
 
-        <div class="col-md-12">
+
+        <div class="col-md-6">
             @php($label = 'Driver Name')
             @php($name = 'driver_name')
             <div class="form-group">
-                <label for="">{{$label}}</label>
-                <span><i class="text-danger"></i></span>
-                <small id="{{$name}}_error" class="text-danger">*</small>
+                <label for="">{{$label}} <span class="text-danger">*</span></label>
+                <small id="{{$name}}_error" class="text-danger"></small>
 
                 <input type="text" name="{{$name}}" class="form-control" placeholder="{{$label}}">
             </div>
