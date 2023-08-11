@@ -37,7 +37,7 @@ Employees Management
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Father Name</th>
+                      <th>Role</th>
                       <th>Email</th>
                       <th>Contact</th>
                       <th>Action</th>
@@ -48,7 +48,7 @@ Employees Management
                     <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>{{$rows->name}}</td>
-                      <td>{{$rows->fname}}</td>
+                      <td>{{implode(',',$rows->userRoles->pluck('name')->toArray())}}</td>
                       <td>{{$rows->email}}</td>
                       <td>{{$rows->contact}}</td>
                       <td>

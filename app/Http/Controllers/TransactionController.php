@@ -126,6 +126,13 @@ class TransactionController extends Controller
             if($request->isMethod('post'))
             {
 
+                $request->validate([
+
+                    'transaction_id'                  => 'required',
+                    'material_type'                     => 'required',
+                   
+                ]);
+
                 $form_data   =  $request->input();
 // dd($form_data);
                 $form_data['material_type']   = decrypt($form_data['material_type']);

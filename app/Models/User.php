@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function getUserById($id)
     {
-        return User::where('id',$id)->first();
+        return User::where(['is_deleted' => 0 ,'id' => $id])->first();
     }
 
     public function getUserListByType($type)
@@ -151,7 +151,73 @@ class User extends Authenticatable
         });
     }
 
-      
+     
+    public function updateUser($object)
+    {
+        return DB::transaction(function() use ($object){
+
+            $user = User::find($object['user_id']);
+
+            if(isset($user->id))
+            {
+
+            $user->name = $object['name'];
+
+            if(isset($object['cnic']))
+            {
+                $user->cnic = $object['cnic'];
+
+            }
+
+            $user->contact = $object['contact_no'];
+
+            $user->email = $object['email'];
+            
+            // $user->user_type = $object['user_type'];
+            
+            if(isset($object['password']))
+            {
+             $user->password = Hash::make($object['password']);
+
+            }
+            else
+            {
+                $user->password = $this->generatePassword();
+
+            }
+
+            if(isset($object['account_type']))
+            {
+                $user->account_type = $object['account_type'];
+
+            }
+
+            if(isset($object['status']))
+            {
+                $user->status = $object['status'];
+
+            }
+
+            $user->update();
+
+            // if($user->user_type == "Contact Person")
+            // {
+            //     $user_obj = new User;
+            //     $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+
+            //     event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name));
+
+            // }
+
+            // $user->assignRole($object['user_type']);
+
+            }
+        return with($user);
+
+
+        });
+    }
+
     public function registerUser($object)
     {
         return DB::transaction(function() use ($object){

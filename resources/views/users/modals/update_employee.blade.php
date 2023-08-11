@@ -1,16 +1,16 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modal_add_employee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_update_employee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Update Employee</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {{ Form::open(array('route' => 'store.employee', 'class' => '', 'id' => 'form_add_employee')) }}
+      {{ Form::open(array('route' => 'update.employee', 'class' => '', 'id' => 'form_update_employee')) }}
 
       <div class="modal-body">
                
@@ -38,7 +38,7 @@
                                     <label for="">{{$label}} <span class="text-danger">*</span> </label>
                                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                                    <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+                                    <input type="text" value="{{$user->name}}" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                     <label for="">{{$label}} <span class="text-danger">*</span> </label>
                                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                                    <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                                    <input type="text" value="{{$user->contact}}" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
 
 
                             </div>
@@ -72,7 +72,7 @@
                                     <label for="exampleInputEmail1">{{$label}} <span class="text-danger">*</span> </label>
                                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                                    <input type="email" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+                                    <input type="email" value="{{$user->email}}" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
 
 
                             </div>
@@ -107,8 +107,9 @@
 
       </div>
       <div class="modal-footer">
+        <input type="hidden" name="employee" value="{{encrypt($user->id)}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" onclick="submitModalForm(event,this,'#form_add_employee','#modal_add_employee')">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="submitModalForm(event,this,'#form_update_employee','#modal_update_employee')">Submit</button>
       </div>
       {{ Form::close() }}
 

@@ -1,6 +1,6 @@
 {{ Form::open(array('route' => 'store.transaction', 'class' => '', 'id' => 'form_create_transaction')) }}
 <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
                 @php($label = 'Plate No')
                 @php($name = 'plate_no')
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
@@ -24,7 +24,7 @@
 
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
                 @php($label = 'Client Name')
                 @php($name = 'client')
 
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
 
                 @php($label = 'Contact')
                 @php($name = 'contact_no')
@@ -84,6 +84,7 @@
 
                 <select name="{{$name}}" id="" class="form-control fstdropdown-select account_list">
 
+                <option value="{{encrypt(0)}}">Select Account</option>
 
                 </select>
 

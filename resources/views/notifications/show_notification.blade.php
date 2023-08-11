@@ -12,7 +12,7 @@
 		@php($notify_route = "#")
 		@endif
 	@endif
-    <a href="{{$route}}" class="text-dark">
+    <a href="{{$route}}" class="text-dark" onclick="seenNotification(event,this,'{{encrypt($rows->id)}}')">
 
     <div class="media">
 

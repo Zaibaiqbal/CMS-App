@@ -48,7 +48,7 @@ Transaction Management
                     </thead>
                     <tbody>
                         @foreach($transaction_list as $rows)
-                        <tr>
+                        <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
                         
                         <td>{{$loop->iteration}}</td>
                         <td>{{$rows->client->name}}</td>
@@ -60,17 +60,17 @@ Transaction Management
                         <td>{{$rows->status}}</td>
                         <td>
                         <div class="item-action dropdown">
-                            <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
-                            
-                            <div class="dropdown-menu pull-right">
-                                {{--
-                            @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
-                
-                            <a href="#" onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-                            @endif
-                            --}}
-                            </div>
-                        </div>
+                          <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
+                          
+                          <div class="dropdown-menu pull-right  p-2 ">
+                              
+                          @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
+
+                          <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                          @endif
+                          
+                          </div>
+                      </div>
                         </td>
                     </tr>
 

@@ -24,7 +24,7 @@
                                 @php($label = 'Select Role')
                                 <div class="form-group">
                                     <label >{{$label}}</label>
-                                    <select name="{{$name}}" id="select2" multiple="true" class="form-control" data-placeholder="{{$label}}">{{$label}}
+                                    <select name="{{$name}}" class="form-control fstdropdown-select">
 
                                     @foreach($role_list as $rows)
 
@@ -62,15 +62,6 @@
 
 <script>
 
-$(function () {
-    //Initialize Select2 Elements
-    $('#select2').select2();
 
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    });
-  });
-
-
+  setFstDropdown();
 </script>

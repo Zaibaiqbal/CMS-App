@@ -105,7 +105,7 @@ class Transaction extends Model
                 $transaction->net_weight = $object['net_weight'];
                 $transaction->material_type_id = $object['material_type'];
 
-                if($transaction->net_weight > 0)
+                if($transaction->net_weight >= 0)
                 {
                     $transaction->status = 'Close';
                 }

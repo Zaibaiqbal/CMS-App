@@ -13,7 +13,7 @@ class UserAccountController extends Controller
         {
             $client_id = $request->client_id;
 
-            $option = '<option value="'.encrypt(0).'">Select Account</option>';
+            $option = '';
 
             $user_account = new UserAccount;
             $account_list = $user_account->getUserAccountListByClientId($client_id);

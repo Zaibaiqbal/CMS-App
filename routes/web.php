@@ -35,7 +35,7 @@ Route::match(['get','post'],'storeemployee', [App\Http\Controllers\UserControlle
 Route::match(['get','post'],'storeclient', [App\Http\Controllers\UserController::class, 'storeClient'])->name('store.client')->middleware('auth','permission:All|Add Client');
 
 
-Route::match(['get','post'],'updateemployee', [App\Http\Controllers\UserController::class, 'updateEmployees'])->name('update.employee')->middleware('auth','permission:All|Update Employee');
+Route::match(['get','post'],'updateemployee', [App\Http\Controllers\UserController::class, 'updateEmployee'])->name('update.employee')->middleware('auth','permission:All|Update Employee');
 
 Route::get('rolespermissions', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.permissions')->middleware('auth','permission:All|Roles & Permissions');
 
@@ -52,7 +52,7 @@ Route::match(['get','post'],'assignrole', [App\Http\Controllers\RoleController::
 
 
 
-Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth');
+Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth','permission:All|Add Truck');
 
 Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('auth','permission:All|Update Truck');
 
@@ -64,6 +64,11 @@ Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::cl
 
 
 Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('auth','permission:All|Add Material Type');
+
+Route::get('materialratelist', [App\Http\Controllers\MaterialTypeController::class, 'viewMaterialList'])->name('material.rate.list')->middleware('auth','permission:All|View Material Types');
+
+
+Route::post('storematerialrate', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialRate'])->name('store.materialrate')->middleware('auth','permission:All|Add Material Type');
 
 Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('auth','permission:All|Add Account');
 
@@ -99,7 +104,7 @@ Route::get('seennotification',[App\Http\Controllers\NotificationController::clas
 
 Route::get('appearnotification',[App\Http\Controllers\NotificationController::class, 'appearNotification'])->name('appearnotification')->middleware('auth','permission:All');
 
-Route::get('clientaccountlist',[App\Http\Controllers\UserAccountController::class, 'getClientAccountList'])->name('clientaccountlist')->middleware('auth','permission:All');
+Route::get('clientaccountlist',[App\Http\Controllers\UserAccountController::class, 'getClientAccountList'])->name('clientaccountlist')->middleware('auth');
 
 
 

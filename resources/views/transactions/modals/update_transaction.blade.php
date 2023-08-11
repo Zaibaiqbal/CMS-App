@@ -5,7 +5,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Truck Info</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Update Transaction</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -176,3 +176,38 @@
     </div>
   </div>
 </div>
+
+<script>
+
+function calculateNetWeight(event,obj)
+    {
+        event.preventDefault();
+
+        var opertaion_type = $('.operation_type').val();
+        var gross_weight =  $("input[name=gross_weight]").val();
+        var tare_weight =  $("input[name=tare_weight]").val();
+
+        var net_weight = 0;
+
+        if(opertaion_type == "Outbound")
+        {
+            if(tare_weight > 0)
+            {
+                net_weight = tare_weight - gross_weight;
+            }
+        
+        }
+        else
+        {
+            if(gross_weight > 0)
+            {
+                net_weight =  gross_weight - tare_weight;
+            
+            }
+        }
+            $('.net_weight').val(net_weight);
+
+    }
+
+
+</script>

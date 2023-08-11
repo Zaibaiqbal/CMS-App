@@ -32,7 +32,6 @@ View Unapproved Clients
                             <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Father Name</th>
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Action</th>
@@ -43,7 +42,6 @@ View Unapproved Clients
                             <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$rows->name}}</td>
-                            <td>{{$rows->fname}}</td>
                             <td>{{$rows->email}}</td>
                             <td>{{$rows->contact}}</td>
                             <td>

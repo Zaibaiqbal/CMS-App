@@ -108,7 +108,7 @@
                                         </li>
                                       
                                         <li>
-                                            <div id="notify_body">
+                                            <div id="notification_body">
                                                 
                                             </div>
                                         </li>
@@ -204,10 +204,29 @@
                             @if(Auth::user()->hasAnyPermission(['All','View Material Types']))
 
                             <li class="pcoded-hasmenu">
-                                <a  href="{{route('material.types.list')}}">
-                                    <span class="pcoded-mtext">Material Types</span>
-                                </a>
-                            
+                                    <a href="javascript:void(0)">
+                                    
+                                        <span class="pcoded-mtext">Material Types</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="pcoded-hasmenu text-dark">
+                                            <a href="{{route('material.types.list')}}">
+                                            
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Material Types</span>
+                                            </a>
+                                        
+                                        </li>
+
+                                        <li class="pcoded-hasmenu text-dark">
+                                            <a href="{{route('material.rate.list')}}">
+                                            
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Material Rates</span>
+                                            </a>
+                                        
+                                        </li>
+
+                                    
+                                    </ul>
                             </li>
                             @endif
                             @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
@@ -456,7 +475,7 @@ function loadNotification()
                         $('.notification_count').html(data.notification_count);
                     }
 
-                    $('#notify_body').html(data.body);
+                    $('#notification_body').html(data.body);
 
 
                 }).fail(function(data) {
@@ -490,7 +509,7 @@ function loadNotification()
                         $('.notification_count').html(data.notification_count);
                     }
 
-                    $('#notify_body').html(data.boy);
+                    $('#notification_body').html(data.boy);
 
                     window.location.href = $(obj).attr('href');
 

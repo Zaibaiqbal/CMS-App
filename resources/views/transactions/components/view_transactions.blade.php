@@ -30,7 +30,7 @@
         <div class="item-action dropdown">
             <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
             
-            <div class="dropdown-menu pull-right">
+            <div class="dropdown-menu pull-right p-1">
                 
             @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
 

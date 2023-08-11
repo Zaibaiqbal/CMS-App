@@ -373,7 +373,7 @@ class UserController extends Controller
             {
                 $request->validate([
 
-                    'cnic'   => 'required|unique:users,cnic',
+                    // 'cnic'   => 'required|unique:users,cnic',
                     'name'  =>  'required',
                     'contact_no'  =>  'required',
                     'email'  =>  'required|unique:users,email',
@@ -409,7 +409,62 @@ class UserController extends Controller
 
     }
 
+    public function updateEmployee(Request $request)
+    {
 
+        try
+        {
+            $data = ['status' => false , 'messge' => ''];
+            if($request->isMethod('post'))
+            {
+                $user_id = decrypt($request->employee);
+                $request->validate([
+
+                    // 'cnic'   => 'required|unique:users,cnic',
+                    'name'  =>  'required',
+                    'employee'  =>  'required',
+                    
+                    'contact_no'  =>  'required',
+                    'email'         =>  'required|unique:users,email,'.$user_id,
+                    'password'          =>  'nullable|min:8|max:16|same:confirm_password',
+                    'confirm_password'  =>  'nullable|min:8|max:16|same:password',
+                ]);
+                $form_data = $request->input();
+
+                // $form_data['user_type'] = 'Employee';
+                // $form_data['status'] = 'Active';
+                $form_data['user_id'] = decrypt($form_data['employee']);
+                $user = new User;
+
+                $user = $user->updateUser($form_data);
+
+                if(isset($user->id))
+                {
+                   $data = ['status' => true , 'message' => 'Employee added successfully'];
+                }
+
+                return $data;
+            }
+            else
+            {
+                $id = decrypt($request->id);
+
+                $user = new User;
+                $user = $user->getUserById($id);
+                return view('users.modals.update_employee',[
+                    'user'  => $user
+                ]);
+            }
+
+        }
+        catch(Exception $e)
+        {
+            
+        }
+        return redirect()->back();
+
+    }
+    
     public function storeClient(Request $request)
     {
 
