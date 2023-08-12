@@ -28,7 +28,7 @@
 
                                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                                    <select name="{{$name}}" id="" class="form-control">
+                                    <select name="{{$name}}" id="" class="form-control fstdropdown-select">
                                         <option value="{{encrypt(0)}}">{{$label}}</option>
                                     @foreach($client_list as $rows)
                                         <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
@@ -135,3 +135,8 @@
     </div>
   </div>
 </div>
+
+<script>
+
+setFstDropdown();
+</script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Truck;
+use App\Models\User;
 use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,8 +68,6 @@ class TruckController extends Controller
                 ]);
                 $form_data = $request->input();
 
-                $form_data['client_id'] = Auth::user()->id;
-
 
                 if(Auth::user()->user_type == "Contact Person")
                 {
@@ -81,6 +80,16 @@ class TruckController extends Controller
 
                     }
 
+                }
+                else if(Auth::user()->user_type == "Client")
+                {
+                    $form_data['client_id'] = Auth::user()->id;
+
+                }
+                else
+                {
+
+                    $form_data['client_id'] = decrypt($request->client);
                 }
                 
 
@@ -117,7 +126,13 @@ class TruckController extends Controller
                 }
                 else
                 {
-                return view('trucks.modals.add_truck');
+                    $user  = new User;
+                    $client_list = $user->getUserListByType('Client');
+            
+
+                return view('trucks.modals.add_truck',[
+                    'client_list'  => $client_list
+                ]);
 
                 }
             }

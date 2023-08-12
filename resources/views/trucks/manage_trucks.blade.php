@@ -89,7 +89,6 @@ Trucks Management
 
 <div id="target_modal"></div>
 @section('page_modal')
-@include('trucks.modals.add_truck')
 
 @endsection
 @section('page_script')

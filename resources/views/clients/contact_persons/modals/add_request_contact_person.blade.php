@@ -76,7 +76,7 @@
                         </div>
 
                     </div>
-                    <div class="col-md-12 mb-2 user_account" >
+                    <div class="col-md-12 mb-2 user_account" style="display: none;">
                         @php($label = 'Select Account')
                         @php($name = 'account')
                         <label for="exampleInputEmail1">{{$label}} <span class="text-danger">*</span> </label>
