@@ -87,9 +87,8 @@
                               <option value="{{encrypt(0)}}">{{$label}}</option>
                               @foreach($account_list as $rows)
 
-                              @php($account = $rows->getAccountById($rows->account_id))
 
-                              <option value="{{encrypt($rows->account_id)}}">{{$account->account_no}}</option>
+                              <option value="{{encrypt($rows->id)}}">{{$rows->account_no}}</option>
 
                               @endforeach
 

@@ -10,6 +10,11 @@ class Account extends Model
 {
     use HasFactory;
 
+    public function getAccountByAccountNo($account_no)
+    {
+        return Account::where('is_deleted',0)->where('account_no',$account_no)->first();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class,'client_id')->withDefault();

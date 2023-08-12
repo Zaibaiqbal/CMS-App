@@ -28,10 +28,17 @@ class UserAccount extends Model
         return UserAccount::where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->get();
     }
 
-    // public function getAccountListByClientId($id)
-    // {
-    //     return UserAccount::whereHas('accounts')->where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->groupby('account_id')->get();
-    // }
+    public function getAccountListByClientId($id)
+    {
+        return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
+        ->join('accounts', 'user_accounts.account_id', '=', 'accounts.id')
+        ->where('user_accounts.is_deleted',0)
+        ->where('user_accounts.parent_id', '=', $id)
+        ->orWhere('user_accounts.user_id',$id)
+        ->select('accounts.id', 'accounts.account_no')
+        ->distinct('accounts.account_no')
+        ->get();
+    }
 
     
     public function getAccountById($id)

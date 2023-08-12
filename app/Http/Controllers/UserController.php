@@ -279,7 +279,17 @@ class UserController extends Controller
                     {
                         $account = new Account;
 
-                        $account = $account->storeAccount($form_data);
+                        if($user->account_type == "New Account")
+                        {
+
+                            $account = $account->storeAccount($form_data);
+                        }
+                        else
+                        {
+
+                            $account = $account->getAccountByAccountNo($form_data);
+                        }
+                     
 
                         if(isset($account->id))
                         {
@@ -666,7 +676,7 @@ class UserController extends Controller
             else
             {
                 $user_account = new UserAccount;
-                $account_list  =  $user_account->getUserAccountListByClientId(Auth::user()->id);
+                $account_list  =  $user_account->getAccountListByClientId(Auth::user()->id);
 // dd($account_list);
                 return view('clients.contact_persons.modals.add_request_contact_person',[
                     'account_list'    =>   $account_list
