@@ -160,7 +160,7 @@ class UserController extends Controller
     
                     'user'                  => 'required',
                     'account_no'              => 'required|max:15|min:0|unique:accounts',
-                    'title'                   => 'required|max:255|min:0',
+                    // 'title'                   => 'required|max:255|min:0',
                    
                     ]);
 
@@ -182,7 +182,7 @@ class UserController extends Controller
                         {
                             $object['user_id']   =  $user->id;
                             $object['account_id']   =  $account->id;
-                            $object['title']   =  $form_data['title'];
+                            // $object['title']   =  $form_data['title'];
                             
                             $user_account = new UserAccount;
 
@@ -261,7 +261,7 @@ class UserController extends Controller
     
                     'user_account'                      => 'required',
                     'account_no'                 => 'required|max:15|min:0',
-                    'title'                   => 'required|max:255|min:0',
+                    // 'title'                   => 'required|max:255|min:0',
                    
                     ]);
 
@@ -296,7 +296,7 @@ class UserController extends Controller
                             $object['user_id']      =  $user->id;
                             $object['account_id']   =  $account->id;
                             $object['id']           =  $user_account->id;
-                            $object['title']           =  $form_data['title'];
+                            // $object['title']           =  $form_data['title'];
                             
                             $user_account = new UserAccount;
 

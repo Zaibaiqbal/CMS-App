@@ -16,12 +16,12 @@ class UserAccountController extends Controller
             $option = '';
 
             $user_account = new UserAccount;
-            $account_list = $user_account->getUserAccountListByClientId($client_id);
+            $account_list = $user_account->getAccountListByClientId($client_id);
 
             foreach($account_list as $rows)
             {
                   
-                $option .= '<option value="'.encrypt($rows->id).'">'.$rows->account->account_no.' - '.$rows->title.'</option>';
+                $option .= '<option value="'.encrypt($rows->id).'">'.$rows->account_no.'</option>';
             }
 
             return $option;

@@ -65,11 +65,11 @@ class UserAccount extends Model
                 $user_account->account_id = $object['account_id'];
 
             }
-            if(isset($object['title']))
-            {
-                $user_account->title = $object['title'];
+            // if(isset($object['title']))
+            // {
+            //     $user_account->title = $object['title'];
 
-            }
+            // }
 
             $user_account->save();
             
@@ -88,7 +88,7 @@ class UserAccount extends Model
             {
 
                  $user_account->account_id = $object['account_id'];
-                 $user_account->title = $object['title'];
+                //  $user_account->title = $object['title'];
 
                  $user_account->update();
 
