@@ -85,7 +85,7 @@
                           <select name="{{$name}}" class="form-control fstdropdown-select" id="">
 
                               <option value="{{encrypt(0)}}">{{$label}}</option>
-                              @foreach($account_list->unique('account_id') as $rows)
+                              @foreach($account_list as $rows)
 
                               @php($account = $rows->getAccountById($rows->account_id))
 

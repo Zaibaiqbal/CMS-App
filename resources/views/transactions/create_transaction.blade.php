@@ -94,7 +94,6 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 
 <div id="target_modal"></div>
 @section('page_modal')
-@include('trucks.modals.add_truck')
 
 @endsection
 @section('page_script')

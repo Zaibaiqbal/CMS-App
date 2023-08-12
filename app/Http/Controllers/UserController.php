@@ -665,7 +665,7 @@ class UserController extends Controller
             {
                 $user_account = new UserAccount;
                 $account_list  =  $user_account->getUserAccountListByClientId(Auth::user()->id);
-
+// dd($account_list);
                 return view('clients.contact_persons.modals.add_request_contact_person',[
                     'account_list'    =>   $account_list
                 ])->render();
