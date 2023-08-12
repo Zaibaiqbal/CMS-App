@@ -34,7 +34,7 @@ Contact Persons Management
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Client</th>
+                      <th>Name</th>
                       <th>Contact</th>
                       <th>Account No</th>
                       <th>Status</th>

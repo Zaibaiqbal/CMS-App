@@ -19,6 +19,24 @@
 
           <div class="card-body">
             <div class="row">
+
+            <div class="col-md-12">
+                                @php($name = 'client')
+                                @php($label = 'Select Client')
+                                <div class="form-group">
+                                    <label for="">{{$label}} <span class="text-danger"> *</span> </label>
+
+                                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                                    <select name="{{$name}}" id="" class="form-control">
+                                        <option value="{{encrypt(0)}}">{{$label}}</option>
+                                    @foreach($client_list as $rows)
+                                        <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
               
               <div class="col-md-6">
                 @php($label = 'Plate Number')
