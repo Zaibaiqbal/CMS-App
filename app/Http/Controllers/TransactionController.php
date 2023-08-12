@@ -24,8 +24,10 @@ class TransactionController extends Controller
 
         $transaction = new Transaction;
 
+        $transaction_list = $transaction->getTransactionsByUserId(Auth::user()->id);
+
         return view('clients.client_transactions.manage_client_transactions',[
-            'transaction_list'  =>  Auth::user()->transactions
+            'transaction_list'  =>  $transaction_list
         ]);
     }
 

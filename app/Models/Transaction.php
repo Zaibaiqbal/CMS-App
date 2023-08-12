@@ -23,7 +23,15 @@ class Transaction extends Model
         return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id,'id' => $id])->first();
     }
 
-    
+    public function getTransactionsByUserId($id)
+    {
+
+        return Transaction::whereHas('userAccount' , function($query) use ($id){
+
+            $query->where('user_id',$id)->orWhere('parent_id',$id);
+
+        })->get();
+    }
     
     public function storeTransaction($object)
     {
@@ -40,13 +48,13 @@ class Transaction extends Model
                 $transaction->truck_id = $truck->id;
                 $transaction->added_id = Auth::user()->id;
 
-                
-
+                // dd($object);
                 $transaction->plate_no = $truck->plate_no;
                 // $transaction->material_type_id = $object['material_type'];
                 $transaction->operation_type = $object['operation_type'];
 
                 $transaction->client_id = $object['user_id'];
+
                 if(isset($object['account']))
                 {
                     $transaction->account_id = $object['account_id'];

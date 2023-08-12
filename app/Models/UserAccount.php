@@ -28,6 +28,12 @@ class UserAccount extends Model
         return UserAccount::where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->get();
     }
 
+    // public function getAccountListByClientId($id)
+    // {
+    //     return UserAccount::whereHas('accounts')->where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->groupby('account_id')->get();
+    // }
+
+    
     public function getAccountById($id)
     {
         return Account::where('is_deleted',0)->where('id',$id)->first();
@@ -52,6 +58,11 @@ class UserAccount extends Model
                 $user_account->account_id = $object['account_id'];
 
             }
+            if(isset($object['title']))
+            {
+                $user_account->title = $object['title'];
+
+            }
 
             $user_account->save();
             
@@ -70,6 +81,7 @@ class UserAccount extends Model
             {
 
                  $user_account->account_id = $object['account_id'];
+                 $user_account->title = $object['title'];
 
                  $user_account->update();
 

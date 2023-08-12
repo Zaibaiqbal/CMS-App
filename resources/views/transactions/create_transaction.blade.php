@@ -245,7 +245,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 
     function getClientAccountList(client_id)
     {
-        var route = "{{url('clientaccountlist')}}";
+        var route = "{{url('getclientaccountlist')}}";
 
         $.get(route,{client_id:client_id},function(data)
         {

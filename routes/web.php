@@ -106,7 +106,7 @@ Route::get('seennotification',[App\Http\Controllers\NotificationController::clas
 
 Route::get('appearnotification',[App\Http\Controllers\NotificationController::class, 'appearNotification'])->name('appearnotification')->middleware('auth','permission:All');
 
-Route::get('clientaccountlist',[App\Http\Controllers\UserAccountController::class, 'getClientAccountList'])->name('clientaccountlist')->middleware('auth');
+Route::get('getclientaccountlist',[App\Http\Controllers\UserAccountController::class, 'getClientAccountList'])->name('getclientaccountlist')->middleware('auth');
 
 
 Route::match(['get','post'],'viewdeactiveusers', [App\Http\Controllers\UserController::class, 'viewDeactiveUsers'])->name('viewdeactiveusers')->middleware('auth','permission:All|View Deactive User');

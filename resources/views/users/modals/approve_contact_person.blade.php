@@ -19,7 +19,19 @@
                     <div class="card-body">
                       
                     <div class="row">
-                        <div class="col-md-12">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              @php($label = 'Title')
+                              @php($name = 'title')
+                              <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                              <small class="text-danger" id="{{$name}}_error"></small>
+                             
+                              <input type="text" name="{{$name}}" placeholder="{{$label}}"  class="form-control" id="">
+                              
+                          </div>
+
+                        </div>
+                        <div class="col-md-6">
                           <div class="form-group">
                               @php($label = 'Account No.')
                               @php($name = 'account_no')

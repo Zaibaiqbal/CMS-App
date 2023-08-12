@@ -30,7 +30,7 @@ Transaction Management
                     <thead>
                       <tr>
                           <th>#</th>
-                          <th>Client</th>
+                          <th>Name</th>
                           <th>Plate No</th>
                           <th>Material Type</th>
                           <th>Gross weight</th>
