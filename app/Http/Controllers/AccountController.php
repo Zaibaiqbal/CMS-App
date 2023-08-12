@@ -25,6 +25,7 @@ class AccountController extends Controller
         $account = new Account;
 
         return view('clients.client_accounts.manage_client_accounts',[
+            
             'accounts_list'  =>  Auth::user()->accounts
         ]);
     }

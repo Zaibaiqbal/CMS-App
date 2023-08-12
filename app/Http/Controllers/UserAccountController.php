@@ -18,9 +18,10 @@ class UserAccountController extends Controller
             $user_account = new UserAccount;
             $account_list = $user_account->getUserAccountListByClientId($client_id);
 
-            foreach($account_list as $rows)
+            foreach($account_list->unique('account_id') as $rows)
             {
-                $option .= '<option value="'.encrypt($rows->id).'">'.$rows->account->account_no.'</option>';
+                    $account = $rows->getAccountById($rows->account_id);
+                $option .= '<option value="'.encrypt($account->id).'">'.$account->account_no.'</option>';
             }
 
             return $option;

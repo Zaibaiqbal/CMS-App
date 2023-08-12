@@ -76,9 +76,7 @@
                         </div>
 
                     </div>
-
-                    <div class="col-md-12 mb-2 user_account" style="display: none;">
-
+                    <div class="col-md-12 mb-2 user_account" >
                         @php($label = 'Select Account')
                         @php($name = 'account')
                         <label for="exampleInputEmail1">{{$label}} <span class="text-danger">*</span> </label>
@@ -87,8 +85,11 @@
                           <select name="{{$name}}" class="form-control fstdropdown-select" id="">
 
                               <option value="{{encrypt(0)}}">{{$label}}</option>
-                              @foreach($account_list as $rows)
-                              <option value="{{encrypt($rows->account->id)}}">{{$rows->account->account_no}}</option>
+                              @foreach($account_list->unique('account_id') as $rows)
+
+                              @php($account = $rows->getAccountById($rows->account_id))
+
+                              <option value="{{encrypt($rows->account_id)}}">{{$account->account_no}}</option>
 
                               @endforeach
 
@@ -131,6 +132,7 @@
 $('.cnic').mask("00000-0000000-0");
 $('.contact').mask("0000-0000000");
 
+setFstDropdown();
 function getAccountList(obj)
 {
 
