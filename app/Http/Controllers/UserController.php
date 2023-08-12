@@ -45,9 +45,20 @@ class UserController extends Controller
     {
         $user = new User;
 
-        $user_list = $user->getUnapproveContactPersons('Contact Person');
+        $user_list = $user->getContactPersonsByCondition('Contact Person','Inactive',0);
 
         return view('users.view_unapproved_contact_persons',[
+            'user_list'  => $user_list
+        ]);
+    }
+
+    public function viewContactPersons()
+    {
+        $user = new User;
+
+        $user_list = $user->getContactPersonsByCondition('Contact Person','Active',1);
+
+        return view('users.view_approved_contact_persons',[
             'user_list'  => $user_list
         ]);
     }
@@ -76,7 +87,7 @@ class UserController extends Controller
     public function registerUser(Request $request)
     {
 
-        $request->validate([
+       $request->validate([
 
             'name'      =>  'required|max:255|min:0',
             'contact'   =>  'required|max:13',
@@ -97,6 +108,43 @@ class UserController extends Controller
 
     }
 
+    
+    public function approveRequestToDeactiveUser(Request $request)
+    {
+        try
+        {
+
+                $user_id = decrypt($request->id);
+
+                $user = new User;
+
+                $user  = $user->getUserById($user_id);
+
+                if(isset($user->id) && $user->is_verified == 1 && $user->status == "Inactive")
+                {
+
+ 
+                    $user->is_verified        = 0;
+                
+                    $user->update();
+                    $user_account = new UserAccount;
+                    $user_account = $user_account->deactivateAccount($user); 
+
+
+                }
+
+
+                return redirect('contactpersons')->with('message', 'User Deactivated successfully!');
+
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+
+    }
 
     public function approveUser(Request $request)
     {
@@ -384,6 +432,8 @@ class UserController extends Controller
 
                 $form_data['user_type'] = 'Employee';
                 $form_data['status'] = 'Active';
+                $form_data['is_verified'] = 1;
+
                 $user = new User;
 
                 $user = $user->storeUser($form_data);
@@ -549,6 +599,25 @@ class UserController extends Controller
         }
     }
 
+    public function viewDeactiveUsers(Request $request)
+    {
+        try
+        {
+            
+            $user = new User;
+
+            $user_list = $user->getDeactiveUserList('Contact Person',decrypt($request->id));
+
+            return view('users.view_deactive_users',[
+                'user_list'   =>  $user_list
+            ]);
+        }
+        catch(Exception $e)
+        {
+
+        }
+    }
+
     public function requestContactPerson(Request $request)
     {
         try
@@ -577,6 +646,11 @@ class UserController extends Controller
                     $object['user_id']  = $user->id;
                     $object['parent_id']  = Auth::user()->id;
 
+                    if($user->user_type == "Contact Person")
+                    {
+                        $object['account_id']    =  decrypt($form_data['account']);
+                    }
+
                     $user_account = new UserAccount;
                     $user_account = $user_account->storeUserAccount($object);
                 
@@ -589,8 +663,12 @@ class UserController extends Controller
             }
             else
             {
+                $user_account = new UserAccount;
+                $account_list  =  $user_account->getUserAccountListByClientId(Auth::user()->id);
 
-                return view('clients.contact_persons.modals.add_request_contact_person')->render();
+                return view('clients.contact_persons.modals.add_request_contact_person',[
+                    'account_list'    =>   $account_list
+                ])->render();
 
             }
 
@@ -602,6 +680,30 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+    public function deactiveUser(Request $request)
+    {
+        try
+        {
+            $data = ['status' => false , 'messge' => ''];
+
+    
+                $user_id = decrypt($request->id);
+
+                $user = new User;
+                $user = $user->deactiveUser($user_id);
+
+                return redirect()->back()->with('message', 'Request sent successfully!');
+
+
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+        return redirect()->back();
+    }
 
     
 }

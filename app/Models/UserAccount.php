@@ -17,6 +17,12 @@ class UserAccount extends Model
 
     }
 
+    public function getClientByUserId($id)
+    {
+        return UserAccount::where('is_deleted',0)->where('user_id',$id)->first();
+
+    }
+    
     public function getUserAccountListByClientId($id)
     {
         return UserAccount::where('is_deleted',0)->where('parent_id',$id)->orWhere('user_id',$id)->get();
@@ -76,6 +82,28 @@ class UserAccount extends Model
         });
     }
 
+    public function deactivateAccount($user)
+    {
+        return DB::transaction(function() use ($user){
+
+
+            $user_account = $this->getClientByUserId($user->id); // here this method is used for finding contact person
+            if(isset($user_account->id))
+            {
+
+                 $user_account->is_deleted = 1;
+
+                 $user_account->update();
+
+
+            }
+
+            
+            return with($user_account);
+
+        });
+    }
+    
 
     public function user()
     {

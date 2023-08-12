@@ -81,6 +81,64 @@ class MaterialTypeController extends Controller
       
     }
 
+    public function updateMaterialType(Request $request)
+    {
+        try
+        {
+            $data = ['status' => false, 'message' => ''];
+
+            if($request->isMethod('post'))
+            {
+        
+                $request->validate([
+    
+                    'type'                      => 'required|max:255',
+                    'material_type_id'                      => 'required|exists:material_types,id',
+                   
+                   
+    
+                    ]);
+                    $form_data = $request->input();
+    
+    
+                    $type = MaterialType::find($form_data['material_type_id']);
+                    if(isset($type->id))
+                    {
+                        $type->name = $form_data['type'];
+                
+                        $type->save();
+    
+    
+                        $data = ['status' => true, 'message' => 'Material Type added successfully'];
+    
+                    
+                    }
+                 
+                return $data;
+            }
+            else
+            {
+                      
+            $material_type = new MaterialType;
+            $material_type = $material_type->getMaterialTypeById(decrypt($request->id));
+
+                return view('material_types.modals.update_material_type',[
+                    'material_type'   =>  $material_type
+                ])->render();
+
+            }
+        
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+        return redirect()->back();
+      
+    }
+
     public function storeMaterialRate(Request $request)
     {
         try
@@ -121,5 +179,44 @@ class MaterialTypeController extends Controller
       
     }
 
+    public function updateMaterialRate(Request $request)
+    {
+        try
+        {
+
+            $data = ['status' => false, 'message' => ''];
+        
+            $request->validate([
+
+                'material_type_id'                      => 'required|exists:material_types,id',
+                'client'                                => 'required|exists:users,id',
+                'rate'                                  => 'required|gt:0',
+               
+
+                ]);
+                $form_data = $request->input();
+
+                // $form_data['client']   = decrypt($form_data['client']);
+
+                $material_rate = new MaterialRate;
+                $material_rate = $material_rate->storeMaterialRate($form_data);
+
+                if(isset($material_rate->id))
+                {
+                    $data = ['status' => true, 'message' => 'Material Type added successfully'];
+
+                }
+           
+            return $data;
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+        return redirect()->back();
+      
+    }
 
 }

@@ -128,7 +128,7 @@ $('.contact').mask("0000-0000000");
                                                 <div class="j-unit">
                                                     <div class="j-input">
                                                         <label class="j-icon-right" >
-                                                            <i class="icofont icofont-envelope"></i>
+                                                            <i class="fa fa-mobile"></i>
                                                         </label>
 
                                                         <input  type="text" placeholder="0000-0000000" data-mask="0000-0000000" class="form-control @error('contact') is-invalid @enderror contact" name="contact" value="{{ old('contact') }}" required >

@@ -65,13 +65,18 @@ class User extends Authenticatable
         return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'desc')->get();
     }
 
-    public function getUnapproveContactPersons($type)
+    public function getDeactiveUserList($type,$id)
+    {
+        return  User::where(['user_type' => $type,'is_verified' => 1,'status'  => 'Inactive','id' => $id])->orderBy('id', 'desc')->get();
+    }
+
+    public function getContactPersonsByCondition($type,$status,$is_verified)
     {
 
         return UserAccount::with(['user', 'client'])
-        ->whereHas('user', function ($query) use ($type) {
+        ->whereHas('user', function ($query) use ($type,$status,$is_verified) {
 
-        $query->where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive']);
+        $query->where(['user_type' => $type,'is_verified' => $is_verified,'status'  => $status]);
         
     })->get();
 
@@ -88,6 +93,32 @@ class User extends Authenticatable
             ->select('users.id')->get()->pluck('id');
     }
 
+    public function deactiveUser($user_id)
+    {
+        return DB::transaction(function() use ($user_id){
+
+            $user = User::find($user_id);
+
+            if(isset($user->id) && $user->status == "Active")
+            {
+                $user->status = "Inactive";
+            
+                $user->update();
+
+                $user_obj = new User;
+                $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+
+                $client = $this->getUserById(Auth::user()->id);
+
+                event(new SendNotification($client->id,$user_ids,'','viewdeactiveusers',$user->id,$client->name. ' has registered to deactivate Contact Person ' .$user->name));
+
+            }
+        
+            return with($user);
+
+
+        });
+    }
     
     public function storeUser($object)
     {
@@ -125,6 +156,11 @@ class User extends Authenticatable
 
             }
 
+            if(isset($object['is_verified']))
+            {
+                $user->is_verified = $object['is_verified'];
+
+            }
             if(isset($object['status']))
             {
                 $user->status = $object['status'];

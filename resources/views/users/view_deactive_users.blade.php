@@ -2,7 +2,7 @@
 
 @section('page_title')
 
-View Unapproved Contact Persons
+Inactive User List
 
 @endsection
 @section('page_breadcrumbs')
@@ -19,7 +19,7 @@ View Unapproved Contact Persons
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Unapproved Contact Persons
+                <h3 class="card-title">Inactive User List
 
                    
                     <!--end::Button-->
@@ -32,7 +32,6 @@ View Unapproved Contact Persons
                             <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Client Name</th>
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Action</th>
@@ -42,10 +41,9 @@ View Unapproved Contact Persons
                             @foreach($user_list as $rows)
                             <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$rows->user->name}}</td>
-                            <td>{{$rows->client->name}}</td>
-                            <td>{{$rows->user->email}}</td>
-                            <td>{{$rows->user->contact}}</td>
+                            <td>{{$rows->name}}</td>
+                            <td>{{$rows->email}}</td>
+                            <td>{{$rows->contact}}</td>
                             <td>
 
                                 <div class="dropdown-primary dropdown">
@@ -56,9 +54,9 @@ View Unapproved Contact Persons
                                         
                                         <li>
 
-                                        @if(Auth::user()->hasAnyPermission(['All','Approve Client']))
-                                        @php($route = route('approve.cotactperson',['id' => encrypt($rows->id)]))
-                                        <a href="#"  class="dropdown-item waves-light waves-effect delete_submit" onclick="formModal(event,'{{$route}}','#modal_approve_contact_person','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Approve</a>
+                                        @if(Auth::user()->hasAnyPermission(['All','Deactive User']))
+                                        @php($route = route('approverdeactive',['id' => encrypt($rows->id)]))
+                                        <a href="{{$route}}"  class="dropdown-item waves-light waves-effect deactive_submit" onclick="formSubmission(event)" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Approve Request</a>
 
                                         @endif
                                         </li>

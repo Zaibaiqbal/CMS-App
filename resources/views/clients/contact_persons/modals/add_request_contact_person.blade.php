@@ -64,16 +64,36 @@
                         
                         <div class="form-group">
 
-                        <input type="radio" name="{{$name}}" value="New Account" aria-label="Radio button for following text input">
+                        <input type="radio" name="{{$name}}" value="New Account" aria-label="Radio button for following text input" onclick="getAccountList(this)">
                         <label for="exampleInputEmail1">For New Account <span class="text-danger"></span> 
 
                         </label>
 
-                        <input type="radio" name="{{$name}}" value="Existing Account" aria-label="Radio button for following text input">
+                        <input type="radio" name="{{$name}}" value="Existing Account" onclick="getAccountList(this)" aria-label="Radio button for following text input">
                         <label for="exampleInputEmail1">For Existing Account <span class="text-danger"></span> 
 
                         </label>
                         </div>
+
+                    </div>
+
+                    <div class="col-md-12 mb-2 user_account" style="display: none;">
+
+                        @php($label = 'Select Account')
+                        @php($name = 'account')
+                        <label for="exampleInputEmail1">{{$label}} <span class="text-danger">*</span> </label>
+                        <small class="text-danger" id="{{$name}}_error"></small>
+
+                          <select name="{{$name}}" class="form-control fstdropdown-select" id="">
+
+                              <option value="{{encrypt(0)}}">{{$label}}</option>
+                              @foreach($account_list as $rows)
+                              <option value="{{encrypt($rows->account->id)}}">{{$rows->account->account_no}}</option>
+
+                              @endforeach
+
+                          </select>
+
 
                     </div>
 
@@ -110,6 +130,24 @@
 <script type="text/javascript">
 $('.cnic').mask("00000-0000000-0");
 $('.contact').mask("0000-0000000");
+
+function getAccountList(obj)
+{
+
+  var type  = $(obj).val();
+
+  if(type == "Existing Account")
+  {
+    $('.user_account').show();
+  }
+  else
+  {
+    $('.user_account').hide();
+
+
+  }
+
+}
 
 
 </script>

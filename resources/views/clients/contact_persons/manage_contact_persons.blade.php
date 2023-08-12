@@ -43,7 +43,7 @@ Contact Persons Management
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($user_list as $rows)
+                    @foreach($user_list->where('user_id','!=',Auth::user()->id) as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>{{$rows->user->name}}</td>
@@ -51,7 +51,7 @@ Contact Persons Management
                       <td>{{$rows->account->account_no}}</td>
                       <td>{{$rows->user->status}}</td>
                       <td>
-{{--
+
                         <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
                             <i class="fa fa-ellipsis-v text-dark"></i>
@@ -59,14 +59,13 @@ Contact Persons Management
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                             <li>
 
-                              @php($route = route('approve.user',['id' => encrypt($rows->id)]))
-                              <a href="#"  class="dropdown-item waves-light waves-effect delete_submit" onclick="formModal(event,'{{$route}}','#modal_approve_user','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Approve</a>
+                              @php($route = route('deactive.user',['id' => encrypt($rows->user->id)]))
+                              <a href="{{$route}}" onclick="formSubmission(event)"  class="dropdown-item waves-light waves-effect deactive_submit" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Request to Deactive</a>
 
                               </li>
                              
                             </ul>
                         </div>
-                        --}}
                       </td>
                     </tr>
                 @endforeach

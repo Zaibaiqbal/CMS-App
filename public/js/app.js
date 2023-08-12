@@ -99,7 +99,7 @@ function formSubmission(event)
 
     swal({
         title: "Are you sure",
-        text: "you want to Approve User",
+        text: "you want to Deactivte user",
         icon: "warning",
         buttons: true,
         dangerMode: true,
@@ -111,7 +111,7 @@ function formSubmission(event)
             swal("Your request has been submitted!", {
                 icon: "success",
             });
-			    window.location.href =  $('.delete_submit').attr('href');
+			    window.location.href =  $('.deactive_submit').attr('href');
         }
         else
         {

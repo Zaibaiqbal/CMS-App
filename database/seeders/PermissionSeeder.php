@@ -73,6 +73,10 @@ class PermissionSeeder extends Seeder
         $data[++$count] = [ "module" => "User", "name" => "Change Password", "guard_name" => "web"];
 
 
+        $data[++$count] = [ "module" => "User", "name" => "View Deactive User", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "User", "name" => "Approve Deactive User", "guard_name" => "web"];
+
         Permission::insert($data);
     }
 }

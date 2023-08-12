@@ -2,7 +2,7 @@
 
 @section('page_title')
 
-View Unapproved Contact Persons
+View Contact Persons
 
 @endsection
 @section('page_breadcrumbs')
@@ -19,7 +19,7 @@ View Unapproved Contact Persons
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Unapproved Contact Persons
+                <h3 class="card-title">View Contact Persons
 
                    
                     <!--end::Button-->
@@ -47,7 +47,7 @@ View Unapproved Contact Persons
                             <td>{{$rows->user->email}}</td>
                             <td>{{$rows->user->contact}}</td>
                             <td>
-
+{{--
                                 <div class="dropdown-primary dropdown">
                                     <div class="" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-v text-dark"></i>
@@ -65,7 +65,7 @@ View Unapproved Contact Persons
                                     
                                     </ul>
                                 </div>
-
+                                --}}
                             </td>
                             </tr>
                         @endforeach

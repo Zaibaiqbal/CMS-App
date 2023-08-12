@@ -48,7 +48,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 @section('page_body')
 
 <div class="row">
-    <div class="col-7">
+    <div class="col-5">
     <div class="card p-2">
         <div class="card-header">
         <h3 class="card-title">Transaction</h3>
@@ -69,7 +69,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
     </div>
 
 
-    <div class="col-5">
+    <div class="col-7">
     <div class="card">
         <div class="card-header">
         <h3 class="card-title">Current Transactions</h3>

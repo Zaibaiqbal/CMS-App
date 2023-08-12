@@ -57,16 +57,14 @@ Material Types Management
                                 <i class="fa fa-ellipsis-v text-dark"></i>
                                 </div>
                                 <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                    {{--
                                     <li>
-                                    @if(Auth::user()->hasAnyPermission(['All','Update Employee']))
+                                    @if(Auth::user()->hasAnyPermission(['All','Update Material Type']))
                 
-                                    <a class="dropdown-item waves-light waves-effect"  href="#" onclick="formModal(event,'{{route('update.employee',['id' => encrypt($rows->id)])}}','#modal_update_employee','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                                    <a class="dropdown-item waves-light waves-effect"  href="#" onclick="formModal(event,'{{route('update.materialtype',['id' => encrypt($rows->id)])}}','#modal_update_material_type','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                                     @endif
 
                                     </li>
                                 
-                                    --}}
                                 </ul>
                             </div>
 
@@ -84,10 +82,10 @@ Material Types Management
         </div>
 
 @endsection
-
+<div id="target_modal"></div>
 @section('page_modal')
-@include('material_types.modals.add_material_type')
 
+@include('material_types.modals.add_material_type')
 @endsection
 @section('page_script')
 

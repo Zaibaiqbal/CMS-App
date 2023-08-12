@@ -20,7 +20,7 @@ Trucks Management
               <div class="card-header">
                 <h3 class="card-title">Trucks List
 
-                  <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                  <a onclick="formModal(event,'{{route('store.clienttruck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                 Add Truck  
                 </a>
                 </h3>

@@ -192,6 +192,35 @@
                             </li>
                               
                             @endif
+
+                            @if(Auth::user()->hasAnyPermission(['All','View Contact Persons']))
+
+                            <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                    
+                                        <span class="pcoded-mtext">Contact Persons</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="pcoded-hasmenu text-dark">
+                                            <a href="{{route('contactpersons.list')}}">
+                                            
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Contact Persons</span>
+                                            </a>
+                                        
+                                        </li>
+
+                                        <li class="pcoded-hasmenu text-dark">
+                                            <a href="{{route('unapprovecontactpersons.list')}}">
+                                            
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Contact Persons</span>
+                                            </a>
+                                        
+                                        </li>
+                                    
+                                    </ul>
+                            </li>
+                            
+                            @endif
                             @if(false && Auth::user()->hasAnyPermission(['All','View Accounts']))
 
                             <li class="pcoded-hasmenu">

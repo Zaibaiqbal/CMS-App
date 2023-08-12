@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Truck;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TruckController extends Controller
 {
@@ -20,7 +22,23 @@ class TruckController extends Controller
     {
 
         $truck = new Truck;
-        $trucks_list = $truck->getClientTrucks();
+
+        $id = Auth::user()->id;
+        
+        if(Auth::user()->user_type == "Contact Person")
+        {
+            $user_account = new UserAccount;
+
+            $user = $user_account->getClientByUserId(Auth::user()->id);
+            if(isset($user->id))
+            {
+                $id = $user->parent_id;
+
+            }
+
+        }
+        $trucks_list = $truck->getClientTrucks($id);
+
         // dd($trucks_list);
         return view('clients.client_trucks.manage_client_trucks',[
             'trucks_list'  =>  $trucks_list
@@ -49,6 +67,23 @@ class TruckController extends Controller
                 ]);
                 $form_data = $request->input();
 
+                $form_data['client_id'] = Auth::user()->id;
+
+
+                if(Auth::user()->user_type == "Contact Person")
+                {
+                    $user_account = new UserAccount;
+
+                    $user = $user_account->getClientByUserId(Auth::user()->id);
+                    if(isset($user->id))
+                    {
+                        $form_data['client_id'] = $user->parent_id;
+
+                    }
+
+                }
+                
+
                 $truck = new Truck;
                 $truck = $truck->storeTruck($form_data);
 
@@ -75,7 +110,16 @@ class TruckController extends Controller
             }
             else
             {
+                if(url()->current() == url('storeclienttruck'))
+                {
+                    return view('clients.client_trucks.modals.add_client_truck');
+
+                }
+                else
+                {
                 return view('trucks.modals.add_truck');
+
+                }
             }
             return $data;
 

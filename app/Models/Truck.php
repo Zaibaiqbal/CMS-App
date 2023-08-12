@@ -13,9 +13,9 @@ class Truck extends Model
     use HasFactory;
 
 
-    public function getClientTrucks()
+    public function getClientTrucks($id)
     {
-        return Truck::where('is_deleted', 0)->where('client_id',Auth::user()->id)->get();
+        return Truck::where('is_deleted', 0)->where('client_id',$id)->get();
 
     }
     public function getTruckByPlateNo($plate_no)
@@ -38,7 +38,7 @@ class Truck extends Model
             }
             $truck->added_id        = Auth::user()->id;
 
-            $truck->client_id        = Auth::user()->id;
+            $truck->client_id        = $object['client_id'];
 
             $truck->company         = $object['company'];
             $truck->model           = $object['model'];

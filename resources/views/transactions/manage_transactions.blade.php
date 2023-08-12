@@ -20,7 +20,7 @@ Transaction Management
               <div class="card-header">
                 <h3 class="card-title">Transactions List
 
-                @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
+                @if(Auth::user()->hasAnyPermission(['All','Create Transaction']))
           
                     <a href="{{route('store.transaction')}}" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                     Create Transaction</a>

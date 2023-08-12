@@ -57,7 +57,7 @@ Employees Management
                             <div class="" data-toggle="dropdown">
                             <i class="fa fa-ellipsis-v text-dark"></i>
                             </div>
-                            <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                            <ul class="show-notification notification-view dropdown-menu p-1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 
                                 <li>
                                 @if(Auth::user()->hasAnyPermission(['All','Update Employee']))

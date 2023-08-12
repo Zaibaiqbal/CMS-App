@@ -32,11 +32,11 @@
                                 </div>
                             </div>
                             <div class="sparkline7-graph project-details-price-hd"  style="background-color: #cecaca;">
-                                <table class="table table-striped table-hover table-borderless table-vcenter font-size-sm mb-0  table-vcenter text-center table-sm">
+                                <table class="table table-striped table-hover table-borderless table-vcenter font-size-sm mb-0  table-vcenter table-sm">
                                          <thead class="table-vcenter">
                                     <tr>
-                                        <th class="text-center">Permisson</th>
-                                        <th class="d-none d-sm-table-cell text-center" >Action</th>
+                                        <th class="text-left">Permisson</th>
+                                        <th class="d-none d-sm-table-cell text-right" >Action</th>
 
 
                                         
@@ -51,7 +51,7 @@
                                         <td class="font-w600 font-size-sm">{{$permissions->name}}</td>
                                         
                                         
-                                       <td class="text-center">
+                                       <td class="text-right">
                                        <div class="checkbox-fade fade-in-primary checkbox">
                                                                                
                                                 <input type="checkbox" @if($role->hasPermissionTo($permissions)) checked @endif  onchange="assignPermission(event,'{{Crypt::encrypt($permissions->id)}}','{{Crypt::encrypt($role->id)}}')" class="" id="example-switch-custom{{$uniqid}}" name="example-switch-custom{{$uniqid}}" >
