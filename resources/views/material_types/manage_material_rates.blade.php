@@ -2,7 +2,7 @@
 
 @section('page_title')
 
-Material Types Management
+Material Rates Management
 
 @endsection
 
@@ -20,7 +20,7 @@ Material Types Management
             <div class="card">
 
             <div class="card-header">
-                <h3 class="card-title">Material Rate List
+                <h3 class="card-title">All Material Rates
 
                 @if(Auth::user()->hasAnyPermission(['All','Add Material Rate']))
           

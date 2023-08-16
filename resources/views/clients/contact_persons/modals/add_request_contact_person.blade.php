@@ -5,7 +5,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request Contact Person</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="col-sm-6 mt-2">
-                            @php($label = 'Choose Account Type')
+                            @php($label = 'Select Account Type')
                             @php($name = 'account_type')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
@@ -82,7 +82,7 @@
                         <label for="exampleInputEmail1">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                          <select name="{{$name}}" class="form-control fstdropdown-select" id="">
+                          <select name="{{$name}}" multiple="true" class="form-control fstdropdown-select" id="">
 
                               <option value="{{encrypt(0)}}">{{$label}}</option>
                               @foreach($account_list as $rows)

@@ -10,7 +10,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {{ Form::open(array('route' => 'store.materialrate', 'class' => '', 'id' => 'form_add_material_type')) }}
+      {{ Form::open(array('route' => 'store.materialrate', 'class' => '', 'id' => 'form_add_material_rate')) }}
 
 
       <div class="modal-body">
@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                              @php($label = 'Select Material Type')
+                              @php($label = 'Select Material')
                               @php($name = 'material_type_id')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
@@ -91,7 +91,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" onclick="submitModalForm(event,this,'#form_add_material_type','#modal_add_material_type')" class="btn btn-primary">Submit</button>
+        <button type="submit" onclick="submitModalForm(event,this,'#form_add_material_rate','#modal_add_material_rate')" class="btn btn-primary">Submit</button>
       </div>
       {{ Form::close() }}
 

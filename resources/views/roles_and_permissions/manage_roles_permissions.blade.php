@@ -19,7 +19,7 @@ Roles & Permissions Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Roles List
+                <h3 class="card-title">All Roles
 
                     @if(Auth::user()->hasAnyPermission(['All','Add Role']))
                     

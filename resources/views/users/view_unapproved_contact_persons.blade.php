@@ -2,7 +2,7 @@
 
 @section('page_title')
 
-View Unapproved Contact Persons
+View Unapproved Contacts
 
 @endsection
 @section('page_breadcrumbs')
@@ -19,8 +19,7 @@ View Unapproved Contact Persons
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Unapproved Contact Persons
-
+                <h3 class="card-title">All Unapproved Contacts
                    
                     <!--end::Button-->
                     </h3>

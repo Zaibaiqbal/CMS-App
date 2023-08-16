@@ -201,7 +201,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('contactperson.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Contact Persons</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">All Contacts</span>
                                             </a>
                                         
                                         </li>

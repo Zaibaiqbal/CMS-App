@@ -180,20 +180,13 @@
                                         
                                         </li>
 
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('unapprovecontactpersons.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Contact Persons</span>
-                                            </a>
-                                        
-                                        </li>
                                     
                                     </ul>
                             </li>
                               
                             @endif
 
-                            @if(Auth::user()->hasAnyPermission(['All','View Contact Persons']))
+                            @if(Auth::user()->hasAnyPermission(['All','All Contacts']))
 
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
@@ -204,7 +197,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('contactpersons.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Contact Persons</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">All Contacts</span>
                                             </a>
                                         
                                         </li>
@@ -212,7 +205,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('unapprovecontactpersons.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Contact Persons</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Contacts</span>
                                             </a>
                                         
                                         </li>
@@ -230,18 +223,18 @@
                                 
                             </li>
                             @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Material Types']))
+                            @if(Auth::user()->hasAnyPermission(['All','View Materials']))
 
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                     
-                                        <span class="pcoded-mtext">Material Types</span>
+                                        <span class="pcoded-mtext">Materials</span>
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('material.types.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Material Types</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Materials</span>
                                             </a>
                                         
                                         </li>
@@ -258,11 +251,11 @@
                                     </ul>
                             </li>
                             @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
+                            @if(Auth::user()->hasAnyPermission(['All','View Fleet']))
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('trucks.list')}}" >
-                                    <span class="pcoded-mtext">Trucks</span>
+                                    <span class="pcoded-mtext">Fleet</span>
                                 </a>
                              
                             </li>

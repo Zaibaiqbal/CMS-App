@@ -76,13 +76,13 @@
       </li>
     @endif
 
-    @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
+    @if(Auth::user()->hasAnyPermission(['All','View Fleet']))
 
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="{{route('material.types.list')}}" class="nav-link">Material Types</a>
+      <a href="{{route('material.types.list')}}" class="nav-link">Materials</a>
     </li>
     @endif
-    @if(Auth::user()->hasAnyPermission(['All','View Trucks']))
+    @if(Auth::user()->hasAnyPermission(['All','View Fleet']))
 
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('trucks.list')}}" class="nav-link">Trucks</a>

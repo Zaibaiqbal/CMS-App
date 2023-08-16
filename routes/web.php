@@ -25,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     
 Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('auth','permission:All|View Clients');
 
-Route::get('trucks', [App\Http\Controllers\TruckController::class, 'index'])->name('trucks.list')->middleware('auth','permission:All|View Trucks');
+Route::get('trucks', [App\Http\Controllers\TruckController::class, 'index'])->name('trucks.list')->middleware('auth','permission:All|View Fleet');
 
 Route::get('employees', [App\Http\Controllers\UserController::class, 'viewAllEmployees'])->name('employees.list')->middleware('auth','permission:All|View Employees');
 
@@ -58,17 +58,17 @@ Route::get('transactions', [App\Http\Controllers\TransactionController::class, '
 
 Route::match(['get','post'],'storetransaction', [App\Http\Controllers\TransactionController::class, 'storeTransaction'])->name('store.transaction')->middleware('auth','permission:All|Create Transaction');
 
-Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::class, 'index'])->name('material.types.list')->middleware('auth','permission:All|View Material Types');
+Route::get('materialtypeslist', [App\Http\Controllers\MaterialTypeController::class, 'index'])->name('material.types.list')->middleware('auth','permission:All|View Materials');
 
 
-Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('auth','permission:All|Add Material Type');
+Route::post('storematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialType'])->name('store.materialtype')->middleware('auth','permission:All|Add Material');
 
 Route::match(['get','post'],'updatematerialtype', [App\Http\Controllers\MaterialTypeController::class, 'updateMaterialType'])->name('update.materialtype')->middleware('auth','permission:All|Update Material Type');
 
-Route::get('materialratelist', [App\Http\Controllers\MaterialTypeController::class, 'viewMaterialList'])->name('material.rate.list')->middleware('auth','permission:All|View Material Types');
+Route::get('materialratelist', [App\Http\Controllers\MaterialTypeController::class, 'viewMaterialList'])->name('material.rate.list')->middleware('auth','permission:All|View Materials');
 
 
-Route::post('storematerialrate', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialRate'])->name('store.materialrate')->middleware('auth','permission:All|Add Material Type');
+Route::post('storematerialrate', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialRate'])->name('store.materialrate')->middleware('auth','permission:All|Add Material');
 
 Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('auth','permission:All|Add Account');
 
@@ -77,7 +77,7 @@ Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'inde
 
 Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('auth','permission:All');
 
-Route::get('contactpersons', [App\Http\Controllers\UserController::class, 'viewContactPersons'])->name('contactpersons.list')->middleware('auth','permission:All|View Contact Persons');
+Route::get('contactpersons', [App\Http\Controllers\UserController::class, 'viewContactPersons'])->name('contactpersons.list')->middleware('auth','permission:All|All Contacts');
 
 
 Route::get('unapprovecontactpersons', [App\Http\Controllers\UserController::class, 'viewUnapprovedContactPersons'])->name('unapprovecontactpersons.list')->middleware('auth','permission:All|View Unapprove Contact Persons');

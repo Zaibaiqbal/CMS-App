@@ -5,7 +5,7 @@
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Material Type</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Material</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                              @php($label = 'Material Type')
+                              @php($label = 'Name')
                               @php($name = 'type')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>

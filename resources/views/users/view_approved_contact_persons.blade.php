@@ -2,7 +2,7 @@
 
 @section('page_title')
 
-View Contact Persons
+All Contacts
 
 @endsection
 @section('page_breadcrumbs')
@@ -19,7 +19,7 @@ View Contact Persons
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">View Contact Persons
+                <h3 class="card-title">All Contacts
 
                    
                     <!--end::Button-->

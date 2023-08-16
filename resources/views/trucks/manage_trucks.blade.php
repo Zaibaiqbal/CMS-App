@@ -18,7 +18,7 @@ Trucks Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Trucks List
+                <h3 class="card-title">All Fleet
 
                     @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
             

@@ -36,7 +36,7 @@ Breadcrumbs::for('accounts', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('trucks', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('View Trucks', route('trucks.list'));
+    $trail->push('View Fleet', route('trucks.list'));
 });
 
 Breadcrumbs::for('create_transaction', function (BreadcrumbTrail $trail) {
@@ -47,7 +47,7 @@ Breadcrumbs::for('create_transaction', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('material_types', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('View Material Types', route('material.types.list'));
+    $trail->push('View Materials', route('material.types.list'));
 });
 
 Breadcrumbs::for('unapproved_clients', function (BreadcrumbTrail $trail) {

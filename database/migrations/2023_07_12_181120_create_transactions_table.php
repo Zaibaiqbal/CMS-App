@@ -34,7 +34,7 @@ class CreateTransactionsTable extends Migration
             $table->double('tare_weight')->default(0);
             $table->double('net_weight')->default(0);
             $table->timestamp('date')->nullable();
-            $table->enum('status', ['Open','Close'])->default('Open');
+            $table->enum('status', ['Queued','Processed'])->default('Queued');
             $table->integer('is_deleted')->default(0);
 
             $table->timestamps();

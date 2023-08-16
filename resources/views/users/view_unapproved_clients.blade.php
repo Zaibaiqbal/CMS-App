@@ -19,7 +19,7 @@ View Unapproved Clients
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Unapproved Client List
+                <h3 class="card-title">All Unapproved Clients
 
                    
                     <!--end::Button-->

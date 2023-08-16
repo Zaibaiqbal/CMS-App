@@ -115,7 +115,7 @@ class Transaction extends Model
 
                 if($transaction->net_weight >= 0)
                 {
-                    $transaction->status = 'Close';
+                    $transaction->status = 'Processed';
                 }
                 
                 // dd($transaction);

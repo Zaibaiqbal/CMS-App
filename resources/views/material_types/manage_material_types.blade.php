@@ -2,7 +2,7 @@
 
 @section('page_title')
 
-Material Types Management
+Materials Management
 
 @endsection
 
@@ -20,12 +20,12 @@ Material Types Management
             <div class="card">
 
             <div class="card-header">
-                <h3 class="card-title">Material Types List
+                <h3 class="card-title">All Materials
 
-                @if(Auth::user()->hasAnyPermission(['All','Add Material Type']))
+                @if(Auth::user()->hasAnyPermission(['All','Add Material']))
           
                 <a data-toggle="modal"  data-target="#modal_add_material_type" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
-                Add Material Type</a>
+                Add Material</a>
                 @endif
                     <!--end::Button-->
                     </h3>
@@ -58,7 +58,7 @@ Material Types Management
                                 </div>
                                 <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                     <li>
-                                    @if(Auth::user()->hasAnyPermission(['All','Update Material Type']))
+                                    @if(Auth::user()->hasAnyPermission(['All','Update Material']))
                 
                                     <a class="dropdown-item waves-light waves-effect"  href="#" onclick="formModal(event,'{{route('update.materialtype',['id' => encrypt($rows->id)])}}','#modal_update_material_type','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                                     @endif

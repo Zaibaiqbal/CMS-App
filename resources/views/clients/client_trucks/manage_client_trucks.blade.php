@@ -18,7 +18,7 @@ Trucks Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Trucks List
+                <h3 class="card-title">All Fleet
 
                   <a onclick="formModal(event,'{{route('store.clienttruck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
                 Add Truck  

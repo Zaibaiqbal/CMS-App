@@ -63,11 +63,12 @@ Transaction Management
                           <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
                           
                           <div class="dropdown-menu pull-right  p-2 ">
-                              
-                          @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
+                              @if($rows->status == "Open")
+                              @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
 
-                          <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-                          @endif
+                              <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                              @endif
+                              @endif
                           
                           </div>
                       </div>

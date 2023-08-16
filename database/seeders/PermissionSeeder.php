@@ -20,16 +20,16 @@ class PermissionSeeder extends Seeder
 
         $count = 0;
 
-        $data[++$count] = [ "module" => "Material Type", "name" => "Add Material Type", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Material Type", "name" => "Add Material", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Material Type", "name" => "View Material Types", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Material Type", "name" => "View Materials", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Material Type", "name" => "Update Material Type", "guard_name" => "web"];
 
 
         $data[++$count] = [ "module" => "Truck", "name" => "Add Truck", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Truck", "name" => "View Trucks", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Truck", "name" => "View Fleet", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Truck", "name" => "Update Truck", "guard_name" => "web"];
 

@@ -15,7 +15,7 @@
     </thead>
     <tbody>
         @foreach($transaction_list as $rows)
-        <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
+        <tr>
         
         <td>{{$loop->iteration}}</td>
         <td>{{$rows->ticket_no}}</td>

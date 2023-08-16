@@ -18,13 +18,13 @@ Contact Persons Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Contact Persons List
+                <h3 class="card-title">All Contacts
 
 
                 </h3>
             
                 <a onclick="formModal(event,'{{route('request.contactperson')}}','#modal_request_contact_person','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
-                         Request to Add Contact Person</a>
+                         Add Contact</a>
               
               </div>
               <!-- /.card-header -->
