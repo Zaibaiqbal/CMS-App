@@ -28,11 +28,18 @@ class CreateTransactionsTable extends Migration
             $table->string('operation_type')->nullable();
 
             $table->string('plate_no')->nullable();
+            $table->string('client_name')->nullable();
+            $table->string('contact_no')->nullable();
 
             $table->double('gross_weight')->default(0);
             $table->string('weight_unit')->nullable();
             $table->double('tare_weight')->default(0);
             $table->double('net_weight')->default(0);
+
+            $table->double('material_rate')->default(0);
+            
+            $table->text('note')->nullable();
+            $table->text('vehicle_desc')->nullable();
             $table->timestamp('date')->nullable();
             $table->enum('status', ['Queued','Processed'])->default('Queued');
             $table->integer('is_deleted')->default(0);

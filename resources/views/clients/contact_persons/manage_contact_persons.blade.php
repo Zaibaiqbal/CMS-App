@@ -8,7 +8,7 @@ Contact Persons Management
 
 @section('page_breadcrumbs')
 
-{{ Breadcrumbs::render('accounts') }}
+{{ Breadcrumbs::render('contact_persons') }}
 
 @endsection
 

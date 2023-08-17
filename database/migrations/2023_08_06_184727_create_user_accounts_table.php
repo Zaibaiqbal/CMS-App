@@ -19,8 +19,8 @@ class CreateUserAccountsTable extends Migration
             $table->bigInteger('account_id')->default(0);
             $table->bigInteger('parent_id')->default(0);
             $table->integer('is_deleted')->default(0);
-            $table->string('title')->nullable();
-
+            $table->longText('description')->nullable();
+            $table->string('status')->default('Unapprove');
             
             $table->timestamps();
         });

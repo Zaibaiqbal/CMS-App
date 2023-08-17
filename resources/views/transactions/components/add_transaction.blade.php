@@ -1,7 +1,7 @@
 {{ Form::open(array('route' => 'store.transaction', 'class' => '', 'id' => 'form_create_transaction')) }}
 <div class="row">
         <div class="col-md-4">
-                @php($label = 'Plate No')
+                @php($label = 'Liscence Plate No')
                 @php($name = 'plate_no')
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
@@ -10,16 +10,7 @@
                 <input type="hidden" name="truck_id" class="truck_id">
 
                 <input type="text" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="">
-{{--
-                <div class="input-group-append">
-                    @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
-            
-                    <a data-target="#modal_add_transaction_truck" data-toggle="modal" class="btn  btn-primary text-white font-weight-bolder p-2" style="float: right;">
-                    Add</a>
-                    @endif
 
-                </div>
-                --}}
             </div>
 
 
@@ -31,31 +22,7 @@
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
                 <div class="input-group">
-
-                {{-- 
-                <select name="{{$name}}" id="" class="form-control fstdropdown-select">
-
-                <option value="{{encrypt(0)}}">{{$label}}</option>
-
-                @foreach($user_list as $rows)
-
-                <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
-
-                @endforeach
-
-                </select>
-
-                <div class="input-group-append">
-                    @if(Auth::user()->hasAnyPermission(['All','Add Clients']))
-            
-                    <a data-target="#modal_add_client" data-toggle="modal" class="btn  btn-primary text-white font-weight-bolder p-2" style="float: right;">
-                    Add</a>
-                    @endif
-
-                </div>
-                --}}
-
-              <input type="text" name="{{$name}}" class="form-control client_name auto_search_client_name" id="" placeholder="{{$label}}">
+                    <input type="text" name="{{$name}}" class="form-control client_name auto_search_client_name" id="" placeholder="{{$label}}">
                 <input type="hidden" value="" name="user_id"  class="user_id">
 
 
@@ -69,10 +36,13 @@
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
-                <input type="text" name="{{$name}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
 
 
         </div>
+
+        
+        {{--
 
         <div class="col-md-6">
                 @php($label = 'Select Account')
@@ -92,7 +62,6 @@
 
             </div>
         </div>
-        {{--
 
         <div class="col-md-6 mb-2">
 
@@ -111,7 +80,7 @@
         </div>
         --}}
 
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
 
             @php($label = 'Select Operation Type')
             @php($name = 'operation_type')
@@ -126,7 +95,7 @@
             </select>
 
         </div>
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
 
             @php($label = 'Gross Weight')
                 @php($name = 'gross_weight')
@@ -164,7 +133,7 @@
         --}}
 
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             @php($label = 'Driver Name')
             @php($name = 'driver_name')
             <div class="form-group">
@@ -176,8 +145,8 @@
         </div>
 
         <div class="col-md-12">
-            @php($label = 'Note')
-            @php($name = 'note')
+            @php($label = 'Vehicle Description')
+            @php($name = 'vehicle_descp')
             <div class="form-group">
                 <label for="">{{$label}}</label>
                 <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}">
@@ -191,6 +160,7 @@
 
 <div class="row">
     <div class="col-md-12">
+        <input type="hidden" value="" name="client_type" class="client_type">
         <button type="submit" onclick="submitModalForm(event,this,'#form_create_transaction','')" class="btn btn-primary my-3" style="float: right;">Queue</button>
 
     </div>

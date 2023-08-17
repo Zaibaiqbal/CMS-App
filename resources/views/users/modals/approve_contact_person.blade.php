@@ -19,33 +19,34 @@
                     <div class="card-body">
                       
                     <div class="row">
-                      {{--
+                      
                       <div class="col-md-6">
                           <div class="form-group">
                               @php($label = 'Title')
                               @php($name = 'title')
                               <label for="">{{$label}} <span class="text-danger">*</span> </label>
                               <small class="text-danger" id="{{$name}}_error"></small>
+                              @if($user_account->user->account_type == "Existing Account") 
                              
+                              <input type="text" name="{{$name}}" placeholder="{{$label}}" value="{{$user_account->account->title}}" readonly  class="form-control" id="">
+                              @else
                               <input type="text" name="{{$name}}" placeholder="{{$label}}"  class="form-control" id="">
-                              
+
+                              @endif
                           </div>
 
                         </div>
 
-                        --}}
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                           <div class="form-group">
                               @php($label = 'Account No.')
                               @php($name = 'account_no')
                               <label for="">{{$label}} <span class="text-danger">*</span> </label>
                               <small class="text-danger" id="{{$name}}_error"></small>
                               @if($user_account->user->account_type == "Existing Account") 
-                              <select name="{{$name}}" id="" class="form-control">
-                                @foreach($user_account->client->userAccounts as $rows)
-                                <option value="{{$rows->account->account_no}}">{{$rows->account->account_no}}</option>
-
-                                @endforeach
+                              <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+                               
+                                <option value="{{$user_account->account->account_no}}">{{$user_account->account->account_no}}</option>
 
                               </select>
                               @else
@@ -79,5 +80,6 @@
 $('.cnic').mask("00000-0000000-0");
 $('.contact').mask("0000-0000000");
 
+setFstDropdown();
 
 </script>

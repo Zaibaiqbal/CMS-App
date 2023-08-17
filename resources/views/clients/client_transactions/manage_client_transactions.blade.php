@@ -18,7 +18,7 @@ Transaction Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Transactions List
+                <h3 class="card-title">All Transactions
 
                 </h3>
 
@@ -31,7 +31,7 @@ Transaction Management
                       <tr>
                           <th>#</th>
                           <th>Name</th>
-                          <th>Plate No</th>
+                          <th>Liscence Plate No</th>
                           <th>Material Type</th>
                           <th>Gross weight</th>
                           <th>Tare weight</th>
@@ -50,7 +50,7 @@ Transaction Management
                         <td>{{$rows->gross_weight}}</td>
                         <td>{{$rows->tare_weight}}</td>
                         <td>{{$rows->net_weight}}</td>
-                        <td>{{$rows->status}}</td>
+                        <td>@if($rows->status == "Queued") In-Progress @else Completed @endif</td>
                        
                     </tr>
 

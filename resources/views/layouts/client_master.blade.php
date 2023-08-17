@@ -222,7 +222,7 @@
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('contactperson.list')}}">
                                             
-                                    <span class="pcoded-mtext">Contact Persons</span>
+                                    <span class="pcoded-mtext">Contacts</span>
                                 </a>
                                 
                             </li>

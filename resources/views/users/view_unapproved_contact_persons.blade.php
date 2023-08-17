@@ -7,7 +7,7 @@ View Unapproved Contacts
 @endsection
 @section('page_breadcrumbs')
 
-{{ Breadcrumbs::render('unapproved_clients') }}
+{{ Breadcrumbs::render('unapproved_contacts') }}
 
 @endsection
 

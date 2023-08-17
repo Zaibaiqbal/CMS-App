@@ -82,9 +82,8 @@
                         <label for="exampleInputEmail1">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                          <select name="{{$name}}" multiple="true" class="form-control fstdropdown-select" id="">
+                          <select name="{{$name}}[]" multiple="true" class="form-control fstdropdown-select" id="">
 
-                              <option value="{{encrypt(0)}}">{{$label}}</option>
                               @foreach($account_list as $rows)
 
 

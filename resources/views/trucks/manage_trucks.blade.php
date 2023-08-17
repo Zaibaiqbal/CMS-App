@@ -20,10 +20,10 @@ Trucks Management
               <div class="card-header">
                 <h3 class="card-title">All Fleet
 
-                    @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
+                    @if(Auth::user()->hasAnyPermission(['All','Add Fleet']))
             
                     <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
-                    Add Truck</a>
+                    Add Fleet</a>
                     @endif
                 </h3>
 
@@ -61,7 +61,7 @@ Trucks Management
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
-                                @if(Auth::user()->hasAnyPermission(['All','Update Truck']))
+                                @if(Auth::user()->hasAnyPermission(['All','Update Fleet']))
 
             
                                 <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>

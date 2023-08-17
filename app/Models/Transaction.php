@@ -36,24 +36,37 @@ class Transaction extends Model
     public function storeTransaction($object)
     {
 
+        // dd($object);
         return DB::transaction(function() use ($object){
 
             $transaction = new Transaction;
           
-            $truck = Truck::find($object['truck_id']);
-
-            if(isset($truck->id))
+            if(isset($object['truck_id']))
             {
+                $truck = Truck::find($object['truck_id']);
 
-                $transaction->truck_id = $truck->id;
+                if(isset($truck->id))
+                {
+                    $transaction->truck_id = $truck->id;
+                }
+            }
+            
+         
                 $transaction->added_id = Auth::user()->id;
 
                 // dd($object);
-                $transaction->plate_no = $truck->plate_no;
+                $transaction->plate_no = $object['plate_no'];
+                $transaction->client_name = $object['client'];
+                $transaction->contact_no = $object['contact_no'];
+
                 // $transaction->material_type_id = $object['material_type'];
                 $transaction->operation_type = $object['operation_type'];
 
-                $transaction->client_id = $object['user_id'];
+                if(isset($object['user_id']))
+                {
+                    $transaction->client_id = $object['user_id'];
+
+                }
 
                 if(isset($object['account']))
                 {
@@ -71,7 +84,14 @@ class Transaction extends Model
                     $transaction->gross_weight = $object['gross_weight'];
 
                 }
-                // $transaction->gross_weight = $object['gross_weight'];
+
+                if(isset( $object['vehicle_descp']))
+                {
+                    $transaction->vehicle_desc = $object['vehicle_descp'];
+
+                }
+                
+                $transaction->client_type = $object['client_type'];
                 // $transaction->net_weight = $object['net_weight'];
                 $transaction->ticket_no = $this->generateTicketNo();
                 
@@ -87,7 +107,6 @@ class Transaction extends Model
                 $transaction->driver_id  = $driver->id;
 
                 $transaction->update();
-            }
 
 
         return with($transaction);
@@ -118,6 +137,21 @@ class Transaction extends Model
                     $transaction->status = 'Processed';
                 }
                 
+                if($transaction->operation_type == "Inbound" && isset($object['job_id']))
+                {
+                    $transaction->job_id = $object['job_id'];
+
+                }     
+                
+                if(isset($object['account']))
+                {
+                    $transaction->account_id = $object['account'];
+
+                }
+
+                $transaction->material_rate = $object['material_rate'];
+
+
                 // dd($transaction);
                 $transaction->update();
 

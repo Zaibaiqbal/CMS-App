@@ -35,7 +35,7 @@ class UserAccount extends Model
         ->where('user_accounts.is_deleted',0)
         ->where('user_accounts.parent_id', '=', $id)
         ->orWhere('user_accounts.user_id',$id)
-        ->select('accounts.id', 'accounts.account_no')
+        ->select('accounts.id', 'accounts.account_no','accounts.title')
         ->distinct('accounts.account_no')
         ->get();
     }
@@ -65,11 +65,17 @@ class UserAccount extends Model
                 $user_account->account_id = $object['account_id'];
 
             }
-            // if(isset($object['title']))
-            // {
-            //     $user_account->title = $object['title'];
+            if(isset($object['status']))
+            {
+                $user_account->status = $object['status'];
 
-            // }
+            }
+
+            if(isset($object['description']))
+            {
+                $user_account->description = $object['description'];
+
+            }
 
             $user_account->save();
             
@@ -88,6 +94,7 @@ class UserAccount extends Model
             {
 
                  $user_account->account_id = $object['account_id'];
+                 $user_account->status = $object['status'];
                 //  $user_account->title = $object['title'];
 
                  $user_account->update();

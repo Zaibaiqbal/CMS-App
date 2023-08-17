@@ -39,6 +39,7 @@ Materials Management
                     <tr>
                       <th>#</th>
                       <th>Name</th>
+                      <th>Board Rate</th>
                    
                       <th>Action</th>
                     </tr>
@@ -50,6 +51,8 @@ Materials Management
                       <td>{{$loop->iteration}}</td>
                      
                       <td>{{$rows->name}}</td>
+                      <td>{{$rows->board_rate}}</td>
+
                       <td>
 
                         <div class="dropdown-primary dropdown">

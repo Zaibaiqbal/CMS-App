@@ -46,7 +46,7 @@ class UserController extends Controller
         $user = new User;
 
         $user_list = $user->getContactPersonsByCondition('Contact Person','Inactive',0);
-
+// dd($user_list);
         return view('users.view_unapproved_contact_persons',[
             'user_list'  => $user_list
         ]);
@@ -160,7 +160,7 @@ class UserController extends Controller
     
                     'user'                  => 'required',
                     'account_no'              => 'required|max:15|min:0|unique:accounts',
-                    // 'title'                   => 'required|max:255|min:0',
+                    'title'                   => 'required|max:255|min:0',
                    
                     ]);
 
@@ -175,14 +175,14 @@ class UserController extends Controller
                     if(isset($form_data['account_no']))
                     {
                         $account = new Account;
-
+// dd($form_data);
                         $account = $account->storeAccount($form_data);
 
                         if(isset($account->id))
                         {
-                            $object['user_id']   =  $user->id;
+                            $object['user_id']      =  $user->id;
                             $object['account_id']   =  $account->id;
-                            // $object['title']   =  $form_data['title'];
+                            $object['status']       =  'Approved';
                             
                             $user_account = new UserAccount;
 
@@ -261,7 +261,7 @@ class UserController extends Controller
     
                     'user_account'                      => 'required',
                     'account_no'                 => 'required|max:15|min:0',
-                    // 'title'                   => 'required|max:255|min:0',
+                    'title'                   => 'required|max:255|min:0',
                    
                     ]);
 
@@ -290,13 +290,13 @@ class UserController extends Controller
                             $account = $account->getAccountByAccountNo($form_data);
                         }
                      
-
                         if(isset($account->id))
                         {
                             $object['user_id']      =  $user->id;
                             $object['account_id']   =  $account->id;
                             $object['id']           =  $user_account->id;
-                            // $object['title']           =  $form_data['title'];
+                            $object['title']           =  $form_data['title'];
+                            $object['status']           =  'Approved';
                             
                             $user_account = new UserAccount;
 
@@ -344,7 +344,7 @@ class UserController extends Controller
                 $user = new UserAccount;
 
                 $user_account  = $user->getUserAccountById($user_account_id);
-
+// dd($user_account);
                 if(isset($user_account->id))
                 {
 
@@ -648,27 +648,27 @@ class UserController extends Controller
                    
                 ]);
                 $form_data = $request->input();
+                
                 $form_data['user_type']  = 'Contact Person';
-        
+
+                if(isset($form_data['account']) && @count($form_data['account']) > 0)
+                {
+                    foreach($form_data['account'] as $key => $rows)
+                    {
+                        $form_data['account'][$key]    =  decrypt($rows);
+
+                    }
+                }
+        // dd($form_data);
                 $user = new User;
                 $user = $user->storeUser($form_data);
 
-                if(isset($user))
+                if(isset($user->id))
                 {
-                    $object['user_id']  = $user->id;
-                    $object['parent_id']  = Auth::user()->id;
-
-                    if($user->user_type == "Contact Person")
-                    {
-                        $object['account_id']    =  decrypt($form_data['account']);
-                    }
-
-                    $user_account = new UserAccount;
-                    $user_account = $user_account->storeUserAccount($object);
-                
                     $data = ['status' => true , 'message' => 'Request Generated Successfully'];
 
                 }
+                
 
                 return $data;
 

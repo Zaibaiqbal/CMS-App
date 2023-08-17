@@ -50,9 +50,9 @@ Route::match(['get','post'],'assignpermission', [App\Http\Controllers\RoleContro
 
 Route::match(['get','post'],'assignrole', [App\Http\Controllers\RoleController::class, 'assignRolesToUser'])->name('assign.roles')->middleware('auth','permission:All|Assign Role');
 
-Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth','permission:All|Add Truck');
+Route::match(['get','post'],'storetruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.truck')->middleware('auth','permission:All|Add Fleet');
 
-Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('auth','permission:All|Update Truck');
+Route::match(['get','post'],'updatetruck', [App\Http\Controllers\TruckController::class, 'updateTruck'])->name('update.truck')->middleware('auth','permission:All|Update Fleet');
 
 Route::get('transactions', [App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.list')->middleware('auth','permission:All|View Transactions');
 
@@ -69,6 +69,8 @@ Route::get('materialratelist', [App\Http\Controllers\MaterialTypeController::cla
 
 
 Route::post('storematerialrate', [App\Http\Controllers\MaterialTypeController::class, 'storeMaterialRate'])->name('store.materialrate')->middleware('auth','permission:All|Add Material');
+
+Route::match(['get','post'],'updatematerialrate', [App\Http\Controllers\MaterialTypeController::class, 'updateMaterialRate'])->name('update.materialrate')->middleware('auth','permission:All|Update Material Rate');
 
 Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('auth','permission:All|Add Account');
 
@@ -112,6 +114,20 @@ Route::get('getclientaccountlist',[App\Http\Controllers\UserAccountController::c
 Route::match(['get','post'],'viewdeactiveusers', [App\Http\Controllers\UserController::class, 'viewDeactiveUsers'])->name('viewdeactiveusers')->middleware('auth','permission:All|View Deactive User');
 
 Route::get('approverdeactive', [App\Http\Controllers\UserController::class, 'approveRequestToDeactiveUser'])->name('approverdeactive')->middleware('auth','permission:All|Approve Deactive User');
+
+
+Route::get('locations', [App\Http\Controllers\LocationController::class, 'index'])->name('locations.list')->middleware('auth','permission:All|View Locations');
+
+
+Route::match(['get','post'],'storecategory', [App\Http\Controllers\LocationController::class, 'storeCategory'])->name('store.category')->middleware('auth','permission:All|Add Category');
+
+
+Route::match(['get','post'],'storelocation', [App\Http\Controllers\LocationController::class, 'storeLocation'])->name('store.location')->middleware('auth','permission:All|Add Location');
+
+Route::post('transactioninvoice', [App\Http\Controllers\TransactionController::class, 'printTransactionInvoice'])->name('transaction.invoice')->middleware('auth','permission:All|Approve Deactive User');
+
+
+Route::get('materialinfo', [App\Http\Controllers\MaterialTypeController::class, 'getMaterialInfo'])->name('materialinfo')->middleware('auth');
 
 // CLIENT ROUTES
 

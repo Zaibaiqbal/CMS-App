@@ -2,14 +2,11 @@
     <thead>
     <tr>
         <th>#</th>
-        <th>Ticket No.</th>
+        <th>Liscence Plate No</th>
+        <th>Description</th>
         <th>Client</th>
-        <th>Plate No</th>
-        <th>Material Type</th>
-        <th>Gross weight</th>
-        <th>Tare weight</th>
-        <th>Net weight</th>
-        <th>Status</th>
+        <th>Ticket No.</th>
+
         <th>Action</th>
     </tr>
     </thead>
@@ -18,27 +15,17 @@
         <tr>
         
         <td>{{$loop->iteration}}</td>
-        <td>{{$rows->ticket_no}}</td>
-        <td>{{$rows->client->name}}</td>
         <td>{{$rows->plate_no}}</td>
-        <td>{{$rows->materialType->name}}</td>
-        <td>{{$rows->gross_weight}}</td>
-        <td>{{$rows->tare_weight}}</td>
-        <td>{{$rows->net_weight}}</td>
-        <td>{{$rows->status}}</td>
-        <td>
-        <div class="item-action dropdown">
-            <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
-            
-            <div class="dropdown-menu pull-right p-1">
-                
-            @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
+        <td>{{$rows->vehicle_desc}}</td>
+        <td>{{$rows->client_name}}</td>
 
-            <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-            @endif
-            
-            </div>
-        </div>
+        <td>{{$rows->ticket_no}}</td>
+       
+        <td>
+        @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
+
+        <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i></a>
+        @endif
         </td>
     </tr>
 

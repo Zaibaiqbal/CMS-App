@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             <div class="sparkline7-graph project-details-price-hd"  style="background-color: #cecaca;">
-                                <table class="table table-striped table-hover table-borderless table-vcenter font-size-sm mb-0  table-vcenter table-sm">
+                                <table class="table table-striped table-hover table-borderless table-vcenter font-size-sm mb-0">
                                          <thead class="table-vcenter">
                                     <tr>
                                         <th class="text-left">Permisson</th>

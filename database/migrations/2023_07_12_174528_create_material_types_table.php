@@ -17,6 +17,7 @@ class CreateMaterialTypesTable extends Migration
             $table->increments('id');
 
             $table->string('name')->nullable();
+            $table->double('board_rate')->nullable();
             $table->integer('is_deleted')->default(0);
 
             $table->timestamps();

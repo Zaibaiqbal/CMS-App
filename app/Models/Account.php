@@ -26,6 +26,12 @@ class Account extends Model
 
             $account = new Account;
             $account->account_no = $object['account_no'];
+            
+                if(isset($object['title']))
+            {
+                $account->title = $object['title'];
+
+            }
 
             $account->save();
             

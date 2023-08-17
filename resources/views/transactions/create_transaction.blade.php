@@ -150,6 +150,14 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                     contentType: "json",
                     success: function (data) {
 
+                        var parsedData = JSON.parse(data);
+
+                        if (parsedData.length === 0) {
+
+                            $('.client_type').val('Cash Account');
+
+                        } else {
+
                         response($.map(JSON.parse(data), function (item) {
                             return {
                                 label: item.plate_no,
@@ -160,13 +168,15 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                             }
                        
                         }))
-
+                    }
                      
                     },
                     error: function (response) {
                         alert(response.responseText);
                     },
                     failure: function (response) {
+                        console.log("fve");
+
                         alert(response.responseText);
                     }
                 });
@@ -177,9 +187,11 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 $('.auto_search_plate_no').val(i.item.value);
                 $('.client_name').val(i.item.label1).attr('readonly',true);
                 $('input[name=user_id]').val(i.item.val1);
-                $('input[name=contact_no]').val(i.item.label2);
+                $('input[name=contact_no]').val(i.item.label2).attr('readonly',true);
+                $('.client_type').val('Client Account');
 
-                getClientAccountList(i.item.val1);
+
+                // getClientAccountList(i.item.val1);
             },
             open: function() {
         // Get the autocomplete list element
@@ -188,7 +200,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 // Add custom CSS class to the list element
                 autocompleteList.addClass("custom-autocomplete-list");
             },
-            minLength: 2
+            minLength: 3
         });
     }
 

@@ -19,19 +19,52 @@
 
           <div class="card-body">
             <div class="row">
-                <div class="col-md-12">
-                        @php($label = 'Plate No')
+            @if($transaction->operation_type == "Inbound")
+                <div class="col-md-6">
+                        @php($label = 'Job Id / PO Number')
+                        @php($name = 'job_id')
+                        <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                        <small class="text-danger" id="{{$name}}_error"></small>
+                    <div class="input-group">
+
+                        <input type="text" value="" name="{{$name}}"  placeholder="{{$label}}"  class="form-control auto_search_plate_no" id="">
+                    </div>
+
+
+                </div>
+                @endif
+                <div @if($transaction->operation_type == "Inbound") class="col-md-6" @else class="col-md-12"  @endif>
+                        @php($label = 'Liscence Plate No')
                         @php($name = 'plate_no')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
-                        <input type="hidden" name="truck_id" value="{{$transaction->truck->id}}" class="truck_id">
+                        <input type="hidden" name="truck_id" value="{{$transaction->truck_id}}" class="truck_id">
 
-                        <input type="text" value="{{$transaction->truck->plate_no}}" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="" readonly>
+                        <input type="text" value="{{$transaction->plate_no}}" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="" readonly>
                     </div>
 
 
+                </div>
+            
+                <div class="col-md-4">
+                    @php($label = 'Select Account')
+                    @php($name = 'account')
+
+                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
+                    <div class="input-group">
+
+                    <select name="{{$name}}" id="" class="form-control" @if($transaction->client_type == 'Cash Account') disabled @else class="form-control fstdropdown-select" @endif>
+                    @foreach($account_list as $rows)
+                        <option value="{{encrypt($rows->id)}}">{{$rows->account_no}} - {{$rows->title}}</option>
+                    @endforeach
+                    </select>
+
+
+
+                    </div>
                 </div>
                 <div class="col-md-4">
                         @php($label = 'Client Name')
@@ -40,7 +73,7 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                         <div class="input-group">
-                        <input type="text" readonly name="{{$name}}" class="form-control name auto_search_client_name" onkeyup="autoSearchClientName(event,'client')" value="{{$transaction->client->name}}" id="" placeholder="{{$label}}">
+                        <input type="text" readonly name="{{$name}}" class="form-control name auto_search_client_name" value="{{$transaction->client_name}}" id="" placeholder="{{$label}}">
                         <input type="hidden"  value="{{$transaction->client_id}}" name="user_id"  class="user_id">
 
                     </div>
@@ -53,29 +86,19 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <input type="text" name="{{$name}}" value="{{$transaction->client->contact}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                        <input type="text" name="{{$name}}" value="{{$transaction->contact_no}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
 
 
                 </div>
+            
                 <div class="col-md-4 mb-2">
-
-                  @php($label = 'Account')
-                  @php($name = 'account')
-                  <label for="">{{$label}} <span class="text-danger">*</span> </label>
-                  <small class="text-danger" id="{{$name}}_error"></small>
-
-                  <input type="text" name="{{$name}}" value="{{$transaction->userAccount->account->account_no}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
-
-
-                  </div>
-                <div class="col-md-6 mb-2">
 
                         @php($label = 'Select Material Type')
                         @php($name = 'material_type')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <select name="{{$name}}" id="" class="form-control">
+                        <select name="{{$name}}" id="" class="form-control fstdropdown-select" onchange="getMaterialRate(event,this)">
 
                             <option value="{{encrypt(0)}}">{{$label}}</option>
                             @foreach($material_types as $rows)
@@ -85,7 +108,7 @@
 
                 </div>
 
-                <div class="col-md-6 mb-2">
+                <div class="col-md-4 mb-2">
 
                     @php($label = 'Select Operation Type')
                     @php($name = 'operation_type')
@@ -99,7 +122,18 @@
                         @endforeach
                     </select>
 
-                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+
+                @php($label = 'Material Rate')
+                    @php($name = 'material_rate')
+                    <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <input type="text" readonly name="{{$name}}" class="form-control material_rate"  placeholder="{{$label}}" >
+
+                </div>
             
                 <div class="col-md-4 mb-2">
 
@@ -169,7 +203,7 @@
       <div class="modal-footer">
         <input type="hidden" name="transaction_id" value="{{encrypt($transaction->id)}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" onclick="submitModalForm(event,this,'#form_update_transaction','#modal_update_transaction')" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Processed</button>
       </div>
       {{ Form::close() }}
 
@@ -178,6 +212,7 @@
 </div>
 
 <script>
+    setFstDropdown();
 
 function calculateNetWeight(event,obj)
     {
@@ -209,5 +244,22 @@ function calculateNetWeight(event,obj)
 
     }
 
+    function getMaterialRate(event,obj)
+    {
+        event.preventDefault();
+
+        var material = $(obj).val();
+        var client_type = "{{$transaction->client_type}}";
+        var user_id = "{{$transaction->client_id}}";
+  
+        $.get("{{route('materialinfo')}}",{material:material,client_type,client_type,user_id,user_id},function(data){
+
+            $('.material_rate').val(data.rate);
+
+
+        });
+
+    }
+    
 
 </script>

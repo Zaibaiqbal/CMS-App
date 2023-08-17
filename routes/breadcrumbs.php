@@ -34,6 +34,17 @@ Breadcrumbs::for('accounts', function (BreadcrumbTrail $trail) {
     $trail->push('View Accounts', route('accounts.list'));
 });
 
+Breadcrumbs::for('contact_persons', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('View Contacts', route('contactpersons.list'));
+});
+
+
+Breadcrumbs::for('unapproved_contacts', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('View Unapproved Contacts', route('unapprovecontactpersons.list'));
+});
+
 Breadcrumbs::for('trucks', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('View Fleet', route('trucks.list'));
@@ -58,4 +69,10 @@ Breadcrumbs::for('unapproved_clients', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('roles_and_permissions', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('View Roles & Permissions', route('roles.permissions'));
+});
+
+
+Breadcrumbs::for('locations', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('View Locations', route('locations.list'));
 });

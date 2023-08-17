@@ -18,7 +18,7 @@ Transaction Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Transactions List
+                <h3 class="card-title">All Transactions
 
                 @if(Auth::user()->hasAnyPermission(['All','Create Transaction']))
           
@@ -51,7 +51,7 @@ Transaction Management
                         <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
                         
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$rows->client->name}}</td>
+                        <td>{{$rows->client_name}}</td>
                         <td>{{$rows->plate_no}}</td>
                         <td>{{$rows->materialType->name}}</td>
                         <td>{{$rows->gross_weight}}</td>
@@ -63,7 +63,7 @@ Transaction Management
                           <a class="icon" data-toggle="dropdown" ><i class="fa fa-list"></i></a>
                           
                           <div class="dropdown-menu pull-right  p-2 ">
-                              @if($rows->status == "Open")
+                              @if($rows->status == "Queued")
                               @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
 
                               <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>

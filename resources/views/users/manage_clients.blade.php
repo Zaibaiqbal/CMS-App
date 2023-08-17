@@ -18,7 +18,7 @@ Clients Management
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Clients List
+                <h3 class="card-title">All Clients
 
                     <!--end::Button-->
                     </h3>

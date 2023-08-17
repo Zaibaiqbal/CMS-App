@@ -260,6 +260,15 @@
                              
                             </li>
                             @endif
+                            @if(Auth::user()->hasAnyPermission(['All','View Locations']))
+
+                            <li class="pcoded-hasmenu">
+                                <a href="{{route('locations.list')}}" >
+                                    <span class="pcoded-mtext">Outbound Location</span>
+                                </a>
+                            
+                            </li>
+                            @endif
                             @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
 
                             <li class="pcoded-hasmenu">

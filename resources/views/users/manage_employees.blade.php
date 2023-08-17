@@ -18,7 +18,7 @@ Employees Management
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Employees List   
+                <h3 class="card-title">All Employees   
                     @if(Auth::user()->hasAnyPermission(['All','Add Employee']))
           
                     <a onclick="formModal(event,'{{route('store.employee')}}','#modal_add_employee','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">

@@ -76,13 +76,12 @@ class User extends Authenticatable
         return UserAccount::with(['user', 'client'])
         ->whereHas('user', function ($query) use ($type,$status,$is_verified) {
 
-        $query->where(['user_type' => $type,'is_verified' => $is_verified,'status'  => $status]);
+        $query->where(['user_type' => $type]);
         
-    })->get();
+    })->where('status','Unapprove')->get();
 
     
     }
-
     public function getUserIdsByPermissions($permission_names = [])
     {
 
@@ -169,15 +168,68 @@ class User extends Authenticatable
 
             $user->save();
 
-            if($user->user_type == "Contact Person")
-            {
-                $user_obj = new User;
-                $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+                if($user->user_type == "Contact Person")
+                {
+       
+                    if(isset($object['account']) && @count($object['account']) > 0)
+                    {
+                        $account_info = [];
 
-                event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name));
+                        foreach($object['account'] as $key => $rows)
+                        {
 
-            }
+                            $account_info = [
 
+                                'user_id'  => $user->id,
+                                'parent_id'  => Auth::user()->id,
+            
+                                'account_id'    =>  $rows,
+
+                            ];
+                            if(isset($object['note']))
+                            {
+                                $account_info += [
+                                    'description'    =>  $object['note'],
+
+                                ];
+                            }
+                            // dd($account_info);
+
+                            $user_account = new UserAccount;
+                            $user_account = $user_account->storeUserAccount($account_info);
+                        }
+                     
+
+                    }
+                    else
+                    {
+                        $account_info = [
+
+                            'user_id'  => $user->id,
+                            'parent_id'  => Auth::user()->id,
+        
+                        ];
+                        if(isset($object['note']))
+                        {
+                            $account_info += [
+                                'description'    =>  $object['note'],
+
+                            ];
+                        }
+// dd($account_info);
+
+                        $user_account = new UserAccount;
+                        $user_account = $user_account->storeUserAccount($account_info);
+                    }
+
+            
+                    $user_obj = new User;
+                    $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+    
+                    event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name));
+
+    
+                }
             // $user->assignRole($object['user_type']);
 
 

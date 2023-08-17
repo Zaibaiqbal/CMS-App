@@ -13,7 +13,7 @@ class TruckController extends Controller
     public function index()
     {
 
-        $trucks_list = Truck::all();
+        $trucks_list = Truck::get();
         return view('trucks.manage_trucks',[
             'trucks_list'  =>  $trucks_list
         ]);
@@ -147,8 +147,6 @@ class TruckController extends Controller
         return redirect()->back();
       
     }
-
-  
 
 
     public function autoSearchPlateNo(Request $request)
