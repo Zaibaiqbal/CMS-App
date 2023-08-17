@@ -231,7 +231,7 @@
                            
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('client.trucks')}}" >
-                                    <span class="pcoded-mtext">Trucks</span>
+                                    <span class="pcoded-mtext">Fleet</span>
                                 </a>
                              
                             </li>

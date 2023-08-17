@@ -600,7 +600,7 @@ class UserController extends Controller
         {
             $user_account = new UserAccount;
             $user_list = $user_account->getUserAccountListByClientId(Auth::user()->id);
-
+// dd($user_list);
             return view('clients.contact_persons.manage_contact_persons',[
                 'user_list'   =>  $user_list
             ]);
