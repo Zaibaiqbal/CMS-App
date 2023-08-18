@@ -43,11 +43,17 @@ class PermissionSeeder extends Seeder
         $data[++$count] = [ "module" => "Location", "name" => "Update Location", "guard_name" => "web"];
 
 
-        $data[++$count] = [ "module" => "Client", "name" => "Add Client", "guard_name" => "web"];
+        // $data[++$count] = [ "module" => "Client", "name" => "Add Client", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Client", "name" => "View Clients", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Client", "name" => "Update Client", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Client", "name" => "View Unapproved Clients", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Contacts", "name" => "View Contacts", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "Contacts", "name" => "View Unapproved Contacts", "guard_name" => "web"];
+
+        // $data[++$count] = [ "module" => "Client", "name" => "Update Client", "guard_name" => "web"];
 
 
         $data[++$count] = [ "module" => "Employee", "name" => "Add Employee", "guard_name" => "web"];
@@ -70,6 +76,7 @@ class PermissionSeeder extends Seeder
 
         $data[++$count] = [ "module" => "Transaction", "name" => "Update Transaction", "guard_name" => "web"];
 
+        $data[++$count] = [ "module" => "Transaction", "name" => "Print Ticket", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Add Role", "guard_name" => "web"];
 

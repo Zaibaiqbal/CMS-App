@@ -12,6 +12,7 @@ class Account extends Model
 
     public function getAccountByAccountNo($account_no)
     {
+        
         return Account::where('is_deleted',0)->where('account_no',$account_no)->first();
     }
 

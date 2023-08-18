@@ -156,7 +156,7 @@
                 <nav class="pcoded-navbar">
                     <div class="pcoded-inner-navbar">
                         <ul class="pcoded-item pcoded-left-item">
-                            @if(Auth::user()->hasAnyPermission(['All','View Clients']))
+                            @if(Auth::user()->hasAnyPermission(['All','View Clients','View Unapproved Clients']))
 
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
@@ -164,6 +164,8 @@
                                         <span class="pcoded-mtext">Clients</span>
                                     </a>
                                     <ul class="pcoded-submenu">
+                                    @if(Auth::user()->hasAnyPermission(['All','View Clients']))
+
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('users.list')}}">
                                             
@@ -171,6 +173,8 @@
                                             </a>
                                         
                                         </li>
+                                        @endif
+                                        @if(Auth::user()->hasAnyPermission(['All','View Unapproved Clients']))
 
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('unapproveclients.list')}}">
@@ -180,28 +184,31 @@
                                         
                                         </li>
 
+                                        @endif
                                     
                                     </ul>
                             </li>
                               
                             @endif
 
-                            @if(Auth::user()->hasAnyPermission(['All','All Contacts']))
+                            @if(Auth::user()->hasAnyPermission(['All','View Contacts','View Unapproved Contacts']))
 
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                     
-                                        <span class="pcoded-mtext">Contact Persons</span>
+                                        <span class="pcoded-mtext">Contacts</span>
                                     </a>
                                     <ul class="pcoded-submenu">
+                                    @if(Auth::user()->hasAnyPermission(['All','View Contacts']))
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('contactpersons.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">All Contacts</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Contacts</span>
                                             </a>
                                         
                                         </li>
-
+                                        @endif
+                                        @if(Auth::user()->hasAnyPermission(['All','View Unapproved Contacts']))
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('unapprovecontactpersons.list')}}">
                                             
@@ -209,6 +216,7 @@
                                             </a>
                                         
                                         </li>
+                                        @endif
                                     
                                     </ul>
                             </li>

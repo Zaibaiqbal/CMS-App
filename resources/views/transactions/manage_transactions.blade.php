@@ -37,7 +37,8 @@ Transaction Management
                       <tr>
                           <th>#</th>
                           <th>Client</th>
-                          <th>Plate No</th>
+                          <th>Account</th>
+                          <th>License Plate No</th>
                           <th>Material Type</th>
                           <th>Gross weight</th>
                           <th>Tare weight</th>
@@ -51,6 +52,7 @@ Transaction Management
                         <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
                         
                         <td>{{$loop->iteration}}</td>
+                        <td>{{$rows->userAccount->account->account_no}}</td>
                         <td>{{$rows->client_name}}</td>
                         <td>{{$rows->plate_no}}</td>
                         <td>{{$rows->materialType->name}}</td>
@@ -68,6 +70,14 @@ Transaction Management
 
                               <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                               @endif
+                              <div class="dropdown-divider"></div>
+
+                              @endif
+
+                              @if(Auth::user()->hasAnyPermission(['All','Print Ticket']))
+
+
+                              <a href="{{route('transaction.invoice',['transaction' => ($rows->id),'pdf' => 'true'])}}" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp; Print</a>
                               @endif
                           
                           </div>

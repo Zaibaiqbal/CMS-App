@@ -62,7 +62,7 @@
           </tr>
 
           <tr>
-            <td>Liscence Plate No.</td>
+            <td>License Plate No.</td>
             <td><input type="text" value="{{$transaction->plate_no}}"></td>
 
             <td>Job Id / PO No.</td>

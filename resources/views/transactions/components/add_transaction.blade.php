@@ -1,7 +1,7 @@
 {{ Form::open(array('route' => 'store.transaction', 'class' => '', 'id' => 'form_create_transaction')) }}
 <div class="row">
         <div class="col-md-4">
-                @php($label = 'Liscence Plate No')
+                @php($label = 'License Plate No')
                 @php($name = 'plate_no')
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
@@ -80,7 +80,7 @@
         </div>
         --}}
 
-        <div class="col-md-4 mb-2">
+        <div class="col-md-6 mb-2">
 
             @php($label = 'Select Operation Type')
             @php($name = 'operation_type')
@@ -95,7 +95,7 @@
             </select>
 
         </div>
-        <div class="col-md-4 mb-2">
+        <div class="col-md-6 mb-2">
 
             @php($label = 'Gross Weight')
                 @php($name = 'gross_weight')
@@ -106,7 +106,7 @@
 
         </div>
         {{--
-        <div class="col-md-4 mb-2">
+        <div class="col-md-6 mb-2">
 
             @php($label = 'Tare Weight')
             @php($name = 'tare_weight')
@@ -118,7 +118,7 @@
 
         </div>
 
-        <div class="col-md-4 mb-2">
+        <div class="col-md-6 mb-2">
 
             @php($label = 'Net-weight')
             @php($name = 'net_weight')
@@ -131,18 +131,6 @@
         </div>
 
         --}}
-
-
-        <div class="col-md-4">
-            @php($label = 'Driver Name')
-            @php($name = 'driver_name')
-            <div class="form-group">
-                <label for="">{{$label}} <span class="text-danger">*</span></label>
-                <small id="{{$name}}_error" class="text-danger"></small>
-
-                <input type="text" name="{{$name}}" class="form-control" placeholder="{{$label}}">
-            </div>
-        </div>
 
         <div class="col-md-12">
             @php($label = 'Vehicle Description')

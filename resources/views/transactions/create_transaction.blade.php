@@ -155,6 +155,10 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                         if (parsedData.length === 0) {
 
                             $('.client_type').val('Cash Account');
+                            $('.truck_id').val('');
+                            $('.client_name').val('').attr('readonly',false);
+                            $('input[name=user_id]').val('');
+                            $('input[name=contact_no]').val('').attr('readonly',false);;
 
                         } else {
 
@@ -188,7 +192,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 $('.client_name').val(i.item.label1).attr('readonly',true);
                 $('input[name=user_id]').val(i.item.val1);
                 $('input[name=contact_no]').val(i.item.label2).attr('readonly',true);
-                $('.client_type').val('Client Account');
+                $('.client_type').val('Numbered Account');
 
 
                 // getClientAccountList(i.item.val1);

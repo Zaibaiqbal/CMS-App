@@ -23,7 +23,7 @@
                 <div class="col-md-6">
                         @php($label = 'Job Id / PO Number')
                         @php($name = 'job_id')
-                        <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                        <label for="">{{$label}} <span class="text-danger"></span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
@@ -34,7 +34,7 @@
                 </div>
                 @endif
                 <div @if($transaction->operation_type == "Inbound") class="col-md-6" @else class="col-md-12"  @endif>
-                        @php($label = 'Liscence Plate No')
+                        @php($label = 'License Plate No')
                         @php($name = 'plate_no')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
@@ -164,7 +164,7 @@
                     <label for="">{{$label}} <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" readonly name="{{$name}}" class="form-control net_weight" id="" placeholder="{{$label}}">
+                    <input type="text" readonly name="{{$name}}" value="{{$transaction->net_weight}}" class="form-control net_weight" id="" placeholder="{{$label}}">
 
 
                 </div>
@@ -178,7 +178,7 @@
                         <span><i class="text-danger"></i></span>
                         <small id="{{$name}}_error" class="text-danger">*</small>
 
-                        <input type="text" value="{{$transaction->driver->name}}" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                        <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
                     </div>
                 </div>
 

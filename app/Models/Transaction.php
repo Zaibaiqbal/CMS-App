@@ -98,15 +98,7 @@ class Transaction extends Model
                 // dd($transaction);
                 $transaction->save();
 
-                $driver = new Driver;
-
-                $driver->name  = $object['driver_name'];
-
-                $driver->save();
-
-                $transaction->driver_id  = $driver->id;
-
-                $transaction->update();
+              
 
 
         return with($transaction);

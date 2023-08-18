@@ -74,7 +74,6 @@ class TransactionController extends Controller
 
                  
                     // 'account'                 => 'required',
-                    'driver_name'                   => 'required|max:255|min:0',
                     'plate_no'                => 'required|max:255|min:0',
                     'operation_type'                => 'required',
                    
@@ -139,8 +138,6 @@ class TransactionController extends Controller
         {
             try {
 
-                if($request->isMethod('Post'))
-                {
 
                     if(isset($request->pdf)){
 
@@ -154,16 +151,7 @@ class TransactionController extends Controller
 
                         return $pdf->setPaper('a4', 'landscape')->stream('Invoice.pdf');
                     }
-
-                    else{
-                        return view('documents.invoice', [
-                        ]);
-
-
-                    }
-            
-                }
-
+               
 
             }
             catch (DecryptException $e)
@@ -195,14 +183,22 @@ class TransactionController extends Controller
                         ];
 
                     }
-
+                    // if($transaction->operation_type == "Inbound")
+                    // {
+                    //     $validation += [
+                    //         'job_id'    => 'required|max:255'
+                    //     ];
+                    // }
     
                     $request->validate($validation+[
     
                         'transaction_id'                  => 'required',
                         'material_type'                     => 'required',
+                        'driver_name'                   => 'required|max:255|min:0',
+
                        
                     ]);
+// dd($validation);
     
                     $form_data   =  $request->input();
     

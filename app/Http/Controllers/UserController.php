@@ -272,7 +272,6 @@ class UserController extends Controller
                 $user_account  = $user->getUserAccountById($user_account);
 
                 $user = $user_account->user;
-
                 if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
                 {
                     if(isset($form_data['account_no']))
@@ -287,9 +286,10 @@ class UserController extends Controller
                         else
                         {
 
-                            $account = $account->getAccountByAccountNo($form_data);
+                            $account = $account->getAccountByAccountNo($form_data['account_no']);
+
                         }
-                     
+                        // dd($account);
                         if(isset($account->id))
                         {
                             $object['user_id']      =  $user->id;
@@ -305,7 +305,7 @@ class UserController extends Controller
 
 
                     }
-
+// exit;
                     $user->is_verified        = 1;
                 
                     $user->status    =   'Active';

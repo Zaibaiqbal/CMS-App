@@ -76,7 +76,7 @@ class User extends Authenticatable
         return UserAccount::with(['user', 'client'])
         ->whereHas('user', function ($query) use ($type,$status,$is_verified) {
 
-        $query->where(['user_type' => $type]);
+        $query->where(['user_type' => $type , 'status' => $status , 'is_verified' => $is_verified]);
         
     })->where('status','Unapprove')->get();
 

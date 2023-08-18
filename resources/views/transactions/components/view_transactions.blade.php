@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>#</th>
-        <th>Liscence Plate No</th>
+        <th>License Plate No</th>
         <th>Description</th>
         <th>Client</th>
         <th>Ticket No.</th>

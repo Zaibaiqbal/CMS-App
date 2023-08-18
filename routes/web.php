@@ -77,12 +77,12 @@ Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountControl
 Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.list')->middleware('auth','permission:All|View Accounts');
 
 
-Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('auth','permission:All');
+Route::get('unapproveclients', [App\Http\Controllers\UserController::class, 'viewUnapprovedClients'])->name('unapproveclients.list')->middleware('auth','permission:All|View Unapproved Clients');
 
-Route::get('contactpersons', [App\Http\Controllers\UserController::class, 'viewContactPersons'])->name('contactpersons.list')->middleware('auth','permission:All|All Contacts');
+Route::get('contactpersons', [App\Http\Controllers\UserController::class, 'viewContactPersons'])->name('contactpersons.list')->middleware('auth','permission:All|View Contacts');
 
 
-Route::get('unapprovecontactpersons', [App\Http\Controllers\UserController::class, 'viewUnapprovedContactPersons'])->name('unapprovecontactpersons.list')->middleware('auth','permission:All|View Unapprove Contact Persons');
+Route::get('unapprovecontactpersons', [App\Http\Controllers\UserController::class, 'viewUnapprovedContactPersons'])->name('unapprovecontactpersons.list')->middleware('auth','permission:All|View Unapproved Contacts');
 
 
 Route::match(['post','get'],'approveuser', [App\Http\Controllers\UserController::class, 'approveUser'])->name('approve.user')->middleware('auth','permission:All');
@@ -124,7 +124,7 @@ Route::match(['get','post'],'storecategory', [App\Http\Controllers\LocationContr
 
 Route::match(['get','post'],'storelocation', [App\Http\Controllers\LocationController::class, 'storeLocation'])->name('store.location')->middleware('auth','permission:All|Add Location');
 
-Route::post('transactioninvoice', [App\Http\Controllers\TransactionController::class, 'printTransactionInvoice'])->name('transaction.invoice')->middleware('auth','permission:All|Approve Deactive User');
+Route::match(['get','post'],'transactioninvoice', [App\Http\Controllers\TransactionController::class, 'printTransactionInvoice'])->name('transaction.invoice')->middleware('auth','permission:All|Approve Deactive User');
 
 
 Route::get('materialinfo', [App\Http\Controllers\MaterialTypeController::class, 'getMaterialInfo'])->name('materialinfo')->middleware('auth');

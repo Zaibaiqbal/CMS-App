@@ -36,6 +36,7 @@ Trucks Management
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Client Name</th>
                       <th>Plate No</th>
                       <th>VIN No</th>
                       <th>Model</th>
@@ -48,6 +49,8 @@ Trucks Management
                     @foreach($trucks_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
+                      <td>{{$rows->user->name}}</td>
+
                       <td>{{$rows->plate_no}}</td>
                       <td>{{$rows->vin_no}}</td>
                       <td>{{$rows->model}}</td>
