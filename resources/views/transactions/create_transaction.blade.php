@@ -51,7 +51,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
     <div class="col-5">
     <div class="card p-2">
         <div class="card-header">
-        <h3 class="card-title">Transaction</h3>
+        <h3 class="card-title">ezWeigh</h3>
 
         <div class="card-toolbar">
               
@@ -72,7 +72,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
     <div class="col-7">
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Current Transactions</h3>
+        <h3 class="card-title text-uppercase">QUEUED</h3>
 
         <div class="card-toolbar">
               
@@ -204,7 +204,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 // Add custom CSS class to the list element
                 autocompleteList.addClass("custom-autocomplete-list");
             },
-            minLength: 3
+            minLength: 1
         });
     }
 
@@ -228,8 +228,8 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 
                         response($.map(JSON.parse(data), function (item) {
                             return {
-                                label: item.client_info,
-                                val: item.id,
+                                label: item.client_name,
+                                label1: item.contact_no,
 
                               
                             }
@@ -245,8 +245,8 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
             },
             select: function (e, i) {
               
-                $('.user_id').val(i.item.val);
-                $('.auto_search_client_name').val(i.item.value);
+                $('.auto_search_client_name').val(i.item.label).attr('readonly',true);
+                $('.contact').val(i.item.label1).attr('readonly',true);
             },
             open: function() {
         // Get the autocomplete list element
@@ -255,7 +255,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 // Add custom CSS class to the list element
                 autocompleteList.addClass("custom-autocomplete-list");
             },
-            minLength: 2
+            minLength: 1
         });
     }
 

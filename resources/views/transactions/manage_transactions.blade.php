@@ -18,12 +18,12 @@ Transaction Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Transactions
+                <h3 class="card-title text-uppercase">All Transactions
 
                 @if(Auth::user()->hasAnyPermission(['All','Create Transaction']))
           
-                    <a href="{{route('store.transaction')}}" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
-                    Create Transaction</a>
+                    <a href="{{route('store.transaction')}}" class="btn btn-primary text-upperccase text-white font-weight-bolder text-uppercase" style="float: right;">
+                    New</a>
                 @endif
 
                 </h3>
@@ -32,14 +32,14 @@ Transaction Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                     <thead>
                       <tr>
                           <th>#</th>
                           <th>Client</th>
                           <th>Account</th>
-                          <th>License Plate No</th>
-                          <th>Material Type</th>
+                          <th>License No</th>
+                          <th>Material</th>
                           <th>Gross weight</th>
                           <th>Tare weight</th>
                           <th>Net weight</th>
@@ -52,8 +52,9 @@ Transaction Management
                         <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
                         
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$rows->userAccount->account->account_no}}</td>
                         <td>{{$rows->client_name}}</td>
+
+                        <td>{{$rows->userAccount->account->account_no}}</td>
                         <td>{{$rows->plate_no}}</td>
                         <td>{{$rows->materialType->name}}</td>
                         <td>{{$rows->gross_weight}}</td>

@@ -12,94 +12,15 @@ function formModal(event,route,form_modal,target_modal)
 
 }
 
-function submitModalForm(event,obj,form_id,form_modal_id)
-{
-
-    event.preventDefault();
-
-    var obj = $(form_id);
-
-    var form = document.querySelector(form_id) // Find the <form> element
-
-    var formData = new FormData(form); // Wrap form contents
-
-    var route = obj.attr('action');
-
-    $.ajax({
-
-        url: route,
-
-        type: obj.attr('method'),
-
-        data: formData,
-
-        dataType: "json",
-
-        contentType: false,
-
-        cache: false,
-
-        processData: false,
-
-        success: function(result) {
-
-            if (result.status) {
-
-               
-                toastr.options =
-                {
-                    "closeButton" : true,
-                    "progressBar" : true
-                }
-                toastr.success(result.message);
-
-                flag = false;
-
-                if ($(form_modal_id).length > 0) {
-
-                    $(form_modal_id).modal('hide');
-
-                    flag = true;
-                }
-                else
-                {
-                    location.reload();
-
-                }
-
-                location.reload();
 
 
-
-            } else {
-
-
-            }
-
-            // removeLoader();
-        },
-        error: function(result){
-
-            // alert(result.responseJSON);
-            var errors = result.responseJSON.errors;
-            $.each(errors, function (key, val) {
-
-                $("#" + key + "_error").text(val[0]);
-            });
-           
-        }
-       
-    });
-
-}
-
-function formSubmission(event)
+function formSubmission(event,obj)
 {
     event.preventDefault();
 
     swal({
         title: "Are you sure",
-        text: "you want to Deactivte user",
+        text: "you want to approve",
         icon: "warning",
         buttons: true,
         dangerMode: true,
@@ -111,7 +32,7 @@ function formSubmission(event)
             swal("Your request has been submitted!", {
                 icon: "success",
             });
-			    window.location.href =  $('.deactive_submit').attr('href');
+			    window.location.href =  $(obj).attr('href');
         }
         else
         {

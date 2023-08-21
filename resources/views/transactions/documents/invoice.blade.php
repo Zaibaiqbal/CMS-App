@@ -42,7 +42,7 @@
             </form>
         </div>
         @endif
-       <center>INVOICE</center>
+       <center>ezWeigh Summary</center>
        
        <br>
 
@@ -54,6 +54,12 @@
            
           <tr>
             <td>Invoice</td>
+
+            @php($ticket_no = $transaction->ticket_no) 
+       @php($parts = explode('-', $ticket_no)) 
+       @php($parts[2] = '<b>' . $parts[2] . '</b>') 
+       @php($modify_ticket = implode('-', $parts))
+
             <td><input type="text" value="{{$transaction->ticket_no}}"></td>
 
             <td>Invoice Date:</td>
@@ -62,7 +68,7 @@
           </tr>
 
           <tr>
-            <td>License Plate No.</td>
+            <td>License No.</td>
             <td><input type="text" value="{{$transaction->plate_no}}"></td>
 
             <td>Job Id / PO No.</td>
@@ -79,7 +85,12 @@
 
           </tr>
          
+          <tr>
+          <td>Driver Name:</td>
+            <td><input type="text" value="{{$transaction->driver->name}}"></td>
 
+
+          </tr>
          
          
         </table>

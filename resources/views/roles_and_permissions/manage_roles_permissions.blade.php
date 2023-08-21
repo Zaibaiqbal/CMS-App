@@ -19,11 +19,11 @@ Roles & Permissions Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Roles
+                <h3 class="card-title text-uppercase">All Roles
 
                     @if(Auth::user()->hasAnyPermission(['All','Add Role']))
                     
-                    <a data-toggle="modal" data-target="#modal_add_role" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                    <a data-toggle="modal" data-target="#modal_add_role" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
                     Add Role</a>
                     @endif
 
@@ -34,7 +34,7 @@ Roles & Permissions Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -58,10 +58,10 @@ Roles & Permissions Management
                             <i class="fa fa-ellipsis-v text-dark"></i>
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                <li>
+                                <li class="">
                                 @if(Auth::user()->hasAnyPermission(['All','Update Role']))
             
-                                <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.role',['id' => encrypt($rows->id)])}}','#modal_update_role','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                                <a href="" class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.role',['id' => encrypt($rows->id)])}}','#modal_update_role','#target_modal')" class="dropdown-item text-dark py-2"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                                 @endif
 
                                 </li>
@@ -70,7 +70,7 @@ Roles & Permissions Management
                                 @if(Auth::user()->hasAnyPermission(['All','Assign Permissions']))
 
             
-                                <a class="dropdown-item waves-light waves-effect"   onclick="formModal(event,'{{route('assign.permissions',['id' => encrypt($rows->id)])}}','#modal_assign_permissions','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Assign Permissions</a>
+                                <a href="" class="dropdown-item waves-light waves-effect"   onclick="formModal(event,'{{route('assign.permissions',['id' => encrypt($rows->id)])}}','#modal_assign_permissions','#target_modal')" class="dropdown-item text-dark py-2"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Assign Permissions</a>
 
                                 @endif
 

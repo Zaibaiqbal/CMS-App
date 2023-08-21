@@ -33,6 +33,26 @@ class TransactionController extends Controller
         ]);
     }
 
+
+    public function autoSearchByClientName(Request $request)
+    {
+
+        try
+        {
+
+            $data = Transaction::selectRaw("client_name,contact_no")
+                    ->where('client_name', 'LIKE', '%'. $request->search. '%')
+                    ->whereNull('client_id')
+                    ->get();
+        return json_encode($data);
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
     
     public function storeTransaction(Request $request)
     {
@@ -42,6 +62,7 @@ class TransactionController extends Controller
 
             if($request->isMethod('post'))
             {
+                // dd($request->client_type);
                 if($request->client_type == "Cash Account")
                 {
                     $validation = [
@@ -56,19 +77,19 @@ class TransactionController extends Controller
                     ]; 
                 }
 
-                if($request->operation_type == "Inbound")
-                {
-                    $validation += [
-                        'gross_weight'   =>   'required|gt:0'
-                    ];
+                // if($request->operation_type == "Inbound")
+                // {
+                //     $validation += [
+                //         'gross_weight'   =>   'required|gt:0'
+                //     ];
 
-                }
-                if($request->operation_type == "Outbound")
-                {
-                    $validation += [
-                        'tare_weight'   =>   'required|gt:0'
-                    ];
-                }
+                // }
+                // if($request->operation_type == "Outbound")
+                // {
+                //     $validation += [
+                //         'tare_weight'   =>   'required|gt:0'
+                //     ];
+                // }
 // dd($validation);
                 $request->validate($validation+[
 
@@ -76,6 +97,8 @@ class TransactionController extends Controller
                     // 'account'                 => 'required',
                     'plate_no'                => 'required|max:255|min:0',
                     'operation_type'                => 'required',
+                    'inweight'                =>   'required|gte:0',
+
                    
                 ]);
                 $form_data   =  $request->input();
@@ -144,12 +167,13 @@ class TransactionController extends Controller
                         $transaction = new Transaction;
                         $transaction = $transaction->getTransactionById($request->transaction);
                         
+                        
                         $pdf = PDF::loadView('transactions.documents.invoice', [
                         'format'        => false,
                         'transaction'     =>   $transaction
                         ]);
 
-                        return $pdf->setPaper('a4', 'landscape')->stream('Invoice.pdf');
+                        return $pdf->setPaper('a4', 'landscape')->download('Invoice.pdf');
                     }
                
 
@@ -163,6 +187,8 @@ class TransactionController extends Controller
 
         }
 
+        
+
         public function updateTransaction(Request $request)
         {
             try
@@ -175,10 +201,10 @@ class TransactionController extends Controller
                     $transaction = $transaction->getTransactionById(decrypt($request->transaction_id));
                     
                     $validation = [];
-                    if($transaction->client_type == 'Numbered Client')
-                    {
 
-                        $validation = [
+                    if($transaction->client_type == "Numbered Account")
+                    {
+                        $validation += [
                             'account'    => 'required'
                         ];
 
@@ -189,20 +215,18 @@ class TransactionController extends Controller
                     //         'job_id'    => 'required|max:255'
                     //     ];
                     // }
-    
                     $request->validate($validation+[
     
                         'transaction_id'                  => 'required',
-                        'material_type'                     => 'required',
+                        'material'                     => 'required',
                         'driver_name'                   => 'required|max:255|min:0',
 
                        
                     ]);
-// dd($validation);
     
                     $form_data   =  $request->input();
     
-                    $form_data['material_type']   = decrypt($form_data['material_type']);
+                    $form_data['material_type']   = decrypt($form_data['material']);
                    
                     $form_data['transaction_id']   = decrypt($form_data['transaction_id']);
 
@@ -264,7 +288,7 @@ class TransactionController extends Controller
             }
     
         
-    
+    return redirect()->back();
     
     }
 

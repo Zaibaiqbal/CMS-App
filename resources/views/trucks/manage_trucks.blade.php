@@ -18,12 +18,12 @@ Trucks Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Fleet
+                <h3 class="card-title text-uppercase">All Fleet
 
-                    @if(Auth::user()->hasAnyPermission(['All','Add Fleet']))
+                    @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
             
-                    <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
-                    Add Fleet</a>
+                    <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                    Add Truck</a>
                     @endif
                 </h3>
 
@@ -32,11 +32,11 @@ Trucks Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table class="table table-striped table-bordered nowrap truck_table">
+                    <table class="table table-striped table-bordered nowrap truck_table text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Client Name</th>
+                      <th>Client</th>
                       <th>Plate No</th>
                       <th>VIN No</th>
                       <th>Model</th>

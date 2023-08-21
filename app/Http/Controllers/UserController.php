@@ -63,26 +63,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function autoSearchByClientName(Request $request)
-    {
-
-        try
-        {
-
-            $data = User::selectRaw("CONCAT(name,' - ',cnic) as client_info , id")
-                    ->where('name', 'LIKE', '%'. $request->search. '%')
-                    ->where('user_type','Client')
-                    ->get();
-     
-        return json_encode($data);
-
-        }
-        catch(Exception $e)
-        {
-
-        }
-
-    }
 
     public function registerUser(Request $request)
     {
@@ -102,7 +82,7 @@ class UserController extends Controller
 
         if(isset($user->id))
         {
-            return redirect()->back()->with('message', 'Email sent successfully!');
+            return redirect('login')->with('message', 'Email sent successfully!');
 
         }
 
@@ -161,6 +141,7 @@ class UserController extends Controller
                     'user'                  => 'required',
                     'account_no'              => 'required|max:15|min:0|unique:accounts',
                     'title'                   => 'required|max:255|min:0',
+                    'client_group'                   => 'required',
                    
                     ]);
 
@@ -175,6 +156,8 @@ class UserController extends Controller
                     if(isset($form_data['account_no']))
                     {
                         $account = new Account;
+                        $form_data['status']  = 'Active';
+                        $form_data['approval_status']  = 'Approved';
 // dd($form_data);
                         $account = $account->storeAccount($form_data);
 
@@ -262,6 +245,7 @@ class UserController extends Controller
                     'user_account'                      => 'required',
                     'account_no'                 => 'required|max:15|min:0',
                     'title'                   => 'required|max:255|min:0',
+                    'client_group'                   => 'required',
                    
                     ]);
 

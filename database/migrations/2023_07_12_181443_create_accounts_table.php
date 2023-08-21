@@ -14,10 +14,16 @@ class CreateAccountsTable extends Migration
     public function up()
     {
         Schema::create('accounts', function (Blueprint $table) {
+            
             $table->increments('id');
             $table->string('title')->nullable();
+            $table->unsignedInteger('added_id')->nullable();
             $table->string('account_no')->nullable();
-            $table->enum('status',['Active','Suspended'])->default('Active');
+            $table->string('client_group')->nullable();
+            $table->enum('approval_status',['Requested','Approved'])->default('Requested');
+
+            $table->enum('status',['Inactive','Active','Suspended'])->default('Inactive');
+
             $table->integer('is_deleted')->default(0);
 
             $table->timestamps();

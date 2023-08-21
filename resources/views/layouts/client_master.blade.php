@@ -208,18 +208,17 @@
                                     
                                     </ul>
                             </li>
-                                 
-                            <li class="pcoded-hasmenu">
+                                 --}}
+                            <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('client.accounts')}}" >
                                     <span class="pcoded-mtext">Accounts</span>
                                 </a>
                                 
                             </li>
-                            --}}
-
+                          
                          
                             @if(Auth::user()->hasRole(['Client']))
-                            <li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('contactperson.list')}}">
                                             
                                     <span class="pcoded-mtext">Contacts</span>
@@ -229,14 +228,14 @@
                             @endif
                          
                            
-                            <li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('client.trucks')}}" >
                                     <span class="pcoded-mtext">Fleet</span>
                                 </a>
                              
                             </li>
 
-                            <li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('client.transactions')}}">
                                     <span class="pcoded-mtext">Transactions</span>
                                 </a>

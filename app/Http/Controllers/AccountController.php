@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendNotification;
 use App\Models\Account;
 use App\Models\User;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,19 +20,64 @@ class AccountController extends Controller
         ]);
     }
 
+    public function getAccountInfo(Request $request)
+    {
+
+        $data = [];
+        $account = new Account;
+        $account = $account->getAccountById(decrypt($request->account));
+
+        if(isset($account->id))
+        {
+           $data['client_group']  =  $account->client_group;
+
+        }
+        return $data;
+    }
+
+    public function approveAccount(Request $request)
+    {
+        $account_id = $request->id;
+
+        $account = new Account;
+        $account = $account->getAccountById($account_id);
+
+        if(isset($account->id))
+        {
+            $account->approval_status = 'Approved';
+            $account->status = 'Active';
+            $account->update();
+
+            // return ['status' => true, 'message' => 'Account added successfully'];
+
+        }
+        return redirect()->back()->with('Account approved successfully');
+
+    }
 
     public function clientAccountList()
     {
 
-        $account = new Account;
+        $account = new UserAccount;
 
         return view('clients.client_accounts.manage_client_accounts',[
             
-            'accounts_list'  =>  Auth::user()->accounts
+            'accounts_list'  =>  $account->getAllAccountListByClientId(Auth::user()->id)
         ]);
     }
 
+    public function viewAccountRequests()
+    {
 
+        $account = new Account;
+
+        return view('accounts.manage_accounts',[
+            
+            'accounts_list'  =>  $account->getRequestedAccountList()
+        ]);
+    }
+
+    
     public function storeAccount(Request $request)
     {
         try
@@ -43,7 +90,7 @@ class AccountController extends Controller
         
                 $request->validate([
     
-                    'client'                  => 'required',
+                    'client_group'                  => 'required',
                     'account_no'              => 'required|max:15|min:0',
                     'title'                   => 'required|max:255|min:0',
                    
@@ -52,15 +99,26 @@ class AccountController extends Controller
                     $form_data = $request->input();
     
                     $account = new Account;
-                    $account->title = $form_data['title'];
-                    $account->account_number = $form_data['account_no'];
-                    $account->client_id = decrypt($form_data['client']);
-                    $account->status = 'Active';
+
+                   $account = $account->storeAccount($form_data);
+
+                    // $account->title = $form_data['title'];
+                    // $account->account_number = $form_data['account_no'];
+                    // $account->client_id = decrypt($form_data['client']);
+                    // $account->status = 'Active';
     
-                    $account->save();
+                    // $account->save();
     
                     if(isset($account->id))
                     {
+
+                        $user = new User;
+                        $user_ids = $user->getUserIdsByPermissions(['All']);
+        
+                        $client = $user->getUserById(Auth::user()->id);
+        
+                        event(new SendNotification($client->id,$user_ids,'','accountrequests',$account->id,$client->name. ' has requested to add a new account ' .$account->title.'-'.$account->account_no));
+        
                         $data = ['status' => true, 'message' => 'Account added successfully'];
     
                     }

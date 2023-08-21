@@ -49,6 +49,7 @@
     color: white !important;
   }
 
+ 
     </style>
     @yield('page_style')
 </head>
@@ -71,6 +72,7 @@
             </div>
         </div>
     </div>
+
     <!-- Pre-loader end -->
 
     <div id="pcoded" class="pcoded">
@@ -161,7 +163,7 @@
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                     
-                                        <span class="pcoded-mtext">Clients</span>
+                                        <span class="pcoded-mtext">CLIENTS</span>
                                     </a>
                                     <ul class="pcoded-submenu">
                                     @if(Auth::user()->hasAnyPermission(['All','View Clients']))
@@ -169,7 +171,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('users.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Clients</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW CLIENTS</span>
                                             </a>
                                         
                                         </li>
@@ -179,7 +181,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('unapproveclients.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Clients</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW UNAPPROVED CLIENTS</span>
                                             </a>
                                         
                                         </li>
@@ -196,14 +198,14 @@
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                     
-                                        <span class="pcoded-mtext">Contacts</span>
+                                        <span class="pcoded-mtext">CONTACTS</span>
                                     </a>
                                     <ul class="pcoded-submenu">
                                     @if(Auth::user()->hasAnyPermission(['All','View Contacts']))
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('contactpersons.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Contacts</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW CONTACTS</span>
                                             </a>
                                         
                                         </li>
@@ -212,7 +214,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('unapprovecontactpersons.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Unapproved Contacts</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW UNAPPROVED CONTACTS</span>
                                             </a>
                                         
                                         </li>
@@ -226,7 +228,7 @@
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('accounts.list')}}" >
-                                    <span class="pcoded-mtext">Accounts</span>
+                                    <span class="pcoded-mtext">ACCOUNTS</span>
                                 </a>
                                 
                             </li>
@@ -236,13 +238,13 @@
                             <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                     
-                                        <span class="pcoded-mtext">Materials</span>
+                                        <span class="pcoded-mtext">MATERIALS</span>
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('material.types.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Materials</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW MATERIALS</span>
                                             </a>
                                         
                                         </li>
@@ -250,7 +252,7 @@
                                         <li class="pcoded-hasmenu text-dark">
                                             <a href="{{route('material.rate.list')}}">
                                             
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">View Material Rates</span>
+                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW MATERIAL RATES</span>
                                             </a>
                                         
                                         </li>
@@ -263,7 +265,7 @@
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('trucks.list')}}" >
-                                    <span class="pcoded-mtext">Fleet</span>
+                                    <span class="pcoded-mtext">FLEET</span>
                                 </a>
                              
                             </li>
@@ -272,7 +274,7 @@
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('locations.list')}}" >
-                                    <span class="pcoded-mtext">Outbound Location</span>
+                                    <span class="pcoded-mtext">OUTBOUND LOCATIONS</span>
                                 </a>
                             
                             </li>
@@ -281,7 +283,7 @@
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('transactions.list')}}">
-                                    <span class="pcoded-mtext">Transactions</span>
+                                    <span class="pcoded-mtext">ezWeigh</span>
                                 </a>
                                 
                             </li>
@@ -290,7 +292,7 @@
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('employees.list')}}">
-                                    <span class="pcoded-mtext">Employees</span>
+                                    <span class="pcoded-mtext">EMPLOYEES</span>
                                 </a>
                                
                             </li>
@@ -299,7 +301,7 @@
 
                             <li class="pcoded-hasmenu">
                                 <a href="{{route('roles.permissions')}}">
-                                    <span class="pcoded-mtext">Roles & Permissions</span>
+                                    <span class="pcoded-mtext">ROLES & PERMISSIONS</span>
                                 </a>
                                
                             </li>

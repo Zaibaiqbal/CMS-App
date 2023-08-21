@@ -131,7 +131,7 @@ $('.contact').mask("0000-0000000");
                                                             <i class="fa fa-mobile"></i>
                                                         </label>
 
-                                                        <input  type="text" placeholder="0000-0000000" data-mask="0000-0000000" class="form-control @error('contact') is-invalid @enderror contact" name="contact" value="{{ old('contact') }}" required >
+                                                        <input  type="text" placeholder="00000000000"  class="form-control @error('contact') is-invalid @enderror contact" name="contact" value="{{ old('contact') }}" required >
                                                     </div>
                                                 </div>
                                             </div>

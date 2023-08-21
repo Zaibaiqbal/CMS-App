@@ -18,9 +18,12 @@ Accounts Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Accounts List
+                <h3 class="card-title text-uppercase">Accounts List
 
-
+          
+                    <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                        Add Account</a>
+               
                 </h3>
 
               
@@ -28,12 +31,12 @@ Accounts Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Client</th>
                       <th>Title</th>
+                      <th>Client Group</th>
                       <th>Account No</th>
                       <th>Status</th>
                      
@@ -43,9 +46,9 @@ Accounts Management
                     @foreach($accounts_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$rows->user->name}}</td>
                       <td>{{$rows->title}}</td>
-                      <td>{{$rows->account_number}}</td>
+                      <td>{{$rows->client_group}}</td>
+                      <td>{{$rows->account_no}}</td>
                       <td>{{$rows->status}}</td>
                       {{--
                       <td>

@@ -37,7 +37,7 @@ Accounts Management
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Client</th>
+                      <th>Client Group</th>
                       <th>Title</th>
                       <th>Account No</th>
                       <th>Status</th>
@@ -49,9 +49,9 @@ Accounts Management
                     @foreach($accounts_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$rows->user->name}}</td>
+                      <td>{{$rows->client_group}}</td>
                       <td>{{$rows->title}}</td>
-                      <td>{{$rows->account_number}}</td>
+                      <td>{{$rows->account_no}}</td>
                       <td>{{$rows->status}}</td>
                       <td>
 
@@ -61,9 +61,9 @@ Accounts Management
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
-                                @if(false && Auth::user()->hasAnyPermission(['All','Update Account']))
+                                @if(Auth::user()->hasAnyPermission(['All','Update Account']))
             
-                                <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.account',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                                <a href="{{route('approveaccount',['id' => $rows->id])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
                                 @endif
 
                                 </li>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class Account extends Model
 {
@@ -14,6 +15,19 @@ class Account extends Model
     {
         
         return Account::where('is_deleted',0)->where('account_no',$account_no)->first();
+    }
+
+
+    public function getRequestedAccountList()
+    {
+        
+        return Account::where('is_deleted',0)->where('approval_status','Requested')->get();
+    }
+
+    public function getAccountById($id)
+    {
+        return Account::where('is_deleted',0)->where('id',$id)->first();
+
     }
 
     public function user()
@@ -28,11 +42,30 @@ class Account extends Model
             $account = new Account;
             $account->account_no = $object['account_no'];
             
-                if(isset($object['title']))
+            if(isset($object['title']))
             {
                 $account->title = $object['title'];
 
             }
+
+            if(isset($object['client_group']))
+            {
+                $account->client_group = $object['client_group'];
+
+            }
+
+            if(isset($object['approval_statis']))
+            {
+                $account->approval_statis = $object['approval_statis'];
+
+            }
+
+            if(isset($object['status']))
+            {
+                $account->status = $object['status'];
+
+            }
+            $account->added_id = Auth::user()->id;
 
             $account->save();
             

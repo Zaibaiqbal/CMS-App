@@ -59,7 +59,7 @@ class Transaction extends Model
                 $transaction->client_name = $object['client'];
                 $transaction->contact_no = $object['contact_no'];
 
-                // $transaction->material_type_id = $object['material_type'];
+                // $transaction->material_type_id = $object['material'];
                 $transaction->operation_type = $object['operation_type'];
 
                 if(isset($object['user_id']))
@@ -74,14 +74,14 @@ class Transaction extends Model
 
                 }
 
-                if(isset( $object['tare_weight']))
-                {
-                    $transaction->tare_weight = $object['tare_weight'];
+                // if(isset( $object['tare_weight']))
+                // {
+                //     $transaction->tare_weight = $object['tare_weight'];
 
-                }
-                if(isset( $object['gross_weight']))
+                // }
+                if(isset( $object['inweight']))
                 {
-                    $transaction->gross_weight = $object['gross_weight'];
+                    $transaction->gross_weight = $object['inweight'];
 
                 }
 
@@ -119,8 +119,8 @@ class Transaction extends Model
             {
                 $transaction->added_id = Auth::user()->id;
 
-                $transaction->gross_weight = $object['gross_weight'];
-                $transaction->tare_weight = $object['tare_weight'];
+                $transaction->gross_weight = $object['inweight'];
+                $transaction->tare_weight = $object['outweight'];
                 $transaction->net_weight = $object['net_weight'];
                 $transaction->material_type_id = $object['material_type'];
 
@@ -141,9 +141,15 @@ class Transaction extends Model
 
                 }
 
-                $transaction->material_rate = $object['material_rate'];
+                if(isset($object['material_rate']) && $transaction->client_type == "Numbered Account")
+                {
+                    $transaction->material_rate = $object['material_rate'];
+
+                }
 
 
+
+                
                 // dd($transaction);
                 $transaction->update();
 
@@ -167,6 +173,25 @@ class Transaction extends Model
         });
 
     }
+
+    // public function calculatePrice($weightInTons) {
+    //     // Calculate the base price for the first 0.25 tons
+    //     $basePrice = $weightInTons * $basePricePerTon; // You need to define $basePricePerTon
+    
+    //     // Calculate the additional price for every 0.25 tons beyond the first 0.25 tons
+    //     $additionalWeight = $weightInTons - 0.25;
+    //     if ($additionalWeight > 0) {
+    //         $additionalPrice = ceil($additionalWeight / 0.25) * $additionalPriceIncrement;
+    //     } else {
+    //         $additionalPrice = 0;
+    //     }
+    
+    //     // Total price is the sum of base price and additional price
+    //     $totalPrice = $basePrice + $additionalPrice;
+    
+    //     return $totalPrice;
+    // }
+    
 
     public function generateTicketNo()
     {

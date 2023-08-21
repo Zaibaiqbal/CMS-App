@@ -1,39 +1,45 @@
 {{ Form::open(array('route' => 'store.transaction', 'class' => '', 'id' => 'form_create_transaction')) }}
 <div class="row">
-        <div class="col-md-4">
-                @php($label = 'License Plate No')
-                @php($name = 'plate_no')
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
-                <small class="text-danger" id="{{$name}}_error"></small>
+        <div class="col-md-6">
+            @php($label = 'License No')
+            @php($name = 'plate_no')
+            <label for="">{{$label}} <span class="text-danger">*</span> </label>
+            <small class="text-danger" id="{{$name}}_error"></small>
             <div class="input-group">
 
                 <input type="hidden" name="truck_id" class="truck_id">
 
                 <input type="text" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="">
-
             </div>
-
-
         </div>
-        <div class="col-md-4">
-                @php($label = 'Client Name')
+        <div class="col-md-6">
+            @php($label = 'Vehicle Desc.')
+            @php($name = 'vehicle_descp')
+            <div class="form-group">
+                <label for="">{{$label}}</label>
+                <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="2" placeholder="{{$label}}"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+                @php($label = 'Client')
                 @php($name = 'client')
 
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                <label for="">{{$label}} <span class="text-danger"></span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
                 <div class="input-group">
-                    <input type="text" name="{{$name}}" class="form-control client_name auto_search_client_name" id="" placeholder="{{$label}}">
+                    <input type="text" name="{{$name}}" class="form-control client_name auto_search_client_name" onkeyup="autoSearchClientName(event,'client_name_tag')" id="" placeholder="{{$label}}">
                 <input type="hidden" value="" name="user_id"  class="user_id">
 
 
             </div>
         </div>
 
-        <div class="col-md-4 mb-2">
+        <div class="col-md-6 mb-2">
 
                 @php($label = 'Contact')
                 @php($name = 'contact_no')
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                <label for="">{{$label}} <span class="text-danger"></span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
                 <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
@@ -82,13 +88,13 @@
 
         <div class="col-md-6 mb-2">
 
-            @php($label = 'Select Operation Type')
+            @php($label = 'Operation')
             @php($name = 'operation_type')
             @php($operation_types = ['Inbound','Outbound'])
             <label for="">{{$label}} <span class="text-danger"></span> </label>
             <small class="text-danger" id="{{$name}}_error"></small>
 
-            <select name="{{$name}}" id="" class="form-control operation_type" onchange="getWeightType(event,this)">
+            <select name="{{$name}}" id="" class="form-control operation_type" >
                 @foreach($operation_types as $rows)
                     <option value="{{$rows}}">{{$rows}}</option>
                 @endforeach
@@ -97,12 +103,12 @@
         </div>
         <div class="col-md-6 mb-2">
 
-            @php($label = 'Gross Weight')
-                @php($name = 'gross_weight')
+            @php($label = 'In-weight')
+                @php($name = 'inweight')
                 <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
-                <input type="text" onkeyup="calculateNetWeight(event,this)" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">
+                <input type="text" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">
 
         </div>
         {{--
@@ -132,15 +138,7 @@
 
         --}}
 
-        <div class="col-md-12">
-            @php($label = 'Vehicle Description')
-            @php($name = 'vehicle_descp')
-            <div class="form-group">
-                <label for="">{{$label}}</label>
-                <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}">
-                    </textarea>
-            </div>
-        </div>
+        
 
     
 </div>

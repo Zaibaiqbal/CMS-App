@@ -5,7 +5,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Fleet Info</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Truck Info</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -21,22 +21,22 @@
             <div class="row">
 
             <div class="col-md-12">
-                                @php($name = 'client')
-                                @php($label = 'Select Client')
-                                <div class="form-group">
-                                    <label for="">{{$label}} <span class="text-danger"> *</span> </label>
+              @php($name = 'client')
+              @php($label = 'Select Client')
+              <div class="form-group">
+                  <label for="">{{$label}} <span class="text-danger"> *</span> </label>
 
-                                    <small class="text-danger" id="{{$name}}_error"></small>
+                  <small class="text-danger" id="{{$name}}_error"></small>
 
-                                    <select name="{{$name}}" id="" class="form-control fstdropdown-select">
-                                        <option value="{{encrypt(0)}}">{{$label}}</option>
-                                    @foreach($client_list as $rows)
-                                        <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
+                  <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+                      <option value="{{encrypt(0)}}">{{$label}}</option>
+                  @foreach($client_list as $rows)
+                      <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
+                  @endforeach
+                  </select>
+              </div>
 
-                            </div>
+            </div>
               
               <div class="col-md-6">
                 @php($label = 'Plate Number')

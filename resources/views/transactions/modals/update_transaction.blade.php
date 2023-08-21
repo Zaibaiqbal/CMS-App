@@ -34,7 +34,7 @@
                 </div>
                 @endif
                 <div @if($transaction->operation_type == "Inbound") class="col-md-6" @else class="col-md-12"  @endif>
-                        @php($label = 'License Plate No')
+                        @php($label = 'License No')
                         @php($name = 'plate_no')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
@@ -56,7 +56,7 @@
                     <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
-                    <select name="{{$name}}" id="" class="form-control" @if($transaction->client_type == 'Cash Account') disabled @else class="form-control fstdropdown-select" @endif>
+                    <select name="{{$name}}" id="" class="form-control" onchange="getAccountInfo(event,this)" @if($transaction->client_type == 'Cash Account') disabled @else class="form-control fstdropdown-select" @endif>
                     @foreach($account_list as $rows)
                         <option value="{{encrypt($rows->id)}}">{{$rows->account_no}} - {{$rows->title}}</option>
                     @endforeach
@@ -67,13 +67,13 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                        @php($label = 'Client Name')
+                        @php($label = 'Client')
                         @php($name = 'client')
 
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                         <div class="input-group">
-                        <input type="text" readonly name="{{$name}}" class="form-control name auto_search_client_name" value="{{$transaction->client_name}}" id="" placeholder="{{$label}}">
+                        <input type="text" name="{{$name}}" class="form-control name auto_search_client_name" onkeyup="autoSearchClientName(event,'client_name_tag')" value="{{$transaction->client_name}}" id="" placeholder="{{$label}}">
                         <input type="hidden"  value="{{$transaction->client_id}}" name="user_id"  class="user_id">
 
                     </div>
@@ -86,15 +86,27 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <input type="text" name="{{$name}}" value="{{$transaction->contact_no}}" readonly class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                        <input type="text" name="{{$name}}" value="{{$transaction->contact_no}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+
+
+                </div>
+
+                <div class="col-md-4 mb-2">
+
+                @php($label = 'Group Type')
+                @php($name = 'client_group')
+                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                <small class="text-danger" id="{{$name}}_error"></small>
+
+                <input type="text" name="{{$name}}" value="{{$transaction->client_type}}" class="form-control contact" id="" readonly >
 
 
                 </div>
             
                 <div class="col-md-4 mb-2">
 
-                        @php($label = 'Select Material Type')
-                        @php($name = 'material_type')
+                        @php($label = 'Select Material')
+                        @php($name = 'material')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
@@ -108,22 +120,8 @@
 
                 </div>
 
-                <div class="col-md-4 mb-2">
 
-                    @php($label = 'Select Operation Type')
-                    @php($name = 'operation_type')
-                    @php($operation_types = ['Inbound','Outbound'])
-                    <label for="">{{$label}} <span class="text-danger"></span> </label>
-                    <small class="text-danger" id="{{$name}}_error"></small>
-
-                    <select name="{{$name}}" id="" class="form-control operation_type" onchange="getWeightType(event,this)" disabled>
-                        @foreach($operation_types as $rows)
-                            <option @if($transaction->operation_type == $rows) selected value="{{$rows}}" @endif>{{$rows}}</option>
-                        @endforeach
-                    </select>
-
-                </div>
-
+                @if($transaction->client_type == "Cash Account")
                 <div class="col-md-4 mb-2">
 
                 @php($label = 'Material Rate')
@@ -134,11 +132,26 @@
                     <input type="text" readonly name="{{$name}}" class="form-control material_rate"  placeholder="{{$label}}" >
 
                 </div>
+                @endif
+
+                <div class="col-md-4 mb-2">
+
+                    @php($label = 'Operation')
+                    @php($name = 'operation_type')
+                    @php($operation_types = ['Inbound','Outbound'])
+                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <input type="text" value="{{$transaction->operation_type}}" readonly class="form-control">
+                   
+
+                </div>
+
             
                 <div class="col-md-4 mb-2">
 
-                    @php($label = 'Gross Weight')
-                        @php($name = 'gross_weight')
+                    @php($label = 'In-Weight')
+                        @php($name = 'inweight')
                         <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
@@ -147,8 +160,8 @@
                 </div>
                 <div class="col-md-4 mb-2">
 
-                    @php($label = 'Tare Weight')
-                    @php($name = 'tare_weight')
+                    @php($label = 'Out-Weight')
+                    @php($name = 'outweight')
                     <label for="" id="tare_label">{{$label}} <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
@@ -187,9 +200,7 @@
                     @php($name = 'note')
                     <div class="form-group">
                         <label for="">{{$label}}</label>
-                        <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}">
-                            {{$transaction->note}}
-                            </textarea>
+                        <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}"></textarea>
                     </div>
                 </div>
 
@@ -203,7 +214,7 @@
       <div class="modal-footer">
         <input type="hidden" name="transaction_id" value="{{encrypt($transaction->id)}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Processed</button>
+        <button type="submit" class="btn btn-primary" >Process</button>
       </div>
       {{ Form::close() }}
 
@@ -214,29 +225,80 @@
 <script>
     setFstDropdown();
 
+    function autoSearchClientName(event,tag)
+    {
+        event.preventDefault();
+
+        var route = "{{ route('searchclientbyname') }}";
+
+        $('input.auto_search_client_name').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: route,
+                    type: "GET",
+                    data: {
+                        search: request.term,
+                    },
+                    contentType: "json",
+                    success: function (data) {
+
+                        response($.map(JSON.parse(data), function (item) {
+                            return {
+                                label: item.client_name,
+                                label1: item.contact_no,
+
+                              
+                            }
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+              
+                $('.auto_search_client_name').val(i.item.label).attr('readonly',true);
+                $('.contact').val(i.item.label1).attr('readonly',true);
+            },
+            open: function() {
+        // Get the autocomplete list element
+                var autocompleteList = $(this).autocomplete("widget");
+
+                // Add custom CSS class to the list element
+                autocompleteList.addClass("custom-autocomplete-list");
+            },
+            minLength: 1
+        });
+    }
+
+
 function calculateNetWeight(event,obj)
     {
         event.preventDefault();
 
         var opertaion_type = $('.operation_type').val();
-        var gross_weight =  $("input[name=gross_weight]").val();
-        var tare_weight =  $("input[name=tare_weight]").val();
+        var inweight =  $("input[name=inweight]").val();
+        var outweight =  $("input[name=outweight]").val();
 
         var net_weight = 0;
 
         if(opertaion_type == "Outbound")
         {
-            if(tare_weight > 0)
+            if(outweight > 0)
             {
-                net_weight = tare_weight - gross_weight;
+                net_weight = outweight - inweight;
             }
         
         }
         else
         {
-            if(gross_weight > 0)
+            if(inweight > 0)
             {
-                net_weight =  gross_weight - tare_weight;
+                net_weight =  inweight - outweight;
             
             }
         }
@@ -253,6 +315,21 @@ function calculateNetWeight(event,obj)
         var user_id = "{{$transaction->client_id}}";
   
         $.get("{{route('materialinfo')}}",{material:material,client_type,client_type,user_id,user_id},function(data){
+
+            $('.material_rate').val(data.rate);
+
+
+        });
+
+    }
+
+    function getAccountInfo(event,obj)
+    {
+        event.preventDefault();
+
+        var account = $(obj).val();
+    
+        $.get("{{route('accountinfo')}}",{account:account},function(data){
 
             $('.material_rate').val(data.rate);
 

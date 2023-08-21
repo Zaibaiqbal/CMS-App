@@ -5,7 +5,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Client Account Info</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Account Info</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -19,24 +19,22 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                @php($name = 'client')
-                                @php($label = 'Select Client')
-                                <div class="form-group">
-                                    <label for="">{{$label}} <span class="text-danger"> *</span> </label>
 
-                                    <small class="text-danger" id="{{$name}}_error"></small>
+                        <div class="col-md-12 mb-2">
 
-                                    <select name="{{$name}}" id="" class="form-control">
-                                        <option value="{{encrypt(0)}}">{{$label}}</option>
-                                    @foreach($client_list as $rows)
-                                        <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
+                          @php($label = 'Client Group')
+                          @php($name = 'client_group')
+                          <label for="">{{$label}} <span class="text-danger">*</span></label>
+                          <small class="text-danger" id="{{$name}}_error"></small>
 
-                            </div>
+                          <select name="{{$name}}" id="" class="form-control fstdropdown-select">
 
+                          @foreach(['Numbered Account','Partner Account'] as $rows)
+                                <option value="{{$rows}}">{{$rows}}</option>
+                            @endforeach
+                          </select>
+                          </div>
+                      
                             <div class="col-md-6">
 
                                 @php($label = 'Title')
@@ -81,3 +79,7 @@
     </div>
   </div>
 </div>
+
+<script>
+  setFstDropdown();
+</script>

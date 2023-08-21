@@ -18,17 +18,17 @@ Locations Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Locations
+                <h3 class="card-title text-uppercase">All Locations
 
                     @if(Auth::user()->hasAnyPermission(['All','Add Category']))
                 
-                    <a onclick="formModal(event,'{{route('store.category')}}','#modal_add_category','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;margin-left:5px;">
+                    <a onclick="formModal(event,'{{route('store.category')}}','#modal_add_category','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;margin-left:5px;">
                     Add Category</a>
                     @endif
 
                     @if(Auth::user()->hasAnyPermission(['All','Add Location']))
             
-                    <a onclick="formModal(event,'{{route('store.location')}}','#modal_add_location','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                    <a onclick="formModal(event,'{{route('store.location')}}','#modal_add_location','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
                     Add Location</a>
                     @endif
                 </h3>
@@ -38,7 +38,7 @@ Locations Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table class="table table-striped table-bordered nowrap truck_table">
+                    <table class="table table-striped table-bordered nowrap truck_table text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>

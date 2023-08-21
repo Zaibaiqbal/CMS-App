@@ -31,7 +31,7 @@ Transaction Management
                       <tr>
                           <th>#</th>
                           <th>Name</th>
-                          <th>License Plate No</th>
+                          <th>License No</th>
                           <th>Material Type</th>
                           <th>Gross weight</th>
                           <th>Tare weight</th>

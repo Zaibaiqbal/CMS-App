@@ -19,7 +19,7 @@ View Unapproved Clients
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Unapproved Clients
+                <h3 class="card-title">ALL UNAPPROVED CLIENTS
 
                    
                     <!--end::Button-->
@@ -27,7 +27,7 @@ View Unapproved Clients
             </div>
             <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                         <thead>
                             <tr>
                             <th>ID</th>

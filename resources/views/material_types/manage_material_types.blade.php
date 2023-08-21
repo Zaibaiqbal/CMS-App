@@ -20,11 +20,11 @@ Materials Management
             <div class="card">
 
             <div class="card-header">
-                <h3 class="card-title">All Materials
+                <h3 class="card-title text-uppercase">All Materials
 
                 @if(Auth::user()->hasAnyPermission(['All','Add Material']))
           
-                <a data-toggle="modal"  data-target="#modal_add_material_type" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                <a data-toggle="modal"  data-target="#modal_add_material_type" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
                 Add Material</a>
                 @endif
                     <!--end::Button-->
@@ -34,7 +34,7 @@ Materials Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>

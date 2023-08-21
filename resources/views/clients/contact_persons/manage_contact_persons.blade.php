@@ -18,27 +18,27 @@ Contact Persons Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Contacts
+                <h3 class="card-title">ALL CONTACTS
 
 
                 </h3>
             
-                <a onclick="formModal(event,'{{route('request.contactperson')}}','#modal_request_contact_person','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                <a onclick="formModal(event,'{{route('request.contactperson')}}','#modal_request_contact_person','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
                          Add Contact</a>
               
               </div>
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Name</th>
-                      <th>Contact</th>
-                      <th>Account No</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                      <th>NAME</th>
+                      <th>CONTACT</th>
+                      <th>ACCOUNT NO</th>
+                      <th>STATUS</th>
+                      <th>ACTION</th>
                      
                     </tr>
                   </thead>

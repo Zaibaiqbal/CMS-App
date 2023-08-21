@@ -18,17 +18,17 @@ Clients Management
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Clients
+                <h3 class="card-title">ALL CLIENTS
 
                     <!--end::Button-->
                     </h3>
             </div>
             <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                         <thead>
                             <tr>
-                            <th>ID</th>
+                            <th>id</th>
                             <th>Name</th>
                             <th>Account No</th>
                             <th>Email</th>

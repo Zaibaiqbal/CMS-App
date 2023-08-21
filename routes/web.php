@@ -72,7 +72,9 @@ Route::post('storematerialrate', [App\Http\Controllers\MaterialTypeController::c
 
 Route::match(['get','post'],'updatematerialrate', [App\Http\Controllers\MaterialTypeController::class, 'updateMaterialRate'])->name('update.materialrate')->middleware('auth','permission:All|Update Material Rate');
 
-Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('auth','permission:All|Add Account');
+// this request will be enerated by only client 
+
+Route::match(['get','post'],'storeaccount', [App\Http\Controllers\AccountController::class, 'storeAccount'])->name('store.account')->middleware('auth');
 
 Route::get('accountslist', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.list')->middleware('auth','permission:All|View Accounts');
 
@@ -94,7 +96,7 @@ Route::match(['post','get'],'approvecontactperson', [App\Http\Controllers\UserCo
 Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoSearchPlateNo'])->name('searchplateno');
 
 
-Route::get('searchclientbyname', [App\Http\Controllers\UserController::class, 'autoSearchByClientName'])->name('searchclientbyname');
+Route::get('searchclientbyname', [App\Http\Controllers\TransactionController::class, 'autoSearchByClientName'])->name('searchclientbyname');
 
 
 Route::post('changepassword', [App\Http\Controllers\UserController::class, 'changePassword'])->name('change.password')->middleware('auth','permission:All|Change Password');
@@ -128,6 +130,14 @@ Route::match(['get','post'],'transactioninvoice', [App\Http\Controllers\Transact
 
 
 Route::get('materialinfo', [App\Http\Controllers\MaterialTypeController::class, 'getMaterialInfo'])->name('materialinfo')->middleware('auth');
+
+Route::get('accountrequests', [App\Http\Controllers\AccountController::class, 'viewAccountRequests'])->name('accountrequests')->middleware('auth');
+
+
+Route::get('approveaccount', [App\Http\Controllers\AccountController::class, 'approveAccount'])->name('approveaccount')->middleware('auth');
+
+
+Route::get('accountinfo', [App\Http\Controllers\AccountController::class, 'getAccountInfo'])->name('accountinfo')->middleware('auth');
 
 // CLIENT ROUTES
 
