@@ -79,6 +79,15 @@ class Transaction extends Model
 
                 }
 
+                if(isset($object['client']))
+                {
+                $transaction->client_name = $object['client'];
+                }
+                if(isset($object['contact_no']))
+                {
+                $transaction->contact_no = $object['contact_no'];
+                }
+
                 // if(isset( $object['tare_weight']))
                 // {
                 //     $transaction->tare_weight = $object['tare_weight'];

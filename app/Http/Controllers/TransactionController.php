@@ -210,7 +210,7 @@ class TransactionController extends Controller
                     
                     $validation = [];
 
-                    if($transaction->client_type == "Numbered Account")
+                    if($transaction->client_group == "Numbered Account")
                     {
                         $validation += [
                             'account'    => 'required'
@@ -262,6 +262,9 @@ class TransactionController extends Controller
     
     
                     }
+
+                    return redirect()->back()->with('success','Transaction closed successfully');
+
                 }
                 else
                 {

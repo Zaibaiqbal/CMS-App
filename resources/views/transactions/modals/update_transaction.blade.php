@@ -45,7 +45,7 @@
 
 
                 </div>
-            
+                @if($transaction->client_group != 'Cash Account')
                 <div class="col-md-4">
                     @php($label = 'Select Account')
                     @php($name = 'account')
@@ -64,6 +64,7 @@
 
                     </div>
                 </div>
+                @endif
                 <div class="col-md-4">
                         @php($label = 'Client')
                         @php($name = 'client')
@@ -108,9 +109,9 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <select name="{{$name}}" id="" class="form-control fstdropdown-select" onchange="getMaterialRate(event,this)">
+                        <select name="{{$name}}" id="" class="form-control" onchange="getMaterialRate(event,this)">
 
-                            <option value="{{encrypt(0)}}">{{$label}}</option>
+                            <option value="">{{$label}}</option>
                             @foreach($material_types as $rows)
                                 <option  value="{{encrypt($rows->id)}}" >{{$rows->name}}</option>
                             @endforeach
@@ -119,7 +120,7 @@
                 </div>
 
 
-                @if($transaction->client_type == "Cash Account")
+                @if($transaction->client_group == "Cash Account")
                 <div class="col-md-4 mb-2">
 
                 @php($label = 'Material Rate')
@@ -306,7 +307,7 @@ function calculateNetWeight(event,obj)
         event.preventDefault();
 
         var material = $(obj).val();
-        var client_type = "{{$transaction->client_type}}";
+        var client_type = "{{$transaction->client_group}}";
         var user_id = "{{$transaction->client_id}}";
   
         $.get("{{route('materialinfo')}}",{material:material,client_type,client_type,user_id,user_id},function(data){
