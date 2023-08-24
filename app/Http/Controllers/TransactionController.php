@@ -6,6 +6,8 @@ use App\Models\MaterialType;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserAccount;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -174,14 +176,12 @@ class TransactionController extends Controller
 
                         $transaction = new Transaction;
                         $transaction = $transaction->getTransactionById($request->transaction);
-                        
-                        
+                     
                         $pdf = PDF::loadView('transactions.documents.invoice', [
                         'format'        => false,
                         'transaction'     =>   $transaction
                         ]);
-
-                        return $pdf->setPaper('a4', 'landscape')->download('Invoice.pdf');
+                        return $pdf->setPaper('a4', 'landscape')->stream('Invoice.pdf');
                     }
                
 

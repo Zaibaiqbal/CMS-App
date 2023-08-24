@@ -42,8 +42,26 @@
             </form>
         </div>
         @endif
-       <center>ezWeigh Summary</center>
-       
+
+        <table style=" width:100%;">
+        <tr>
+          <td style="width: 30%;"><img src="logos/tes02.png"  width="20%"/></td>
+
+          <td>
+       <center><b>ezWeigh Summary</b></center>
+      </td>
+
+       <td> <p style="float:right;">LaFleche, Div. Veckwith Transfer
+       <br>
+          6271 Cavanagh Road.
+          <br>
+
+          Carleton Place, Ontario K7C 0C4 </p></td>
+        </tr>
+        </table>
+         
+
+       <br>
        <br>
 
        <hr>
