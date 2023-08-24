@@ -84,7 +84,6 @@
                 </select>
 
         </div>
-        --}}
 
         <div class="col-md-6 mb-2">
 
@@ -101,7 +100,9 @@
             </select>
 
         </div>
-        <div class="col-md-6 mb-2">
+        --}}
+
+        <div class="col-md-12 mb-2">
 
             @php($label = 'In-weight')
                 @php($name = 'inweight')

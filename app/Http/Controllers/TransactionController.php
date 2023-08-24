@@ -102,7 +102,7 @@ class TransactionController extends Controller
                  
                     // 'account'                 => 'required',
                     'plate_no'                => 'required|max:255|min:0',
-                    'operation_type'                => 'required',
+                    // 'operation_type'                => 'required',
                     'inweight'                =>   'required|gte:0',
                     'vehicle_descp'           =>    'nullable|max:255'
 

@@ -60,7 +60,7 @@ class Transaction extends Model
                 $transaction->contact_no = $object['contact_no'];
 
                 // $transaction->material_type_id = $object['material'];
-                $transaction->operation_type = $object['operation_type'];
+                // $transaction->operation_type = $object['operation_type'];
 
                 if(isset($object['user_id']))
                 {
@@ -123,12 +123,23 @@ class Transaction extends Model
                 $transaction->gross_weight = $object['inweight'];
                 $transaction->tare_weight = $object['outweight'];
                 $transaction->net_weight = $object['net_weight'];
+                if($object['net_weight'] < 0)
+                {
+                    $transaction->operation_type = 'Outbound';
+                    
+                }
+                else
+                {
+                    $transaction->operation_type = 'Inbound';
+
+                }
+
                 $transaction->material_type_id = $object['material_type'];
 
                     $transaction->status = 'Processed';
                 
                 
-                if($transaction->operation_type == "Inbound" && isset($object['job_id']))
+                if(isset($object['job_id']))
                 {
                     $transaction->job_id = $object['job_id'];
 

@@ -19,21 +19,19 @@
 
           <div class="card-body">
             <div class="row">
-            @if($transaction->operation_type == "Inbound")
-                <div class="col-md-6">
+                <div class="col-md-12 job_id" style="display: none;">
                         @php($label = 'Job Id / PO Number')
                         @php($name = 'job_id')
                         <label for="">{{$label}} <span class="text-danger"></span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
-                        <input type="text" value="" name="{{$name}}"  placeholder="{{$label}}"  class="form-control auto_search_plate_no" id="">
+                        <input type="text" value="" name="{{$name}}"  placeholder="{{$label}}"  class="form-control" id="">
                     </div>
 
 
                 </div>
-                @endif
-                <div @if($transaction->operation_type == "Inbound") class="col-md-6" @else class="col-md-12"  @endif>
+                <div class="col-md-12">
                         @php($label = 'License No')
                         @php($name = 'plate_no')
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
@@ -138,11 +136,10 @@
 
                     @php($label = 'Operation')
                     @php($name = 'operation_type')
-                    @php($operation_types = ['Inbound','Outbound'])
                     <label for="">{{$label}} <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" value="{{$transaction->operation_type}}" readonly class="form-control">
+                    <input type="text" value="" readonly class="form-control operation_type">
                    
 
                 </div>
@@ -155,7 +152,7 @@
                         <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <input type="text" onkeyup="calculateNetWeight(event,this)" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}" value="{{$transaction->gross_weight}}">
+                        <input type="text" onchange="calculateNetWeight(event,this)" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}" value="{{$transaction->gross_weight}}">
 
                 </div>
                 <div class="col-md-4 mb-2">
@@ -165,7 +162,7 @@
                     <label for="" id="tare_label">{{$label}} <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" name="{{$name}}" class="form-control" onkeyup="calculateNetWeight(event,this)" id="tare_input" placeholder="{{$label}}" value="{{$transaction->tare_weight}}">
+                    <input type="text" name="{{$name}}" class="form-control" onchange="calculateNetWeight(event,this)" id="tare_input" placeholder="{{$label}}" value="{{$transaction->tare_weight}}">
 
 
                 </div>
@@ -280,27 +277,25 @@ function calculateNetWeight(event,obj)
     {
         event.preventDefault();
 
-        var opertaion_type = $('.operation_type').val();
         var inweight =  $("input[name=inweight]").val();
         var outweight =  $("input[name=outweight]").val();
 
         var net_weight = 0;
 
-        if(opertaion_type == "Outbound")
-        {
-            if(outweight > 0)
-            {
-                net_weight = outweight - inweight;
-            }
-        
-        }
-        else
-        {
-            if(inweight > 0)
-            {
-                net_weight =  inweight - outweight;
+      
+        net_weight =  inweight - outweight;
             
-            }
+
+        if(net_weight < 0)
+        {
+            $('.operation_type').val('Outbound');
+            $('.job_id').hide();
+
+        }
+        if(net_weight > 0)
+        {
+            $('.operation_type').val('Inbound');
+            $('.job_id').show();
         }
             $('.net_weight').val(net_weight);
 

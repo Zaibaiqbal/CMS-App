@@ -126,7 +126,7 @@ Route::match(['get','post'],'storecategory', [App\Http\Controllers\LocationContr
 
 Route::match(['get','post'],'storelocation', [App\Http\Controllers\LocationController::class, 'storeLocation'])->name('store.location')->middleware('auth','permission:All|Add Location');
 
-Route::match(['get','post'],'transactioninvoice', [App\Http\Controllers\TransactionController::class, 'printTransactionInvoice'])->name('transaction.invoice')->middleware('auth','permission:All|Approve Deactive User');
+Route::match(['get','post'],'transactioninvoice', [App\Http\Controllers\TransactionController::class, 'printTransactionInvoice'])->name('transaction.invoice')->middleware('auth','permission:All|Print Ticket');
 
 
 Route::get('materialinfo', [App\Http\Controllers\MaterialTypeController::class, 'getMaterialInfo'])->name('materialinfo')->middleware('auth');
