@@ -56,9 +56,14 @@ class Transaction extends Model
 
                 // dd($object);
                 $transaction->plate_no = $object['plate_no'];
+                if(isset($object['client']))
+                {
                 $transaction->client_name = $object['client'];
+                }
+                if(isset($object['contact_no']))
+                {
                 $transaction->contact_no = $object['contact_no'];
-
+                }
                 // $transaction->material_type_id = $object['material'];
                 // $transaction->operation_type = $object['operation_type'];
 

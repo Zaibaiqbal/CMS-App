@@ -72,8 +72,8 @@ class TransactionController extends Controller
                 if($request->client_group == "Cash Account")
                 {
                     $validation += [
-                        'client'        =>   'required|max:255',
-                        'contact_no'   =>   'required|max:255'
+                        'client'        =>   'nullable|max:255',
+                        'contact_no'   =>   'nullable|max:255'
                     ]; 
                 }
                 else
