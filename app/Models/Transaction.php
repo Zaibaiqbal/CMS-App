@@ -98,11 +98,9 @@ class Transaction extends Model
                 // $transaction->net_weight = $object['net_weight'];
                 $transaction->ticket_no = $this->generateTicketNo();
                 
-                // dd($transaction);
                 $transaction->save();
 
-              
-
+                // dd($transaction);
 
         return with($transaction);
 

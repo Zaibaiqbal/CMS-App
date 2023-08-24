@@ -62,7 +62,7 @@ class TransactionController extends Controller
 
             if($request->isMethod('post'))
             {
-                // dd($request->client_type);
+                // dd($request->client_group);
 
                 $client_group = ['Cash Account','Numbered Account','Partner Account'];
 
@@ -104,6 +104,7 @@ class TransactionController extends Controller
                     'plate_no'                => 'required|max:255|min:0',
                     'operation_type'                => 'required',
                     'inweight'                =>   'required|gte:0',
+                    'vehicle_descp'           =>    'nullable|max:255'
 
                    
                 ]);
@@ -141,6 +142,7 @@ class TransactionController extends Controller
 
                 $material_type_list = $material_type->getMaterialTypeList();
                 $transaction_list = $transaction->getTransactionByAddedId();
+                // dd($transaction_list);
                 $user_list = $user->getUserListByType('Client')->where('is_verified',1);
 
                 return view('transactions.create_transaction',[

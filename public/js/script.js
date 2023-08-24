@@ -234,7 +234,6 @@ function submitModalForm(event,obj,form_id,form_modal_id)
         },
         error: function(result){
 
-            alert(result.responseJSON.errors);
             removeThemeLoader();
             // alert(result.responseJSON);
             var errors = result.responseJSON.errors;

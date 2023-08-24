@@ -71,12 +71,12 @@ class TruckController extends Controller
 
                 if(Auth::user()->user_type == "Contact Person")
                 {
-                    $user_account = new UserAccount;
+                    $user = new User;
 
-                    $user = $user_account->getClientByUserId(Auth::user()->id);
+                    $user = $user->getUserById(Auth::user()->id);
                     if(isset($user->id))
                     {
-                        $form_data['client_id'] = $user->parent_id;
+                        $form_data['client_id'] = $user->client_id;
 
                     }
 
@@ -156,7 +156,8 @@ class TruckController extends Controller
         try
         {
             $data = Truck::join('users as u','u.id','=','trucks.client_id')
-                    ->selectRaw('trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id')
+                    ->join('accounts as a','a.added_id','=','trucks.client_id')
+                    ->selectRaw('trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id,a.client_group')
                     ->where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
                     ->get();
      

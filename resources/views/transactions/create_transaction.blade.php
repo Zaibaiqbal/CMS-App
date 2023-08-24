@@ -168,6 +168,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                                 label1: item.name,
                                 val1:    item.user_id,
                                 label2: item.contact,
+                                label3: item.client_group,
                             }
                        
                         }))
@@ -191,7 +192,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                 $('.client_name').val(i.item.label1).attr('readonly',true);
                 $('input[name=user_id]').val(i.item.val1);
                 $('input[name=contact_no]').val(i.item.label2).attr('readonly',true);
-                $('.client_type').val('');
+                $('.client_group').val(i.item.label3);
 
 
                 // getClientAccountList(i.item.val1);
