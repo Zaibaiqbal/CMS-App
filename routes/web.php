@@ -152,6 +152,8 @@ Route::get('clienttransactions', [App\Http\Controllers\TransactionController::cl
 
 Route::get('clientaccounts', [App\Http\Controllers\AccountController::class, 'clientAccountList'])->name('client.accounts')->middleware('auth');
 
+Route::get('assignaccountslist', [App\Http\Controllers\AccountController::class, 'assignAccountList'])->name('assignaccountslist')->middleware('auth');
+
 Route::get('deactiveuser', [App\Http\Controllers\UserController::class, 'deactiveUser'])->name('deactive.user')->middleware('auth');
 
 Route::match(['get','post'],'contactpersonlist', [App\Http\Controllers\UserController::class, 'getContactPersonList'])->name('contactperson.list')->middleware('auth');
@@ -160,6 +162,12 @@ Route::match(['get','post'],'contactpersonlist', [App\Http\Controllers\UserContr
 Route::match(['get','post'],'storeclienttruck', [App\Http\Controllers\TruckController::class, 'storeTruck'])->name('store.clienttruck')->middleware('auth');
 
 Route::match(['get','post'],'requestcontactperson', [App\Http\Controllers\UserController::class, 'requestContactPerson'])->name('request.contactperson')->middleware('auth');
+
+
+Route::match(['get','post'],'assignaccount', [App\Http\Controllers\AccountController::class, 'assignAccount'])->name('assign.account')->middleware('auth');
+
+
+Route::match(['get','post'],'unapprovedaccounts', [App\Http\Controllers\AccountController::class, 'viewUnapprovedAccountAssignment'])->name('unapprovedaccounts')->middleware('auth');
 
 
 // END CLIENT ROUTES

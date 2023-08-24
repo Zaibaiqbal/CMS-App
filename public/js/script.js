@@ -149,7 +149,7 @@ $(document).ready(function() {
 
 
 function addThemeLoader() {
-    var loaderHTML = '<div class="theme-loader"><div class="ball-scale"><div class="contain"><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div></div></div></div>';
+    var loaderHTML = '<div class="theme-loader" style="z-index:2052"><div class="ball-scale"><div class="contain"><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div></div></div></div>';
 
     $(loaderHTML).appendTo('body');
 }
@@ -174,6 +174,7 @@ function submitModalForm(event,obj,form_id,form_modal_id)
 
     var route = obj.attr('action');
 
+    addThemeLoader();
 
     $.ajax({
 
@@ -192,16 +193,9 @@ function submitModalForm(event,obj,form_id,form_modal_id)
         processData: false,
 
         success: function(result) {
-
+// alert(result.status);
             if (result.status) {
 
-               
-                toastr.options =
-                {
-                    "closeButton" : true,
-                    "progressBar" : true
-                }
-                toastr.success(result.message);
 
                var flag = false;
 
@@ -211,25 +205,36 @@ function submitModalForm(event,obj,form_id,form_modal_id)
 
                     flag = true;
                 }
+               
+                if (result.redirect_url && result.redirect_url.length > 0) {
+
+                    window.location.href = result.redirect_url;
+                }
                 else
                 {
-                    location.reload();
+                location.reload();
 
                 }
 
-                location.reload();
+                toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+                toastr.success(result.message);
 
-
+                removeThemeLoader();
 
             } else {
 
+                removeThemeLoader();
 
             }
 
         },
         error: function(result){
 
-
+            removeThemeLoader();
             // alert(result.responseJSON);
             var errors = result.responseJSON.errors;
             $.each(errors, function (key, val) {

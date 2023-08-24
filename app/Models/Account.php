@@ -24,6 +24,14 @@ class Account extends Model
         return Account::where('is_deleted',0)->where('approval_status','Requested')->get();
     }
 
+    public function getAccountListByCondition($condition = [])
+    {
+        
+        return Account::where('is_deleted',0)->where($condition)->get();
+    }
+
+    
+
     public function getAccountById($id)
     {
         return Account::where('is_deleted',0)->where('id',$id)->first();

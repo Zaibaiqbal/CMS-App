@@ -90,8 +90,11 @@ class Transaction extends Model
                     $transaction->vehicle_desc = $object['vehicle_descp'];
 
                 }
-                
-                $transaction->client_type = $object['client_type'];
+                if(isset( $object['client_group']))
+                {
+                $transaction->client_group = $object['client_group'];
+
+                }
                 // $transaction->net_weight = $object['net_weight'];
                 $transaction->ticket_no = $this->generateTicketNo();
                 
@@ -124,10 +127,8 @@ class Transaction extends Model
                 $transaction->net_weight = $object['net_weight'];
                 $transaction->material_type_id = $object['material_type'];
 
-                if($transaction->net_weight >= 0)
-                {
                     $transaction->status = 'Processed';
-                }
+                
                 
                 if($transaction->operation_type == "Inbound" && isset($object['job_id']))
                 {

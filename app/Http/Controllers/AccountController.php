@@ -6,6 +6,7 @@ use App\Events\SendNotification;
 use App\Models\Account;
 use App\Models\User;
 use App\Models\UserAccount;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,31 @@ class AccountController extends Controller
         $accounts_list = Account::get();
         return view('accounts.manage_accounts',[
             'accounts_list'  =>  $accounts_list
+        ]);
+    }
+
+
+    public function assignAccountList()
+    {
+
+        $account = new UserAccount;
+
+        return view('clients.client_accounts.manage_account_assignment',[
+            
+            'accounts_list'  =>  $account->getAllAccountListByClientId(Auth::user()->id)
+        ]);
+    }
+
+
+    public function viewUnapprovedAccountAssignment(Request $request)
+    {
+
+        $user = new UserAccount;
+
+        $user_list = $user->getUnapprovedAccountAssignments(decrypt($request->id));
+
+        return view('accounts.view_unapproved_accountsassignment',[
+            'user_list'  => $user_list
         ]);
     }
 
@@ -33,6 +59,59 @@ class AccountController extends Controller
 
         }
         return $data;
+    }
+
+    public function assignAccount(Request $request)
+    {
+        try
+        {
+            if($request->isMethod('post'))
+            {
+
+                $form_data = $request->input();
+
+                $form_data['user_id']   = $form_data['user'];
+                $form_data['account_id']   = $form_data['account'];
+                $user_account = new UserAccount; 
+                $user_account = $user_account->storeUserAccount($form_data);
+                if(isset($user_account->id))
+                {
+                    $user = new User;
+                    $user_ids = $user->getUserIdsByPermissions(['All']);
+    
+                    $client = $user->getUserById(Auth::user()->id);
+    
+                    event(new SendNotification($client->id,$user_ids,'','unapprovedaccounts',$user_account->user_id,$client->name. ' has requested to assign new account to ' .$user_account->user->name));
+    
+                    $data = ['status' => true, 'message' => 'Account requested successfully'];
+                }
+
+                return $data;
+
+            }
+            else
+            {
+                $user = new User;
+                $user_list = $user->getUserListByCondition(['client_id' => Auth::user()->id,'user_type' => 'Contact Person']);
+
+                $account = new Account;
+                $account_list = $account->getAccountListByCondition(['added_id' => Auth::user()->id,'approval_status' => 'Approved']);
+
+                return view('clients.client_accounts.modals.assign_account',[
+
+                    'user_list'    =>   $user_list,
+                    'account_list'    =>   $account_list,
+                
+                    ]);
+            }
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+        return redirect()->back();
     }
 
     public function approveAccount(Request $request)
@@ -87,8 +166,7 @@ class AccountController extends Controller
             {
 
                 $data = ['status' => false, 'message' => ''];
-        
-                $request->validate([
+               $request->validate([
     
                     'client_group'                  => 'required',
                     'account_no'              => 'required|max:15|min:0',
@@ -144,7 +222,6 @@ class AccountController extends Controller
 
         }
 
-        return redirect()->back();
       
 
     }

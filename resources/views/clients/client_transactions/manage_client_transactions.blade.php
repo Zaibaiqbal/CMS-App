@@ -18,7 +18,7 @@ Transaction Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Transactions
+                <h3 class="card-title text-uppercase">All Transactions
 
                 </h3>
 
@@ -26,13 +26,13 @@ Transaction Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                     <thead>
                       <tr>
                           <th>#</th>
                           <th>Name</th>
                           <th>License No</th>
-                          <th>Material Type</th>
+                          <th>Material</th>
                           <th>Gross weight</th>
                           <th>Tare weight</th>
                           <th>Net weight</th>

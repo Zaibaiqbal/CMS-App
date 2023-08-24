@@ -63,16 +63,22 @@ class TransactionController extends Controller
             if($request->isMethod('post'))
             {
                 // dd($request->client_type);
-                if($request->client_type == "Cash Account")
+
+                $client_group = ['Cash Account','Numbered Account','Partner Account'];
+
+                $validation = [
+                    'client_group'  =>  'in:'.implode(',',$client_group)
+                ];
+                if($request->client_group == "Cash Account")
                 {
-                    $validation = [
+                    $validation += [
                         'client'        =>   'required|max:255',
                         'contact_no'   =>   'required|max:255'
                     ]; 
                 }
                 else
                 {
-                    $validation = [
+                    $validation += [
                         'user_id'                  => 'required|exists:users,id',
                     ]; 
                 }

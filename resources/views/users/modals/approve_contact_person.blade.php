@@ -26,12 +26,18 @@
                       <label for="">{{$label}} <span class="text-danger">*</span></label>
                       <small class="text-danger" id="{{$name}}_error"></small>
 
+                      @if($user_account->user->account_type == "Existing Account") 
+                      <input type="text" name="{{$name}}" placeholder="{{$label}}" readonly value="{{$user_account->account->client_group}}"  class="form-control" id="">
+
+                      @else
+
                       <select name="{{$name}}" id="" class="form-control fstdropdown-select">
 
                       @foreach(['Numbered Account','Partner Account'] as $rows)
                             <option value="{{$rows}}">{{$rows}}</option>
                         @endforeach
                       </select>
+                      @endif
                       </div>
                       
                       <div class="col-md-6">

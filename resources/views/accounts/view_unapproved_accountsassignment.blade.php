@@ -1,14 +1,14 @@
-@extends('layouts.client_master')
+@extends('layouts.master')
 
 @section('page_title')
 
-Trucks Management
+Accounts Management
 
 @endsection
 
 @section('page_breadcrumbs')
 
-{{ Breadcrumbs::render('trucks') }}
+{{ Breadcrumbs::render('accounts') }}
 
 @endsection
 
@@ -18,11 +18,14 @@ Trucks Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title text-uppercase">All Fleet
+                <h3 class="card-title">Accounts List
 
-                  <a onclick="formModal(event,'{{route('store.clienttruck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
-                Add Truck  
-                </a>
+                @if(Auth::user()->hasAnyPermission(['All','Add Account']))
+          
+                    <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                        Add Account</a>
+                    @endif
+
                 </h3>
 
               
@@ -30,48 +33,45 @@ Trucks Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table class="table table-striped table-bordered nowrap truck_table text-uppercase">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Plate No</th>
-                      <th>VIN No</th>
-                      <th>Model</th>
-                      <th>Color</th>
-                      <th>Tare Weight</th>
+                      <th>Client Group</th>
+                      <th>Title</th>
+                      <th>Account No</th>
+                      <th>Status</th>
+                     
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($trucks_list as $rows)
+                    @foreach($accounts_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$rows->plate_no}}</td>
-                      <td>{{$rows->vin_no}}</td>
-                      <td>{{$rows->model}}</td>
-                      <td>{{$rows->color}}</td>
-                      <td>{{$rows->tare_weight}}</td>
-{{--
-
+                      <td>{{$rows->client_group}}</td>
+                      <td>{{$rows->title}}</td>
+                      <td>{{$rows->account_no}}</td>
+                      <td>{{$rows->status}}</td>
                       <td>
-                      <div class="dropdown-primary dropdown">
+
+                        <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
                             <i class="fa fa-ellipsis-v text-dark"></i>
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
-                                @if(Auth::user()->hasAnyPermission(['All','Update Fleet']))
-
+                                @if(Auth::user()->hasAnyPermission(['All','Update Account']))
             
-                                <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-                            @endif
+                                <a href="{{route('approveaccount',['id' => $rows->id])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
+                                @endif
 
                                 </li>
                              
                             </ul>
                         </div>
+                           
                       </td>
-                      --}}
-
                     </tr>
                 @endforeach
                   </tbody>

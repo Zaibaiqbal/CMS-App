@@ -49,6 +49,9 @@
     color: white !important;
   }
 
+  .modal{
+    z-index:1052;
+}
     </style>
     @yield('page_style')
 </head>
@@ -212,6 +215,13 @@
                             <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('client.accounts')}}" >
                                     <span class="pcoded-mtext">Accounts</span>
+                                </a>
+                                
+                            </li>
+
+                            <li class="pcoded-hasmenu text-uppercase">
+                                <a href="{{route('assignaccountslist')}}" >
+                                    <span class="pcoded-mtext">Assign Account</span>
                                 </a>
                                 
                             </li>

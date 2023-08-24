@@ -146,7 +146,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <input type="hidden" value="" name="client_type" class="client_type">
+        <input type="hidden" value="" name="client_group" class="client_group">
         <button type="submit" onclick="submitModalForm(event,this,'#form_create_transaction','')" class="btn btn-primary my-3" style="float: right;">Queue</button>
 
     </div>

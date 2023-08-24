@@ -71,7 +71,7 @@ class UserController extends Controller
 
             'name'      =>  'required|max:255|min:0',
             'contact'   =>  'required|max:13',
-            'email'     =>  'required|unique:users,email',
+            'email'     =>  'required|email|unique:users,email',
            
         ]);
 
@@ -82,9 +82,11 @@ class UserController extends Controller
 
         if(isset($user->id))
         {
-            return redirect('login')->with('message', 'Email sent successfully!');
+            $data = ['status' => true, 'message' => 'User Registered. Email sent successfully.','redirect_url' => route('login')];
 
         }
+    
+        return $data;
 
     }
 
@@ -138,10 +140,10 @@ class UserController extends Controller
 
                 $request->validate([
     
-                    'user'                  => 'required',
-                    'account_no'              => 'required|max:15|min:0|unique:accounts',
-                    'title'                   => 'required|max:255|min:0',
-                    'client_group'                   => 'required',
+                    'user'                      => 'required',
+                    'account_no'                => 'required|max:15|min:0|unique:accounts',
+                    'title'                     => 'required|max:255|min:0',
+                    'client_group'              => 'required',
                    
                     ]);
 
@@ -659,8 +661,9 @@ class UserController extends Controller
             }
             else
             {
-                $user_account = new UserAccount;
-                $account_list  =  $user_account->getAccountListByClientId(Auth::user()->id);
+                $account = new Account;
+                $account_list = $account->getAccountListByCondition(['added_id' => Auth::user()->id,'approval_status' => 'Approved']);
+
 // dd($account_list);
                 return view('clients.contact_persons.modals.add_request_contact_person',[
                     'account_list'    =>   $account_list

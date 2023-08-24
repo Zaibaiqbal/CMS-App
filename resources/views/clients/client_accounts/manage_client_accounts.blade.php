@@ -18,7 +18,7 @@ Accounts Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title text-uppercase">Accounts List
+                <h3 class="card-title text-uppercase">All Accounts
 
           
                     <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">

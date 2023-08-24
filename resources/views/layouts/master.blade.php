@@ -49,12 +49,42 @@
     color: white !important;
   }
 
+  .overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.modal{
+    z-index:1052;
+}
  
     </style>
     @yield('page_style')
 </head>
 
 <body>
+ 
     <!-- Pre-loader start -->
     <div class="theme-loader">
         <div class="ball-scale">

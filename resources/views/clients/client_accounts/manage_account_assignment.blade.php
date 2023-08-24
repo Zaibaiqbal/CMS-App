@@ -2,13 +2,13 @@
 
 @section('page_title')
 
-Trucks Management
+Accounts Management
 
 @endsection
 
 @section('page_breadcrumbs')
 
-{{ Breadcrumbs::render('trucks') }}
+{{ Breadcrumbs::render('accounts') }}
 
 @endsection
 
@@ -18,11 +18,12 @@ Trucks Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title text-uppercase">All Fleet
+                <h3 class="card-title text-uppercase">All Account Assignment
 
-                  <a onclick="formModal(event,'{{route('store.clienttruck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
-                Add Truck  
-                </a>
+          
+                    <a onclick="formModal(event,'{{route('assign.account')}}','#modal_assign_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                        Assign Account</a>
+               
                 </h3>
 
               
@@ -30,48 +31,46 @@ Trucks Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table class="table table-striped table-bordered nowrap truck_table text-uppercase">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Plate No</th>
-                      <th>VIN No</th>
-                      <th>Model</th>
-                      <th>Color</th>
-                      <th>Tare Weight</th>
+                      <th>Title</th>
+                      <th>Client Group</th>
+                      <th>Account No</th>
+                      <th>Status</th>
+                     
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($trucks_list as $rows)
+                    @foreach($accounts_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$rows->plate_no}}</td>
-                      <td>{{$rows->vin_no}}</td>
-                      <td>{{$rows->model}}</td>
-                      <td>{{$rows->color}}</td>
-                      <td>{{$rows->tare_weight}}</td>
-{{--
-
+                      <td>{{$rows->title}}</td>
+                      <td>{{$rows->client_group}}</td>
+                      <td>{{$rows->account_no}}</td>
+                      <td>{{$rows->status}}</td>
+                      {{--
                       <td>
-                      <div class="dropdown-primary dropdown">
+
+                        <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
                             <i class="fa fa-ellipsis-v text-dark"></i>
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
-                                @if(Auth::user()->hasAnyPermission(['All','Update Fleet']))
-
+                                @if(false && Auth::user()->hasAnyPermission(['All','Update Account']))
             
-                                <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.truck',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-                            @endif
+                                <a class="dropdown-item waves-light waves-effect"  onclick="formModal(event,'{{route('update.account',['id' => encrypt($rows->id)])}}','#modal_update_truck','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                                @endif
 
                                 </li>
                              
                             </ul>
                         </div>
+                           
                       </td>
                       --}}
-
                     </tr>
                 @endforeach
                   </tbody>

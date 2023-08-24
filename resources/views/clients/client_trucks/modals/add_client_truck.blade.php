@@ -97,8 +97,7 @@
                   @php($name = 'description')
                   <div class="form-group">
                       <label for="">{{$label}}</label>
-                      <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}">
-                        </textarea>
+                      <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}"></textarea>
                   </div>
               </div>
               

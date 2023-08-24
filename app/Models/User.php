@@ -59,7 +59,11 @@ class User extends Authenticatable
         return  User::where('user_type', $type)->where('status','Active')->orderBy('id', 'desc')->get();
     }
 
-
+    public function getUserListByCondition($condition = [])
+    {
+        return  User::where(['is_deleted' => 0 ]+$condition)->where('status','Active')->orderBy('id', 'desc')->get();
+    }
+    
     public function getUnapproveClients($type)
     {
         return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'desc')->get();
@@ -72,13 +76,21 @@ class User extends Authenticatable
 
     public function getContactPersonsByCondition($type,$status,$is_verified)
     {
+// dd($type,$status,$is_verified);
+        return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
+        ->join('users as uc', 'users.client_id', '=', 'uc.id')
+        ->where('user_accounts.is_deleted',0)
+        ->where(['users.user_type' => $type , 'users.status' => $status , 'users.is_verified' => $is_verified])
+        ->select('user_accounts.id','users.id as user_id', 'uc.name as client_name','users.name as user_name','users.email','users.contact')
+     
+        ->get();
 
-        return UserAccount::with(['user', 'client'])
-        ->whereHas('user', function ($query) use ($type,$status,$is_verified) {
+    //     return UserAccount::with(['user'])
+    //     ->whereHas('user', function ($query) use ($type,$status,$is_verified) {
 
-        $query->where(['user_type' => $type , 'status' => $status , 'is_verified' => $is_verified]);
+    //     $query->whereHas('client');
         
-    })->where('status','Unapprove')->get();
+    // })->where(['user_type' => $type , 'status' => $status , 'is_verified' => $is_verified])->where('status','Unapprove')->get();
 
     
     }
@@ -173,6 +185,7 @@ class User extends Authenticatable
        
                     if(isset($object['account']) && @count($object['account']) > 0)
                     {
+                       
                         $account_info = [];
 
                         foreach($object['account'] as $key => $rows)
@@ -180,9 +193,7 @@ class User extends Authenticatable
 
                             $account_info = [
 
-                                'user_id'  => $user->id,
-                                'parent_id'  => Auth::user()->id,
-            
+                                'user_id'  => $user->id,            
                                 'account_id'    =>  $rows,
 
                             ];
@@ -222,11 +233,14 @@ class User extends Authenticatable
                         $user_account = $user_account->storeUserAccount($account_info);
                     }
 
-            
+                    $user->client_id    =   Auth::user()->id;
+                    $user->update();
+                    
                     $user_obj = new User;
                     $user_ids = $user_obj->getUserIdsByPermissions(['All']);
     
                     event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name));
+
 
     
                 }
@@ -327,7 +341,7 @@ class User extends Authenticatable
             {
                 $user_obj = new User;
                 $user_ids = $user_obj->getUserIdsByPermissions(['All']);
-    // dd($user_ids);
+
                 \Mail::to($user->email)->send(new \App\Mail\RegistrationMail($user));
     
                 event(new SendNotification($user->id,$user_ids,'','unapproveclients',0,'A new client '.$user->name. ' has registered to your system'));
@@ -359,6 +373,11 @@ class User extends Authenticatable
     {
 
         return $this->belongsToMany(Role::class,'model_has_roles','model_id');
+    }
+    public function client()
+    {
+
+        return $this->belongsTo(User::class,'client_id');
     }
     public function transactions()
     {

@@ -49,7 +49,7 @@ Transaction Management
                     </thead>
                     <tbody>
                         @foreach($transaction_list as $rows)
-                        <tr @if($rows->status == "Open") style="background-color:#fc847b;" @endif>
+                        <tr @if($rows->status == "Queued") style="background-color:#fc847b;" @endif>
                         
                         <td>{{$loop->iteration}}</td>
                         <td>{{$rows->client_name}}</td>

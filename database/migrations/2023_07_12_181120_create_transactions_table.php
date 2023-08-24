@@ -24,7 +24,7 @@ class CreateTransactionsTable extends Migration
             $table->string('ticket_no')->nullable();
             $table->string('job_id')->nullable();
 
-            $table->string('client_type')->nullable();
+            $table->string('client_group')->nullable();
             $table->string('operation_type')->nullable();
 
             $table->string('plate_no')->nullable();

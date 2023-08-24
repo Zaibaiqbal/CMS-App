@@ -19,6 +19,8 @@
         <link href="{{ asset('css/prism.css') }}" rel="stylesheet">	
         <link href="{{ asset('css/jquery.mCustomScrollbar.css') }}" rel="stylesheet">	
         <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">	
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <!-- Tempusdominus Bootstrap 4 -->
 
@@ -49,6 +51,7 @@
         <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}" defer></script>
         <script src="{{ asset('js/pcoded.min.js') }}" defer></script>
         <script src="{{ asset('js/script.js') }}" defer></script>
+        <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 

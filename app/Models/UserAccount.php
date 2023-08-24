@@ -23,6 +23,12 @@ class UserAccount extends Model
 
     }
     
+    public function getUnapprovedAccountAssignments($id)
+    {
+        return UserAccount::where('is_deleted',0)->where('user_id',$id)->where('status','Unapprove')->get();
+    }
+
+    
     public function getUserAccountListByClientId($id)
     {
         return UserAccount::where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->get();
@@ -32,27 +38,56 @@ class UserAccount extends Model
     {
         return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
         ->join('accounts', 'user_accounts.account_id', '=', 'accounts.id')
-        ->where('user_accounts.is_deleted',0)
-        ->where('user_accounts.parent_id', '=', $id)
-        ->orWhere('user_accounts.user_id',$id)
-        ->select('accounts.id', 'accounts.account_no','accounts.title')
+        ->leftJoin('users as uc', 'users.client_id', '=', 'uc.id')
+        ->where(function ($query) use ($id) {
+            $query->where('accounts.added_id', $id)
+                ->orWhere('user_accounts.user_id', $id);
+        })
+        ->where('user_accounts.is_deleted', 0)
+
+        ->where('accounts.status', 'Active')
+        ->select('accounts.id', 'accounts.account_no', 'accounts.title')
         ->distinct('accounts.account_no')
         ->get();
+        // return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
+        // ->join('accounts', 'user_accounts.account_id', '=', 'accounts.id')
+        // ->where('user_accounts.is_deleted',0)
+        // ->where('user_accounts.parent_id', '=', $id)
+        // ->orWhere('user_accounts.user_id',$id)
+        // ->select('accounts.id', 'accounts.account_no','accounts.title')
+        // ->distinct('accounts.account_no')
+        // ->get();
     }
 
 
     public function getAllAccountListByClientId($id)
     {
+
         return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
         ->join('accounts', 'user_accounts.account_id', '=', 'accounts.id')
-        ->where('user_accounts.is_deleted',0)
-        ->where('user_accounts.parent_id', '=', $id)
+        ->leftJoin('users as uc', 'users.client_id', '=', 'uc.id')
+        ->where(function ($query) use ($id) {
+            $query->where('accounts.added_id', $id)
+                ->orWhere('user_accounts.user_id', $id);
+        })
+        ->where('user_accounts.is_deleted', 0)
 
-        ->orWhere('user_accounts.user_id',$id)
+        ->where('accounts.status', 'Active')
         ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status','accounts.client_group')
-        ->distinct('accounts.account_no')
 
+        ->distinct('accounts.account_no')
         ->get();
+
+        // return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
+        // ->join('accounts', 'user_accounts.account_id', '=', 'accounts.id')
+        // ->where('user_accounts.is_deleted',0)
+        // ->where('accounts.added_id', '=', $id)
+
+        // ->orWhere('user_accounts.user_id',$id)
+        // ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status','accounts.client_group')
+        // ->distinct('accounts.account_no')
+
+        // ->get();
     }
 
     

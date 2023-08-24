@@ -72,18 +72,14 @@ $('.contact').mask("0000-0000000");
                                         {{ session()->get('message') }}
                                     </div>
                                 @endif
-                                    <form method="POST" action="{{ route('user.register') }}" class="j-pro" id="j-pro" novalidate="">
+                                    <form method="POST" action="{{ route('user.register') }}" class="j-pro" id="form_register_user" novalidate="" >
                                       @csrf  
                                       <div class="j-content">
 
                                             <!-- start name -->
                                             <div>
-                                                <label class="j-label">Name</label>
-                                                @error('name')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
+                                                <label class="j-label">Name  <small class="text-danger" id="name_error"></small></label>
+                                               
                                                 <div class="j-unit">
                                                     <div class="j-input">
                                                         <label class="j-icon-right" for="name">
@@ -97,12 +93,9 @@ $('.contact').mask("0000-0000000");
                                             <!-- start email -->
                                             <div>
                                                 <div>
-                                                    <label class="j-label">Email</label>
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="j-label">Email   <small class="text-danger" id="email_error"></small></label>
+                                                  
+
                                                 </div>
                                                 <div class="j-unit">
                                                     <div class="j-input">
@@ -118,12 +111,9 @@ $('.contact').mask("0000-0000000");
                                          <!-- start email -->
                                          <div>
                                                 <div>
-                                                    <label class="j-label">Contact</label>
-                                                    @error('contact')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="j-label">Contact        <small class="text-danger" id="contact_error"></small></label>
+                                             
+
                                                 </div>
                                                 <div class="j-unit">
                                                     <div class="j-input">
@@ -188,7 +178,7 @@ $('.contact').mask("0000-0000000");
                                         <!-- end /.content -->
                                         <div class="j-footer">
                                           <center>
-                                            <button type="submit" class="btn btn-primary">Register</button>
+                                            <button type="submit" onclick="submitModalForm(event,this,'#form_register_user','')"class="btn btn-primary">Register</button>
                                             </center>
 
                                           </div>

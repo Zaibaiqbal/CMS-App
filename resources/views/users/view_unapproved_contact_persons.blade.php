@@ -31,7 +31,7 @@ View Unapproved Contacts
                             <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Client Name</th>
+                            <th>Client</th>
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Action</th>
@@ -41,10 +41,10 @@ View Unapproved Contacts
                             @foreach($user_list as $rows)
                             <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$rows->user->name}}</td>
-                            <td>{{$rows->client->name}}</td>
-                            <td>{{$rows->user->email}}</td>
-                            <td>{{$rows->user->contact}}</td>
+                            <td>{{$rows->user_name}}</td>
+                            <td>{{$rows->client_name}}</td>
+                            <td>{{$rows->email}}</td>
+                            <td>{{$rows->contact}}</td>
                             <td>
 
                                 <div class="dropdown-primary dropdown">

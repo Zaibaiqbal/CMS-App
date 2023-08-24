@@ -60,7 +60,7 @@
        @php($parts[2] = '<b>' . $parts[2] . '</b>') 
        @php($modify_ticket = implode('-', $parts))
 
-            <td><input type="text" value="{{$transaction->ticket_no}}"></td>
+            <td><?php echo html_entity_decode($modify_ticket); ?></td>
 
             <td>Invoice Date:</td>
             <td><input type="text" value="{{$transaction->created_at}}"></td>

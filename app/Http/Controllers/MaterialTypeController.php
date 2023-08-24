@@ -207,7 +207,7 @@ class MaterialTypeController extends Controller
 
         }
 
-        return redirect()->back();
+        // return redirect()->back();
       
     }
 
