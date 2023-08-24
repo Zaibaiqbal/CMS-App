@@ -29,7 +29,7 @@ class AccountController extends Controller
 
         return view('clients.client_accounts.manage_account_assignment',[
             
-            'accounts_list'  =>  $account->getAllAccountListByClientId(Auth::user()->id)
+            'accounts_list'  =>  $account->getAllAssignAccountListByClientId(Auth::user()->id)
         ]);
     }
 
@@ -165,12 +165,11 @@ class AccountController extends Controller
             if($request->isMethod('post'))
             {
 
-                $data = ['status' => false, 'message' => ''];
                $request->validate([
     
                     'client_group'                  => 'required',
-                    'account_no'              => 'required|max:15|min:0',
-                    'title'                   => 'required|max:255|min:0',
+                    'account_no'              => 'required',
+                    'title'                   => 'required',
                    
     
                     ]);

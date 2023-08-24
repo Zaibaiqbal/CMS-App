@@ -59,8 +59,30 @@ class UserAccount extends Model
         // ->get();
     }
 
-
     public function getAllAccountListByClientId($id)
+    {
+
+        return Account::where('added_id', $id)
+       
+        ->where('accounts.status', 'Active')
+        ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status','accounts.client_group')
+
+        ->distinct('accounts.account_no')
+        ->get();
+
+        // return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')
+        // ->join('accounts', 'user_accounts.account_id', '=', 'accounts.id')
+        // ->where('user_accounts.is_deleted',0)
+        // ->where('accounts.added_id', '=', $id)
+
+        // ->orWhere('user_accounts.user_id',$id)
+        // ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status','accounts.client_group')
+        // ->distinct('accounts.account_no')
+
+        // ->get();
+    }
+
+    public function getAllAssignAccountListByClientId($id)
     {
 
         return UserAccount::join('users', 'user_accounts.user_id', '=', 'users.id')

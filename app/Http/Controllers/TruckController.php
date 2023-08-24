@@ -116,6 +116,7 @@ class TruckController extends Controller
                     }
 
                 }
+                return $data;
             }
             else
             {

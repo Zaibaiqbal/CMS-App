@@ -212,6 +212,8 @@
                                     </ul>
                             </li>
                                  --}}
+                            @if(Auth::user()->hasRole(['Client']))
+
                             <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('client.accounts')}}" >
                                     <span class="pcoded-mtext">Accounts</span>
@@ -227,7 +229,6 @@
                             </li>
                           
                          
-                            @if(Auth::user()->hasRole(['Client']))
                             <li class="pcoded-hasmenu text-uppercase">
                                 <a href="{{route('contactperson.list')}}">
                                             

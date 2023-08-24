@@ -149,7 +149,7 @@ $(document).ready(function() {
 
 
 function addThemeLoader() {
-    var loaderHTML = '<div class="theme-loader" style="z-index:2052"><div class="ball-scale"><div class="contain"><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div></div></div></div>';
+    var loaderHTML = '<div class="theme-loader" style="z-index:2052;opacity:0.5"><div class="ball-scale"><div class="contain"><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div><div class="ring"><div class="frame"></div></div></div></div></div>';
 
     $(loaderHTML).appendTo('body');
 }
@@ -234,6 +234,7 @@ function submitModalForm(event,obj,form_id,form_modal_id)
         },
         error: function(result){
 
+            alert(result.responseJSON.errors);
             removeThemeLoader();
             // alert(result.responseJSON);
             var errors = result.responseJSON.errors;

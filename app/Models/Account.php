@@ -62,9 +62,9 @@ class Account extends Model
 
             }
 
-            if(isset($object['approval_statis']))
+            if(isset($object['approval_status']))
             {
-                $account->approval_statis = $object['approval_statis'];
+                $account->approval_status = $object['approval_status'];
 
             }
 
@@ -73,6 +73,7 @@ class Account extends Model
                 $account->status = $object['status'];
 
             }
+            // dd($account);
             $account->added_id = Auth::user()->id;
 
             $account->save();

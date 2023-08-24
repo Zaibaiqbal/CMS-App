@@ -56,7 +56,7 @@
                     <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
-                    <select name="{{$name}}" id="" class="form-control fstdropdown-select" onchange="getAccountInfo(event,this)" @if($transaction->client_type == 'Cash Account') disabled @else class="form-control fstdropdown-select" @endif>
+                    <select name="{{$name}}" id="" class="form-control fstdropdown-select" onchange="getAccountInfo(event,this)" @if($transaction->client_group== 'Cash Account') disabled @else class="form-control fstdropdown-select" @endif>
                     @foreach($account_list as $rows)
                         <option value="{{encrypt($rows->id)}}">{{$rows->account_no}} - {{$rows->title}}</option>
                     @endforeach
@@ -98,7 +98,7 @@
                 <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
-                <input type="text" name="{{$name}}" value="{{$transaction->client_type}}" class="form-control client_group" id="" readonly >
+                <input type="text" name="{{$name}}" value="{{$transaction->client_group}}" class="form-control client_group" id="" readonly >
 
 
                 </div>

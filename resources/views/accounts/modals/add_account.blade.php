@@ -13,6 +13,7 @@
      
       {{ Form::open(array('route' => 'store.account', 'class' => '', 'id' => 'form_add_account')) }}
 
+
       <div class="modal-body">
                
                 <div class="card">
