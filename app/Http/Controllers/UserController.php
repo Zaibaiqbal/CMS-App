@@ -160,6 +160,7 @@ class UserController extends Controller
                         $account = new Account;
                         $form_data['status']  = 'Active';
                         $form_data['approval_status']  = 'Approved';
+                        $form_data['user_id']  = $user->id;
 // dd($form_data);
                         $account = $account->storeAccount($form_data);
 
@@ -266,6 +267,7 @@ class UserController extends Controller
 
                         if($user->account_type == "New Account")
                         {
+                            $form_data['user_id']  =   $user->client->id;
 
                             $account = $account->storeAccount($form_data);
                         }

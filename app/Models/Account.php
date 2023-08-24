@@ -74,8 +74,16 @@ class Account extends Model
 
             }
             // dd($account);
-            $account->added_id = Auth::user()->id;
+            if(isset($object['user_id']))
+            {
+                $account->added_id = $object['user_id'];
 
+            }
+            else
+            {
+                $account->added_id = Auth::user()->id;
+                
+            }
             $account->save();
             
             return with($account);
