@@ -79,15 +79,7 @@ class Transaction extends Model
 
                 }
 
-                if(isset($object['client']))
-                {
-                $transaction->client_name = $object['client'];
-                }
-                if(isset($object['contact_no']))
-                {
-                $transaction->contact_no = $object['contact_no'];
-                }
-
+        
                 // if(isset( $object['tare_weight']))
                 // {
                 //     $transaction->tare_weight = $object['tare_weight'];
@@ -137,6 +129,7 @@ class Transaction extends Model
                 $transaction->gross_weight = $object['inweight'];
                 $transaction->tare_weight = $object['outweight'];
                 $transaction->net_weight = $object['net_weight'];
+                
                 if($object['net_weight'] < 0)
                 {
                     $transaction->operation_type = 'Outbound';
@@ -165,14 +158,21 @@ class Transaction extends Model
 
                 }
 
-                if(isset($object['material_rate']) && $transaction->client_type == "Numbered Account")
+                if(isset($object['material_rate']) && $transaction->client_group == "Numbered Account")
                 {
                     $transaction->material_rate = $object['material_rate'];
 
                 }
 
 
-
+                if(isset($object['client']))
+                {
+                $transaction->client_name = $object['client'];
+                }
+                if(isset($object['contact_no']))
+                {
+                $transaction->contact_no = $object['contact_no'];
+                }
                 
                 // dd($transaction);
                 $transaction->update();
