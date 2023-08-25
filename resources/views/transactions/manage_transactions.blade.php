@@ -69,7 +69,7 @@ Transaction Management
                               @if($rows->status == "Queued")
                               @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
 
-                              <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                              <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
                               @endif
                               <div class="dropdown-divider"></div>
 

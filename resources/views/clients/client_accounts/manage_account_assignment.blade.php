@@ -36,7 +36,6 @@ Accounts Management
                     <tr>
                       <th>#</th>
                       <th>Title</th>
-                      <th>Client Group</th>
                       <th>Account No</th>
                       <th>Status</th>
                      
@@ -47,7 +46,6 @@ Accounts Management
                     <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>{{$rows->title}}</td>
-                      <td>{{$rows->client_group}}</td>
                       <td>{{$rows->account_no}}</td>
                       <td>{{$rows->status}}</td>
                       {{--

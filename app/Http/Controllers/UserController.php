@@ -192,7 +192,7 @@ class UserController extends Controller
                         \Mail::to($user->email)->send(new \App\Mail\ApproveUser($user));
         
                         $user->password    = Hash::make($user->password);
-                    
+                        $user->client_group   = $form_data['client_group'];
                         $user->update();
                     }
 
@@ -626,8 +626,17 @@ class UserController extends Controller
 
             if($request->isMethod('post'))
             {
+                $validation = [];
 
-                $request->validate([
+                if($request->account_type == "Existing Account")
+                {
+                    $validation = [
+                        'account_no.*'  => 'required'
+                    ];
+                }
+               
+
+                $request->validate($validation+[
 
                     'name'      =>  'required',
                     'contact_no'   =>  'required|max:13',

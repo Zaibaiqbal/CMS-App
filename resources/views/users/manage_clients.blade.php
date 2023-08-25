@@ -40,7 +40,7 @@ Clients Management
                             <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$rows->name}}</td>
-                            <td>{{$rows->account}}</td>
+                            <td>{{implode(',',$rows->userAccounts->pluck('account.account_no')->toArray())}}</td>
                             <td>{{$rows->email}}</td>
                             <td>{{$rows->contact}}</td>
                             </tr>

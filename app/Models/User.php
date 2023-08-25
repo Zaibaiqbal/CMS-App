@@ -96,7 +96,6 @@ class User extends Authenticatable
     }
     public function getUserIdsByPermissions($permission_names = [])
     {
-
         return \DB::table('permissions')
             ->whereIn('permissions.name', $permission_names)
             ->join('model_has_permissions', 'model_has_permissions.permission_id', '=', 'permissions.id')

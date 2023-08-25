@@ -53,9 +53,10 @@ class AccountController extends Controller
         $account = new Account;
         $account = $account->getAccountById(decrypt($request->account));
 
+        // dd($account);
         if(isset($account->id))
         {
-           $data['client_group']  =  $account->client_group;
+           $data['client_group']  =  $account->user->client_group;
 
         }
         return $data;
@@ -167,7 +168,7 @@ class AccountController extends Controller
 
                $request->validate([
     
-                    'client_group'                  => 'required',
+                    // 'client_group'                  => 'required',
                     'account_no'              => 'required',
                     'title'                   => 'required',
                    

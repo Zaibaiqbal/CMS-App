@@ -19,12 +19,15 @@
 		border-right: 0;
 		border-left: 0;
 		border-bottom: 1px dotted black;
-		font-size: 12px;
+		font-size: 14px;
 		text-align: center;
         background-color: transparent;
 	}
 
-
+.customer_info{
+  font-size: 17px;
+  font-weight: bold;
+}
 
 </style>
 </head>
@@ -71,7 +74,7 @@
         <table style=" width:100%; background:#eee;">
            
           <tr>
-            <td>Invoice</td>
+            <td class="customer_info">Invoice</td>
 
             @php($ticket_no = $transaction->ticket_no) 
        @php($parts = explode('-', $ticket_no)) 
@@ -80,33 +83,33 @@
 
             <td><?php echo html_entity_decode($modify_ticket); ?></td>
 
-            <td>Invoice Date:</td>
+            <td class="customer_info">Invoice Date:</td>
             <td><input type="text" value="{{$transaction->created_at}}"></td>
        
           </tr>
 
           <tr>
-            <td>License No.</td>
+            <td class="customer_info">License No.</td>
             <td><input type="text" value="{{$transaction->plate_no}}"></td>
 
-            <td>Job Id / PO No.</td>
+            <td class="customer_info">Job Id / PO No.</td>
             <td><input type="text" value="{{$transaction->job_id}}"></td>
           </tr>
           
           <tr>
-          <td>Client:</td>
+          <td class="customer_info">Client:</td>
             <td><input type="text" value="{{$transaction->client_name}}"></td>
 
+            <td class="customer_info">Driver Name:</td>
+            <td><input type="text" value="{{$transaction->driver->name}}"></td>
 
-            <td>Contact No.</td>
-            <td><input type="text" value="{{$transaction->contact_no}}"></td>
 
           </tr>
          
           <tr>
-          <td>Driver Name:</td>
-            <td><input type="text" value="{{$transaction->driver->name}}"></td>
-
+        
+            <td class="customer_info">Contact No.</td>
+            <td><input type="text" value="{{$transaction->contact_no}}"></td>
 
           </tr>
          

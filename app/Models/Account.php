@@ -40,7 +40,7 @@ class Account extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'client_id')->withDefault();
+        return $this->belongsTo(User::class,'added_id')->withDefault();
     }
 
     public function storeAccount($object)
@@ -56,11 +56,11 @@ class Account extends Model
 
             }
 
-            if(isset($object['client_group']))
-            {
-                $account->client_group = $object['client_group'];
+            // if(isset($object['client_group']))
+            // {
+            //     $account->client_group = $object['client_group'];
 
-            }
+            // }
 
             if(isset($object['approval_status']))
             {

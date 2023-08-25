@@ -37,7 +37,6 @@ Accounts Management
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Client Group</th>
                       <th>Title</th>
                       <th>Account No</th>
                       <th>Status</th>
@@ -49,7 +48,6 @@ Accounts Management
                     @foreach($accounts_list as $rows)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$rows->client_group}}</td>
                       <td>{{$rows->title}}</td>
                       <td>{{$rows->account_no}}</td>
                       <td>{{$rows->status}}</td>

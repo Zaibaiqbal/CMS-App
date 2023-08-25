@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('user_type')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('account_type')->nullable();
+            $table->string('client_group')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->enum('status',['Active','Inactive'])->default('Inactive');

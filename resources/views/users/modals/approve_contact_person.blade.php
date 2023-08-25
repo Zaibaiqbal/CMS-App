@@ -27,7 +27,7 @@
                       <small class="text-danger" id="{{$name}}_error"></small>
 
                       @if($user_account->user->account_type == "Existing Account") 
-                      <input type="text" name="{{$name}}" placeholder="{{$label}}" readonly value="{{$user_account->account->client_group}}"  class="form-control" id="">
+                      <input type="text" name="{{$name}}" placeholder="{{$label}}" readonly value="{{$user_account->user->client->client_group}}"  class="form-control" id="">
 
                       @else
 
@@ -74,6 +74,15 @@
                               @endif
                           </div>
 
+                        </div>
+                        <div class="col-md-12">
+                        <div class="form-group">
+                              @php($label = 'Note')
+                              <label for="">{{$label}}  </label>
+                              <small class="text-danger" id="{{$name}}_error"></small>
+                            
+                              <textarea name="" id="" class="form-control" cols="30" rows="3">{{$user_account->description}}</textarea>
+                          </div>
                         </div>
                     </div>
 

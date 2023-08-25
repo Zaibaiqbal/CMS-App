@@ -65,7 +65,7 @@ class UserAccount extends Model
         return Account::where('added_id', $id)
        
         ->where('accounts.status', 'Active')
-        ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status','accounts.client_group')
+        ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status')
 
         ->distinct('accounts.account_no')
         ->get();
@@ -95,7 +95,7 @@ class UserAccount extends Model
         ->where('user_accounts.is_deleted', 0)
 
         ->where('accounts.status', 'Active')
-        ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status','accounts.client_group')
+        ->select('accounts.id', 'accounts.account_no','accounts.title','accounts.status')
 
         ->distinct('accounts.account_no')
         ->get();

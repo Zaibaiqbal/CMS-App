@@ -21,20 +21,6 @@
                     <div class="card-body">
                         <div class="row">
 
-                        <div class="col-md-12 mb-2">
-
-                          @php($label = 'Client Group')
-                          @php($name = 'client_group')
-                          <label for="">{{$label}} <span class="text-danger">*</span></label>
-                          <small class="text-danger" id="{{$name}}_error"></small>
-
-                          <select name="{{$name}}" id="" class="form-control fstdropdown-select">
-
-                          @foreach(['Numbered Account','Partner Account'] as $rows)
-                                <option value="{{$rows}}">{{$rows}}</option>
-                            @endforeach
-                          </select>
-                          </div>
                       
                             <div class="col-md-6">
 
