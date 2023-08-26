@@ -38,7 +38,7 @@ Materials Management
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Name</th>
+                      <th>Material</th>
                       <th>Board Rate</th>
                    
                       <th>Action</th>

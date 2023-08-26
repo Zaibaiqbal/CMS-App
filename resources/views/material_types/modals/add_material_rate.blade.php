@@ -43,8 +43,8 @@
 
 
                             <div class="col-md-6">
-                              @php($label = 'Select Client')
-                              @php($name = 'client')
+                              @php($label = 'Select Account')
+                              @php($name = 'account')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
                                     <span><i class="text-danger">*</i></span>
@@ -54,9 +54,9 @@
 
                                     <option value="{{0}}">{{$label}}</option>
 
-                                    @foreach($client_list as $rows)
+                                    @foreach($account_list as $rows)
 
-                                    <option value="{{$rows->id}}">{{$rows->name}}</option>
+                                    <option value="{{$rows->id}}">{{$rows->title}} - {{$rows->account_no}}</option>
 
                                     @endforeach
 

@@ -49,6 +49,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public function getUserById($id)
     {
         return User::where(['is_deleted' => 0 ,'id' => $id])->first();
@@ -63,7 +64,7 @@ class User extends Authenticatable
     {
         return  User::where(['is_deleted' => 0 ]+$condition)->where('status','Active')->orderBy('id', 'desc')->get();
     }
-    
+
     public function getUnapproveClients($type)
     {
         return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'desc')->get();

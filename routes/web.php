@@ -20,7 +20,7 @@ Route::post('userregister', [App\Http\Controllers\UserController::class, 'regist
         return redirect('/home');
     });
     
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verifyrole');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
     
     
 Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('auth','permission:All|View Clients');
@@ -138,6 +138,9 @@ Route::get('approveaccount', [App\Http\Controllers\AccountController::class, 'ap
 
 
 Route::get('accountinfo', [App\Http\Controllers\AccountController::class, 'getAccountInfo'])->name('accountinfo')->middleware('auth');
+
+
+Route::get('materialwisestats', [App\Http\Controllers\HomeController::class, 'getMaterialWiseStats'])->name('materialwisestats')->middleware('auth','permission:All');
 
 // CLIENT ROUTES
 

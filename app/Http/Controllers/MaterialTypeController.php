@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\MaterialRate;
 use App\Models\MaterialType;
 use App\Models\User;
@@ -28,14 +29,17 @@ class MaterialTypeController extends Controller
         $user  = new User;
         $material_types_list = MaterialType::get();
         $material_rate = new MaterialRate;
+        $account = new Account;
 
         $material_rate_list = $material_rate->getMaterialRateList();
         $client_list = $user->getUserListByType('Client');
+        $account_list = $account->getAccountListByCondition(['approval_status' => 'Approved']);
         return view('material_types.manage_material_rates',[
 
             'material_types_list'   =>  $material_types_list,
             'client_list'           =>  $client_list,
             'material_rate_list'           =>  $material_rate_list,
+            'account_list'           =>  $account_list,
 
         ]);
     }
@@ -181,7 +185,7 @@ class MaterialTypeController extends Controller
             $request->validate([
 
                 'material_type_id'                      => 'required|exists:material_types,id',
-                'client'                                => 'required|exists:users,id',
+                'account'                                => 'required|exists:accounts,id',
                 'rate'                                  => 'required|gt:0',
                
 
@@ -224,7 +228,7 @@ class MaterialTypeController extends Controller
                 $request->validate([
     
                     'material_type_id'                      => 'required|exists:material_types,id',
-                    'client'                                => 'required|exists:users,id',
+                    'account'                                => 'required|exists:accounts,id',
                     'rate'                                  => 'required|gte:0',
                     'material_rate'                                  => 'required',
                    

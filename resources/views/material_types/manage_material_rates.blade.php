@@ -39,7 +39,7 @@ Material Rates Management
                     <tr>
                       <th>#</th>
                       <th>Material</th>
-                      <th>Client</th>
+                      <th>Account</th>
                       <th>Rate</th>
                       <th>Action</th>
                     </tr>
@@ -51,7 +51,7 @@ Material Rates Management
                       <td>{{$loop->iteration}}</td>
                      
                       <td>{{$rows->materialType->name}}</td>
-                      <td>{{$rows->client->name}}</td>
+                      <td>{{$rows->account->title}} - {{$rows->account->account_no}}</td>
                       <td>{{$rows->rate}}</td>
                       <td>
 

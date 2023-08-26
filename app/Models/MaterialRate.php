@@ -12,7 +12,7 @@ class MaterialRate extends Model
 
     public function getMaterialRateList()
     {
-        return MaterialRate::whereHas('client')->whereHas('materialType')->get();
+        return MaterialRate::whereHas('account')->whereHas('materialType')->get();
     }
 
     public function getMaterialRateByCondition($condition = [])
@@ -33,7 +33,10 @@ class MaterialRate extends Model
             {
                 $material_rate->material_type_id   = $object['material_type_id'];
                 $material_rate->rate               = $object['rate'];
-                $material_rate->client_id              = $object['client'];
+                // $material_rate->client_id              = $object['client'];
+
+                $material_rate->account_id              = $object['account'];
+
     
                 $material_rate->save();
             }
@@ -55,7 +58,10 @@ class MaterialRate extends Model
             {
                 $material_rate->material_type_id   = $object['material_type_id'];
                 $material_rate->rate               = $object['rate'];
-                $material_rate->client_id              = $object['client'];
+                // $material_rate->client_id              = $object['client'];
+
+                $material_rate->account_id              = $object['account'];
+
     
                 $material_rate->update();
             }
@@ -69,6 +75,11 @@ class MaterialRate extends Model
     public function client()
     {
         return $this->belongsTo(User::class,'client_id')->withDefault();
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class,'account_id')->withDefault();
     }
 
     public function materialType()

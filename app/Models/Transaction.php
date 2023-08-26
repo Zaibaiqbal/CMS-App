@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
@@ -23,6 +24,12 @@ class Transaction extends Model
         return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id,'id' => $id])->first();
     }
 
+    public function getTransactionsByCondition($condition)
+    {
+
+        return Transaction::where('is_deleted' , 0)->where($condition)->get();
+    }
+
     public function getTransactionsByUserId($id)
     {
 
@@ -32,6 +39,27 @@ class Transaction extends Model
 
         })->get();
     }
+    
+    public function getDailyMaterialWiseStats()
+    {
+
+        return MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
+        ->whereDate('t.created_at',now())
+
+        ->select('material_types.name','t.gross_weight','t.tare_weight')
+        ->get();
+    }
+
+    public function getMonthlyMaterialWiseStats()
+    {
+
+        return MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
+        ->whereMonth('t.created_at', Carbon::now()->month)
+
+        ->select('material_types.name','t.gross_weight','t.tare_weight')
+        ->get();
+    }
+    
     
     public function storeTransaction($object)
     {
