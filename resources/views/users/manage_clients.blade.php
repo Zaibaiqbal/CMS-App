@@ -20,6 +20,11 @@ Clients Management
             <div class="card-header">
                 <h3 class="card-title">ALL CLIENTS
 
+                @if(Auth::user()->hasAnyPermission(['All']))
+          
+                <a onclick="formModal(event,'{{route('import.clients')}}','#md_import_data_client','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                Import Clients</a>
+                @endif
                     <!--end::Button-->
                     </h3>
             </div>
@@ -60,8 +65,13 @@ Clients Management
 
 @endsection
 
-
+<div id="target_modal"></div>
 
 @section('page_script')
 
+<script>
+
+  
+    
+</script>
 @endsection

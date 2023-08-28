@@ -142,6 +142,9 @@ Route::get('accountinfo', [App\Http\Controllers\AccountController::class, 'getAc
 
 Route::get('materialwisestats', [App\Http\Controllers\HomeController::class, 'getMaterialWiseStats'])->name('materialwisestats')->middleware('auth','permission:All');
 
+
+Route::match(['post','get'],'importclients', [App\Http\Controllers\ImportController::class, 'importClientData'])->name('import.clients')->middleware('auth','permission:All');
+
 // CLIENT ROUTES
 
 
