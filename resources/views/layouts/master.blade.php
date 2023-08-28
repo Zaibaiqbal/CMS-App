@@ -116,7 +116,7 @@
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="index-1.htm">
+                        <a href="{{route('home')}}">
                             <img class="img-fluid" src="{{asset('logos/logo.png')}}" height="90px;" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
