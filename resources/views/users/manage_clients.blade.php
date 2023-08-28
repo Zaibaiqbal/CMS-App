@@ -38,6 +38,7 @@ Clients Management
                             <th>Account No</th>
                             <th>Email</th>
                             <th>Contact</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,13 @@ Clients Management
                             <td>{{implode(',',$rows->userAccounts->pluck('account.account_no')->toArray())}}</td>
                             <td>{{$rows->email}}</td>
                             <td>{{$rows->contact}}</td>
+                            <td>
+                                
+                            @if(Auth::user()->hasAnyPermission(['All','View Client Summary']))
+
+                            <a href="{{route('client.summary',['id' => encrypt($rows->id)])}}" class="text-dark py-0"><i class="dropdown-icon fa fa-eye "></i></a>
+                            @endif
+                            </td>
                             </tr>
                         @endforeach
                         </tbody>

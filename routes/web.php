@@ -20,7 +20,7 @@ Route::post('userregister', [App\Http\Controllers\UserController::class, 'regist
         return redirect('/home');
     });
     
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verifyrole');
     
     
 Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('auth','permission:All|View Clients');
@@ -175,5 +175,6 @@ Route::match(['get','post'],'assignaccount', [App\Http\Controllers\AccountContro
 
 Route::match(['get','post'],'unapprovedaccounts', [App\Http\Controllers\AccountController::class, 'viewUnapprovedAccountAssignment'])->name('unapprovedaccounts')->middleware('auth');
 
+Route::match(['get','post'],'clientsummary', [App\Http\Controllers\UserController::class, 'viewClientSummary'])->name('client.summary')->middleware('auth','permission:All|View Client Summary');
 
 // END CLIENT ROUTES

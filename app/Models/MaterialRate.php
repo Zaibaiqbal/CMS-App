@@ -71,6 +71,16 @@ class MaterialRate extends Model
         });
 
     }
+
+    
+    public function getMaterialRatesByAccount($id)
+    {
+        return MaterialRate::whereHas('account',function($query) use ($id){
+            $query->where('added_id',$id);
+            
+        })->whereHas('materialType')->orderby('id','desc')->get();
+
+    }
     
     public function client()
     {

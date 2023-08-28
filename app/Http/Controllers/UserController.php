@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\SendNotification;
 use App\Models\Account;
+use App\Models\MaterialRate;
+use App\Models\Truck;
 use App\Models\User;
 use App\Models\UserAccount;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -152,6 +155,7 @@ class UserController extends Controller
                 $user = new User;
 
                 $user  = $user->getUserById($user_id);
+                // dd($user);
 
                 if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
                 {
@@ -186,7 +190,6 @@ class UserController extends Controller
                     
                     $user->update();
 
-        
                     if(isset($user->id) && strlen($user->password) > 0)
                     {
                         \Mail::to($user->email)->send(new \App\Mail\ApproveUser($user));
@@ -713,6 +716,40 @@ class UserController extends Controller
 
         }
         return redirect()->back();
+    }
+
+    public function viewClientSummary(Request $request)
+    {
+        try
+        {
+            $client_id = decrypt($request->id);
+
+            $user = new User;
+            $account = new Account;
+            $truck = new Truck;
+            $material_rates = new MaterialRate;
+            $user = $user->getUserById($client_id);
+
+            $contact_list = $user->getUserListByCondition(['client_id' => $client_id]);
+
+            $account_list = $account->getAccountListByCondition(['added_id' => $client_id]);
+
+            $truck_list = $truck->getClientTrucks($client_id);
+            $material_rates_list = $material_rates->getMaterialRatesByAccount($client_id);
+
+            return view('users.view_client_summary',[
+                'user'              =>     $user,
+                'contact_list'      =>  $contact_list,
+                'account_list'      =>  $account_list,
+                'trucks_list'        =>  $truck_list,
+                'material_rates_list'        =>  $material_rates_list,
+            ]);
+
+        }
+        catch(Exception $e)
+        {
+
+        }
     }
 
     

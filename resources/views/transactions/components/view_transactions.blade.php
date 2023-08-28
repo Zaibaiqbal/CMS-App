@@ -28,7 +28,7 @@
         <td>
         @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
 
-        <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i></a>
+        <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="text-dark py-0"><i class="dropdown-icon fa fa-edit "></i></a>
         @endif
         </td>
     </tr>
