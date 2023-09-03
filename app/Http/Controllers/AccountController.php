@@ -165,16 +165,31 @@ class AccountController extends Controller
 
             if($request->isMethod('post'))
             {
-
-               $request->validate([
+                $validation = [];
+                if(Auth::user()->hasRole(['Super Admin'])){
+    
+                    $validation += [
+                        'client'      =>    'required'
+                    ];
+                }
+               $request->validate($validation+[
     
                     // 'client_group'                  => 'required',
-                    'account_no'              => 'required',
+                    'account_no'              => 'required|unique:accounts,account_no',
                     'title'                   => 'required',
                    
     
                     ]);
+
                     $form_data = $request->input();
+                    if(Auth::user()->hasRole(['Super Admin'])){
+
+                        $form_data['user_id']           = decrypt($form_data['client']);
+                        $form_data['approval_status']   = 'Approved';
+                        $form_data['status']            = 'Active';
+    
+                    }
+                    // dd($form_data);
     
                     $account = new Account;
 
@@ -189,19 +204,24 @@ class AccountController extends Controller
     
                     if(isset($account->id))
                     {
+                        if(!Auth::user()->hasRole(['Super Admin'])){
+  
 
-                        $user = new User;
-                        $user_ids = $user->getUserIdsByPermissions(['All']);
-        
-                        $client = $user->getUserById(Auth::user()->id);
-        
-                        event(new SendNotification($client->id,$user_ids,'','accountrequests',$account->id,$client->name. ' has requested to add a new account ' .$account->title.'-'.$account->account_no));
-        
+                            $user = new User;
+                            $user_ids = $user->getUserIdsByPermissions(['All']);
+            
+                            $client = $user->getUserById(Auth::user()->id);
+            
+                            event(new SendNotification($client->id,$user_ids,'','accountrequests',$account->id,$client->name. ' has requested to add a new account ' .$account->title.'-'.$account->account_no));
+            
+                        }
+                      
                         $data = ['status' => true, 'message' => 'Account added successfully'];
+
+                        return $data;
     
                     }
                
-                return $data;
             }
             else
             {

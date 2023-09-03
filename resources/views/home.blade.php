@@ -124,49 +124,33 @@
 <div class="col-xl-4 col-md-12">
     <div class="card feed-card">
         <div class="card-header">
-            <h5>Feeds</h5>
+            <h5>Today's Weather </h5>
         </div>
         <div class="card-block">
-            <div class="row m-b-30">
-                <div class="col-auto p-r-0">
-                    <i class="feather icon-bell bg-simple-c-blue feed-icon"></i>
-                </div>
-                <div class="col">
-                    <h6 class="m-b-5">You have 3 pending tasks. <span class="text-muted f-right f-13">Just Now</span></h6>
-                </div>
+            
+        <div id="wrapper-bg" class="card text-white bg-image shadow-4-strong"
+          style="background-image: url('img/clouds.gif');background-repeat:no-repeat;background-size:cover;">
+          <!-- Main current data -->
+          <div class="card-header p-4 border-0">
+            <div class="text-center mb-3">
+              <p class="h2 mb-1" id="wrapper-name"></p>
+              <p class="mb-1" id="wrapper-description"></p>
+              <br>
+              <p class="display-1 mb-1" id="wrapper-temp"></p>
+              <br>
+              <br>
+
+              <h5 class="">Pressure: <h5 id="wrapper-pressure"></h5></h5>
+              <h5 class="mx-2">|</h5>
+              <h5 class="">Humidity: <h5 id="wrapper-humidity"></h5></h5>
             </div>
-            <div class="row m-b-30">
-                <div class="col-auto p-r-0">
-                    <i class="feather icon-shopping-cart bg-simple-c-pink feed-icon"></i>
-                </div>
-                <div class="col">
-                    <h6 class="m-b-5">New order received <span class="text-muted f-right f-13">Just Now</span></h6>
-                </div>
-            </div>
-            <div class="row m-b-30">
-                <div class="col-auto p-r-0">
-                    <i class="feather icon-file-text bg-simple-c-green feed-icon"></i>
-                </div>
-                <div class="col">
-                    <h6 class="m-b-5">You have 3 pending tasks. <span class="text-muted f-right f-13">Just Now</span></h6>
-                </div>
-            </div>
-            <div class="row m-b-30">
-                <div class="col-auto p-r-0">
-                    <i class="feather icon-shopping-cart bg-simple-c-pink feed-icon"></i>
-                </div>
-                <div class="col">
-                    <h6 class="m-b-5">New order received <span class="text-muted f-right f-13">Just Now</span></h6>
-                </div>
-            </div>
-            <div class="row m-b-30">
-                <div class="col-auto p-r-0">
-                    <i class="feather icon-file-text bg-simple-c-green feed-icon"></i>
-                </div>
-                <div class="col">
-                    <h6 class="m-b-5">You have 3 pending tasks. <span class="text-muted f-right f-13">Just Now</span></h6>
-                </div>
-            </div>
+          </div>
+
+        </div>
+
+
+        </div>
+
         </div>
     </div>
 </div>
@@ -610,6 +594,65 @@ $(document).ready(function(){
 
 });
 
+
+// API call
+let queryUrl = "https://api.openweathermap.org/data/2.5/onecall?";
+let lat = "lat=33.626057&";
+let lon = "lon=73.071442&";
+let apiOptions = "units=metric&exclude=minutely,alerts&";
+let apiKey = "appid=dbb76c5d98d5dbafcb94441c6a10236e";
+let file = queryUrl + lat + lon + apiOptions + apiKey;
+
+fetch(file)
+.then((response) => response.json())
+.then((data) => {
+// Weather main data
+let main = data.current.weather[0].main;
+let description = data.current.weather[0].description;
+let temp = Math.round(data.current.temp);
+let pressure = data.current.pressure;
+let humidity = data.current.humidity;
+let name = "Rawalpindi";
+
+document.getElementById("wrapper-description").innerHTML = description;
+document.getElementById("wrapper-temp").innerHTML = temp + "°C";
+document.getElementById("wrapper-pressure").innerHTML = pressure;
+document.getElementById("wrapper-humidity").innerHTML = humidity + "°C";
+document.getElementById("wrapper-name").innerHTML = name;
+
+
+// Backgrounds
+switch (main) {
+case "Snow":
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')";
+break;
+case "Clouds":
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')";
+break;
+case "Fog":
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')";
+break;
+case "Rain":
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')";
+break;
+case "Clear":
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
+break;
+case "Thunderstorm":
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')";
+break;
+default:
+document.getElementById("wrapper-bg").style.backgroundImage =
+"url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
+break;
+}
+});
 
 </script>
 @endsection

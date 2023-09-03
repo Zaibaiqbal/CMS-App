@@ -134,19 +134,36 @@ class User extends Authenticatable
     public function storeUser($object)
     {
         return DB::transaction(function() use ($object){
+            // dd($object);
 
             $user = new User;
             $user->name = $object['name'];
+        
+            $user->contact = $object['contact_no'];
 
-            if(isset($object['cnic']))
+            if(isset($object['other_contact']) && strlen($object['other_contact']) > 0)
             {
-                $user->cnic = $object['cnic'];
+                $user->other_contact = $object['other_contact'];
+
+            }
+            else
+            {
+                $user->other_contact = Null;
+
 
             }
 
-            $user->contact = $object['contact_no'];
+            
+            if(isset($object['email']))
+            {
+                $user->email = $object['email'];
 
-            $user->email = $object['email'];
+
+            }
+            else
+            {
+                $user->email = $this->generateEmail();
+            }
             
             $user->user_type = $object['user_type'];
             
@@ -176,7 +193,34 @@ class User extends Authenticatable
             {
                 $user->status = $object['status'];
 
+        }
+
+            if(isset($object['address']))
+            {
+                $user->address = $object['address'];
+
             }
+          
+            if(isset($object['city']))
+            {
+                $user->city = $object['city'];
+
+            }
+         
+
+            if(isset($object['province']))
+            {
+                $user->province = $object['province'];
+
+            }
+          
+
+            if(isset($object['postal_code']))
+            {
+                $user->postal_code = $object['postal_code'];
+
+            }
+          
 
             $user->save();
 
@@ -227,7 +271,7 @@ class User extends Authenticatable
 
                             ];
                         }
-// dd($account_info);
+
 
                         $user_account = new UserAccount;
                         $user_account = $user_account->storeUserAccount($account_info);
@@ -246,13 +290,18 @@ class User extends Authenticatable
                 }
             // $user->assignRole($object['user_type']);
 
-
         return with($user);
 
 
         });
     }
 
+    public function generateEmail()
+    {
+        $max   = User::max('id');
+        $email = 'tes'.uniqid().'@cms.net';
+        return $email;
+    }
      
     public function updateUser($object)
     {

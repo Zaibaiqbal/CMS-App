@@ -30,7 +30,13 @@ class HomeController extends Controller
         $user = new User;
         $transaction = new Transaction;
         $user_list = $user->getUserListByCondition(['user_type'=>'Client']);
-        $total_transactions = $transaction->getTransactionsByCondition(['status'=>'Processed']);
+        $condition = [];
+        if(!Auth::user()->hasRole(['Super Admin']))
+        {
+            $condition =['added_id'    =>   Auth::user()->id];
+        }
+        $total_transactions = $transaction->getTransactionsByCondition($condition+['status'=>'Processed']);
+
 
         return view('home',[
             'client_count'          =>   $user_list->count(),
@@ -44,8 +50,13 @@ class HomeController extends Controller
     {
 
         $transaction = new Transaction();
-        $daily_transaction_list = $transaction->getDailyMaterialWiseStats();
-        $monthly_transaction_list = $transaction->getMonthlyMaterialWiseStats();
+        $condition = [];
+        if(!Auth::user()->hasRole(['Super Admin']))
+        {
+            $condition =['added_id'    =>   Auth::user()->id];
+        }
+        $daily_transaction_list = $transaction->getDailyMaterialWiseStats($condition);
+        $monthly_transaction_list = $transaction->getMonthlyMaterialWiseStats($condition);
 
         $data['daily_view'] =  view('dashboard.components.material_wise_stats',[
         

@@ -59,7 +59,7 @@ class TruckController extends Controller
 
             $request->validate([
 
-                'plate_no'              => 'required|unique:trucks,plate_no',
+                'plate_no'              => 'required',
                 // 'vin_no'                => 'required|unique:trucks,plate_no',
                 'model'                 => 'required|max:255',
                 'tare_weight'           => 'required|gt:0',
@@ -156,7 +156,7 @@ class TruckController extends Controller
         try
         {
             $data = Truck::join('users as u','u.id','=','trucks.client_id')
-                    ->selectRaw('trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id,u.client_group')
+                    ->selectRaw('trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id,u.client_group,trucks.identifier')
                     ->where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
                     ->get();
      

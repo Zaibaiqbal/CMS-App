@@ -18,7 +18,7 @@ class CreateTrucksTable extends Migration
             $table->bigInteger('client_id')->nullable();
             $table->bigInteger('added_id')->nullable();
 
-            $table->string('plate_no')->unique();
+            $table->string('plate_no')->nullable();
             $table->string('model')->nullable();
             $table->string('color')->nullable();
             $table->string('company')->nullable();

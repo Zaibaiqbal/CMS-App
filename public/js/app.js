@@ -20,7 +20,7 @@ function formSubmission(event,obj)
 
     swal({
         title: "Are you sure",
-        text: "you want to approve",
+        text: "you want to "+$(obj).attr('content'),
         icon: "warning",
         buttons: true,
         dangerMode: true,

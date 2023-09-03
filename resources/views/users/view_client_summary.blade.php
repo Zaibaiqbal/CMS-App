@@ -99,7 +99,7 @@ Clients Management
                                             <tbody>
                                                 @foreach($contact_list as $rows)
                                                 <tr>
-                                        <td>{{$loop->iteration}}</td>
+                                                    <td>{{$loop->iteration}}</td>
 
                                                     <td>{{$rows->name}}</td>
                                                     <td>{{$rows->email}}</td>

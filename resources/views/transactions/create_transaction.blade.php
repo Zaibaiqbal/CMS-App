@@ -163,7 +163,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 
                         response($.map(JSON.parse(data), function (item) {
                             return {
-                                label: item.plate_no,
+                                label: item.identifier,
                                 val:    item.id,
                                 label1: item.name,
                                 val1:    item.user_id,

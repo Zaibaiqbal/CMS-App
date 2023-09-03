@@ -31,8 +31,10 @@ class SendNotification
       public $params;
       // NOTIFICATION MESSAGE
       public $message;
+
+      public $params2;
   
-      public function __construct($from_user = 0,$to_users = [],$type = '',$route = '',$params = 0,$message = '', $is_lead = '')
+      public function __construct($from_user = 0,$to_users = [],$type = '',$route = '',$params = 0,$message = '', $params2 = 0)
       {
           $this->from_user = $from_user;
           $this->to_users  = $to_users;
@@ -40,6 +42,10 @@ class SendNotification
           $this->route     = $route;
           $this->params    = $params;
           $this->message   = $message;
+          $this->params2    = $params2;
+
+        //   dd($params2);
+
       }
     /**
      * Get the channels the event should broadcast on.

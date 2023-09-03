@@ -28,7 +28,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" onclick="storeClient(event,this,'#form_add_client','#modal_add_client')">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="submitModalForm(event,this,'#form_add_client','#modal_add_client')">Submit</button>
       </div>
       {{ Form::close() }}
 

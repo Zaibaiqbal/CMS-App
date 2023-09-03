@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SendNotification;
 use App\Models\Account;
 use App\Models\MaterialRate;
+use App\Models\Transaction;
 use App\Models\Truck;
 use App\Models\User;
 use App\Models\UserAccount;
@@ -12,6 +13,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PDF;
+
 
 class UserController extends Controller
 {
@@ -64,6 +67,80 @@ class UserController extends Controller
         return view('users.view_approved_contact_persons',[
             'user_list'  => $user_list
         ]);
+    }
+
+    public function viewEmployeeDailyProgress(Request $request)
+    {
+        try
+        {
+            
+            // dd($request->input());
+
+            $user_id = decrypt($request->id);
+
+            $user = new User;
+            $user_list = $user->getUserListByCondition(['id' => $user_id]);
+
+            // $transaction = new Transaction;
+
+            // $transaction = $transaction->getEmployeeProgressByCondition($user_id,$request->date);
+
+            return view('users.view_employees_progress_list',[
+                'user_list'     =>  $user_list,
+                'date'          =>  $request->date
+            ]);
+
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+    }
+
+    public function printEmployeeDailyProgress(Request $request)
+    {
+        try
+        {
+            
+            // dd($request->input());
+
+            $user_id = decrypt($request->id);
+
+            $transaction = new Transaction;
+
+            $transaction_list = $transaction->getEmployeeProgressByCondition($user_id,$request->date);
+// dd($transaction);
+            $user = new User;
+            $user = $user->getUserById($user_id);
+
+            // return view('users.documents.print_employees_progress_pdf',[
+            //     'transaction_list'     =>  $transaction,
+            //     'date'          =>  $request->date
+            // ]);
+
+            $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
+            [ 
+                'transaction_list'      =>  $transaction_list,
+                'user'                  =>   $user,
+                'date'                  =>   $request->date
+        ]);
+                return $pdf->setPaper('a4', 'portrait')->stream('Employee Progress.pdf');
+
+        //     $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
+        //     [ 
+        //         'transaction_list'      =>  $transaction_list,
+        //         'user'                  =>   $user
+        // ]);
+
+        //     // Return the PDF as a downloadable response
+        //     return $pdf->stream('transactions.pdf');
+
+        }
+        catch(Exception $e)
+        {
+
+        }
     }
 
 
@@ -136,21 +213,25 @@ class UserController extends Controller
         try
         {
 
+
             if($request->isMethod('post'))
             {
 
-                $form_data = $request->input();
+                $data = ['status' => false, 'message' => ''];
 
                 $request->validate([
     
                     'user'                      => 'required',
-                    'account_no'                => 'required|max:15|min:0|unique:accounts',
+                    'account_no'                => 'required|max:15|min:0',
                     'title'                     => 'required|max:255|min:0',
                     'client_group'              => 'required',
                    
                     ]);
 
+                $form_data = $request->input();
+
                 $user_id = decrypt($request->user);
+                // dd($user_id);
 
                 $user = new User;
 
@@ -159,13 +240,14 @@ class UserController extends Controller
 
                 if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
                 {
+
                     if(isset($form_data['account_no']))
                     {
                         $account = new Account;
                         $form_data['status']  = 'Active';
                         $form_data['approval_status']  = 'Approved';
                         $form_data['user_id']  = $user->id;
-// dd($form_data);
+
                         $account = $account->storeAccount($form_data);
 
                         if(isset($account->id))
@@ -197,16 +279,15 @@ class UserController extends Controller
                         $user->password    = Hash::make($user->password);
                         $user->client_group   = $form_data['client_group'];
                         $user->update();
+
+                        return ['status' => true, 'message' => 'User approved! Email sent successfully.'];
+
                     }
 
-                }
 
-                if(isset($user->id))
-                {
-                    $data = ['status' => true, 'message' => 'User approved! Email sent successfully.'];
                 }
-        
                 return $data;
+        
 
             }
             else
@@ -524,20 +605,27 @@ class UserController extends Controller
         try
         {
             $data = ['status' => false , 'messge' => ''];
+
             if($request->isMethod('post'))
             {
+
                 $request->validate([
 
-                    'cnic'   => 'required|unique:users,cnic',
-                    'name'  =>  'required',
-                    'contact_no'  =>  'required',
-                    'email'  =>  'required|unique:users,email',
+                    // 'cnic'   => 'required|unique:users,cnic',
+                    'name'              =>  'required',
+                    'contact_no'        =>  'required',
+                    // 'email'             =>  'required|unique:users,email',
+                    'address'           =>  'required|max:255',
+                    'city'              =>  'required|max:255',
+                    'province'              =>  'nullable',
+                    'postal_code'              =>  'nullable',
                     // 'password'          =>  'nullable|min:8|max:16|same:confirm_password',
                     // 'confirm_password'  =>  'nullable|min:8|max:16|same:password',
                 ]);
-                $form_data = $request->input();
 
+                $form_data = $request->input();
                 $form_data['user_type'] = 'Client';
+           
 
                 $user = new User;
 
@@ -545,6 +633,7 @@ class UserController extends Controller
 
                 if(isset($user->id))
                 {
+                    // dd($user);
                    $data = ['status' => true , 'message' => 'Client added successfully'];
 
                    
@@ -562,9 +651,14 @@ class UserController extends Controller
                        }    
                     
                    }
-                }
 
+                }
                 return $data;
+
+            }
+            else
+            {
+                return view('users.modals.add_client')->render();
             }
          
 
@@ -573,7 +667,6 @@ class UserController extends Controller
         {
             
         }
-        return redirect()->back();
 
     }
 
@@ -737,14 +830,44 @@ class UserController extends Controller
             $truck_list = $truck->getClientTrucks($client_id);
             $material_rates_list = $material_rates->getMaterialRatesByAccount($client_id);
 
-            return view('users.view_client_summary',[
+            $pdf = PDF::loadView('users.documents.client_summary', [
                 'user'              =>     $user,
                 'contact_list'      =>  $contact_list,
                 'account_list'      =>  $account_list,
                 'trucks_list'        =>  $truck_list,
                 'material_rates_list'        =>  $material_rates_list,
-            ]);
+                ]);
+                return $pdf->setPaper('a4', 'portrait')->stream('Client Summary.pdf');
 
+            // return view('users.view_client_summary',[
+            //     'user'              =>     $user,
+            //     'contact_list'      =>  $contact_list,
+            //     'account_list'      =>  $account_list,
+            //     'trucks_list'        =>  $truck_list,
+            //     'material_rates_list'        =>  $material_rates_list,
+            // ]);
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+    }
+
+    public function sendEmployeeDailyProgress(Request $request)
+    {
+        try
+        {
+            $date = now();
+
+            $user_obj = new User;
+            $user_ids = $user_obj->getUserIdsByPermissions(['All']);
+
+            $employee = $user_obj->getUserById(Auth::user()->id);
+
+            event(new SendNotification($employee->id,$user_ids,'','viewemployeeprogress',$employee->id,$employee->name. ' has signed off from system at ' .$date,$date));
+
+            return redirect()->back();
         }
         catch(Exception $e)
         {

@@ -14,7 +14,7 @@ class Notification extends Model
 
     public function getUserNotification()
     {
-        return Notification::where('is_seen',0)->whereJsonContains('to_user_id',Auth::user()->id)->orderBy('id','desc')->take(50)->get();
+        return Notification::whereJsonContains('to_user_id',Auth::user()->id)->orderBy('id','desc')->take(50)->get();
     }
 
 
@@ -51,11 +51,11 @@ class Notification extends Model
                     $notify->user_id      = $user_id;
                     $notify->route        = $event->route;
                     $notify->params       = $event->params; 
+                    $notify->params2       = $event->params2; 
                     $notify->message      = $event->message;
                     $notify->save();
                 }
             }
-           
             return with($notify);
         });
     }

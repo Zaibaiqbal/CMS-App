@@ -39,22 +39,32 @@ class Transaction extends Model
 
         })->get();
     }
+
+    public function getEmployeeProgressByCondition($id,$date)
+    {
+        $startOfDay = now()->startOfDay();
+// dd($date,$startOfDay);
+        return Transaction::where('added_id',$id)->whereDate('created_at', '>=', $startOfDay)
+            ->whereDate('created_at', '<=', $date)->get();
+    }
     
-    public function getDailyMaterialWiseStats()
+    public function getDailyMaterialWiseStats($condition = [])
     {
 
         return MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
         ->whereDate('t.created_at',now())
+        ->where($condition)
 
         ->select('material_types.name','t.gross_weight','t.tare_weight')
         ->get();
     }
 
-    public function getMonthlyMaterialWiseStats()
+    public function getMonthlyMaterialWiseStats($condition = [])
     {
 
         return MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
         ->whereMonth('t.created_at', Carbon::now()->month)
+        ->where($condition)
 
         ->select('material_types.name','t.gross_weight','t.tare_weight')
         ->get();

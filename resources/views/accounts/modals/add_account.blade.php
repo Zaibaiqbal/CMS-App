@@ -21,6 +21,42 @@
                     <div class="card-body">
                         <div class="row">
 
+                        @if(Auth::user()->hasRole(['Super Admin']))
+                        <div class="col-md-6">
+                          @php($name = 'client')
+                          @php($label = 'Select Client')
+                          <div class="form-group">
+                              <label for="">{{$label}} <span class="text-danger"> *</span> </label>
+
+                              <small class="text-danger" id="{{$name}}_error"></small>
+
+                              <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+                                  <option value="{{encrypt(0)}}">{{$label}}</option>
+                              @foreach($client_list as $rows)
+                                  <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
+                              @endforeach
+                              </select>
+                          </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+
+                        @php($label = 'Client Group')
+                        @php($name = 'client_group')
+                        <label for="">{{$label}} <span class="text-danger">*</span></label>
+                        <small class="text-danger" id="{{$name}}_error"></small>
+
+                        <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+
+                        @foreach(['Numbered Account','Partner Account'] as $rows)
+                              <option value="{{$rows}}">{{$rows}}</option>
+                          @endforeach
+                        </select>
+                        </div>
+
+                          @endif
+
                       
                             <div class="col-md-6">
 

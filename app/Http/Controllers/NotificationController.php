@@ -17,6 +17,7 @@ class NotificationController extends Controller
             $notify = new Notification;
 
             $notify_list = $notify->getUserNotification();
+            $notify_list_count = $notify_list->where('is_seen',0);
 
             $data['body'] = view('notifications.show_notification',[
 
@@ -24,7 +25,7 @@ class NotificationController extends Controller
 
             ])->render();
 
-            $data['notification_count'] = $notify_list->count();
+            $data['notification_count'] = $notify_list_count;
         }
 
         return $data;

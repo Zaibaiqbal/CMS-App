@@ -21,6 +21,7 @@ class ApproveUser extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+        // dd($user);
     }
 
     /**

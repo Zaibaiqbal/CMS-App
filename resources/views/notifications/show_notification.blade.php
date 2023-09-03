@@ -1,30 +1,39 @@
+
+<style>
+	.media-body a:hover{
+		background-color: transparent !important;
+	}
+</style>
 @if(@count($notify_list) > 0)
-     
+
+			     
 	@foreach($notify_list as $rows)
 
 	@if($rows->params > 0)
 
-		@php($route = route($rows->route,['id' => encrypt($rows->params)]))
+		@php($route = route($rows->route,['id' => encrypt($rows->params) , 'date' => $rows->params2]))
 	@else
 		@if(!empty(trim($rows->route)))
 		@php($route = url($rows->route))
 		@else
-		@php($notify_route = "#")
+		@php($route = "#")
 		@endif
 	@endif
-    <a href="{{$route}}" class="text-dark" onclick="seenNotification(event,this,'{{encrypt($rows->id)}}')">
 
-    <div class="media">
 
-        <div class="media-body">
-                <p class="notification-msg">{{$rows->message}}</p>
+			<a href="{{$route}}" @if($rows->is_seen == 0) class="text-primary" @else class="text-dark" @endif  onclick="seenNotification(event,this,'{{encrypt($rows->id)}}')">
+			<div class="media-body">
+
+                <div class="notification-msg">{{$rows->message}}</div>
                 <span class="notification-time">{{$rows->created_at->diffForHumans()}}</span>
-        </div>
-
-    </div>
-    </a>
+	</div>
+    		
+			</a>
 
 	@endforeach
+        
+
+
 	
 	
 	

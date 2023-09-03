@@ -20,6 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('cnic')->nullable();
             $table->string('email')->unique();
             $table->string('contact')->nullable();
+            $table->string('other_contact')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
+            $table->string('postal_code')->nullable();
             $table->string('user_type')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('account_type')->nullable();

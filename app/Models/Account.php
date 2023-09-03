@@ -73,7 +73,7 @@ class Account extends Model
                 $account->status = $object['status'];
 
             }
-            // dd($account);
+            // dd($object);
             if(isset($object['user_id']))
             {
                 $account->added_id = $object['user_id'];
@@ -85,6 +85,8 @@ class Account extends Model
                 
             }
             $account->save();
+
+            
             
             return with($account);
 

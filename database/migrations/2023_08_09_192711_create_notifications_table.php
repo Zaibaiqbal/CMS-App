@@ -19,6 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->json('to_user_id')->nullable(); // BIG INTEGER IDS
             $table->integer('params')->default(0)->nullable();
+            $table->integer('params2')->default(0)->nullable();
             $table->string('type')->nullable();
             $table->string('route')->nullable();
             $table->string('message')->nullable();

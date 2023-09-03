@@ -57,10 +57,19 @@ class Truck extends Model
             }
 
             $truck->save();
+            $this->generateIdentifier($truck);
+
 
             return with($truck);
         });
 
+    }
+
+    public function generateIdentifier($truck)
+    {
+         $truck->identifier = $truck->plate_no.'-'.$truck->client_id;
+
+         $truck->update();
     }
 
     public function user()

@@ -13,7 +13,6 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">	
-    <link href="{{ asset('css/pcoded-horizontal.min.css') }}" rel="stylesheet">	
     <link href="{{ asset('css/prism.css') }}" rel="stylesheet">	
     <link href="{{ asset('css/jquery.mCustomScrollbar.css') }}" rel="stylesheet">	
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">	
@@ -83,7 +82,7 @@
     @yield('page_style')
 </head>
 
-<body>
+<body class="menu-static">
  
     <!-- Pre-loader start -->
     <div class="theme-loader">
@@ -108,7 +107,8 @@
     <div id="pcoded" class="pcoded">
 
         <div class="pcoded-container">
-            <!-- Menu header start -->
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
 
@@ -116,8 +116,8 @@
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="{{route('home')}}">
-                            <img class="img-fluid" src="{{asset('logos/logo.png')}}" height="90px;" alt="Theme-Logo">
+                        <a href="{{route('home')}}" class="my-4">
+                            <img class="img-fluid" src="{{asset('logos/tes02.png')}}" width="30%" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>
@@ -125,13 +125,28 @@
                     </div>
 
                     <div class="navbar-container container-fluid">
-                      
+                        <ul class="nav-left">
+                            <li class="header-search">
+                                <div class="main-search morphsearch-search">
+                                    <div class="input-group">
+                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                    <i class="feather icon-maximize full-screen"></i>
+                                </a>
+                            </li>
+                        </ul>
                         <ul class="nav-right">
                             <li class="header-notification">
                                 <div class="dropdown-primary dropdown"  onclick="appearNotification();" >
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
-                                        <span class="notification_count badge bg-c-pink"></span>
+                                        <span class="notification_count badge bg-c-pink">0</span>
                                     </div>
                                     <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
@@ -147,7 +162,7 @@
                                     </ul>
                                 </div>
                             </li>
-                      
+
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -156,7 +171,15 @@
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                    <li>
+                                        @if(!Auth::user()->hasRole(['Super Admin']))
+                                        <li>
+                                            <a class="text-dark" content="sign off" onclick="formSubmission(event,this)" href="{{route('sendemployeedailyprogress')}}"> <i class="fa fa-lock"></i></i> 
+                                              Sign Off
+                                            </a>
+                                           
+                                        </li>
+                                        @endif
+                                        <li>
                                             <a class="text-dark"  data-target="#modal_change_password" data-toggle="modal" href="#"> <i class="fa fa-lock"></i></i> 
                                               Change Password
                                             </a>
@@ -183,317 +206,237 @@
                     </div>
                 </div>
             </nav>
-            <!-- Menu header end -->
+
             <div class="pcoded-main-container">
-                <nav class="pcoded-navbar">
-                    <div class="pcoded-inner-navbar">
-                        <ul class="pcoded-item pcoded-left-item">
-                            @if(Auth::user()->hasAnyPermission(['All','View Clients','View Unapproved Clients']))
-
-                            <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                    
-                                        <span class="pcoded-mtext">CLIENTS</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                    @if(Auth::user()->hasAnyPermission(['All','View Clients']))
-
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('users.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW CLIENTS</span>
-                                            </a>
-                                        
-                                        </li>
-                                        @endif
-                                        @if(Auth::user()->hasAnyPermission(['All','View Unapproved Clients']))
-
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('unapproveclients.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW UNAPPROVED CLIENTS</span>
-                                            </a>
-                                        
-                                        </li>
-
-                                        @endif
-                                    
-                                    </ul>
-                            </li>
-                              
-                            @endif
-
-                            @if(Auth::user()->hasAnyPermission(['All','View Contacts','View Unapproved Contacts']))
-
-                            <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                    
-                                        <span class="pcoded-mtext">CONTACTS</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                    @if(Auth::user()->hasAnyPermission(['All','View Contacts']))
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('contactpersons.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW CONTACTS</span>
-                                            </a>
-                                        
-                                        </li>
-                                        @endif
-                                        @if(Auth::user()->hasAnyPermission(['All','View Unapproved Contacts']))
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('unapprovecontactpersons.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW UNAPPROVED CONTACTS</span>
-                                            </a>
-                                        
-                                        </li>
-                                        @endif
-                                    
-                                    </ul>
-                            </li>
-                            
-                            @endif
-                            @if(false && Auth::user()->hasAnyPermission(['All','View Accounts']))
-
-                            <li class="pcoded-hasmenu">
-                                <a href="{{route('accounts.list')}}" >
-                                    <span class="pcoded-mtext">ACCOUNTS</span>
-                                </a>
-                                
-                            </li>
-                            @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Materials']))
-
-                            <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                    
-                                        <span class="pcoded-mtext">MATERIALS</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('material.types.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW MATERIALS</span>
-                                            </a>
-                                        
-                                        </li>
-
-                                        <li class="pcoded-hasmenu text-dark">
-                                            <a href="{{route('material.rate.list')}}">
-                                            
-                                                <span class="pcoded-mtext text-dark" data-i18n="nav.dash.main">VIEW MATERIAL RATES</span>
-                                            </a>
-                                        
-                                        </li>
-
-                                    
-                                    </ul>
-                            </li>
-                            @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Fleet']))
-
-                            <li class="pcoded-hasmenu">
-                                <a href="{{route('trucks.list')}}" >
-                                    <span class="pcoded-mtext">FLEET</span>
-                                </a>
-                             
-                            </li>
-                            @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Locations']))
-
-                            <li class="pcoded-hasmenu">
-                                <a href="{{route('locations.list')}}" >
-                                    <span class="pcoded-mtext">OUTBOUND LOCATIONS</span>
-                                </a>
-                            
-                            </li>
-                            @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
-
-                            <li class="pcoded-hasmenu">
-                                <a href="{{route('transactions.list')}}">
-                                    <span class="pcoded-mtext">ezWeigh</span>
-                                </a>
-                                
-                            </li>
-                            @endif
-                            @if(Auth::user()->hasAnyPermission(['All','View Employees']))
-
-                            <li class="pcoded-hasmenu">
-                                <a href="{{route('employees.list')}}">
-                                    <span class="pcoded-mtext">EMPLOYEES</span>
-                                </a>
-                               
-                            </li>
-                            @endif
-                            @if(Auth::user()->hasAnyPermission(['All','Roles & Permissions']))
-
-                            <li class="pcoded-hasmenu">
-                                <a href="{{route('roles.permissions')}}">
-                                    <span class="pcoded-mtext">ROLES & PERMISSIONS</span>
-                                </a>
-                               
-                            </li>
-                            @endif
-                          
-                        </ul>
-                    </div>
-                </nav>
-                <!-- Sidebar chat start -->
-                <div id="sidebar" class="users p-chat-user showChat">
-                    <div class="had-container">
-                        <div class="card card_main p-fixed users-main">
-                            <div class="user-box">
-                                <div class="chat-inner-header">
-                                    <div class="back_chatBox">
-                                        <div class="right-icon-control">
-                                            <input type="text" class="form-control  search-text" placeholder="Search Friend" id="search-friends">
-                                            <div class="form-icon">
-                                                <i class="icofont icofont-search"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-friend-list">
-                                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
-                                        <a class="media-left" href="#!">
-                                            <img class="media-object img-radius img-radius" src="" alt="Generic placeholder image ">
-                                            <div class="live-status bg-success"></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="f-13 chat-header">Josephin Doe</div>
-                                        </div>
-                                    </div>
-                                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe" data-toggle="tooltip" data-placement="left" title="Lary Doe">
-                                        <a class="media-left" href="#!">
-                                            <img class="media-object img-radius" src="" alt="Generic placeholder image">
-                                            <div class="live-status bg-success"></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="f-13 chat-header">Lary Doe</div>
-                                        </div>
-                                    </div>
-                                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
-                                        <a class="media-left" href="#!">
-                                            <img class="media-object img-radius" src="" alt="Generic placeholder image">
-                                            <div class="live-status bg-success"></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="f-13 chat-header">Alice</div>
-                                        </div>
-                                    </div>
-                                    <div class="media userlist-box" data-id="4" data-status="online" data-username="Alia" data-toggle="tooltip" data-placement="left" title="Alia">
-                                        <a class="media-left" href="#!">
-                                            <img class="media-object img-radius" src="" alt="Generic placeholder image">
-                                            <div class="live-status bg-success"></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="f-13 chat-header">Alia</div>
-                                        </div>
-                                    </div>
-                                    <div class="media userlist-box" data-id="5" data-status="online" data-username="Suzen" data-toggle="tooltip" data-placement="left" title="Suzen">
-                                        <a class="media-left" href="#!">
-                                            <img class="media-object img-radius" src="" alt="Generic placeholder image">
-                                            <div class="live-status bg-success"></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="f-13 chat-header">Suzen</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Sidebar inner chat start-->
-                <div class="showChat_inner">
-                    <div class="media chat-inner-header">
-                        <a class="back_chatBox">
-                            <i class="feather icon-chevron-left"></i> Josephin Doe
-                        </a>
-                    </div>
-                    <div class="media chat-messages">
-                        <a class="media-left photo-table" href="#!">
-                            <img class="media-object img-radius img-radius m-t-5" src="" alt="Generic placeholder image">
-                        </a>
-                        <div class="media-body chat-menu-content">
-                            <div class="">
-                                <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
-                                <p class="chat-time">8:20 a.m.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="media chat-messages">
-                        <div class="media-body chat-menu-reply">
-                            <div class="">
-                                <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
-                                <p class="chat-time">8:20 a.m.</p>
-                            </div>
-                        </div>
-                        <div class="media-right photo-table">
-                            <a href="#!">
-                                <img class="media-object img-radius img-radius m-t-5" src="" alt="Generic placeholder image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chat-reply-box p-b-20">
-                        <div class="right-icon-control">
-                            <input type="text" class="form-control search-text" placeholder="Share Your Thoughts">
-                            <div class="form-icon">
-                                <i class="feather icon-navigation"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Sidebar inner chat end-->
                 <div class="pcoded-wrapper">
+                    <nav class="pcoded-navbar">
+                        <div class="pcoded-inner-navbar main-menu">
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="">
+                                    <a href="{{route('home')}}">
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                        <span class="pcoded-mtext text-uppercase">Dashboard</span>
+                                    </a>
+                                  
+                                </li>
+                                @if(Auth::user()->hasAnyPermission(['All','View Clients','View Unapproved Clients']))
+
+                                <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+
+                                            <span class="pcoded-mtext">CLIENTS</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                        @if(Auth::user()->hasAnyPermission(['All','View Clients']))
+
+                                            <li class="pcoded-hasmenu text-dark">
+                                                <a href="{{route('users.list')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW CLIENTS</span>
+                                                </a>
+                                            
+                                            </li>
+                                            @endif
+                                            @if(Auth::user()->hasAnyPermission(['All','View Unapproved Clients']))
+
+                                            <li class="pcoded-hasmenu">
+                                                <a href="{{route('unapproveclients.list')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW UNAPPROVED CLIENTS</span>
+                                                </a>
+                                            
+                                            </li>
+
+                                            @endif
+                                        
+                                        </ul>
+                                </li>
+                                
+                                @endif
+                              
+                                @if(Auth::user()->hasAnyPermission(['All','View Contacts','View Unapproved Contacts']))
+
+                                <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)">
+                                            <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                                        
+                                            <span class="pcoded-mtext">CONTACTS</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                        @if(Auth::user()->hasAnyPermission(['All','View Contacts']))
+                                            <li class="pcoded-hasmenu">
+                                                <a href="{{route('contactpersons.list')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW CONTACTS</span>
+                                                </a>
+                                            
+                                            </li>
+                                            @endif
+                                            @if(Auth::user()->hasAnyPermission(['All','View Unapproved Contacts']))
+                                            <li class="pcoded-hasmenu">
+                                                <a href="{{route('unapprovecontactpersons.list')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW UNAPPROVED CONTACTS</span>
+                                                </a>
+                                            
+                                            </li>
+                                            @endif
+                                        
+                                        </ul>
+                                </li>
+                                
+                                @endif
+                            
+                                @if(Auth::user()->hasAnyPermission(['All','View Accounts']))
+
+                                <li class="">
+                                    <a href="{{route('accounts.list')}}" >
+                                    <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+
+                                        <span class="pcoded-mtext">ACCOUNTS</span>
+                                    </a>
+                                    
+                                </li>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','View Materials']))
+
+                                <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+
+                                            <span class="pcoded-mtext">MATERIALS</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="{{route('material.types.list')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW MATERIALS</span>
+                                                </a>
+                                            
+                                            </li>
+
+                                            <li class="pcoded-hasmenu">
+                                                <a href="{{route('material.rate.list')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW MATERIAL RATES</span>
+                                                </a>
+                                            
+                                            </li>
+
+                                        
+                                        </ul>
+                                </li>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','View Trucks','Add Truck','Update Truck']))
+
+                                <li class="">
+                                    <a href="{{route('trucks.list')}}" >
+                                        <span class="pcoded-micon"><i class="icofont icofont-free-delivery"></i></span>
+                                        <span class="pcoded-mtext">FLEET</span>
+                                    </a>
+                                
+                                </li>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','View Locations']))
+
+                                <li class="">
+                                    <a href="{{route('locations.list')}}" >
+                                    <span class="pcoded-micon"><i class="icofont icofont-location-pin"></i></span>
+
+                                        <span class="pcoded-mtext">OUTBOUND LOCATIONS</span>
+                                    </a>
+
+                                </li>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','View Transactions']))
+
+                                <li class="">
+                                    <a href="{{route('transactions.list')}}">
+                                    <span class="pcoded-micon"><i class="feather icon-credit-card"></i></span>
+
+                                        <span class="pcoded-mtext">ezWeigh</span>
+                                    </a>
+                                    
+                                </li>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','View Employees']))
+
+                                <li class="">
+                                    <a href="{{route('employees.list')}}">
+                                    <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+
+                                        <span class="pcoded-mtext">EMPLOYEES</span>
+                                    </a>
+                                
+                                </li>
+                                @endif
+                                @if(Auth::user()->hasAnyPermission(['All','Roles & Permissions']))
+
+                                <li class="">
+                                    <a href="{{route('roles.permissions')}}">
+                                        <span class="pcoded-micon"><i class="feather icon-command"></i></span>
+
+                                        <span class="pcoded-mtext">ROLES & PERMISSIONS</span>
+                                    </a>
+                                
+                                </li>
+                                @endif
+                             
+                            </ul>
+                           
+                        </div>
+                    </nav>
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
+
 
                             <!-- Main-body start -->
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     
-                                  <div class="page-header mb-0">
-                                      <div class="row align-items-end">
-                                          <div class="col-lg-8">
-                                            
-                                          </div>
-                                          <div class="col-lg-4 m-t-20">
-                                              <div class="page-header-breadcrumb">
-                                                @yield('page_breadcrumbs')
-                                              </div>
-                                          </div>
-                                      </div>
-                                    </div>
-                                    <!-- Page body start -->
-                                    <div class="page-body">
-
-                                                            @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
+                                    <div class="page-header mb-0">
+                                        <div class="row align-items-end">
+                                            <div class="col-lg-8">
+                                              
+                                            </div>
+                                            <div class="col-lg-4 m-t-20">
+                                                <div class="page-header-breadcrumb">
+                                                  @yield('page_breadcrumbs')
+                                                </div>
+                                            </div>
                                         </div>
-                                    @endif
-                                       @yield('page_body')
-
-
-                                    </div>
-                                    <!-- Page body end -->
-                                </div>
+                                      </div>
+                                      <!-- Page body start -->
+                                      <div class="page-body">
+  
+                                                              @if ($errors->any())
+                                          <div class="alert alert-danger">
+                                              <ul>
+                                                  @foreach ($errors->all() as $error)
+                                                      <li>{{ $error }}</li>
+                                                  @endforeach
+                                              </ul>
+                                          </div>
+                                      @endif
+                                         @yield('page_body')
+  
+  
+                                      </div>
+                                      <!-- Page body end -->
+                                  </div>
                             </div>
                             <!-- Main-body end -->
                             <div id="styleSelector">
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
+
     </div>
 
     @yield('page_modal')
@@ -508,7 +451,7 @@
 
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
-    <script src="{{ asset('js/menu-hori-fixed.js') }}" defer></script>
+    <script src="{{ asset('js/menu-sidebar-static.js') }}" defer></script>
     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}" defer></script>
     <script src="{{ asset('js/pcoded.min.js') }}" defer></script>
     <script src="{{ asset('js/script.js') }}" defer></script>

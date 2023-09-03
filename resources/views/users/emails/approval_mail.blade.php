@@ -12,16 +12,15 @@
 
 <div class="card-body">
 
-  <center><img src="{{logos/tes02.png}}"  width="20%"/></center>
+  <center><img src="logos/tes02.png"  width="20%"/></center>
 
-  <p>Your request for the registration against following details has been approved by Admin.
+  <p>Your request for the registration against following details has been approved by Admin. </p>
     
-    <br>
-    <h4>Name</h4> <b>{{$user['name']}}</b> 
-    <h4>Contact</h4> <b>{{$user['contact']}}</b> 
-    <h4>Email</h4> <b>{{$user['email']}}</b> 
+    <p><b>Name: </b> {{$user['name']}} </p>
+    <p><b>Contact: </b>{{$user['contact']}} </p>
+   <p> <b>Email: </b> {{$user['email']}} </p>
     
-  Your password is: <b> {{$user['password']}}  </b> </p>
+ <p> Your password is: <b> {{$user['password']}}  </b> </p>
 
 
     <p>Thank you</p>

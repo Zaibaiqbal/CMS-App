@@ -25,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     
 Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.list')->middleware('auth','permission:All|View Clients');
 
-Route::get('trucks', [App\Http\Controllers\TruckController::class, 'index'])->name('trucks.list')->middleware('auth','permission:All|View Fleet');
+Route::get('trucks', [App\Http\Controllers\TruckController::class, 'index'])->name('trucks.list')->middleware('auth','permission:All|View Trucks');
 
 Route::get('employees', [App\Http\Controllers\UserController::class, 'viewAllEmployees'])->name('employees.list')->middleware('auth','permission:All|View Employees');
 
@@ -140,10 +140,19 @@ Route::get('approveaccount', [App\Http\Controllers\AccountController::class, 'ap
 Route::get('accountinfo', [App\Http\Controllers\AccountController::class, 'getAccountInfo'])->name('accountinfo')->middleware('auth');
 
 
-Route::get('materialwisestats', [App\Http\Controllers\HomeController::class, 'getMaterialWiseStats'])->name('materialwisestats')->middleware('auth','permission:All');
+Route::get('materialwisestats', [App\Http\Controllers\HomeController::class, 'getMaterialWiseStats'])->name('materialwisestats')->middleware('auth');
 
 
 Route::match(['post','get'],'importclients', [App\Http\Controllers\ImportController::class, 'importClientData'])->name('import.clients')->middleware('auth','permission:All');
+
+
+Route::get('sendemployeedailyprogress', [App\Http\Controllers\UserController::class, 'sendEmployeeDailyProgress'])->name('sendemployeedailyprogress')->middleware('auth');
+
+Route::get('viewemployeeprogress', [App\Http\Controllers\UserController::class, 'viewEmployeeDailyProgress'])->name('viewemployeeprogress')->middleware('auth');
+
+
+Route::get('printemployeeprogress', [App\Http\Controllers\UserController::class, 'printEmployeeDailyProgress'])->name('printemployeeprogress')->middleware('auth');
+
 
 // CLIENT ROUTES
 

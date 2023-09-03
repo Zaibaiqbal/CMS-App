@@ -2,14 +2,15 @@
 
 @section('page_title')
 
-Clients Management
+View Unapproved Clients
 
 @endsection
 @section('page_breadcrumbs')
 
-{{ Breadcrumbs::render('clients') }}
+{{ Breadcrumbs::render('unapproved_clients') }}
 
 @endsection
+
 @section('page_body')
 
 
@@ -18,19 +19,9 @@ Clients Management
         <!-- Zero config.table start -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">ALL CLIENTS
+                <h3 class="card-title">Employees Progress
 
-                @if(false && Auth::user()->hasAnyPermission(['All']))
-          
-                <a onclick="formModal(event,'{{route('import.clients')}}','#md_import_data_client','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
-                Import Clients</a>
-                @endif
-
-                @if(Auth::user()->hasAnyPermission(['All']))
-          
-                    <a onclick="formModal(event,'{{route('store.client')}}','#modal_add_client','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
-                    Add Client</a>
-                    @endif
+                   
                     <!--end::Button-->
                     </h3>
             </div>
@@ -39,9 +30,8 @@ Clients Management
                     <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                         <thead>
                             <tr>
-                            <th>id</th>
+                            <th>ID</th>
                             <th>Name</th>
-                            <th>Account No</th>
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Action</th>
@@ -52,15 +42,17 @@ Clients Management
                             <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$rows->name}}</td>
-                            <td>{{implode(',',$rows->userAccounts->pluck('account.account_no')->toArray())}}</td>
                             <td>{{$rows->email}}</td>
                             <td>{{$rows->contact}}</td>
                             <td>
-                                
-                            @if(Auth::user()->hasAnyPermission(['All','View Client Summary']))
+                                @if(Auth::user()->hasAnyPermission(['All']))
+                                @php($route = route('printemployeeprogress',['id' => encrypt($rows->id) ,'date' => $date]))
+                                <a href="{{$route}}" target="_blank" class="dropdown-item waves-light waves-effect" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i></a>
 
-                            <a href="{{route('client.summary',['id' => encrypt($rows->id)])}}" target="_blank" class="text-dark py-0"><i class="dropdown-icon fa fa-eye "></i></a>
-                            @endif
+                                @endif
+                                      
+                                </div>
+
                             </td>
                             </tr>
                         @endforeach
@@ -85,7 +77,6 @@ Clients Management
 
 <script>
 
-  
-    
+
 </script>
 @endsection
