@@ -153,6 +153,13 @@ Route::get('viewemployeeprogress', [App\Http\Controllers\UserController::class, 
 
 Route::get('printemployeeprogress', [App\Http\Controllers\UserController::class, 'printEmployeeDailyProgress'])->name('printemployeeprogress')->middleware('auth');
 
+Route::get('latestdashboardstats', [App\Http\Controllers\HomeController::class, 'showLatestDashboardStats'])->name('latestdashboardstats')->middleware('auth');
+
+Route::match(['get','post'],'generateweeklyinvoice', [App\Http\Controllers\ReportController::class, 'generateWeeklyInvoice'])->name('generateweeklyinvoice')->middleware('auth','permission:All|Generate Weekly Invoice');
+
+
+Route::get('rateslab', [App\Http\Controllers\MaterialTypeController::class, 'viewRateSlab'])->name('rateslab')->middleware('auth','permission:All');
+
 
 // CLIENT ROUTES
 

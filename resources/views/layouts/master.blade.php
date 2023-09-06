@@ -112,12 +112,12 @@
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
 
-                    <div class="navbar-logo">
+                    <div class="navbar-logo" style="height: 72px !important;">
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
                         <a href="{{route('home')}}" class="my-4">
-                            <img class="img-fluid" src="{{asset('logos/tes02.png')}}" width="30%" alt="Theme-Logo">
+                            <img class="img-fluid" src="{{asset('logos/logo.png')}}" width="30%" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>
@@ -207,7 +207,7 @@
                 </div>
             </nav>
 
-            <div class="pcoded-main-container">
+            <div class="pcoded-main-container mt-3">
                 <div class="pcoded-wrapper">
                     <nav class="pcoded-navbar">
                         <div class="pcoded-inner-navbar main-menu">
@@ -230,7 +230,7 @@
                                         <ul class="pcoded-submenu">
                                         @if(Auth::user()->hasAnyPermission(['All','View Clients']))
 
-                                            <li class="pcoded-hasmenu text-dark">
+                                            <li class=" text-dark">
                                                 <a href="{{route('users.list')}}">
                                                 
                                                     <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW CLIENTS</span>
@@ -240,7 +240,7 @@
                                             @endif
                                             @if(Auth::user()->hasAnyPermission(['All','View Unapproved Clients']))
 
-                                            <li class="pcoded-hasmenu">
+                                            <li class="">
                                                 <a href="{{route('unapproveclients.list')}}">
                                                 
                                                     <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW UNAPPROVED CLIENTS</span>
@@ -259,13 +259,13 @@
 
                                 <li class="pcoded-hasmenu">
                                         <a href="javascript:void(0)">
-                                            <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                                            <span class="pcoded-micon"><i class="icofont icofont-contact-add"></i></span>
                                         
                                             <span class="pcoded-mtext">CONTACTS</span>
                                         </a>
                                         <ul class="pcoded-submenu">
                                         @if(Auth::user()->hasAnyPermission(['All','View Contacts']))
-                                            <li class="pcoded-hasmenu">
+                                            <li class="">
                                                 <a href="{{route('contactpersons.list')}}">
                                                 
                                                     <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW CONTACTS</span>
@@ -274,7 +274,7 @@
                                             </li>
                                             @endif
                                             @if(Auth::user()->hasAnyPermission(['All','View Unapproved Contacts']))
-                                            <li class="pcoded-hasmenu">
+                                            <li class="">
                                                 <a href="{{route('unapprovecontactpersons.list')}}">
                                                 
                                                     <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW UNAPPROVED CONTACTS</span>
@@ -292,7 +292,7 @@
 
                                 <li class="">
                                     <a href="{{route('accounts.list')}}" >
-                                    <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                                    <span class="pcoded-micon"><i class="icofont icofont-people"></i></span>
 
                                         <span class="pcoded-mtext">ACCOUNTS</span>
                                     </a>
@@ -303,12 +303,12 @@
 
                                 <li class="pcoded-hasmenu">
                                         <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                                        <span class="pcoded-micon"><i class="icofont icofont-bricks"></i></span>
 
                                             <span class="pcoded-mtext">MATERIALS</span>
                                         </a>
                                         <ul class="pcoded-submenu">
-                                            <li class="pcoded-hasmenu">
+                                            <li class="">
                                                 <a href="{{route('material.types.list')}}">
                                                 
                                                     <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW MATERIALS</span>
@@ -316,15 +316,22 @@
                                             
                                             </li>
 
-                                            <li class="pcoded-hasmenu">
+                                            <li class="">
                                                 <a href="{{route('material.rate.list')}}">
                                                 
                                                     <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW MATERIAL RATES</span>
                                                 </a>
                                             
                                             </li>
-
-                                        
+{{--
+                                            <li class="">
+                                                <a href="{{route('rateslab')}}">
+                                                
+                                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">VIEW RATE SLAB</span>
+                                                </a>
+                                            
+                                            </li>
+                                            --}}
                                         </ul>
                                 </li>
                                 @endif
@@ -388,12 +395,12 @@
                         </div>
                     </nav>
                     <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
+                        <div class="pcoded-inner-content p-0">
 
 
                             <!-- Main-body start -->
                             <div class="main-body">
-                                <div class="page-wrapper">
+                                <div class="page-wrapper p-2">
                                     
                                     <div class="page-header mb-0">
                                         <div class="row align-items-end">

@@ -1,4 +1,4 @@
-@foreach($transaction_list as $rows)
+@foreach($material_wise_transaction_list as $rows)
 <tr>
     <td>{{$loop->iteration}}</td>
     <td>{{$rows->name}}</td>

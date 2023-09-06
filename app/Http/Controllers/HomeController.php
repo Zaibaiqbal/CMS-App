@@ -51,26 +51,52 @@ class HomeController extends Controller
 
         $transaction = new Transaction();
         $condition = [];
+
         if(!Auth::user()->hasRole(['Super Admin']))
         {
             $condition =['added_id'    =>   Auth::user()->id];
         }
-        $daily_transaction_list = $transaction->getDailyMaterialWiseStats($condition);
-        $monthly_transaction_list = $transaction->getMonthlyMaterialWiseStats($condition);
+        $material_wise_transaction_list = $transaction->getDailyMaterialWiseStats($condition);
 
-        $data['daily_view'] =  view('dashboard.components.material_wise_stats',[
+        $data['transaction_view'] =  view('dashboard.components.material_wise_stats',[
         
-            'transaction_list'          =>      $daily_transaction_list
-        
-            ])->render();
-        
-        $data['monthly_view'] =  view('dashboard.components.material_wise_stats',[
-        
-            'transaction_list'          =>      $monthly_transaction_list
+            'material_wise_transaction_list'          =>      $material_wise_transaction_list
         
             ])->render();
         
         return $data;
 
     }
+
+    public function showLatestDashboardStats(Request $request)
+    {
+
+        $user = new User;
+        $transaction = new Transaction;
+        $user_list = $user->getUserListByCondition(['user_type'=>'Client']);
+        $condition = [];
+        if(!Auth::user()->hasRole(['Super Admin']))
+        {
+            $condition =['added_id'    =>   Auth::user()->id];
+        }
+
+        $transactions_list = $transaction->getDashboardTransactionsByCondition($condition+['status'=>'Processed'],$request->from,$request->to);
+        $material_wise_transaction_list = $transaction->getDailyMaterialWiseStats($condition,$request->from,$request->to);
+
+// dd($transactions_list);
+        $data['total_clients' ]        =   $user_list->count();
+        $data['total_tickets']    =   $transactions_list->count();
+        $data['inbound_count' ]        =   $transactions_list->where('operation_type','Inbound')->count();
+        $data['outbound_count']        =   $transactions_list->where('operation_type','Outbound')->count();
+        $data['transaction_view'] =  view('dashboard.components.material_wise_stats',[
+        
+            'material_wise_transaction_list'          =>      $material_wise_transaction_list
+        
+            ])->render();
+
+        return $data;
+
+    }
+
+
 }

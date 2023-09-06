@@ -126,6 +126,7 @@
                 <th>Gross Weight</th>
                 <th>Tare Weight</th>
                 <th>Net Weight</th>
+                <th>Total Price</th>
             </tr>
           </thead>
           <tbody>
@@ -134,15 +135,19 @@
                     <td>{{$transaction->material_rate}}</td>
                     <td>{{$transaction->gross_weight}}</td>
                     <td>{{$transaction->tare_weight}}</td>
-                    <td>{{$transaction->net_weight}}</td>
+                    <td>{{abs($transaction->net_weight)}}</td>
+                    @php($total = $transaction->material_rate * ($transaction->net_weight))
+                    <td>{{abs($total)}}</td>
                 </tr>
 
 
                 <tr style="font-weight: bold;">
-                    <td colspan="2">Total:</td>
+                    <td colspan="1">Total:</td>
+                    <td colspan=""></td>
                     <td>{{$transaction->gross_weight}}</td>
                     <td>{{$transaction->tare_weight}}</td>
-                    <td>{{$transaction->net_weight}}</td>
+                    <td>{{abs($transaction->net_weight)}}</td>
+                    <td></td>
 
                 </tr>
 

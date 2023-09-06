@@ -26,7 +26,7 @@ class AddIdentifierColumnToTrucksTable extends Migration
     public function down()
     {
         Schema::table('trucks', function (Blueprint $table) {
-            $table->dropColumn();
+            $table->dropColumn('identifier');
         });
     }
 }

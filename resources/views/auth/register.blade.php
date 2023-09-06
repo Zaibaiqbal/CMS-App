@@ -63,7 +63,7 @@ $('.contact').mask("0000-0000000");
                         <div class="card">
                             <div class="card-header text-center p-2">
                                 <h3>Register Here</h3>
-                                <img alt="Logo" src="{{asset('logos/tes02.png')}}" width="13%" />
+                                <img alt="Logo" class=" mt-2" src="{{asset('logos/logo.png')}}" width="13%" />
                             </div>
                             <div class="card-block">
                                 <div class="j-wrapper j-wrapper-640 p-0">

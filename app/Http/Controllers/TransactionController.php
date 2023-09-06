@@ -65,12 +65,12 @@ class TransactionController extends Controller
             if($request->isMethod('post'))
             {
                 // dd($request->client_group);
+                $validation = [];
+                // $client_group = ['Cash Account','Numbered Account','Partner Account'];
 
-                $client_group = ['Cash Account','Numbered Account','Partner Account'];
-
-                $validation = [
-                    'client_group'  =>  'in:'.implode(',',$client_group)
-                ];
+                // $validation = [
+                //     'client_group'  =>  'in:'.implode(',',$client_group)
+                // ];
                 if($request->client_group == "Cash Account")
                 {
                     $validation += [
@@ -210,7 +210,7 @@ class TransactionController extends Controller
                     
                     $validation = [];
 
-                    if($transaction->client_group == "Numbered Account")
+                    if($transaction->client_group == "Numbered")
                     {
                         $validation += [
                             'account'    => 'required'

@@ -308,9 +308,9 @@ function calculateNetWeight(event,obj)
 
         var material = $(obj).val();
         var client_type = "{{$transaction->client_group}}";
-        var user_id = "{{$transaction->client_id}}";
+        var account_id = $('select[name=account]').val();
   
-        $.get("{{route('materialinfo')}}",{material:material,client_type,client_type,user_id,user_id},function(data){
+        $.get("{{route('materialinfo')}}",{material:material,client_type,client_type,account_id,account_id},function(data){
 
             $('.material_rate').val(data.rate);
 

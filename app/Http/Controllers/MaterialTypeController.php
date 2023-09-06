@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\MaterialRate;
 use App\Models\MaterialType;
+use App\Models\RateSlab;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -50,14 +51,20 @@ class MaterialTypeController extends Controller
         {
             // dd($request->input());
             $data = [];
+
             $material_id = decrypt($request->material);
+            if(isset($request->account_id))
+            {
+                $account_id = decrypt($request->account_id);
+
+            }
             $material = new MaterialType;
             $material_rate = new MaterialRate;
+            // dd($account_id);
 
-            if(isset($request->user_id) && $request->user_id > 0)
+            if(isset($account_id) && $account_id > 0)
             {
-               $material_rate =  $material_rate->getMaterialRateByCondition(['material_type_id' => $material_id , 'client_id' => $request->user_id]);
-
+               $material_rate =  $material_rate->getMaterialRateByCondition(['material_type_id' => $material_id , 'account_id' => $account_id]);
                $data['rate'] = $material_rate->rate;
             }
             else
@@ -66,6 +73,7 @@ class MaterialTypeController extends Controller
                $data['rate'] = $material_rate->board_rate;
 
             }
+            // dd($data);
             return $data;
 
 
@@ -85,21 +93,22 @@ class MaterialTypeController extends Controller
         
             $request->validate([
 
-                'type'                      => 'required|max:255',
-                'board_rate'                      => 'required',
+                // 'type'                            => 'required|max:255',
+                // 'board_rate'                      => 'required',
+                // 'slab_rate'                      => 'required',
+                // 'slab_weight'                      => 'required',
+                // 'weight_break'                      => 'required',
                
                
 
                 ]);
                 $form_data = $request->input();
-
+// dd($form_data);
 
                 $type = new MaterialType;
-                $type->name = $form_data['type'];
-                $type->board_rate = $form_data['board_rate'];
-            
-                $type->save();
 
+                $type = $type->storeMaterialType($form_data);
+               
                 if(isset($type->id))
                 {
                     $data = ['status' => true, 'message' => 'Material added successfully'];
@@ -275,6 +284,19 @@ class MaterialTypeController extends Controller
         }
 
       
+    }
+
+
+    public function viewRateSlab()
+    {
+
+        $rate = new RateSlab;
+        $rate_list    = $rate->get();
+
+
+        return view('rates.manage_rate_slab',[
+            'rate_list'    =>   $rate_list
+        ]);
     }
 
 }

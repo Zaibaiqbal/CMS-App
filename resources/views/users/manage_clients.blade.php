@@ -20,7 +20,7 @@ Clients Management
             <div class="card-header">
                 <h3 class="card-title">ALL CLIENTS
 
-                @if(false && Auth::user()->hasAnyPermission(['All']))
+                @if(Auth::user()->hasAnyPermission(['All']))
           
                 <a onclick="formModal(event,'{{route('import.clients')}}','#md_import_data_client','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
                 Import Clients</a>
@@ -28,7 +28,7 @@ Clients Management
 
                 @if(Auth::user()->hasAnyPermission(['All']))
           
-                    <a onclick="formModal(event,'{{route('store.client')}}','#modal_add_client','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                    <a onclick="formModal(event,'{{route('store.client')}}','#modal_add_client','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase mr-2" style="float: right;">
                     Add Client</a>
                     @endif
                     <!--end::Button-->
@@ -56,11 +56,38 @@ Clients Management
                             <td>{{$rows->email}}</td>
                             <td>{{$rows->contact}}</td>
                             <td>
-                                
-                            @if(Auth::user()->hasAnyPermission(['All','View Client Summary']))
 
-                            <a href="{{route('client.summary',['id' => encrypt($rows->id)])}}" target="_blank" class="text-dark py-0"><i class="dropdown-icon fa fa-eye "></i></a>
-                            @endif
+                           
+                            <div class="dropdown-primary dropdown">
+                            <div class="" data-toggle="dropdown">
+                            <i class="fa fa-ellipsis-v text-dark"></i>
+
+                            </div>
+                            <ul class="show-notification notification-view dropdown-menu p-1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                
+                                <li>
+
+                                @if($rows->client_group == "Numbered" &&  Auth::user()->hasAnyPermission(['All','Generate Weekly Invoice']))
+            
+                                <a href="{{route('generateweeklyinvoice',['id' => $rows->id])}}"  class="dropdown-item waves-light waves-effect " target="_blank" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Weekly Invoice</a>
+                               
+
+                                @endif
+
+                                </li>
+                                <li>
+
+                                @if(Auth::user()->hasAnyPermission(['All','View Client Summary']))
+
+                               <a href="{{route('client.summary',['id' => encrypt($rows->id)])}}"  class="dropdown-item waves-light waves-effect" target="_blank" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Client Summary</a>
+                               
+
+                                @endif
+                                </li>
+                            
+                            </ul>
+                        </div>
+                         
                             </td>
                             </tr>
                         @endforeach

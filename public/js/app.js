@@ -179,12 +179,25 @@ function importData(event,form_obj,message)
             
             // messageToaster(result.status,result.message,result.status);
 
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success(result.message);
+
             removeThemeLoader();
         },
         error: function(result)
         {
             // console.log(result.responseJSON);
             // messageToaster(result.responseJSON.status,result.responseJSON.message,result.responseJSON.status);
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success(result.message);
 
             removeThemeLoader();
         }

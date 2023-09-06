@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modal_add_material_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Add Material</h5>
@@ -35,6 +35,45 @@
                             <div class="col-md-6">
                               @php($label = 'Board Rate')
                               @php($name = 'board_rate')
+                                <div class="form-group">
+                                    <label for="">{{$label}}</label>
+                                    <span><i class="text-danger">*</i></span>
+                                    <small id="{{$name}}_error" class="text-danger"></small>
+
+                                    <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                              @php($label = 'Slab Weight')
+                              @php($name = 'slab_weight')
+                                <div class="form-group">
+                                    <label for="">{{$label}}</label>
+                                    <span><i class="text-danger">*</i></span>
+                                    <small id="{{$name}}_error" class="text-danger"></small>
+
+                                    <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                              @php($label = 'Slab Rate')
+                              @php($name = 'slab_rate')
+                                <div class="form-group">
+                                    <label for="">{{$label}}</label>
+                                    <span><i class="text-danger">*</i></span>
+                                    <small id="{{$name}}_error" class="text-danger"></small>
+
+                                    <input type="text" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                              @php($label = 'Weight Break')
+                              @php($name = 'weight_break')
                                 <div class="form-group">
                                     <label for="">{{$label}}</label>
                                     <span><i class="text-danger">*</i></span>

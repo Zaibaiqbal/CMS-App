@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\User;
+use App\Models\UserAccount;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -80,29 +82,59 @@ class ImportController extends Controller
 
                             $user_info['name']         = $rows[1];
                       
-                            $user_info['email']             = trim($rows[5]);
+                            $user_info['email']             = trim($rows[6]);
                             $user_info['password']          = NULL;
                     
-                            $user_info['contact_no']           = $rows[3];
-                            $user_info['other_contact']     = $rows[4];
-                    
-                            $user_info['address'] = $rows[6];
-                            $user_info['city'] = $rows[7];
-                            $user_info['province'] = $rows[8];
-                            $user_info['postal_code']        = $rows[9];
-                            $user_info['is_verified']        = 1;
-                            $user_info['status']        = 'Active';
-                  
-        
-                            $user->storeUser($user_info);
+                            $user_info['client_group']           = $rows[3];
 
-                    }  
+                            $user_info['contact_no']           = $rows[4];
+                            $user_info['other_contact']     = $rows[5];
+                    
+                            $user_info['address'] = $rows[7];
+                            $user_info['city'] = $rows[8];
+                            $user_info['province'] = $rows[9];
+                            $user_info['postal_code']        = $rows[10];
+                            $user_info['is_verified']        = 1;
+                            $user_info['status']            = 'Active';
+                  
+                            $user =   $user->storeUser($user_info);
+
+                            if(isset($user->id) && strlen($rows[2]) > 0)
+                            {
+                                $account_info = [];
+
+                                $account_info['account_no']         = $rows[2];
+                                $account_info['title']              = $user->name;
+                                $account_info['user_id']            = $user->id;
+                                $account_info['approval_status']    = 'Approved';
+                                $account_info['status']             = 'Active';
+
+                                $account = new Account;
+                                $account = $account->storeAccount($account_info);
+
+
+                                if(isset($account->id))
+                                {
+                                    $user_account = [];
+
+                                    $account_info['account_id']              = $account->id;
+                                    $user_account['user_id']            = $account->user_id;
+                                    $user_account['status']            = 'Active';
+                                    
+                                    $user_account = new UserAccount;
+                                    $user_account = $user_account->storeUserAccount($account_info);
+                                }
+
+                            }
+
+                        //  dd($user);
+                        }  
 
                     }            
         
-                    $this->setErrorMessage(200,'success','Csv succssfully uploaded');
-                    return $user;
                     
+                    
+                    return $this->setErrorMessage(200,'success','Csv succssfully uploaded');
                 });
              
     
@@ -115,7 +147,7 @@ class ImportController extends Controller
         }
         catch(Exception $e)
         {
-
+            dd($e);
         }
      
     }

@@ -17,7 +17,8 @@ class MaterialRate extends Model
 
     public function getMaterialRateByCondition($condition = [])
     {
-        return MaterialRate::where($condition)->with('client','materialType')->first();
+        // dd($condition);
+        return MaterialRate::where($condition)->with('account','materialType')->first();
     }
     
     public function storeMaterialRate($object)

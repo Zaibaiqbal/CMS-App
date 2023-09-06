@@ -30,6 +30,33 @@ class Transaction extends Model
         return Transaction::where('is_deleted' , 0)->where($condition)->get();
     }
 
+    public function getDashboardTransactionsByCondition($condition,$from,$to)
+    {
+
+        $query = Transaction::where('is_deleted' , 0)->where($condition);
+
+// dd($query->get());
+        if(strlen(trim($from)) > 0 && strlen(trim($to)) > 0)
+        {
+           $query = $query->whereDate('created_at','>=',$from)->whereDate('created_at','<=',$to);
+        }
+       
+         return $query->get();
+
+
+
+    }
+
+    public function getTransactionsByClientId($id)
+    {
+        return Transaction::join('accounts as a','a.id','=','transactions.account_id')
+        ->join('user_accounts as ua','ua.account_id','=','a.id')
+        ->join('users as c','c.id','=','transactions.client_id')
+        ->where('c.id',$id)->where('c.client_group','Numbered')->get();
+
+    }
+    
+
     public function getTransactionsByUserId($id)
     {
 
@@ -48,15 +75,21 @@ class Transaction extends Model
             ->whereDate('created_at', '<=', $date)->get();
     }
     
-    public function getDailyMaterialWiseStats($condition = [])
+    public function getDailyMaterialWiseStats($condition = [],$from = "",$to ="")
     {
 
-        return MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
+        $query = MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
         ->whereDate('t.created_at',now())
         ->where($condition)
 
-        ->select('material_types.name','t.gross_weight','t.tare_weight')
-        ->get();
+        ->selectRaw("material_types.name,sum(t.gross_weight) as gross_weight,sum(t.tare_weight) as tare_weight");
+
+        if(strlen(trim($from)) > 0 && strlen(trim($to)) > 0)
+        {
+           $query = $query->whereDate('t.created_at','>=',$from)->whereDate('t.created_at','<=',$to);
+        }
+       
+        return $query->groupby('material_types.id')->get();
     }
 
     public function getMonthlyMaterialWiseStats($condition = [])
@@ -66,8 +99,8 @@ class Transaction extends Model
         ->whereMonth('t.created_at', Carbon::now()->month)
         ->where($condition)
 
-        ->select('material_types.name','t.gross_weight','t.tare_weight')
-        ->get();
+        ->selectRaw("material_types.name,sum(t.gross_weight) as gross_weight,sum(t.tare_weight) as tare_weight")
+        ->groupby('material_types.id')->get();
     }
     
     
@@ -159,6 +192,7 @@ class Transaction extends Model
         return DB::transaction(function() use ($object){
           
             $transaction = Transaction::find($object['transaction_id']);
+          
 
             if(isset($transaction->id))
             {
@@ -179,9 +213,9 @@ class Transaction extends Model
 
                 }
 
-                $transaction->material_type_id = $object['material_type'];
+                $transaction->material_type_id  = $object['material_type'];
 
-                    $transaction->status = 'Processed';
+                $transaction->status            = 'Processed';
                 
                 
                 if(isset($object['job_id']))
@@ -189,6 +223,7 @@ class Transaction extends Model
                     $transaction->job_id = $object['job_id'];
 
                 }     
+
                 
                 if(isset($object['account']))
                 {
@@ -196,17 +231,11 @@ class Transaction extends Model
 
                 }
 
-                if(isset($object['material_rate']) && $transaction->client_group == "Numbered Account")
-                {
-                    $transaction->material_rate = $object['material_rate'];
-
-                }
-
-
                 if(isset($object['client']))
                 {
                 $transaction->client_name = $object['client'];
                 }
+
                 if(isset($object['contact_no']))
                 {
                 $transaction->contact_no = $object['contact_no'];
@@ -220,6 +249,13 @@ class Transaction extends Model
                 $driver->name  = $object['driver_name'];
 
                 $driver->save();
+
+
+
+                $material_rate = $this->getMaterialRate($transaction);
+
+
+                $transaction->material_rate = $material_rate;
 
                 $transaction->driver_id  = $driver->id;
 
@@ -236,23 +272,47 @@ class Transaction extends Model
 
     }
 
-    // public function calculatePrice($weightInTons) {
-    //     // Calculate the base price for the first 0.25 tons
-    //     $basePrice = $weightInTons * $basePricePerTon; // You need to define $basePricePerTon
-    
-    //     // Calculate the additional price for every 0.25 tons beyond the first 0.25 tons
-    //     $additionalWeight = $weightInTons - 0.25;
-    //     if ($additionalWeight > 0) {
-    //         $additionalPrice = ceil($additionalWeight / 0.25) * $additionalPriceIncrement;
-    //     } else {
-    //         $additionalPrice = 0;
-    //     }
-    
-    //     // Total price is the sum of base price and additional price
-    //     $totalPrice = $basePrice + $additionalPrice;
-    
-    //     return $totalPrice;
-    // }
+    public function getMaterialRate(Transaction $transaction)
+    {
+        $material_rate = 0;
+
+        $material_rate_obj = new MaterialRate;
+
+        if(isset($transaction->account_id) && isset($transaction->material_type_id))
+        {
+           $material_rate =  $material_rate_obj->getMaterialRateByCondition(['material_type_id' => $transaction->material_type_id , 'account_id' => $transaction->account]);
+
+           if(isset($material_rate->id))
+           {
+            $material_rate = $material_rate->rate;
+
+           }
+        }
+        if($transaction->client_group == "Cash Account")
+        {
+
+           $material_rate =  $this->calculateRateBySlab($transaction);
+
+        //    $material_rate =  $transaction->materialType->board_rate;
+        }
+        return $material_rate;
+
+    }
+
+    public function calculateRateBySlab(Transaction $transaction) {
+     
+        $totalPrice = 0;
+
+       $net_weight = $transaction->net_weight;
+       $board_rate = $transaction->materialType->board_rate;
+       $slab_rate = $transaction->materialType->slab_rate;
+       $slab_weight = $transaction->materialType->slab_weight;
+
+
+       $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
+
+       return $totalPrice;
+    }
     
 
     public function generateTicketNo()

@@ -49,6 +49,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // public function searchableAs()
+    // {
+    //     return 'users';
+    // }
 
     public function getUserById($id)
     {
@@ -154,7 +158,7 @@ class User extends Authenticatable
             }
 
             
-            if(isset($object['email']))
+            if(isset($object['email']) && strlen($object['email']) > 0)
             {
                 $user->email = $object['email'];
 
@@ -163,6 +167,7 @@ class User extends Authenticatable
             else
             {
                 $user->email = $this->generateEmail();
+                // dd($user);
             }
             
             $user->user_type = $object['user_type'];
@@ -184,6 +189,11 @@ class User extends Authenticatable
 
             }
 
+            if(isset($object['client_group']))
+            {
+                $user->client_group = $object['client_group'];
+
+            }
             if(isset($object['is_verified']))
             {
                 $user->is_verified = $object['is_verified'];

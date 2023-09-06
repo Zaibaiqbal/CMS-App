@@ -40,6 +40,8 @@ Materials Management
                       <th>#</th>
                       <th>Material</th>
                       <th>Board Rate</th>
+                      <th>Slab Rate</th>
+                      <th>Slab Weight</th>
                    
                       <th>Action</th>
                     </tr>
@@ -52,6 +54,8 @@ Materials Management
                      
                       <td>{{$rows->name}}</td>
                       <td>{{$rows->board_rate}}</td>
+                      <td>{{$rows->slab_rate}}</td>
+                      <td>{{$rows->slab_weight}}</td>
 
                       <td>
 

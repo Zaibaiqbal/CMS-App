@@ -1,6 +1,53 @@
 @extends('layouts.master')
 
 @section('page_body')
+<div class="row"  >
+    <div class="col-md-12">
+        <div class="dropdown dropdown-inline" style="float: right;">
+            <a href="#" class="btn btn-clean btn-hover-light-primary btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="feather icon-menu"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="margin-top:5%;width:100%;">
+                <!--begin::Naviigation-->
+                <ul class="navi">
+                 
+                    <li class="navi-separator mb-1 opacity-70"></li>
+                    <li class="navi-item mx-2 mb-2">
+                            <span class="navi-icon">
+
+                            </span>
+                            <span class="navi-text ">
+                                <b>From</b>
+                                <input id="latest_from" type="date" name="from" class="form-control form-control-sm">
+                            </span>
+                    </li>
+
+                    <li class="navi-item mx-2 mb-2">
+                            <span class="navi-icon">
+
+                            </span>
+                            <span class="navi-text">
+                                <b>To</b>
+                                <input id="latest_to" type="date" name="to" class="form-control form-control-sm">
+                            </span>
+                    </li>
+
+                    <li class="navi-item my-2 mx-4 mb-4">
+                            <span class="navi-icon">
+
+                            </span>
+                            <span class="navi-text">
+                                <button onclick="showDashboardStats(true);" type="button" class="btn btn-sm btn-outline-primary float-right">Filter</button>
+                            </span>
+                    </li>
+
+                </ul>
+                <!--end::Naviigation-->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
 
 <!-- statustic-card start -->
@@ -10,7 +57,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <p class="m-b-5">Clients</p>
-                    <h4 class="m-b-0">{{$client_count}}</h4>
+                    <h4 class="m-b-0 total_clients">0</h4>
                 </div>
                 <div class="col col-auto text-right">
                     <i class="feather icon-user f-50 text-c-yellow"></i>
@@ -25,7 +72,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <p class="m-b-5">Tickets</p>
-                    <h4 class="m-b-0">{{$total_transactions}}</h4>
+                    <h4 class="m-b-0 tickets">0</h4>
                 </div>
                 <div class="col col-auto text-right">
                     <i class="feather icon-credit-card f-50 text-c-green"></i>
@@ -40,7 +87,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <p class="m-b-5">Inbound</p>
-                    <h4 class="m-b-0">{{$inbound_count}}</h4>
+                    <h4 class="m-b-0 inbound">0</h4>
                 </div>
                 <div class="col col-auto text-right">
                     <i class="feather icon-book f-50 text-c-pink"></i>
@@ -55,7 +102,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <p class="m-b-5">Outbound</p>
-                    <h4 class="m-b-0">{{$outbound_count}}</h4>
+                    <h4 class="m-b-0 outbound">0</h4>
                 </div>
                 <div class="col col-auto text-right">
                     <i class="feather icon-shopping-cart f-50 text-c-blue"></i>
@@ -71,15 +118,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-header-left ">
-                <ul class="nav nav-tabs  tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#home1" role="tab">Daily</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile1" role="tab">Monthly</a>
-                    </li>
-                  
-                </ul>
+                    <div class="card-title">Transactions</div>
             </div>
         </div>
         <div class="card-block-big">
@@ -100,21 +139,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane" id="profile1" role="tabpanel">
-                    <table class="table table-hover table-borderless">
-                        <thead class="bg-primary">
-                        <tr >
-                            <th>#</th>
-                            <th>Material</th>
-                            <th>In-weight</th>
-                            <th>Out-weight</th>
-                        </tr>
-                        </thead>
-                        <tbody id="monthly_material_weightage">
-
-                        </tbody>
-                    </table>
-                </div>
+         
                
             </div>
           
@@ -122,37 +147,16 @@
     </div>
 </div>
 <div class="col-xl-4 col-md-12">
-    <div class="card feed-card">
-        <div class="card-header">
-            <h5>Today's Weather </h5>
-        </div>
-        <div class="card-block">
-            
-        <div id="wrapper-bg" class="card text-white bg-image shadow-4-strong"
-          style="background-image: url('img/clouds.gif');background-repeat:no-repeat;background-size:cover;">
-          <!-- Main current data -->
-          <div class="card-header p-4 border-0">
-            <div class="text-center mb-3">
-              <p class="h2 mb-1" id="wrapper-name"></p>
-              <p class="mb-1" id="wrapper-description"></p>
-              <br>
-              <p class="display-1 mb-1" id="wrapper-temp"></p>
-              <br>
-              <br>
-
-              <h5 class="">Pressure: <h5 id="wrapper-pressure"></h5></h5>
-              <h5 class="mx-2">|</h5>
-              <h5 class="">Humidity: <h5 id="wrapper-humidity"></h5></h5>
-            </div>
-          </div>
+    <div class="card">
+        <div class="card-header bg-secondary">
+            <h4 class="card-title text-light p-0">Weekly Weather Forecast</h4>
 
         </div>
-
-
-        </div>
-
+        <div class="card-body">
+            <div id="showWeatherForcast"></div>
         </div>
     </div>
+</div>
 </div>
 <!-- statustic-card start -->
 {{--
@@ -579,9 +583,16 @@
 
 function showMaterialWeightage()
 {
+
+    var latest_from     = $('#latest_from').val();
+
+    var latest_to       = $('#latest_to').val();
+
     var route = "{{route('materialwisestats')}}";
 
-    $.get(route,function(data){
+    var data_set = {from:latest_from,to:latest_to};
+
+    $.get(route,data_set,function(data){
 
         $('#material_weightage').html(data.daily_view);
         $('#monthly_material_weightage').html(data.monthly_view);
@@ -592,67 +603,126 @@ $(document).ready(function(){
 
     showMaterialWeightage();
 
+    showDashboardStats(true);
+
 });
 
+function showDashboardStats(flag = false)
+{
 
-// API call
-let queryUrl = "https://api.openweathermap.org/data/2.5/onecall?";
-let lat = "lat=33.626057&";
-let lon = "lon=73.071442&";
-let apiOptions = "units=metric&exclude=minutely,alerts&";
-let apiKey = "appid=dbb76c5d98d5dbafcb94441c6a10236e";
-let file = queryUrl + lat + lon + apiOptions + apiKey;
+    var latest_from     = $('#latest_from').val();
 
-fetch(file)
-.then((response) => response.json())
-.then((data) => {
-// Weather main data
-let main = data.current.weather[0].main;
-let description = data.current.weather[0].description;
-let temp = Math.round(data.current.temp);
-let pressure = data.current.pressure;
-let humidity = data.current.humidity;
-let name = "Rawalpindi";
-
-document.getElementById("wrapper-description").innerHTML = description;
-document.getElementById("wrapper-temp").innerHTML = temp + "°C";
-document.getElementById("wrapper-pressure").innerHTML = pressure;
-document.getElementById("wrapper-humidity").innerHTML = humidity + "°C";
-document.getElementById("wrapper-name").innerHTML = name;
+    var latest_to       = $('#latest_to').val();
 
 
-// Backgrounds
-switch (main) {
-case "Snow":
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')";
-break;
-case "Clouds":
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')";
-break;
-case "Fog":
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')";
-break;
-case "Rain":
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')";
-break;
-case "Clear":
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
-break;
-case "Thunderstorm":
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')";
-break;
-default:
-document.getElementById("wrapper-bg").style.backgroundImage =
-"url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
-break;
+    var route    = "{{route('latestdashboardstats')}}";
+
+    var data_set = {from:latest_from,to:latest_to};
+
+    addThemeLoader();
+
+    $.get(route,data_set,function(data){
+
+        $('.total_clients').html(data.total_clients);
+          $('.tickets').html(data.total_tickets);
+          $('.inbound').html(data.inbound_count);
+          $('.outbound').html(data.outbound_count); 
+
+            // $(bind_element).html(data.view);
+            showMaterialWeightage();
+
+            removeThemeLoader();
+
+
+    });
+
 }
-});
+
+// Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
+// const apiKey = '204c22e7b8680f3836006973fc31a2f1';
+// const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=RAWALPINDI&units=metric&cnt=7&appid=${apiKey}`;
+
+// function displayWeatherData(data) {
+//     const weatherWidget = document.getElementById('weather-widget');
+//     weatherWidget.innerHTML = ''; // Clear previous content
+
+//     data.list.forEach(item => {
+
+//         const date = new Date(item.dt * 1000);
+
+//         const day = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+//         const temp = Math.round(item.main.temp);
+//         const description = item.weather[0].description;
+        
+//         const card = document.createElement('div');
+//         card.classList.add('card', 'mb-2');
+        
+//         const cardBody = document.createElement('div');
+//         cardBody.classList.add('card-body');
+        
+//         const cardTitle = document.createElement('h6');
+//         cardTitle.classList.add('card-title');
+//         cardTitle.textContent = `${day}: ${temp}°C, ${description}`;
+        
+//         cardBody.appendChild(cardTitle);
+//         card.appendChild(cardBody);
+//         weatherWidget.appendChild(card);
+//     });
+// }
+
+// // Fetch weather data and display it
+// fetch(apiUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//         displayWeatherData(data);
+//     })
+//     .catch(error => {
+//         console.error('Error fetching weather data:', error);
+//     });
+
+
+    $(document).ready(function() {
+        var key = "204c22e7b8680f3836006973fc31a2f1";
+        var city = "RAWALPINDI";
+        var url = "https://api.openweathermap.org/data/2.5/forecast";
+        $.ajax({
+            url: url, //API Call
+            dataType: "json",
+            type: "GET",
+            data: {
+                q: city,
+                appid: key,
+                units: "metric",
+                cnt: "42"
+            },
+            success: function(data) {
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const timesToDisplay = [0, 8, 16, 24, 32, 40];
+                let d;
+                let dayName;
+                var wf = "";
+                wf += "<h2>" + data.city.name + "</h2>"; // City (displays once)
+                // alert(data.list)
+                $.each(data.list, function(index, val) {
+                  if(timesToDisplay.includes(index)){
+
+
+                    d = new Date(data.list[index].dt * 1000);
+                    dayName = days[d.getDay()];
+                    wf += "<p>" // Opening paragraph tag
+                    wf += "<b> "+dayName+"</b>: " // Day
+                    wf += val.main.temp + "&degC" // Temperature
+                    wf += "<span> " + val.weather[0].description + "</span>"; // Description
+                    wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
+                    wf += "</p>" // Closing paragraph tag
+                  }
+                });
+                $("#showWeatherForcast").html(wf);
+            }
+        });
+    });
+
 
 </script>
 @endsection

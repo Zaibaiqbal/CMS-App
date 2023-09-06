@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMaterialRatesTable extends Migration
+class CreateRateSlabsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateMaterialRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('material_rates', function (Blueprint $table) {
+        Schema::create('rate_slabs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('client_id')->nullable();
-            $table->unsignedInteger('material_type_id')->nullable();
-            $table->double('rate')->default(0)->nullable();
-            $table->integer('is_deleted')->default(0);
-
+            $table->double('start_weight')->nullable();
+            $table->double('end_weight')->nullable();
+            $table->double('rate')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateMaterialRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('material_rates');
+        Schema::dropIfExists('rate_slabs');
     }
 }
