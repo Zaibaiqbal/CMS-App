@@ -51,11 +51,15 @@
           <td style="width: 30%;"><img src="logos/tes02.png"  width="20%"/></td>
 
           <td>
-       <center><b>ezWeigh Summary</b></center>
-      </td>
+          <b style="font-size: 25px;margin-left:25%;">ezWeigh Summary</b>
+        </td>
+        <td></td>
 
-       <td> <p style="float:right;">LaFleche, Div. Veckwith Transfer
-       <br>
+        </tr>
+        <tr>
+
+          <td> <p >LaFleche, Div. Veckwith Transfer
+          <br>
           6271 Cavanagh Road.
           <br>
 
@@ -113,7 +117,13 @@
 
           </tr>
          
-         
+          <tr>
+        
+            <td class="customer_info">In Time.</td>
+            <td><input type="text" value="{{date_format($transaction->created_at,'Y-m-d H:m')}}"></td>
+            <td class="customer_info">Out Time.</td>
+            <td><input type="text" value="{{date_format($transaction->updated_at,'Y-m-d H:m')}}"></td>
+          </tr>
         </table>
        
         <br>
