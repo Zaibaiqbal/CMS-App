@@ -55,7 +55,7 @@ Employees Management
 
                         <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
-                            <i class="typcn typcn-th-menu"></i>
+                            <i class="fa fa-ellipsis-v text-dark"></i>
                             </div>
                             <ul class="show-notification notification-view dropdown-menu p-1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 

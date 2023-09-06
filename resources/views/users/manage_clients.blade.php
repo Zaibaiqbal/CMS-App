@@ -67,7 +67,7 @@ Clients Management
                                 
                                 <li>
 
-                                @if($rows->client_group == "Numbered" &&  Auth::user()->hasAnyPermission(['All','Generate Weekly Invoice']))
+                                @if($rows->client_group == "Numbered Clients" &&  Auth::user()->hasAnyPermission(['All','Generate Weekly Invoice']))
             
                                 <a href="{{route('generateweeklyinvoice',['id' => $rows->id])}}"  class="dropdown-item waves-light waves-effect " target="_blank" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp;Weekly Invoice</a>
                                

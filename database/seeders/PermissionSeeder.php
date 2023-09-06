@@ -78,6 +78,8 @@ class PermissionSeeder extends Seeder
 
         $data[++$count] = [ "module" => "Transaction", "name" => "Print Ticket", "guard_name" => "web"];
 
+        $data[++$count] = [ "module" => "Client", "name" => "Generate Weekly Invoice", "guard_name" => "web"];
+
         $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Add Role", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Update Role", "guard_name" => "web"];
