@@ -49,7 +49,7 @@ class HomeController extends Controller
     public function getMaterialWiseStats(Request $request)
     {
 
-        $transaction = new Transaction();
+        $transaction = new Transaction;
         $condition = [];
 
         if(!Auth::user()->hasRole(['Super Admin']))
@@ -57,7 +57,7 @@ class HomeController extends Controller
             $condition =['added_id'    =>   Auth::user()->id];
         }
         $material_wise_transaction_list = $transaction->getDailyMaterialWiseStats($condition);
-
+// dd($material_wise_transaction_list);
         $data['transaction_view'] =  view('dashboard.components.material_wise_stats',[
         
             'material_wise_transaction_list'          =>      $material_wise_transaction_list

@@ -19,7 +19,7 @@
 		border-right: 0;
 		border-left: 0;
 		border-bottom: 1px dotted black;
-		font-size: 14px;
+		font-size: 10px;
 		text-align: center;
         background-color: transparent;
 	}
@@ -69,7 +69,7 @@
           <td style="width: 30%;"><img src="logos/tes02.png"  width="25%"/></td>
 
           <td>
-          <table border="0" style="border-collapse: collapse;font-size: 12pt;float:right;">
+          <table border="0" style="border-collapse: collapse;font-size: 10pt;float:right;">
 
             <tbody>
                 <tr>
@@ -81,7 +81,7 @@
                 </tr> 
                 <tr>
                     <td>Date:</td>
-                    <td><input type="text" value="{{now()}}" style="width: 60%;"></td>
+                    <td><input type="text" value="{{date_format(now(),'Y-m-d')}}" style="width: 70%;"></td>
                 </tr>
 
                 <tr>
@@ -122,7 +122,7 @@
 
         <table border="0" style="width: 70%;border-collapse: collapse;font-size: 12pt;margin-left:10%;">
             <thead>
-                    <tr style="text-align:left">
+                    <tr>
                         <th>Sold To</th>
                         <th>Ship To</th>
                     </tr>
@@ -184,9 +184,48 @@
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->ticket_no}}</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+
+                
 
             </tr>
             @endforeach
+            <tr></tr>
+            <tfoot style="border:1px solid black;">
+                <tr rowspan="3">
+                    <td>Shipped By:</td>
+                    <td></td>
+
+                    <td colspan="2"> Tracking Number</td>
+                    <td></td>
+                    <td style="border-left: 1px solid black;border-right: 1px solid black;">Total Amount</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>Comment:</td>
+                    <td></td>
+
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td style="border-left: 1px solid black;border-right: 1px solid black;">Amount Paid</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Sold By:</td>
+                    <td></td>
+
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td style="border-left: 1px solid black;border-right: 1px solid black;">Amount Owning</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tfoot>
 
                 
           </tbody>

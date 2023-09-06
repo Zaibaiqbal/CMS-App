@@ -44,7 +44,9 @@ class ReportController extends Controller
                     // Send the email with the PDF attached
                     \Mail::to($user->email)->send(new \App\Mail\WeeklyInvoiceReportMail($weekly_pdf_report));
 
-                    // return $pdf->setPaper('a4', 'landscape')->download($user->name.' Weekly Invoice Report.pdf');
+                    return $pdf->setPaper('a4', 'landscape')->stream($user->name.' Weekly Invoice Report.pdf');
+                    // return redirect('users');
+
                 }
            
 

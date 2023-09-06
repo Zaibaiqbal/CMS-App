@@ -574,8 +574,6 @@
 
 @endsection
 
-
-
 @section('page_script')
 
 
@@ -594,8 +592,8 @@ function showMaterialWeightage()
 
     $.get(route,data_set,function(data){
 
-        $('#material_weightage').html(data.daily_view);
-        $('#monthly_material_weightage').html(data.monthly_view);
+        $('#material_weightage').html(data.transaction_view);
+        // $('#monthly_material_weightage').html(data.monthly_view);
     });
 }
 
@@ -629,7 +627,6 @@ function showDashboardStats(flag = false)
           $('.outbound').html(data.outbound_count); 
 
             // $(bind_element).html(data.view);
-            showMaterialWeightage();
 
             removeThemeLoader();
 

@@ -252,10 +252,12 @@ class Transaction extends Model
 
 
 
-                $material_rate = $this->getMaterialRate($transaction);
+                $this->getMaterialRate($transaction);
 
+                // $material_rate =  $transaction->materialType->board_rate;
 
-                $transaction->material_rate = $material_rate;
+                // $transaction->material_rate = $material_rate;
+                // $transaction->total_cost = $total_price;
 
                 $transaction->driver_id  = $driver->id;
 
@@ -277,24 +279,31 @@ class Transaction extends Model
         $material_rate = 0;
 
         $material_rate_obj = new MaterialRate;
-
+// dd($transaction);
         if(isset($transaction->account_id) && isset($transaction->material_type_id))
         {
-           $material_rate =  $material_rate_obj->getMaterialRateByCondition(['material_type_id' => $transaction->material_type_id , 'account_id' => $transaction->account]);
+           $material_rate =  $material_rate_obj->getMaterialRateByCondition(['material_type_id' => $transaction->material_type_id , 'account_id' => $transaction->account_id]);
 
            if(isset($material_rate->id))
            {
             $material_rate = $material_rate->rate;
 
            }
+
+           $total_price = $transaction->net_weight*$material_rate;
         }
         if($transaction->client_group == "Cash Account")
         {
+            $material_rate =  $transaction->materialType->board_rate;
 
-           $material_rate =  $this->calculateRateBySlab($transaction);
+           $total_price =  $this->calculateRateBySlab($transaction);
 
-        //    $material_rate =  $transaction->materialType->board_rate;
         }
+
+        $transaction->material_rate = $material_rate;
+        $transaction->total_cost = $total_price;
+
+            $transaction->update();
         return $material_rate;
 
     }
