@@ -136,7 +136,7 @@
                                                 <div class="card-header text-center">
 
                                                     <img alt="Logo" src="{{ asset('logos/logo.png') }}"
-                                                        width="22%" />
+                                                        width="35%" />
 
 
                                                 </div>
