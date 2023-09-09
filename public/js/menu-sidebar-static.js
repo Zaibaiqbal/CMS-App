@@ -17,7 +17,7 @@ $(document).ready(function () {
         ItemBorderStyle: 'none',
         SubItemBorder: true,
         DropDownIconStyle: 'style1', // Value should be style1,style2,style3
-        menutype: 'st6', // Value should be st1, st2, st3, st4, st5 menu icon style
+        menutype: 'st5', // Value should be st1, st2, st3, st4, st5 menu icon style
         freamtype: "theme1",
         layouttype:'light', // Value should be light / dark
         FixedNavbarPosition: false,  // Value should be true / false  header postion
