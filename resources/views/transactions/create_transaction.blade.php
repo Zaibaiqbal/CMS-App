@@ -99,38 +99,6 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 @section('page_script')
 <script>
 
-// $(document).ready(function () {
-//         $("[id*=txtSearch]").autocomplete({
-//             source: function (request, response) {
-//                 $.ajax({
-//                     url: '<%=ResolveUrl("~/Search.ashx") %>' + '?term=' + request.term,
-//                     type: "POST",
-//                     contentType: "application/json; charset=utf-8",
-//                     success: function (data) {
-//                         response($.map(JSON.parse(data), function (item) {
-//                             return {
-//                                 label: item.split('-')[1],
-//                                 val: item.split('-')[0],
-//                                 Country: item.split('-')[2]
-//                             }
-//                         }))
-//                     },
-//                     error: function (response) {
-//                         alert(response.responseText);
-//                     },
-//                     failure: function (response) {
-//                         alert(response.responseText);
-//                     }
-//                 });
-//             },
-//             select: function (e, i) {
-//                 $('[id*=txtId]').val(i.item.val);
-//                 $('[id*=txtCountry]').val(i.item.Country);
-//             },
-//             minLength: 0
-//         });
-//     });
-
     function autoSearchPlateNo(event,tag)
     {
         event.preventDefault();

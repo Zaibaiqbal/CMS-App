@@ -21,16 +21,14 @@ class Account extends Model
     public function getRequestedAccountList()
     {
         
-        return Account::where('is_deleted',0)->where('approval_status','Requested')->get();
+        return Account::where('is_deleted',0)->where('approval_status','Unapproved')->get();
     }
 
     public function getAccountListByCondition($condition = [])
     {
         
-        return Account::where('is_deleted',0)->where($condition)->get();
+        return Account::where('is_deleted',0)->where($condition)->orderby('id','asc')->get();
     }
-
-    
 
     public function getAccountById($id)
     {
@@ -86,7 +84,20 @@ class Account extends Model
             }
             $account->save();
 
+            if(Auth::user()->hasRole(['Super Admin']))
+            {
+                // dd($account->id);
             
+                $user_account_info = [
+                    'account_id'   =>   $account->id,
+                    'user_id'       =>   $account->added_id,
+                    'status'        =>   'Approved'
+                ];
+// dd($user_account);
+                $user_account = new UserAccount;
+                $user_account = $user_account->storeUserAccount($user_account_info);
+
+            }
             
             return with($account);
 

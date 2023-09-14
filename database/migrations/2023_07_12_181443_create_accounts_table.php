@@ -20,7 +20,7 @@ class CreateAccountsTable extends Migration
             $table->unsignedInteger('added_id')->nullable();
             $table->string('account_no')->nullable();
           
-            $table->enum('approval_status',['Requested','Approved'])->default('Requested');
+            $table->enum('approval_status',['Unapproved','Approved'])->default('Unapproved');
 
             $table->enum('status',['Inactive','Active','Suspended'])->default('Inactive');
 

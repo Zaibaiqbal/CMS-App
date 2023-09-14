@@ -78,25 +78,25 @@
         <table style=" width:100%; background:#eee;">
            
           <tr>
-            <td class="customer_info">Invoice</td>
+            <td class="customer_info">Invoice:</td>
 
             @php($ticket_no = $transaction->ticket_no) 
        @php($parts = explode('-', $ticket_no)) 
        @php($parts[2] = '<b>' . $parts[2] . '</b>') 
        @php($modify_ticket = implode('-', $parts))
 
-            <td><?php echo html_entity_decode($modify_ticket); ?></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo html_entity_decode($modify_ticket); ?></td>
 
             <td class="customer_info">Invoice Date:</td>
-            <td><input type="text" value="{{$transaction->created_at}}"></td>
+            <td><input type="text" value="{{$transaction->updated_at}}"></td>
        
           </tr>
 
           <tr>
-            <td class="customer_info">License No.</td>
+            <td class="customer_info">License No:</td>
             <td><input type="text" value="{{$transaction->plate_no}}"></td>
 
-            <td class="customer_info">Job Id / PO No.</td>
+            <td class="customer_info">Job Id / PO No:</td>
             <td><input type="text" value="{{$transaction->job_id}}"></td>
           </tr>
           
@@ -112,16 +112,17 @@
          
           <tr>
         
-            <td class="customer_info">Contact No.</td>
+            <td class="customer_info">Contact No:</td>
             <td><input type="text" value="{{$transaction->contact_no}}"></td>
 
+            <td class="customer_info">In Time:</td>
+            <td><input type="text" value="{{date_format($transaction->created_at,'Y-m-d H:m')}}"></td>
           </tr>
          
           <tr>
-        
-            <td class="customer_info">In Time.</td>
-            <td><input type="text" value="{{date_format($transaction->created_at,'Y-m-d H:m')}}"></td>
-            <td class="customer_info">Out Time.</td>
+          <td class="customer_info"></td>
+            <td></td>
+            <td class="customer_info">Out Time:</td>
             <td><input type="text" value="{{date_format($transaction->updated_at,'Y-m-d H:m')}}"></td>
           </tr>
         </table>

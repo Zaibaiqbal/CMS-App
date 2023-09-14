@@ -95,11 +95,15 @@ Route::match(['post','get'],'approvecontactperson', [App\Http\Controllers\UserCo
 
 Route::get('searchplateno', [App\Http\Controllers\TruckController::class, 'autoSearchPlateNo'])->name('searchplateno');
 
+Route::get('autosearchtruck', [App\Http\Controllers\TruckController::class, 'autoSearchTruckInfo'])->name('autosearchtruck');
+
 
 Route::get('searchclientbyname', [App\Http\Controllers\TransactionController::class, 'autoSearchByClientName'])->name('searchclientbyname');
 
 
 Route::post('changepassword', [App\Http\Controllers\UserController::class, 'changePassword'])->name('change.password')->middleware('auth','permission:All|Change Password');
+
+Route::match(['get','post'],'processtransaction', [App\Http\Controllers\TransactionController::class, 'processTransaction'])->name('process.transaction')->middleware('auth','permission:All|Update Transaction');
 
 Route::match(['get','post'],'updatetransaction', [App\Http\Controllers\TransactionController::class, 'updateTransaction'])->name('update.transaction')->middleware('auth','permission:All|Update Transaction');
 
@@ -134,11 +138,12 @@ Route::get('materialinfo', [App\Http\Controllers\MaterialTypeController::class, 
 Route::get('accountrequests', [App\Http\Controllers\AccountController::class, 'viewAccountRequests'])->name('accountrequests')->middleware('auth');
 
 
-Route::get('approveaccount', [App\Http\Controllers\AccountController::class, 'approveAccount'])->name('approveaccount')->middleware('auth');
+Route::get('updateaccountstatus', [App\Http\Controllers\AccountController::class, 'updateAccountStatus'])->name('updateaccountstatus')->middleware('auth');
 
 
 Route::get('accountinfo', [App\Http\Controllers\AccountController::class, 'getAccountInfo'])->name('accountinfo')->middleware('auth');
 
+Route::get('clientaccountlist', [App\Http\Controllers\TruckController::class, 'getClientAccount'])->name('clientaccountlist')->middleware('auth');
 
 Route::get('materialwisestats', [App\Http\Controllers\HomeController::class, 'getMaterialWiseStats'])->name('materialwisestats')->middleware('auth');
 
@@ -161,6 +166,25 @@ Route::match(['get','post'],'generateweeklyinvoice', [App\Http\Controllers\Repor
 Route::get('rateslab', [App\Http\Controllers\MaterialTypeController::class, 'viewRateSlab'])->name('rateslab')->middleware('auth','permission:All');
 
 
+Route::get('usersettings', [App\Http\Controllers\HomeController::class, 'viewSetting'])->name('usersettings')->middleware('auth','permission:All');
+
+
+Route::match(['get','post'],'storesurcharge', [App\Http\Controllers\HomeController::class, 'storeSurcharge'])->name('store.surcharge')->middleware('auth','permission:All');
+
+Route::get('surchargeinfo', [App\Http\Controllers\HomeController::class, 'surcharge'])->name('surchargeinfo')->middleware('auth','permission:All');
+
+
+// Ticket Issue Routes
+
+Route::post('ticketissue', [App\Http\Controllers\HomeController::class, 'storeTicketIssue'])->name('ticketissue')->middleware('auth','permission:All|Ticket Issue');
+
+
+Route::get('autosearchticketnumber', [App\Http\Controllers\TransactionController::class, 'autoSearchTicketNumber'])->name('autosearchticketnumber');
+
+
+Route::get('viewticketissues', [App\Http\Controllers\HomeController::class, 'viewTicketIssues'])->name('viewticketissues');
+
+// Ticket Route End
 // CLIENT ROUTES
 
 

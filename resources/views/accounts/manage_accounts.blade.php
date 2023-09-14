@@ -18,11 +18,11 @@ Accounts Management
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Accounts List
+                <h3 class="card-title text-uppercase">Accounts List
 
                 @if(Auth::user()->hasAnyPermission(['All','Add Account']))
           
-                    <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder" style="float: right;">
+                    <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
                         Add Account</a>
                     @endif
 
@@ -33,7 +33,7 @@ Accounts Management
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_datatable" class="table table-striped table-bordered nowrap">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -59,9 +59,16 @@ Accounts Management
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
-                                @if(Auth::user()->hasAnyPermission(['All','Update Account']))
-            
-                                <a href="{{route('approveaccount',['id' => $rows->id])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
+                                  @if(Auth::user()->hasAnyPermission(['All','Update Account']))
+                                    @if($rows->approval_status == "Unapproved" && $rows->status == "Inactive")
+                
+                                    <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
+                                    @endif
+
+                                    @if($rows->approval_status == "Approved" && $rows->status == "Active")
+                
+                                      <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Deactivate</a>
+                                    @endif
                                 @endif
 
                                 </li>

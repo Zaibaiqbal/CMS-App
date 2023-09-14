@@ -225,11 +225,12 @@
 
                                                 </li>
                                             @endif
+                                       
+
                                             <li>
-                                                <a class="text-dark" data-target="#modal_change_password"
-                                                    data-toggle="modal" href="#"> <i
-                                                        class="fa fa-lock"></i></i>
-                                                    Change Password
+                                                <a href="{{route('usersettings')}}" class="text-dark" href="#"> <i
+                                                        class="fa fa-gear"></i></i>
+                                                    Settings
                                                 </a>
 
                                             </li>

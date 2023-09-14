@@ -300,8 +300,11 @@ class UserController extends Controller
 
                 if(isset($user->id) && $user->is_verified == 0 && $user->status == "Inactive")
                 {
+                    $group_list = $user->getDistinctClientGroupList()->pluck('client_group')->toArray();
 
                     return view('users.modals.approve_client',[
+                        'group_list'   =>   $group_list,
+
                         'user'  =>  $user
                     ])->render();
                 }
@@ -413,14 +416,18 @@ class UserController extends Controller
             {
                 $user_account_id = decrypt($request->id);
 
+                $user_account = new UserAccount;
                 $user = new UserAccount;
 
-                $user_account  = $user->getUserAccountById($user_account_id);
+                $user_account  = $user_account->getUserAccountById($user_account_id);
 // dd($user_account);
                 if(isset($user_account->id))
                 {
+                    $group_list = $user->getDistinctClientGroupList()->pluck('client_group')->toArray();
+
 
                     return view('users.modals.approve_contact_person',[
+                        'group_list'   =>   $group_list,
 
                         'user_account'  =>  $user_account
                     
@@ -867,11 +874,13 @@ class UserController extends Controller
 
             event(new SendNotification($employee->id,$user_ids,'','viewemployeeprogress',$employee->id,$employee->name. ' has signed off from system at ' .$date,$date));
 
-            return redirect()->back();
+            Auth::logout();
+
+            return redirect('/login'); 
         }
         catch(Exception $e)
         {
-
+dd($e);
         }
     }
 

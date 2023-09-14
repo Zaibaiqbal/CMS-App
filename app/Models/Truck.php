@@ -24,6 +24,21 @@ class Truck extends Model
 
     }
 
+    public function getTruckById($id)
+    {
+        return Truck::where('is_deleted', 0)->where('id',$id)->first();
+
+    }
+
+    public function getTruckListByPlateNo($plate_no)
+    {
+        
+
+        return Truck::where('is_deleted', 0)->where('plate_no', 'LIKE', '%'. $plate_no. '%')->get();
+
+    }
+
+    
     public function storeTruck($object)
     {
         return DB::transaction(function() use ($object){
@@ -65,9 +80,55 @@ class Truck extends Model
 
     }
 
+    public function updateTruck($object)
+    {
+        return DB::transaction(function() use ($object){
+
+            $truck = Truck::find($object['truck']);
+
+            if(isset($truck->id))
+            {
+
+            $truck->plate_no        = $object['plate_no'];
+            
+            if(isset($object['vin_no']))
+            {
+                $truck->vin_no          = $object['vin_no'];
+
+            }
+            $truck->added_id        = Auth::user()->id;
+
+            $truck->client_id        = $object['client_id'];
+
+            $truck->company         = $object['company'];
+            $truck->model           = $object['model'];
+            $truck->tare_weight           = $object['tare_weight'];
+
+            if(isset($object['description']))
+            {
+                $truck->description     = $object['description'];
+
+            }
+
+            if(isset($object['color']))
+            {
+                $truck->color           = $object['color'];
+                
+            }
+
+            $truck->update();
+            $this->generateIdentifier($truck);
+
+        }
+
+            return with($truck);
+        });
+
+    }
+    
     public function generateIdentifier($truck)
     {
-         $truck->identifier = $truck->plate_no.'-'.$truck->client_id;
+         $truck->identifier = $truck->plate_no.'-'.$truck->user->name;
 
          $truck->update();
     }

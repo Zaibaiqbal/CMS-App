@@ -49,7 +49,7 @@
                               @php($label = 'Slab Weight')
                               @php($name = 'slab_weight')
                                 <div class="form-group">
-                                    <label for="">{{$label}}</label>
+                                    <label for="">{{$label}} (kg)</label>
                                     <span><i class="text-danger">*</i></span>
                                     <small id="{{$name}}_error" class="text-danger"></small>
 
@@ -75,7 +75,7 @@
                               @php($label = 'Weight Break')
                               @php($name = 'weight_break')
                                 <div class="form-group">
-                                    <label for="">{{$label}}</label>
+                                    <label for="">{{$label}} (kg)</label>
                                     <span><i class="text-danger">*</i></span>
                                     <small id="{{$name}}_error" class="text-danger"></small>
 

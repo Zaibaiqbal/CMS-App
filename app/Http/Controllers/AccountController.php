@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\SendNotification;
 use App\Models\Account;
+use App\Models\MaterialRate;
 use App\Models\User;
 use App\Models\UserAccount;
+use App\Rules\AccountNoRule;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,12 +55,29 @@ class AccountController extends Controller
         $account = new Account;
         $account = $account->getAccountById(decrypt($request->account));
 
-        // dd($account);
+// dd($account);
+        $view = '<option value="">Select Material</option>';
         if(isset($account->id))
         {
+
+        $material_rate = new MaterialRate;
+        $material_list = $material_rate->getMaterialRatesByAccount($account->id);
+        
            $data['client_group']  =  $account->user->client_group;
 
+           if($material_list->count() > 0)
+           {
+            foreach($material_list as $rows)
+            {
+                $view .= '<option value="'.encrypt($rows->materialType->id).'">'.$rows->materialType->name.'</option>';
+
+            }
+
+           }
+
         }
+        $data['view']  = $view;
+
         return $data;
     }
 
@@ -82,7 +101,7 @@ class AccountController extends Controller
     
                     $client = $user->getUserById(Auth::user()->id);
     
-                    event(new SendNotification($client->id,$user_ids,'','unapprovedaccounts',$user_account->user_id,$client->name. ' has requested to assign new account to ' .$user_account->user->name));
+                    event(new SendNotification($client->id,$user_ids,'','unapprovedaccounts',$user_account->user_id,$client->name. ' has requested to assign new account to ' .$user_account->user->name,now()));
     
                     $data = ['status' => true, 'message' => 'Account requested successfully'];
                 }
@@ -115,7 +134,7 @@ class AccountController extends Controller
         return redirect()->back();
     }
 
-    public function approveAccount(Request $request)
+    public function updateAccountStatus(Request $request)
     {
         $account_id = $request->id;
 
@@ -124,8 +143,8 @@ class AccountController extends Controller
 
         if(isset($account->id))
         {
-            $account->approval_status = 'Approved';
-            $account->status = 'Active';
+            $account->approval_status = $request->approval_status;
+            $account->status          = $request->status;
             $account->update();
 
             // return ['status' => true, 'message' => 'Account added successfully'];
@@ -134,6 +153,8 @@ class AccountController extends Controller
         return redirect()->back()->with('Account approved successfully');
 
     }
+
+
 
     public function clientAccountList()
     {
@@ -160,9 +181,7 @@ class AccountController extends Controller
     
     public function storeAccount(Request $request)
     {
-        try
-        {
-
+      
             if($request->isMethod('post'))
             {
                 $validation = [];
@@ -172,16 +191,17 @@ class AccountController extends Controller
                         'client'      =>    'required'
                     ];
                 }
+// dd($request->input());
                $request->validate($validation+[
     
-                    // 'client_group'                  => 'required',
-                    'account_no'              => 'required|unique:accounts,account_no',
+                    'account_no'              => ['required',new AccountNoRule($request->account_no)],
                     'title'                   => 'required',
                    
     
                     ]);
 
                     $form_data = $request->input();
+
                     if(Auth::user()->hasRole(['Super Admin'])){
 
                         $form_data['user_id']           = decrypt($form_data['client']);
@@ -189,9 +209,12 @@ class AccountController extends Controller
                         $form_data['status']            = 'Active';
     
                     }
+
+
                     // dd($form_data);
     
                     $account = new Account;
+                    // $curr_account = $account->getAccountByAccountNo($form_data['']);
 
                    $account = $account->storeAccount($form_data);
 
@@ -212,7 +235,7 @@ class AccountController extends Controller
             
                             $client = $user->getUserById(Auth::user()->id);
             
-                            event(new SendNotification($client->id,$user_ids,'','accountrequests',$account->id,$client->name. ' has requested to add a new account ' .$account->title.'-'.$account->account_no));
+                            event(new SendNotification($client->id,$user_ids,'','accountrequests',$account->id,$client->name. ' has requested to add a new account ' .$account->title.'-'.$account->account_no,now()));
             
                         }
                       
@@ -228,19 +251,15 @@ class AccountController extends Controller
                 $user = new User;
                 $client_list = $user->getUserListByType('Client');
 
+                $group_list = $user->getDistinctClientGroupList()->pluck('client_group')->toArray();
                 return view('accounts.modals.add_account',[
 
-                    'client_list'   =>   $client_list
+                    'client_list'   =>   $client_list,
+                    'group_list'   =>   $group_list,
 
                 ]);
             }
 
-
-        }
-        catch(Exception $e)
-        {
-
-        }
 
       
 

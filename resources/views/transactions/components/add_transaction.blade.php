@@ -12,6 +12,7 @@
                 <input type="text" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="">
             </div>
         </div>
+      
         <div class="col-md-6">
             @php($label = 'Vehicle Desc.')
             @php($name = 'vehicle_descp')
@@ -20,7 +21,13 @@
                 <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="2" placeholder="{{$label}}"></textarea>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="checkbox" name="is_identified" value="1" id="">
+                <label for="">Not Identified Yet</label>
 
+            </div>
+        </div>
         <div class="col-md-6">
                 @php($label = 'Client')
                 @php($name = 'client')

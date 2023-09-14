@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SurchargeHstPercentage;
+use App\Models\TicketIssue;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Psy\Readline\Transient;
 
 class HomeController extends Controller
 {
@@ -46,6 +47,49 @@ class HomeController extends Controller
         ]);
     }
 
+    public function viewSetting()
+    {
+
+        $user = new User;
+        $surcharge_hst = new SurchargeHstPercentage;
+        $user_list = $user->getUserListByCondition(['user_type'=>'Client']);
+        $surcharge_hst = $surcharge_hst->getSurchargeHstPer();
+
+        return view('user_settings',[
+            'user'          => Auth::user()->id,
+            'user_list'     =>    $user_list,
+            'surcharge_hst'     =>   $surcharge_hst
+        ]);
+
+    }
+
+
+    public function storeSurcharge(Request $request)
+    {
+
+        $data = ['status' => false, 'message' => ''];
+
+        $request->validate([
+    
+            // 'client'                     => 'required',
+            'hst_per'                     => 'required|gte:0',
+            'surcharge'                   => 'required|gte:0',
+        
+            ]);
+
+           $form_data = $request->input();
+           
+           $surcharge_hst = new SurchargeHstPercentage;
+           $surcharge_hst = $surcharge_hst->storeSurcharge($form_data);
+
+           if(isset($surcharge_hst->id))
+           {
+              return redirect()->back()->with('Percentage added successfully');
+           }
+
+           return redirect()->back();
+    }
+    
     public function getMaterialWiseStats(Request $request)
     {
 
@@ -98,5 +142,85 @@ class HomeController extends Controller
 
     }
 
+    public function storeTicketIssue(Request $request)
+    {
+        try
+            {
+                $data = ['status' => false, 'message' => ''];
+
+                if($request->isMethod('post'))
+                {
+
+                    // dd($request->input());
+                   
+                    $request->validate([
+
+                        'transaction_id'                  => 'required',
+                        'ticket_number'                   => 'required',
+                        'issue'                           => 'required',                    
+                    ]);
+
+                    $form_data   =  $request->input();
+
+                    $ticket_issue = new TicketIssue;
+
+                    $ticket_issue = $ticket_issue->storeTicketIssue($form_data);
+
+
+                    if(isset($ticket_issue->id))
+                    {
+
+                        // dd($ticket_issue->id);
+
+                        $user = new User;
+
+                        $user_ids = $user->getUserIdsByPermissions(['All','View Ticket Issues']);
+            
+                        $user = $user->getUserById(Auth::user()->id);
+                        
+
+                        $message = 'An issue has been reported against Ticket Number '.$form_data['ticket_number'];
+
+                        event(new \App\Events\SendNotification($user->id, $user_ids, '', 'viewticketissues', 0 , $message, now() ));
+
+                        return ['status' => true, 'message' => 'Issue reported successfully.'];
+  
+
+                    }
+
+                }
+               
+            }
+
+        
+        catch(Exception $e)
+            {
+
+            }
+
+        
+        return redirect()->back();
+
+    }
+
+    public function viewTicketIssues(Request $request)
+    {
+        try
+        {
+            $ticket_issue = new TicketIssue;
+            $ticket_issue_list = $ticket_issue->getPendingIssues();
+
+            return view('ticket_issues.view_ticket_issues',[
+            
+                'ticket_issue_list'   =>  $ticket_issue_list
+            ]);
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
 
 }

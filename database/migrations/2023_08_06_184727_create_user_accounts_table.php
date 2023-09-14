@@ -20,7 +20,7 @@ class CreateUserAccountsTable extends Migration
             $table->bigInteger('parent_id')->default(0);
             $table->integer('is_deleted')->default(0);
             $table->longText('description')->nullable();
-            $table->string('status')->default('Unapprove');
+            $table->string('status')->default('Inactive');
             
             $table->timestamps();
         });

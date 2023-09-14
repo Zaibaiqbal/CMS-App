@@ -60,7 +60,7 @@ Clients Management
                            
                             <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
-                            <i class="fa fa-ellipsis-v text-dark"></i>
+                             <i class="fa fa-list"></i>
 
                             </div>
                             <ul class="show-notification notification-view dropdown-menu p-1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -112,7 +112,6 @@ Clients Management
 
 <script>
 
-  
-    
+
 </script>
 @endsection

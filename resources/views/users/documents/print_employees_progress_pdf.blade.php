@@ -167,7 +167,7 @@
           <center> <h3>Today's Summary</h3></center>
           <br>
         <br>
-        <h4> Client Information: </h4>
+        <h4> Employee Information: </h4>
        
       
         <div class="row clear">

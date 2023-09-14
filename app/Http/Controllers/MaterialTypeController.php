@@ -60,7 +60,6 @@ class MaterialTypeController extends Controller
             }
             $material = new MaterialType;
             $material_rate = new MaterialRate;
-            // dd($account_id);
 
             if(isset($account_id) && $account_id > 0)
             {
@@ -73,7 +72,7 @@ class MaterialTypeController extends Controller
                $data['rate'] = $material_rate->board_rate;
 
             }
-            // dd($data);
+            
             return $data;
 
 

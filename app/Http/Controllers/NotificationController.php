@@ -25,7 +25,7 @@ class NotificationController extends Controller
 
             ])->render();
 
-            $data['notification_count'] = $notify_list_count;
+            $data['notification_count'] = $notify_list_count->count();
         }
 
         return $data;

@@ -26,9 +26,9 @@
         <td>{!! $modify_ticket !!}</td>
        
         <td>
-        @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
+        @if(Auth::user()->hasAnyPermission(['All','Process Transaction']))
 
-        <a href="#" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="text-dark py-0"><i class="dropdown-icon fa fa-edit "></i></a>
+        <a href="#" onclick="formModal(event,'{{route('process.transaction',['id' => encrypt($rows->id)])}}','#modal_process_transaction','#target_modal')" class="dropdown-icon text-dark py-0"><i class="dropdown-icon fa fa-edit "></i></a>
         @endif
         </td>
     </tr>

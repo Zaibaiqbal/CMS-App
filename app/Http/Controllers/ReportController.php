@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\WeeklyInvoiceReportMail;
+use App\Models\SurchargeHstPercentage;
 use App\Models\Transaction;
 use App\Models\User;
 use Exception;
@@ -28,15 +29,18 @@ class ReportController extends Controller
                     $transaction = new Transaction;
                     $transaction_list = $transaction->getTransactionsByClientId($user->id);
         
-        
                     $transaction = new Transaction;
                     $transaction = $transaction->getTransactionById($request->transaction);
-                 
+                    $surcharge_hst = new SurchargeHstPercentage;
+                    $surcharge_hst = $surcharge_hst->getSurchargeHstPer();
+                    
                     $pdf = PDF::loadView('transactions.documents.weekly_invoice', [
     
                         'transaction_list'  =>   $transaction_list,
                         'user'              =>   $user,
-                        'format'            =>    false
+                        'format'            =>    false,
+                        'surcharge_hst'     =>   $surcharge_hst
+
         
                     ]);
                     $weekly_pdf_report = $pdf->output();
@@ -61,12 +65,17 @@ class ReportController extends Controller
                 $transaction = new Transaction;
                 $transaction_list = $transaction->getTransactionsByClientId($user->id);
     
+                $surcharge_hst = new SurchargeHstPercentage;
+                $surcharge_hst = $surcharge_hst->getSurchargeHstPer();
+        
     
                 return view('transactions.documents.weekly_invoice', [
     
                     'transaction_list'  =>   $transaction_list,
                     'user'              =>   $user,
-                    'format'            =>    true
+                    'format'            =>    true,
+                    'surcharge_hst'     =>   $surcharge_hst
+
     
                 ])->render();
             }

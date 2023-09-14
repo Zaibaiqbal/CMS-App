@@ -1,16 +1,16 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modal_update_transaction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_process_transaction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Transaction</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Process Transaction</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {{ Form::open(array('route' => 'update.transaction', 'class' => '', 'id' => 'form_update_transaction')) }}
+      {{ Form::open(array('route' => 'process.transaction', 'class' => '', 'id' => 'form_process_transaction')) }}
 
 
       <div class="modal-body">
@@ -26,7 +26,7 @@
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
-                        <input type="text" value="" name="{{$name}}" value="{{$transaction->job_id}}"  placeholder="{{$label}}"  class="form-control" id="">
+                        <input type="text" value="" name="{{$name}}"  placeholder="{{$label}}"  class="form-control" id="">
                     </div>
 
 
@@ -38,9 +38,7 @@
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
-                        <input type="hidden" name="truck_id" value="{{$transaction->truck_id}}" class="truck_id">
-
-                        <input type="text" value="{{$transaction->plate_no}}" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="">
+                        <input type="text" value="{{$transaction->plate_no}}" name="{{$name}}"  placeholder="{{$label}}" onkeyup="autoSearchPlateNo(event,'plate_no_tag')" class="form-control auto_search_plate_no" id="" readonly>
                     </div>
 
 
@@ -54,10 +52,10 @@
                             <div class="input-group">
 
                                 <select name="{{$name}}" id="" class="form-control fstdropdown-select" onchange="getClientAccountList(event,this)" >
-                                <option value="{{encrypt(0)}}">{{$label}}</option>
+                                <option value="">{{$label}}</option>
                                 
                                 @foreach($truck_list as $rows)
-                                    <option @if($transaction->truck_id == $rows->id) selected value="{{encrypt($rows->id)}}" @endif>{{$rows->identifier}}</option>
+                                    <option value="{{$rows->id}}">{{$rows->identifier}}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -74,8 +72,9 @@
                     <div class="input-group">
 
                     <select name="{{$name}}" id="" class="form-control fstdropdown-select account_list" onchange="getAccountInfo(event)" @if($transaction->client_group== 'Cash Account') disabled @else class="form-control fstdropdown-select" @endif>
+                   <option value="">{{$label}}</option>
                     @foreach($account_list as $rows)
-                        <option @if($transaction->account_id == $rows->id) selected value="{{encrypt($rows->id)}}" @endif value="{{encrypt($rows->id)}}">{{$rows->account_no}} - {{$rows->title}}</option>
+                        <option value="{{encrypt($rows->id)}}">{{$rows->account_no}} - {{$rows->title}}</option>
                     @endforeach
                     </select>
 
@@ -91,7 +90,7 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                         <div class="input-group">
-                        <input type="text" name="{{$name}}" class="form-control name auto_search_client_name" onkeyup="autoSearchClientName(event,'client_name_tag')" value="{{$transaction->client_name}}" id="" placeholder="{{$label}}">
+                        <input type="text" name="{{$name}}" class="form-control name auto_search_client_name client" onkeyup="autoSearchClientName(event,'client_name_tag')" value="{{$transaction->client_name}}" id="" placeholder="{{$label}}">
                         <input type="hidden"  value="{{$transaction->client_id}}" name="user_id"  class="user_id">
 
                     </div>
@@ -104,7 +103,7 @@
                         <label for="">{{$label}} <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <input type="text" name="{{$name}}" value="{{$transaction->contact_no}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                        <input type="text" name="{{$name}}" value="{{$transaction->contact_no}}" class="form-control contact_no" id="" placeholder="0000-0000000" data-mask="0000-000000">
 
 
                 </div>
@@ -123,18 +122,18 @@
             
                 <div class="col-md-4 mb-2">
 
-                        @php($label = 'Select Material')
-                        @php($name = 'material')
-                        <label for="">{{$label}} <span class="text-danger">*</span> </label>
-                        <small class="text-danger" id="{{$name}}_error"></small>
+                    @php($label = 'Select Material')
+                    @php($name = 'material')
+                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
 
-                        <select name="{{$name}}" id="" class="form-control material_list" onchange="getMaterialRate(event,this)">
+                    <select name="{{$name}}" id="" class="form-control material_list" onchange="getMaterialRate(event,this)">
 
-                            <option value="">{{$label}}</option>
-                            @foreach($material_types as $rows)
-                                <option @if($transaction->material_type_id == $rows->id) selected value="{{encrypt($rows->id)}}" @endif >{{$rows->name}}</option>
-                            @endforeach
-                        </select>
+                        <option value="">{{$label}}</option>
+                        @foreach($material_types as $rows)
+                            <option  value="{{encrypt($rows->id)}}" >{{$rows->name}}</option>
+                        @endforeach
+                    </select>
 
                 </div>
 
@@ -147,7 +146,7 @@
                     <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" readonly value="{{$transaction->material_rate}}" name="{{$name}}" class="form-control material_rate"  placeholder="{{$label}}" >
+                    <input type="text" readonly name="{{$name}}" class="form-control material_rate"  placeholder="{{$label}}" >
 
                 </div>
                 @endif
@@ -159,7 +158,7 @@
                     <label for="">{{$label}} <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" value="{{$transaction->operation_type}}" readonly class="form-control operation_type">
+                    <input type="text" value="" readonly class="form-control operation_type">
                    
 
                 </div>
@@ -194,7 +193,7 @@
                     <label for="">{{$label}} <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" name="{{$name}}" value="{{$transaction->net_weight}}" class="form-control net_weight" id="" placeholder="{{$label}}">
+                    <input type="text" readonly name="{{$name}}" value="{{$transaction->net_weight}}" class="form-control net_weight" id="" placeholder="{{$label}}">
 
 
                 </div>
@@ -208,7 +207,7 @@
                         <span><i class="text-danger"></i></span>
                         <small id="{{$name}}_error" class="text-danger">*</small>
 
-                        <input type="text" value="{{$transaction->driver->name}}" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                        <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
                     </div>
                 </div>
 
@@ -217,7 +216,7 @@
                     @php($name = 'note')
                     <div class="form-group">
                         <label for="">{{$label}}</label>
-                        <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}">{{$transaction->note}}</textarea>
+                        <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="3" placeholder="{{$label}}"></textarea>
                     </div>
                 </div>
 
@@ -231,7 +230,7 @@
       <div class="modal-footer">
         <input type="hidden" name="transaction_id" value="{{encrypt($transaction->id)}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" onclick="submitModalForm(event,this,'#form_update_transaction','#modal_update_transaction')" class="btn btn-primary" >Update</button>
+        <button type="submit" class="btn btn-primary" >Process</button>
       </div>
       {{ Form::close() }}
 
@@ -279,7 +278,7 @@
             select: function (e, i) {
               
                 $('.auto_search_client_name').val(i.item.label).attr('readonly',true);
-                $('.contact').val(i.item.label1).attr('readonly',true);
+                $('.contact_no').val(i.item.label1).attr('readonly',true);
             },
             open: function() {
         // Get the autocomplete list element
@@ -362,13 +361,24 @@ function calculateNetWeight(event,obj)
     {
         event.preventDefault();
 
-        var truck_id = $(obj).val();
+        
+        var truck = "{{$transaction->truck_id}}";
+
+        if(truck > 0)
+        {
+            var truck_id = truck;
+        }
+        else
+        {
+            var truck_id   = $(obj).val();
+        }
+
         addThemeLoader();
     
         $.get("{{route('clientaccountlist')}}",{truck_id:truck_id},function(data){
 
-            $('input[name=client]').val(data.client_name).attr('readonly',true);
-            $('input[name=contact_no]').val(data.contact).attr('readonly',true);
+            $('.client').val(data.client_name).attr('readonly',true);
+            $('.contact_no').val(data.contact).attr('readonly',true);
             $('.account_list').html(data.view);
 
             setFstDropdown();

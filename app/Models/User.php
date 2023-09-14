@@ -61,24 +61,28 @@ class User extends Authenticatable
 
     public function getUserListByType($type)
     {
-        return  User::where('user_type', $type)->where('status','Active')->orderBy('id', 'desc')->get();
+        return  User::where('user_type', $type)->where('status','Active')->orderBy('id', 'asc')->get();
     }
 
     public function getUserListByCondition($condition = [])
     {
-        return  User::where(['is_deleted' => 0 ]+$condition)->where('status','Active')->orderBy('id', 'desc')->get();
+        return  User::where(['is_deleted' => 0 ]+$condition)->where('status','Active')->orderBy('id', 'asc')->get();
     }
 
     public function getUnapproveClients($type)
     {
-        return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'desc')->get();
+        return  User::where(['user_type' => $type,'is_verified' => 0,'status'  => 'Inactive'])->orderBy('id', 'asc')->get();
     }
 
     public function getDeactiveUserList($type,$id)
     {
-        return  User::where(['user_type' => $type,'is_verified' => 1,'status'  => 'Inactive','id' => $id])->orderBy('id', 'desc')->get();
+        return  User::where(['user_type' => $type,'is_verified' => 1,'status'  => 'Inactive','id' => $id])->orderBy('id', 'asc')->get();
     }
 
+    public function getDistinctClientGroupList()
+    {
+        return  User::whereNotNull('client_group')->distinct('client_group')->get();
+    }
     public function getContactPersonsByCondition($type,$status,$is_verified)
     {
 // dd($type,$status,$is_verified);
@@ -125,7 +129,7 @@ class User extends Authenticatable
 
                 $client = $this->getUserById(Auth::user()->id);
 
-                event(new SendNotification($client->id,$user_ids,'','viewdeactiveusers',$user->id,$client->name. ' has registered to deactivate Contact Person ' .$user->name));
+                event(new SendNotification($client->id,$user_ids,'','viewdeactiveusers',$user->id,$client->name. ' has registered to deactivate Contact Person ' .$user->name,now()));
 
             }
         
@@ -293,7 +297,7 @@ class User extends Authenticatable
                     $user_obj = new User;
                     $user_ids = $user_obj->getUserIdsByPermissions(['All']);
     
-                    event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name));
+                    event(new SendNotification(Auth::user()->id,$user_ids,'','unapprovecontactpersons',0,'Request to add a new contact person '.$user->name. ' has been created by '. Auth::user()->name,now()));
 
 
     
@@ -403,7 +407,7 @@ class User extends Authenticatable
 
                 \Mail::to($user->email)->send(new \App\Mail\RegistrationMail($user));
     
-                event(new SendNotification($user->id,$user_ids,'','unapproveclients',0,'A new client '.$user->name. ' has registered to your system'));
+                event(new SendNotification($user->id,$user_ids,'','unapproveclients',0,'A new client '.$user->name. ' has registered to your system',now()));
     
             return with($user);
 

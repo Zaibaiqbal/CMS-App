@@ -46,6 +46,35 @@ class TruckController extends Controller
         ]);
     }
 
+    public function getClientAccount(Request $request)
+    {
+        $data = ['view' => '' ];
+
+        $truck = new Truck;
+
+        $truck = $truck->getTruckById($request->truck_id);
+      
+        // dd($trucks_list);
+        if(isset($truck->id))
+        {
+            $user_account = new UserAccount;
+            $account_list = $user_account->getAccountListByClientId($truck->client_id);
+            $data['client_name']    = $truck->user->name;
+            $data['contact']        = $truck->user->contact;
+            $data['view']           = '<option value="'.encrypt(0).'">Select Account</option>';
+    
+            foreach($account_list as $rows)
+            {
+                  
+                $data['view'] .= '<option value="'.encrypt($rows->id).'">'.$rows->title.'-'.$rows->account_no.'</option>';
+    
+            }
+    
+        }
+       
+        return $data;
+    }
+    
 
     public function storeTruck(Request $request)
     {
@@ -149,6 +178,113 @@ class TruckController extends Controller
       
     }
 
+    public function updateTruck(Request $request)
+    {
+        try
+        {
+
+            $data = ['status' => false, 'message' => ''];
+            
+            if($request->isMethod('post'))
+            {
+
+                $request->validate([
+
+                'plate_no'              => 'required',
+                'truck'                 => 'required|exists:trucks,id',
+                'model'                 => 'required|max:255',
+                'tare_weight'           => 'required|gt:0',
+                'company'               => 'required|max:255',
+
+                ]);
+                $form_data = $request->input();
+
+
+                if(Auth::user()->user_type == "Contact Person")
+                {
+                    $user = new User;
+
+                    $user = $user->getUserById(Auth::user()->id);
+                    if(isset($user->id))
+                    {
+                        $form_data['client_id'] = $user->client_id;
+
+                    }
+
+                }
+                else if(Auth::user()->user_type == "Client")
+                {
+                    $form_data['client_id'] = Auth::user()->id;
+
+                }
+                else
+                {
+
+                    $form_data['client_id'] = decrypt($request->client);
+                }
+                
+
+                $truck = new Truck;
+                $truck = $truck->updateTruck($form_data);
+
+                if(isset($truck->id))
+                {
+                    $data = ['status' => true, 'message' => 'Truck updated successfully'];
+
+                    if (isset($request->flag)) 
+                    {
+                        if($request->flag)
+                        {
+                            $data['plate_no']       = $truck->plate_no;
+                            $data['id']             = $truck->id;
+                            // $data['client_id']      = encrypt($truck->client->id);
+                            // $data['name']           = $truck->client->name;
+                            // $data['contact']        = $truck->client->contact;
+
+                            return $data;
+                        }    
+                     
+                    }
+
+                }
+                return $data;
+            }
+            else
+            {
+                $truck = new Truck;
+                $truck = $truck->getTruckById(decrypt($request->id));
+
+                if(url()->current() == url('updateclienttruck'))
+                {
+                    return view('clients.client_trucks.modals.update_client_truck',[
+                        'truck'         =>  $truck
+                    ]);
+
+                }
+                else
+                {
+                    $user  = new User;
+                    $client_list = $user->getUserListByType('Client');
+            
+
+                    return view('trucks.modals.update_truck',[
+                        'client_list'  => $client_list,
+                        'truck'         =>  $truck
+                    ]);
+
+                }
+            }
+            return $data;
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+        return redirect()->back();
+      
+    }
 
     public function autoSearchPlateNo(Request $request)
     {
@@ -169,4 +305,27 @@ class TruckController extends Controller
         }
 
     }
+
+
+    public function autoSearchTruckInfo(Request $request)
+    {
+
+        try
+        {
+            $data = Truck::where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
+                    ->get();
+     
+        return json_encode($data);
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
+
 }
+
+
+

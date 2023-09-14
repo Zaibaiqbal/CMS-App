@@ -31,7 +31,7 @@ class UserAccount extends Model
     
     public function getUserAccountListByClientId($id)
     {
-        return UserAccount::where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->get();
+        return UserAccount::where('is_deleted',0)->where('account_id','>',0)->where('parent_id',$id)->orWhere('user_id',$id)->orderby('id','asc')->get();
     }
 
     public function getAccountListByClientId($id)
@@ -121,10 +121,11 @@ class UserAccount extends Model
 
     public function storeUserAccount($object)
     {
+// dd($object);
+
         return DB::transaction(function() use ($object){
 
             $user_account = new UserAccount;
-
             $user_account->user_id = $object['user_id'];
 
             if(isset($object['parent_id']))

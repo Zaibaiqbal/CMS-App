@@ -6,11 +6,50 @@ Trucks Management
 
 @endsection
 
+@section('page_script')
+
+<style>
+
+ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
+    width: auto !important;
+    background-color: #eaeaf2 !important;
+
+}
+
+.custom-autocomplete-list {
+    /* Add your custom styles here */
+    /* For example: */
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 0;
+    width: 25% !important;
+    z-index: 2000;
+
+  }
+
+  .custom-autocomplete-list li {
+    /* Add your custom styles for each list item here */
+    /* For example: */
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .custom-autocomplete-list li:hover {
+    background-color: #ddd;
+  }
+
+</style>
+
+@endsection('page_script')
+
 @section('page_breadcrumbs')
 
 {{ Breadcrumbs::render('trucks') }}
 
 @endsection
+
+
 
 @section('page_body')
 
@@ -60,7 +99,8 @@ Trucks Management
 
                       <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
-                            <i class="fa fa-ellipsis-v text-dark"></i>
+                              <i class="fa fa-list"></i>
+
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>

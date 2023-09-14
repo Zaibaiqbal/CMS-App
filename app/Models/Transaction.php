@@ -49,10 +49,11 @@ class Transaction extends Model
 
     public function getTransactionsByClientId($id)
     {
-        return Transaction::join('accounts as a','a.id','=','transactions.account_id')
-        ->join('user_accounts as ua','ua.account_id','=','a.id')
-        ->join('users as c','c.id','=','transactions.client_id')
-        ->where('c.id',$id)->where('c.client_group','Numbered')->get();
+        return Transaction::where('client_id',$id)->get();
+        
+        // join('accounts as a','a.id','=','transactions.account_id')
+        // ->join('user_accounts as ua','ua.account_id','=','a.id')
+        // ->join('users as c','c.id','=','transactions.client_id')
 
     }
     
@@ -119,6 +120,8 @@ class Transaction extends Model
                 if(isset($truck->id))
                 {
                     $transaction->truck_id = $truck->id;
+                    $transaction->client_id = $truck->user->id;
+
                 }
             }
             
@@ -127,9 +130,10 @@ class Transaction extends Model
 
                 // dd($object);
                 $transaction->plate_no = $object['plate_no'];
+
                 if(isset($object['client']))
                 {
-                $transaction->client_name = $object['client'];
+                    $transaction->client_name = $object['client'];
                 }
                 if(isset($object['contact_no']))
                 {
@@ -169,7 +173,12 @@ class Transaction extends Model
                 }
                 if(isset( $object['client_group']))
                 {
-                $transaction->client_group = $object['client_group'];
+                    $transaction->client_group = $object['client_group'];
+
+                }
+                if(isset( $object['is_identified']))
+                {
+                    $transaction->is_identified = $object['is_identified'];
 
                 }
                 // $transaction->net_weight = $object['net_weight'];
@@ -186,21 +195,38 @@ class Transaction extends Model
 
     }
 
-    public function updateTransaction($object)
+    public function processTransaction($object)
     {
 
         return DB::transaction(function() use ($object){
           
             $transaction = Transaction::find($object['transaction_id']);
-          
+        //   dd($object);
 
             if(isset($transaction->id))
             {
+
+
+                if(isset($object['truck_id']))
+                {
+                    $truck = Truck::find($object['truck_id']);
+
+                    if(isset($truck->id))
+                    {
+                        $transaction->truck_id = $truck->id;
+                        $transaction->client_id = $truck->user->id;
+
+                    }
+
+                    $transaction->truck_id = $object['truck_id'];
+
+                }
+
                 $transaction->added_id = Auth::user()->id;
 
-                $transaction->gross_weight = $object['inweight'];
-                $transaction->tare_weight = $object['outweight'];
-                $transaction->net_weight = $object['net_weight'];
+                $transaction->gross_weight = $object['inweight']/1000;
+                $transaction->tare_weight = $object['outweight']/1000;
+                $transaction->net_weight = abs($object['net_weight']/1000);
                 
                 if($object['net_weight'] < 0)
                 {
@@ -224,7 +250,6 @@ class Transaction extends Model
 
                 }     
 
-                
                 if(isset($object['account']))
                 {
                     $transaction->account_id = $object['account'];
@@ -250,8 +275,6 @@ class Transaction extends Model
 
                 $driver->save();
 
-
-
                 $this->getMaterialRate($transaction);
 
                 // $material_rate =  $transaction->materialType->board_rate;
@@ -274,6 +297,103 @@ class Transaction extends Model
 
     }
 
+    public function updateTransaction($object)
+    {
+
+        return DB::transaction(function() use ($object){
+          
+            $transaction = Transaction::find($object['transaction_id']);
+          
+// dd($object);
+            if(isset($transaction->id))
+            {
+
+                if(isset($object['truck_id']))
+                {
+                    $truck = Truck::find($object['truck_id']);
+                   
+                    $transaction->client_id = $truck->user->id;
+    
+                    
+                }
+                $transaction->added_id = Auth::user()->id;
+
+                $transaction->gross_weight = $object['inweight']/1000;
+                $transaction->tare_weight = $object['outweight']/1000;
+                $transaction->net_weight = $object['net_weight']/1000;
+                
+                if($object['net_weight'] < 0)
+                {
+                    $transaction->operation_type = 'Outbound';
+                    
+                }
+                else
+                {
+                    $transaction->operation_type = 'Inbound';
+
+                }
+
+                $transaction->material_type_id  = $object['material_type'];
+
+                $transaction->status            = 'Processed';
+                
+                if(isset($object['job_id']))
+                {
+                    $transaction->job_id = $object['job_id'];
+
+                }     
+
+                if(isset($object['truck_id']))
+                {
+                    $transaction->truck_id = $object['truck_id'];
+
+                } 
+                if(isset($object['account']))
+                {
+                    $transaction->account_id = $object['account'];
+
+                }
+
+                if(isset($object['client']))
+                {
+                    $transaction->client_name = $object['client'];
+                }
+
+                if(isset($object['contact_no']))
+                {
+                $transaction->contact_no = $object['contact_no'];
+                }
+           
+                // dd($transaction);
+                $transaction->update();
+
+                // $driver = new Driver;
+
+                // $driver->name  = $object['driver_name'];
+
+                // $driver->save();
+
+                $this->getMaterialRate($transaction);
+
+                // $material_rate =  $transaction->materialType->board_rate;
+
+                // $transaction->material_rate = $material_rate;
+                // $transaction->total_cost = $total_price;
+
+                // $transaction->driver_id  = $driver->id;
+
+                $transaction->update();
+
+
+            }
+
+
+        return with($transaction);
+
+
+        });
+
+    }
     public function getMaterialRate(Transaction $transaction)
     {
         $material_rate = 0;
@@ -296,7 +416,7 @@ class Transaction extends Model
         {
             $material_rate =  $transaction->materialType->board_rate;
 
-           $total_price =  $this->calculateRateBySlab($transaction);
+            $total_price =  $this->calculateRateBySlab($transaction);
 
         }
 

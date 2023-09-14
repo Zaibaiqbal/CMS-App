@@ -1,16 +1,16 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modal_add_truck"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_update_truck"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Truck Info</h5>
+        <h5 class="modal-title" id="exampleModalLabel">update Truck Info</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {{ Form::open(array('route' => 'store.truck', 'class' => '', 'id' => 'form_add_truck_info')) }}
+      {{ Form::open(array('route' => 'update.truck', 'class' => '', 'id' => 'form_update_truck_info')) }}
 
 
       <div class="modal-body">
@@ -31,7 +31,7 @@
                   <select name="{{$name}}" id="" class="form-control fstdropdown-select">
                       <option value="{{encrypt(0)}}">{{$label}}</option>
                   @foreach($client_list as $rows)
-                      <option value="{{encrypt($rows->id)}}">{{$rows->name}}</option>
+                      <option @if($truck->user->id == $rows->id) selected value="{{encrypt($rows->id)}}" @endif>{{$rows->name}}</option>
                   @endforeach
                   </select>
               </div>
@@ -46,7 +46,7 @@
                       <span><i class="text-danger">*</i></span>
                       <small id="{{$name}}_error" class="text-danger"></small>
 
-                      <input type="text" name="{{$name}}" class="form-control auto_search_truck" onkeyup="autoSearchTruck(event,this)" id="" placeholder="{{$label}}">
+                      <input type="text" value="{{$truck->plate_no}}" name="{{$name}}" class="form-control" id="" placeholder="{{$label}}">
                   </div>
 
               </div>
@@ -59,7 +59,7 @@
                       <span><i class="text-danger">*</i></span>
                       <small id="{{$name}}_error" class="text-danger"></small>
 
-                      <input type="text" name="{{$name}}" class="form-control company" placeholder="{{$label}}">
+                      <input type="text" value="{{$truck->company}}" name="{{$name}}" class="form-control company" placeholder="{{$label}}">
                   </div>
               </div>
 
@@ -71,7 +71,7 @@
                       <span><i class="text-danger">*</i></span>
                       <small id="{{$name}}_error" class="text-danger"></small>
 
-                      <input type="text" name="{{$name}}" class="form-control model" placeholder="{{$label}}">
+                      <input type="text" name="{{$name}}" value="{{$truck->model}}" class="form-control model" placeholder="{{$label}}">
                   </div>
               </div>
 
@@ -82,7 +82,7 @@
                       <label for="">{{$label}}</label>
                       <small id="{{$name}}_error" class="text-danger"></small>
 
-                      <input type="text" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                      <input type="text" name="{{$name}}" value="{{$truck->color}}" class="form-control" placeholder="{{$label}}">
                   </div>
               </div>
 
@@ -94,7 +94,7 @@
                       <span><i class="text-danger">*</i></span>
                       <small id="{{$name}}_error" class="text-danger"></small>
 
-                      <input type="text" name="{{$name}}" class="form-control tare_weight" placeholder="{{$label}}">
+                      <input type="text" name="{{$name}}" value="{{$truck->tare_weight}}" class="form-control tare_weight" placeholder="{{$label}}">
                   </div>
               </div>
 
@@ -106,7 +106,7 @@
                       <span><i class="text-danger"></i></span>
                       <small id="{{$name}}_error" class="text-danger"></small>
 
-                      <input type="text" name="{{$name}}" class="form-control vin_no" placeholder="{{$label}}">
+                      <input type="text" name="{{$name}}" value="{{$truck->vin_no}}" class="form-control vin_no" placeholder="{{$label}}">
                   </div>
               </div>
 
@@ -115,7 +115,7 @@
                   @php($name = 'description')
                   <div class="form-group">
                       <label for="">{{$label}}</label>
-                      <textarea type="text" name="{{$name}}" class="form-control description" cols="40" rows="3" placeholder="{{$label}}"></textarea>
+                      <textarea type="text" name="{{$name}}" class="form-control description" cols="40" rows="3" placeholder="{{$label}}">{{$truck->description}}</textarea>
                   </div>
               </div>
               
@@ -126,8 +126,9 @@
         </div>
       </div>
       <div class="modal-footer">
+        <input type="hidden" name="truck" value="{{$truck->id}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" onclick="submitModalForm(event,this,'#form_add_truck_info','#modal_add_truck')" class="btn btn-primary">Submit</button>
+        <button type="submit" onclick="submitModalForm(event,this,'#form_update_truck_info','#modal_update_truck')" class="btn btn-primary">Update</button>
       </div>
       {{ Form::close() }}
 
@@ -152,7 +153,7 @@ function autoSearchTruck(event,obj)
 
   var formData = {}
 
-  $('input.auto_search_truck').autocomplete({
+  $(obj).autocomplete({
       source: function (request, response) {
           $.ajax({
               url: route,
@@ -186,7 +187,6 @@ function autoSearchTruck(event,obj)
                           label3: item.vin_no,
                           label4: item.tare_weight,
                           label5: item.description,
-                          val2: item.plate_no,
                       }
                 
                   }))
@@ -207,7 +207,7 @@ function autoSearchTruck(event,obj)
 
           $('.company').val(i.item.label2).attr('readonly',true);
           $('input[name=color]').val(i.item.val1).attr('readonly',true);
-          $('.auto_search_truck').val(i.item.val2);
+          $(obj).val(i.item.value);
           $('.model').val(i.item.label1).attr('readonly',true);
           $('.vin_no').val(i.item.label3).attr('readonly',true);
           $('.tare_weight').val(i.item.label4).attr('readonly',true);
@@ -217,9 +217,8 @@ function autoSearchTruck(event,obj)
           // getClientAccountList(i.item.val1);
       },
       open: function() {
-        // alert($(obj).autocomplete("widget"));
   // Get the autocomplete list element
-          var autocompleteList = $(obj).autocomplete("widget");
+          var autocompleteList = $(this).autocomplete("widget");
 
           // Add custom CSS class to the list element
           autocompleteList.addClass("custom-autocomplete-list");

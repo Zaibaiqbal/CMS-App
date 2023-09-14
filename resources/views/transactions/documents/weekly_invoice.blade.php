@@ -179,18 +179,48 @@
           <tbody>
             @foreach($transaction_list as $rows)
             <tr>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->plate_no}}</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->net_weight}}</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->ticket_no}}</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->total_cost}}</td>
 
                 
 
             </tr>
+         
             @endforeach
+            <tr>
+                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">Total</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{($transaction_list->sum('total_cost'))}}</td>
+
+                
+            </tr>
+            <tr>
+            @php($surcharge_amount = 0)
+
+                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">@if(isset($surcharge_hst->id)) SURCHARGE @ {{$surcharge_hst->surcharge_per}} @endif</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                @if(isset($surcharge_hst->id)) 
+                    @php($surcharge = $surcharge_hst->surcharge_per/100)
+                    @php($surcharge_amount = $surcharge * $transaction_list->sum('total_cost'))
+
+                @endif
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$surcharge_amount}}</td>
+
+                
+            </tr>
             <tr></tr>
             <tfoot style="border:1px solid black;">
                 <tr rowspan="3">
@@ -200,7 +230,9 @@
                     <td colspan="2"> Tracking Number</td>
                     <td></td>
                     <td style="border-left: 1px solid black;border-right: 1px solid black;">Total Amount</td>
-                    <td></td>
+                    @php($sub_total = $surcharge_amount + $transaction_list->sum('total_cost'))
+                    <td>{{($sub_total)}}</td>
+                    
                     <td></td>
                 </tr>
                 <tr>

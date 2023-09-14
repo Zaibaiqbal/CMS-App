@@ -63,7 +63,7 @@ Accounts Management
                                 <li>
                                 @if(Auth::user()->hasAnyPermission(['All','Update Account']))
             
-                                <a href="{{route('approveaccount',['id' => $rows->id])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
+                                <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
                                 @endif
 
                                 </li>

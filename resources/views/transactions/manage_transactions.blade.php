@@ -67,13 +67,20 @@ Transaction Management
                           
                           <div class="dropdown-menu pull-right  p-2 ">
                               @if($rows->status == "Queued")
-                              @if(Auth::user()->hasAnyPermission(['All','Update Transaction']))
+                              @if(Auth::user()->hasAnyPermission(['All','Process Transaction']))
 
-                              <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                              <a href="#" target="_blank" onclick="formModal(event,'{{route('process.transaction',['id' => encrypt($rows->id)])}}','#modal_process_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Process</a>
                               @endif
                               <div class="dropdown-divider"></div>
 
                               @endif
+
+                                @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Update Transaction']))
+
+                                <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item text-dark py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                                <div class="dropdown-divider"></div>
+
+                                @endif
 
                               @if(Auth::user()->hasAnyPermission(['All','Print Ticket']))
 

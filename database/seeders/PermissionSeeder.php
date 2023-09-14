@@ -76,7 +76,12 @@ class PermissionSeeder extends Seeder
 
         $data[++$count] = [ "module" => "Transaction", "name" => "Update Transaction", "guard_name" => "web"];
 
+        $data[++$count] = [ "module" => "Transaction", "name" => "Process Transaction", "guard_name" => "web"];
+
         $data[++$count] = [ "module" => "Transaction", "name" => "Print Ticket", "guard_name" => "web"];
+
+
+
 
         $data[++$count] = [ "module" => "Client", "name" => "Generate Weekly Invoice", "guard_name" => "web"];
 
@@ -94,6 +99,10 @@ class PermissionSeeder extends Seeder
         $data[++$count] = [ "module" => "User", "name" => "View Deactive User", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "User", "name" => "Approve Deactive User", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "User", "name" => "View Ticket Issues", "guard_name" => "web"];
+
+        $data[++$count] = [ "module" => "User", "name" => "Report Ticket Issue", "guard_name" => "web"];
 
         Permission::insert($data);
     }

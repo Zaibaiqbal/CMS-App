@@ -28,7 +28,7 @@
 
                       <select name="{{$name}}" id="" class="form-control fstdropdown-select">
 
-                      @foreach(['Numbered Account','Partner Account'] as $rows)
+                      @foreach($group_list  as $rows)
                             <option value="{{$rows}}">{{$rows}}</option>
                         @endforeach
                       </select>
