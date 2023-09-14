@@ -15,9 +15,15 @@ $(document).ready(function () {
             pcoded.setAttribute('logo-theme', 'theme6');
             $('.table').removeClass('text-dark');
             $('.dropdown').removeClass('text-dark');
+            $('.notification-menu').removeClass('text-dark');
+
             $('.table').addClass('text-light');
             $('.dropdown').addClass('text-light');
             $('.dropdown-icon').addClass('text-light');
+            $('.dropdown-menu').addClass('text-light');
+            $('.notification-menu').addClass('text-light');
+
+
             
         } else {
             // Switch to the light theme
@@ -29,6 +35,8 @@ $(document).ready(function () {
             $('.dropdown').removeClass('text-light');
             $('.table').addClass('text-dark');
             $('.dropdown').addClass('text-dark');
+            $('.notification-menu').addClass('text-dark');
+
         }
     }
 

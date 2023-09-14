@@ -55,19 +55,19 @@ Accounts Management
 
                         <div class="dropdown-primary dropdown">
                             <div class="" data-toggle="dropdown">
-                            <i class="fa fa-ellipsis-v text-dark"></i>
+                            <i class="fa fa-list"></i>
                             </div>
                             <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                 <li>
                                   @if(Auth::user()->hasAnyPermission(['All','Update Account']))
                                     @if($rows->approval_status == "Unapproved" && $rows->status == "Inactive")
                 
-                                    <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
+                                    <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Approve</a>
                                     @endif
 
                                     @if($rows->approval_status == "Approved" && $rows->status == "Active")
                 
-                                      <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect text-dark py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Deactivate</a>
+                                      <a href="{{route('updateaccountstatus',['id' => $rows->id , 'approval_status' => 'Approved', 'status' => 'Active'])}}" onclick="formSubmission(event,this)" class="dropdown-item waves-light waves-effect py-2 class_delete"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Deactivate</a>
                                     @endif
                                 @endif
 

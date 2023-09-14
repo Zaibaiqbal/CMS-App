@@ -209,14 +209,14 @@
                                         <div class="dropdown-toggle" data-toggle="dropdown">
                                             <img src="{{ asset('images/user.jpg') }}" class="img-radius"
                                                 alt="User-Profile-Image">
-                                            <span>{{ Auth::user()->name }}</span>
+                                            <span class="notification-menu">{{ Auth::user()->name }}</span>
                                             <i class="feather icon-chevron-down"></i>
                                         </div>
                                         <ul class="show-notification profile-notification dropdown-menu"
                                             data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                             @if (!Auth::user()->hasRole(['Super Admin']))
                                                 <li>
-                                                    <a class="text-dark" content="sign off"
+                                                    <a class="notification-menu" content="sign off"
                                                         onclick="formSubmission(event,this)"
                                                         href="{{ route('sendemployeedailyprogress') }}"> <i
                                                             class="fa fa-lock"></i></i>
@@ -228,14 +228,14 @@
                                        
 
                                             <li>
-                                                <a href="{{route('usersettings')}}" class="text-dark" href="#"> <i
+                                                <a href="{{route('usersettings')}}" class="notification-menu" href="#"> <i
                                                         class="fa fa-gear"></i></i>
                                                     Settings
                                                 </a>
 
                                             </li>
                                             <li>
-                                                <a class="text-dark" href="{{ route('logout') }}"
+                                                <a class="notification-menu" href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
                                                               document.getElementById('logout-form').submit();">
                                                     <i class="feather icon-log-out"></i>
