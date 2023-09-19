@@ -24,7 +24,7 @@ class Transaction extends Model
         return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id,'id' => $id])->first();
     }
 
-    public function getTransactionsByCondition($condition)
+    public function getTransactionsByCondition($condition = [])
     {
 
         return Transaction::where('is_deleted' , 0)->where($condition)->orderby('id','desc')->get();
@@ -509,10 +509,11 @@ class Transaction extends Model
 
         }
 
-        $transaction->material_rate = $material_rate;
-        $transaction->total_cost = $total_price;
+            $transaction->material_rate = $material_rate;
+            $transaction->total_cost = $total_price;
 
             $transaction->update();
+
         return $material_rate;
 
     }

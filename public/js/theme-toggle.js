@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 
 
-            $(themeToggle).html('Light Mode');
+            $(themeToggle).html('<i class="feather icon-sun f-50 text-c-dark"></i> Light mode');
 
             
         } else {
@@ -66,7 +66,8 @@ $(document).ready(function () {
 
             $('.notification-msg').addClass('text-dark');
             $('.notification-time').addClass('text-dark');
-            $(themeToggle).html('Dark Mode');
+            $(themeToggle).html('<i class="feather icon-moon f-50 text-c-dark"></i> Dark mode');
+
             
 
         }

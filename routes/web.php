@@ -169,28 +169,28 @@ Route::match(['get','post'],'generateweeklyinvoice', [App\Http\Controllers\Repor
 Route::get('rateslab', [App\Http\Controllers\MaterialTypeController::class, 'viewRateSlab'])->name('rateslab')->middleware('auth','permission:All');
 
 
-Route::get('usersettings', [App\Http\Controllers\HomeController::class, 'viewSetting'])->name('usersettings')->middleware('auth','permission:All');
+Route::get('usersettings', [App\Http\Controllers\HomeController::class, 'viewSetting'])->name('usersettings')->middleware('auth','permission:All|Change Password');
 
 
 Route::match(['get','post'],'storesurcharge', [App\Http\Controllers\HomeController::class, 'storeSurcharge'])->name('store.surcharge')->middleware('auth','permission:All');
 
-Route::get('surchargeinfo', [App\Http\Controllers\HomeController::class, 'surcharge'])->name('surchargeinfo')->middleware('auth','permission:All');
+Route::get('surchargeinfo', [App\Http\Controllers\HomeController::class, 'surcharge'])->name('surchargeinfo')->middleware('auth','permission:All|Add Surcharge Hst');
 
 
 // Ticket Issue Routes
 
-Route::post('ticketissue', [App\Http\Controllers\HomeController::class, 'storeTicketIssue'])->name('ticketissue')->middleware('auth','permission:All|Ticket Issue');
+Route::post('ticketissue', [App\Http\Controllers\HomeController::class, 'storeTicketIssue'])->name('ticketissue')->middleware('auth','permission:All|Report Ticket Issue');
 
 
 Route::get('autosearchticketnumber', [App\Http\Controllers\TransactionController::class, 'autoSearchTicketNumber'])->name('autosearchticketnumber');
 
 
-Route::get('viewticketissues', [App\Http\Controllers\HomeController::class, 'viewTicketIssues'])->name('viewticketissues');
+Route::get('viewticketissues', [App\Http\Controllers\HomeController::class, 'viewTicketIssues'])->name('viewticketissues')->middleware('auth','permission:All|View Ticket Issues');
 
-Route::get('dailycustomerreport', [App\Http\Controllers\ReportController::class, 'viewDailyCustomerReport'])->name('dailycustomerreport');
+Route::get('dailycustomerreport', [App\Http\Controllers\ReportController::class, 'viewDailyCustomerReport'])->name('dailycustomerreport')->middleware('auth','permission:All|View Daily Customer Activity');
 
 
-Route::get('weeklycustomerreport', [App\Http\Controllers\ReportController::class, 'viewWeeklyCustomerReport'])->name('weeklycustomerreport');
+Route::get('weeklycustomerreport', [App\Http\Controllers\ReportController::class, 'viewWeeklyCustomerReport'])->name('weeklycustomerreport')->middleware('auth','permission:All|View Weekly Customer Activity');
 
 
 // Ticket Route End

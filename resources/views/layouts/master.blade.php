@@ -220,6 +220,7 @@
                                                 </li>
                                             @endif
                                        
+                                            @if (Auth::user()->hasAnyPermission(['All', 'Change Password','Add Surcharge/Hst','Report Ticket Issue']))
 
                                             <li>
                                                 <a href="{{route('usersettings')}}" class="notification-menu" href="#"> <i
@@ -228,6 +229,7 @@
                                                 </a>
 
                                             </li>
+                                            @endif
                                             <li>
                                                 <a class="notification-menu" href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
@@ -244,7 +246,9 @@
                                             </li>
 
                                             <li>
-                                                <a id="theme-toggle" class="notification-menu" href="#"> <i class="fa fa-sun-o"></i></i>
+                                                <a id="theme-toggle" class="notification-menu" href="#">                   
+                                                      <i class="feather icon-moon f-50 text-c-pink"></i>
+
                                                     Dark mode</a>
 
                                             </li>

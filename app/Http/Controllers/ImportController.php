@@ -116,12 +116,7 @@ class ImportController extends Controller
     {
         if($request->isMethod('post'))
             {
-                $validator = Validator::make($request->all(),$this->getValidationList());
-                
-                if($validator->fails())
-                {
-                    $this->setErrorMessage(422,'error',$validator->errors()->first());
-                }
+                $request->validate($this->getValidationList());
 
                 DB::transaction(function() use ($request) {
         

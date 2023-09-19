@@ -90,7 +90,7 @@
                     <h4 class="m-b-0 inbound">0</h4>
                 </div>
                 <div class="col col-auto text-right">
-                    <i class="feather icon-book f-50 text-c-pink"></i>
+                    <i class="feather icon-moon f-50 text-c-pink"></i>
                 </div>
             </div>
         </div>
