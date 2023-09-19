@@ -49,6 +49,7 @@ class Transaction extends Model
         return Transaction::join('users as c','c.id','=','transactions.client_id')
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         ->whereIn('c.client_group',$condition)
+        ->where('transactions.status','Processed')
         ->whereDate('transactions.created_at',now())
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,transactions.total_cost")
         ->get();
