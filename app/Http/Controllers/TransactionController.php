@@ -268,6 +268,11 @@ class TransactionController extends Controller
                     if(isset($transaction->id))
                     {
                        
+                       if(isset($transaction->client->id) && $transaction->client->client_group == 'GFL')
+                       {
+                            return redirect()->back()->with('success','Transaction closed successfully');
+
+                       }
                           
                         return view('transactions.documents.invoice', [
 

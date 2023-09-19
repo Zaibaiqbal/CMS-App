@@ -59,6 +59,11 @@ class User extends Authenticatable
         return User::where(['is_deleted' => 0 ,'id' => $id])->first();
     }
 
+    public function getUserByName($user_name)
+    {
+        return User::where(['is_deleted' => 0])->where('name', 'LIKE', '%'. $user_name. '%')->first();
+    }
+
     public function getUserListByType($type)
     {
         return  User::where('user_type', $type)->where('status','Active')->orderBy('id', 'asc')->get();

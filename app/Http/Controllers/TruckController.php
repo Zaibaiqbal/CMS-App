@@ -97,7 +97,7 @@ class TruckController extends Controller
                 ]);
                 $form_data = $request->input();
 
-
+// dd($form_data);
                 if(Auth::user()->user_type == "Contact Person")
                 {
                     $user = new User;

@@ -26,6 +26,12 @@ Accounts Management
                         Add Account</a>
                     @endif
 
+
+                @if(Auth::user()->hasAnyPermission(['All']))
+          
+                <a onclick="formModal(event,'{{route('import.accounts')}}','#md_import_data_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+          Import Accounts</a>
+          @endif
                 </h3>
 
               

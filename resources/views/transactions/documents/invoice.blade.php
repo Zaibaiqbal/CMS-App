@@ -42,6 +42,7 @@
                 <input type="hidden" value="{{$transaction->id}}" name="transaction">
                 <input type="hidden" value="pdf" name="format">
                 <button style="margin-left: 96% !important;border:none;background-color:transparent;" type="submit" class="pdf" title="Generate PDF" name="pdf" value="pdf"><img src="{{asset('images/pdf-icon.png')}}" width="60%"></button>
+                <a href="{{route('transactions.list')}}"><img src="{{asset('images/back.png')}}" width="60%"></a>
             </form>
         </div>
         @endif
@@ -88,7 +89,7 @@
             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo html_entity_decode($modify_ticket); ?></td>
 
             <td class="customer_info">Invoice Date:</td>
-            <td><input type="text" value="{{$transaction->updated_at}}"></td>
+            <td><input type="text" value="{{date_format(now(),'Y-m-d H:i')}}"></td>
        
           </tr>
 
@@ -116,14 +117,14 @@
             <td><input type="text" value="{{$transaction->contact_no}}"></td>
 
             <td class="customer_info">In Time:</td>
-            <td><input type="text" value="{{date_format($transaction->created_at,'Y-m-d H:m')}}"></td>
+            <td><input type="text" value="{{date_format($transaction->created_at,'Y-m-d H:i')}}"></td>
           </tr>
          
           <tr>
           <td class="customer_info"></td>
             <td></td>
             <td class="customer_info">Out Time:</td>
-            <td><input type="text" value="{{date_format($transaction->updated_at,'Y-m-d H:m')}}"></td>
+            <td><input type="text" value="{{date_format($transaction->updated_at,'Y-m-d H:i')}}"></td>
           </tr>
         </table>
        

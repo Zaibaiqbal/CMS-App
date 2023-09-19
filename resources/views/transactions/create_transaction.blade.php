@@ -132,6 +132,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
                         response($.map(JSON.parse(data), function (item) {
                             return {
                                 label: item.identifier,
+                                val2: item.plate_no,
                                 val:    item.id,
                                 label1: item.name,
                                 val1:    item.user_id,
@@ -157,6 +158,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
               
                 $('.truck_id').val(i.item.val);
                 $('.auto_search_plate_no').val(i.item.value);
+                $('.plate_no').val(i.item.val2);
                 $('.client_name').val(i.item.label1).attr('readonly',true);
                 $('input[name=user_id]').val(i.item.val1);
                 $('input[name=contact_no]').val(i.item.label2).attr('readonly',true);

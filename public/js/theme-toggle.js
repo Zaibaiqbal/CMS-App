@@ -2,11 +2,11 @@ $(document).ready(function () {
     const pcoded = document.getElementById('pcoded');
     const themeToggle = document.getElementById('theme-toggle');
     const savedTheme = localStorage.getItem('theme');
-
     // Function to set the theme based on the 'layout-type' attribute
     function setTheme(theme) {
 
         if (theme === 'dark') {
+
 
             // Switch to the dark theme
             pcoded.setAttribute('layout-type', 'dark');
@@ -22,7 +22,11 @@ $(document).ready(function () {
             $('.dropdown-icon').addClass('text-light');
             $('.dropdown-menu').addClass('text-light');
             $('.notification-menu').addClass('text-light');
+            $('.auth_name').addClass('text-dark');
+            $('.notification-toggle').addClass('text-dark');
+            $('.dropdown-icon').addClass('text-light');
 
+            $(themeToggle).html('Light Mode');
 
             
         } else {
@@ -33,9 +37,16 @@ $(document).ready(function () {
             pcoded.setAttribute('logo-theme', 'theme1');
             $('.table').removeClass('text-light');
             $('.dropdown').removeClass('text-light');
+            $('.notification-menu').removeClass('text-light');
+
             $('.table').addClass('text-dark');
             $('.dropdown').addClass('text-dark');
             $('.notification-menu').addClass('text-dark');
+            $('.dropdown-icon').addClass('text-dark');
+           
+            $('.notification-toggle').addClass('text-dark');
+            $(themeToggle).html('Dark Mode');
+            
 
         }
     }

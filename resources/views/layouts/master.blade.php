@@ -177,7 +177,7 @@
                             <ul class="nav-right">
                                 <li class="header-notification">
                                     <div class="dropdown-primary dropdown" onclick="appearNotification();">
-                                        <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <div class="dropdown-toggle notification-toggle" data-toggle="dropdown">
                                             <i class="feather icon-bell"></i>
                                             <span class="notification_count badge bg-c-pink">0</span>
                                         </div>
@@ -197,19 +197,13 @@
                                     </div>
                                 </li>
 
-                                <li class="nav-item">
-                                    <button id="theme-toggle" class="btn btn-sm btn-outline-secondary">
-                                        Toggle Theme
-                                    </button>
-                                </li>
-
-
+                              
                                 <li class="user-profile header-notification">
                                     <div class="dropdown-primary dropdown">
                                         <div class="dropdown-toggle" data-toggle="dropdown">
                                             <img src="{{ asset('images/user.jpg') }}" class="img-radius"
                                                 alt="User-Profile-Image">
-                                            <span class="notification-menu">{{ Auth::user()->name }}</span>
+                                            <span class="notification-menu auth_name">{{ Auth::user()->name }}</span>
                                             <i class="feather icon-chevron-down"></i>
                                         </div>
                                         <ul class="show-notification profile-notification dropdown-menu"
@@ -246,6 +240,12 @@
                                                     class="d-none">
                                                     @csrf
                                                 </form>
+
+                                            </li>
+
+                                            <li>
+                                                <a id="theme-toggle" class="notification-menu" href="#"> <i class="fa fa-sun-o"></i></i>
+                                                    Dark mode</a>
 
                                             </li>
 
@@ -438,6 +438,17 @@
                                                 <span class="pcoded-micon"><i class="feather icon-command"></i></span>
 
                                                 <span class="pcoded-mtext">ROLES & PERMISSIONS</span>
+                                            </a>
+
+                                        </li>
+                                    @endif
+
+                                    @if (Auth::user()->hasAnyPermission(['All', 'View Reports']))
+                                        <li class="">
+                                            <a href="{{ route('reports') }}">
+                                                <span class="pcoded-micon"><i class="feather icon-command"></i></span>
+
+                                                <span class="pcoded-mtext">Reports</span>
                                             </a>
 
                                         </li>

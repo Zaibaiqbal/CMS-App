@@ -27,7 +27,7 @@ class Transaction extends Model
     public function getTransactionsByCondition($condition)
     {
 
-        return Transaction::where('is_deleted' , 0)->where($condition)->get();
+        return Transaction::where('is_deleted' , 0)->where($condition)->orderby('id','desc')->get();
     }
 
     public function getDashboardTransactionsByCondition($condition,$from,$to)
@@ -41,10 +41,17 @@ class Transaction extends Model
            $query = $query->whereDate('created_at','>=',$from)->whereDate('created_at','<=',$to);
         }
        
-         return $query->get();
+         return $query->orderby('id','desc')->get();
+    }
 
-
-
+    public function viewDailyCustomerReport($condition = [])
+    {
+        return Transaction::join('users as c','c.id','=','transactions.client_id')
+        ->join('material_types as mt','mt.id','=','transactions.material_type_id')
+        ->whereIn('c.client_group',$condition)
+        ->whereDate('transactions.created_at',now())
+        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,transactions.total_cost")
+        ->get();
     }
 
     public function getTransactionsByClientId($id)
@@ -79,18 +86,31 @@ class Transaction extends Model
     public function getDailyMaterialWiseStats($condition = [],$from = "",$to ="")
     {
 
-        $query = MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
-        ->whereDate('t.created_at',now())
-        ->where($condition)
+        // $query = MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
+        // ->whereDate('t.created_at',now())
+        // ->where($condition)
 
-        ->selectRaw("material_types.name,sum(t.gross_weight) as gross_weight,sum(t.tare_weight) as tare_weight");
+        // ->selectRaw("material_types.name,sum(t.gross_weight) as gross_weight,sum(t.tare_weight) as tare_weight");
 
-        if(strlen(trim($from)) > 0 && strlen(trim($to)) > 0)
-        {
-           $query = $query->whereDate('t.created_at','>=',$from)->whereDate('t.created_at','<=',$to);
-        }
+        // if(strlen(trim($from)) > 0 && strlen(trim($to)) > 0)
+        // {
+        //    $query = $query->whereDate('t.created_at','>=',$from)->whereDate('t.created_at','<=',$to);
+        // }
        
-        return $query->groupby('material_types.id')->get();
+        // return $query->groupby('material_types.id',)->get();
+
+        $query = MaterialType::selectRaw("material_types.name,
+            SUM(CASE WHEN t.operation_type = 'Inbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as inbound_net_weight,
+            SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight")
+            ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
+            ->where($condition);
+
+        if (strlen(trim($from)) > 0 && strlen(trim($to)) > 0) {
+            $query = $query->whereDate('t.created_at', '>=', $from)->whereDate('t.created_at', '<=', $to);
+        }
+
+        return $query->groupBy('material_types.id')->get();
+
     }
 
     public function getMonthlyMaterialWiseStats($condition = [])
@@ -224,9 +244,9 @@ class Transaction extends Model
 
                 $transaction->added_id = Auth::user()->id;
 
-                $transaction->gross_weight = $object['inweight']/1000;
-                $transaction->tare_weight = $object['outweight']/1000;
-                $transaction->net_weight = abs($object['net_weight']/1000);
+                $transaction->gross_weight = $object['inweight'];
+                $transaction->tare_weight = $object['outweight'];
+                $transaction->net_weight = abs($object['net_weight']);
                 
                 if($object['net_weight'] < 0)
                 {
@@ -318,9 +338,9 @@ class Transaction extends Model
                 }
                 $transaction->added_id = Auth::user()->id;
 
-                $transaction->gross_weight = $object['inweight']/1000;
-                $transaction->tare_weight = $object['outweight']/1000;
-                $transaction->net_weight = $object['net_weight']/1000;
+                $transaction->gross_weight = $object['inweight'];
+                $transaction->tare_weight = $object['outweight'];
+                $transaction->net_weight = $object['net_weight'];
                 
                 if($object['net_weight'] < 0)
                 {
@@ -432,7 +452,7 @@ class Transaction extends Model
      
         $totalPrice = 0;
 
-       $net_weight = $transaction->net_weight;
+       $net_weight = $transaction->net_weight*1000;
        $board_rate = $transaction->materialType->board_rate;
        $slab_rate = $transaction->materialType->slab_rate;
        $slab_weight = $transaction->materialType->slab_weight;

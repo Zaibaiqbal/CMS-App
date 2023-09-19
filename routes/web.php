@@ -151,6 +151,9 @@ Route::get('materialwisestats', [App\Http\Controllers\HomeController::class, 'ge
 Route::match(['post','get'],'importclients', [App\Http\Controllers\ImportController::class, 'importClientData'])->name('import.clients')->middleware('auth','permission:All');
 
 
+Route::match(['post','get'],'importaccounts', [App\Http\Controllers\ImportController::class, 'importAccountsData'])->name('import.accounts')->middleware('auth','permission:All');
+
+
 Route::get('sendemployeedailyprogress', [App\Http\Controllers\UserController::class, 'sendEmployeeDailyProgress'])->name('sendemployeedailyprogress')->middleware('auth');
 
 Route::get('viewemployeeprogress', [App\Http\Controllers\UserController::class, 'viewEmployeeDailyProgress'])->name('viewemployeeprogress')->middleware('auth');
@@ -184,7 +187,13 @@ Route::get('autosearchticketnumber', [App\Http\Controllers\TransactionController
 
 Route::get('viewticketissues', [App\Http\Controllers\HomeController::class, 'viewTicketIssues'])->name('viewticketissues');
 
+Route::get('dailycustomerreport', [App\Http\Controllers\ReportController::class, 'viewDailyCustomerReport'])->name('dailycustomerreport');
+
+
 // Ticket Route End
+
+
+Route::get('reports', [App\Http\Controllers\ReportController::class, 'index'])->name('reports')->middleware('auth','permission:All|View Reports');
 // CLIENT ROUTES
 
 

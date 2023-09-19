@@ -2,8 +2,8 @@
 <tr>
     <td>{{$loop->iteration}}</td>
     <td>{{$rows->name}}</td>
-    <td>{{$rows->gross_weight}}</td>
-    <td>{{$rows->tare_weight}}</td>
+    <td>{{$rows->inbound_net_weight}}</td>
+    <td>{{abs($rows->outbound_net_weight)}}</td>
 
 </tr>
 

@@ -118,7 +118,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-header-left ">
-                    <div class="card-title">Transactions</div>
+                    <div class="card-title">Material Wise Transactions</div>
             </div>
         </div>
         <div class="card-block-big">
@@ -157,6 +157,42 @@
         </div>
     </div>
 </div>
+
+<div class="col-xl-8 col-md-12" style="position: relative;top:-250px;">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-left ">
+                    <div class="card-title">Latest Transactions</div>
+            </div>
+        </div>
+        <div class="card-block-big">
+
+            <div class="tab-content tabs card-block">
+                <div class="tab-pane active" id="home1" role="tabpanel">
+                    <table class="table table-hover table-borderless">
+                        <thead class="bg-success">
+                            <tr>
+                                <th>#</th>
+                                <th>License No</th>
+                                <th>Description</th>
+                                <th>Client</th>
+                                <th>Ticket No.</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="latest_transactions">
+
+                        </tbody>
+                    </table>
+                </div>
+         
+               
+            </div>
+          
+        </div>
+    </div>
+</div>
+
 </div>
 <!-- statustic-card start -->
 {{--
@@ -626,7 +662,7 @@ function showDashboardStats(flag = false)
           $('.inbound').html(data.inbound_count);
           $('.outbound').html(data.outbound_count); 
 
-            // $(bind_element).html(data.view);
+            $('#latest_transactions').html(data.latest_transactions);
 
             removeThemeLoader();
 

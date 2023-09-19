@@ -12,6 +12,56 @@ use PDF;
 
 class ReportController extends Controller
 {
+
+    public function index()
+    {
+        try{
+            return view('reports.manage_reports');
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
+
+    
+
+    public function viewDailyCustomerReport(Request $request)
+    {
+        try
+        {
+            $condition = [];
+            if($request->type == 'TOPPS')
+            {
+                $condition += ['Numbered Clients','TSC','Cash Account'];
+            }
+          
+            if($request->type == 'GFL')
+            {
+                $condition += ['GFL'];
+            }
+            $transaction = new Transaction;
+            $transaction_list = $transaction->viewDailyCustomerReport($condition);
+
+            // dd($transaction_list);
+            $pdf = PDF::loadView('reports.view_daily_customer_report', [
+
+                'transaction_list'  =>   $transaction_list,
+             
+            ]);
+         
+            return $pdf->setPaper('a4', 'landscape')->stream('Daily Customer Report.pdf');
+            // return redirect('users');
+
+        }
+ 
+        catch(Exception $e)
+        {
+dd($e);
+        }
+    }
+
     public function generateWeeklyInvoice(Request $request)
     {
         try

@@ -76,3 +76,8 @@ Breadcrumbs::for('locations', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('View Locations', route('locations.list'));
 });
+
+Breadcrumbs::for('reports', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('View Reports', route('reports'));
+});

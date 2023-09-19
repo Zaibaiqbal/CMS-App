@@ -17,7 +17,13 @@ class Account extends Model
         return Account::where('is_deleted',0)->where('account_no',$account_no)->first();
     }
 
+    public function getAccountByName($title_name)
+    {
+        
+        return Account::where('is_deleted',0)->where('title', 'LIKE', '%'. $title_name. '%')->first();
+    }
 
+    
     public function getRequestedAccountList()
     {
         
@@ -89,9 +95,10 @@ class Account extends Model
                 // dd($account->id);
             
                 $user_account_info = [
-                    'account_id'   =>   $account->id,
+
+                    'account_id'    =>   $account->id,
                     'user_id'       =>   $account->added_id,
-                    'status'        =>   'Approved'
+                    'status'        =>   'Active'
                 ];
 // dd($user_account);
                 $user_account = new UserAccount;

@@ -98,7 +98,7 @@ class HomeController extends Controller
 
         if(!Auth::user()->hasRole(['Super Admin']))
         {
-            $condition =['added_id'    =>   Auth::user()->id];
+            $condition = ['added_id'    =>   Auth::user()->id];
         }
         $material_wise_transaction_list = $transaction->getDailyMaterialWiseStats($condition);
 // dd($material_wise_transaction_list);
@@ -136,6 +136,12 @@ class HomeController extends Controller
         
             'material_wise_transaction_list'          =>      $material_wise_transaction_list
         
+            ])->render();
+
+        $data['latest_transactions'] =  view('dashboard.components.latest_transactions',[
+    
+            'transaction_list'          =>   $transactions_list->take(10),
+
             ])->render();
 
         return $data;
