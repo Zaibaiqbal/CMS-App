@@ -1,18 +1,19 @@
 @extends('layouts.master')
 
 @section('page_body')
-<div class="row"  >
-    <div class="col-md-12">
-        <div class="dropdown dropdown-inline" style="float: right;">
-            <a href="#" class="btn btn-clean btn-hover-light-primary btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="feather icon-menu"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="margin-top:5%;width:100%;">
-                <!--begin::Naviigation-->
-                <ul class="navi">
-                 
-                    <li class="navi-separator mb-1 opacity-70"></li>
-                    <li class="navi-item mx-2 mb-2">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dropdown dropdown-inline" style="float: right;">
+                <a href="#" class="btn btn-clean btn-hover-light-primary btn-icon" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="feather icon-menu"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="margin-top:5%;width:100%;">
+                    <!--begin::Naviigation-->
+                    <ul class="navi">
+
+                        <li class="navi-separator mb-1 opacity-70"></li>
+                        <li class="navi-item mx-2 mb-2">
                             <span class="navi-icon">
 
                             </span>
@@ -20,9 +21,9 @@
                                 <b>From</b>
                                 <input id="latest_from" type="date" name="from" class="form-control form-control-sm">
                             </span>
-                    </li>
+                        </li>
 
-                    <li class="navi-item mx-2 mb-2">
+                        <li class="navi-item mx-2 mb-2">
                             <span class="navi-icon">
 
                             </span>
@@ -30,172 +31,186 @@
                                 <b>To</b>
                                 <input id="latest_to" type="date" name="to" class="form-control form-control-sm">
                             </span>
-                    </li>
+                        </li>
 
-                    <li class="navi-item my-2 mx-4 mb-4">
+                        <li class="navi-item my-2 mx-4 mb-4">
                             <span class="navi-icon">
 
                             </span>
                             <span class="navi-text">
-                                <button onclick="showDashboardStats(true);" type="button" class="btn btn-sm btn-outline-primary float-right">Filter</button>
+                                <button onclick="showDashboardStats(true);" type="button"
+                                    class="btn btn-sm btn-outline-primary float-right">Filter</button>
                             </span>
-                    </li>
+                        </li>
 
-                </ul>
-                <!--end::Naviigation-->
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-
-<!-- statustic-card start -->
-<div class="col-xl-3 col-md-6">
-    <div class="card bg-c-yellow text-white">
-        <div class="card-block">
-            <div class="row align-items-center">
-                <div class="col">
-                    <p class="m-b-5">Clients</p>
-                    <h4 class="m-b-0 total_clients">0</h4>
-                </div>
-                <div class="col col-auto text-right">
-                    <i class="feather icon-user f-50 text-c-yellow"></i>
+                    </ul>
+                    <!--end::Naviigation-->
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-xl-3 col-md-6">
-    <div class="card bg-c-green text-white">
-        <div class="card-block">
-            <div class="row align-items-center">
-                <div class="col">
-                    <p class="m-b-5">Tickets</p>
-                    <h4 class="m-b-0 tickets">0</h4>
+
+    <div class="row">
+        <div class="col-xl-8 col-md-8">
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-c-yellow text-white">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="m-b-5">Clients</p>
+                                <h4 class="m-b-0 total_clients">0</h4>
+                            </div>
+                            <div class="col col-auto text-right">
+                                <i class="feather icon-user f-50 text-c-yellow"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col col-auto text-right">
-                    <i class="feather icon-credit-card f-50 text-c-green"></i>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-c-green text-white">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="m-b-5">Tickets</p>
+                                <h4 class="m-b-0 tickets">0</h4>
+                            </div>
+                            <div class="col col-auto text-right">
+                                <i class="feather icon-credit-card f-50 text-c-green"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-c-pink text-white">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="m-b-5">Inbound</p>
+                                <h4 class="m-b-0 inbound">0</h4>
+                            </div>
+                            <div class="col col-auto text-right">
+                                <i class="feather icon-log-in f-50 text-c-pink"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-c-blue text-white">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="m-b-5">Outbound</p>
+                                <h4 class="m-b-0 outbound">0</h4>
+                            </div>
+                            <div class="col col-auto text-right">
+                                <i class="feather icon-log-out f-50 text-c-blue"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <!-- statustic-card start -->
+        <div class="col-xl-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-left ">
+                        <div class="card-title">Material Wise Transactions</div>
+                    </div>
+                </div>
+                <div class="card-block-big">
+
+                    <div class="tab-content tabs card-block">
+                        <div class="tab-pane active" id="home1" role="tabpanel">
+                            <table class="table table-hover table-borderless">
+                                <thead class="bg-primary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Material</th>
+                                        <th>In-weight</th>
+                                        <th>Out-weight</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="material_weightage">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
                 </div>
             </div>
         </div>
+        
+
+        <div class="col-xl-12 col-md-12" >
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-left ">
+                        <div class="card-title">Latest Transactions</div>
+                    </div>
+                </div>
+                <div class="card-block-big">
+
+                    <div class="tab-content tabs card-block">
+                        <div class="tab-pane active" id="home1" role="tabpanel">
+                            <table class="table table-hover table-borderless">
+                                <thead class="bg-success">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>License No</th>
+                                        <th>Description</th>
+                                        <th>Client</th>
+                                        <th>Ticket No.</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="latest_transactions">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+            
+        </div>
+        </div>
+
+
+        <div class="col-xl-4 col-md-4" style="padding: 0%">
+            {{-- <div class="row"> --}}
+
+            <div class="col-xl-12 col-md-12" style="padding: 0%">
+                <div class="showWeatherForcast"></div>
+            </div>
+            {{-- </div> --}}
+
+
+            </div>
+
+        <!-- statustic-card start -->
+        
+        
+        <!-- statustic-card start -->
+
+        
+
     </div>
-</div>
-<div class="col-xl-3 col-md-6">
-    <div class="card bg-c-pink text-white">
-        <div class="card-block">
-            <div class="row align-items-center">
-                <div class="col">
-                    <p class="m-b-5">Inbound</p>
-                    <h4 class="m-b-0 inbound">0</h4>
-                </div>
-                <div class="col col-auto text-right">
-                    <i class="feather icon-moon f-50 text-c-pink"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-3 col-md-6">
-    <div class="card bg-c-blue text-white">
-        <div class="card-block">
-            <div class="row align-items-center">
-                <div class="col">
-                    <p class="m-b-5">Outbound</p>
-                    <h4 class="m-b-0 outbound">0</h4>
-                </div>
-                <div class="col col-auto text-right">
-                    <i class="feather icon-shopping-cart f-50 text-c-blue"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- statustic-card start -->
-
-<!-- statustic-card start -->
-<div class="col-xl-8 col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <div class="card-header-left ">
-                    <div class="card-title">Material Wise Transactions</div>
-            </div>
-        </div>
-        <div class="card-block-big">
-
-            <div class="tab-content tabs card-block">
-                <div class="tab-pane active" id="home1" role="tabpanel">
-                    <table class="table table-hover table-borderless">
-                        <thead class="bg-primary">
-                        <tr >
-                            <th>#</th>
-                            <th>Material</th>
-                            <th>In-weight</th>
-                            <th>Out-weight</th>
-                        </tr>
-                        </thead>
-                        <tbody id="material_weightage">
-
-                        </tbody>
-                    </table>
-                </div>
-         
-               
-            </div>
-          
-        </div>
-    </div>
-</div>
-<div class="col-xl-4 col-md-12">
-    <div class="card">
-        <div class="card-header bg-secondary">
-            <h4 class="card-title text-light p-0">Weekly Weather Forecast</h4>
-
-        </div>
-        <div class="card-body">
-            <div id="showWeatherForcast"></div>
-        </div>
-    </div>
-</div>
-
-<div class="col-xl-8 col-md-12" style="position: relative;top:-250px;">
-    <div class="card">
-        <div class="card-header">
-            <div class="card-header-left ">
-                    <div class="card-title">Latest Transactions</div>
-            </div>
-        </div>
-        <div class="card-block-big">
-
-            <div class="tab-content tabs card-block">
-                <div class="tab-pane active" id="home1" role="tabpanel">
-                    <table class="table table-hover table-borderless">
-                        <thead class="bg-success">
-                            <tr>
-                                <th>#</th>
-                                <th>License No</th>
-                                <th>Description</th>
-                                <th>Client</th>
-                                <th>Ticket No.</th>
-
-                            </tr>
-                        </thead>
-                        <tbody id="latest_transactions">
-
-                        </tbody>
-                    </table>
-                </div>
-         
-               
-            </div>
-          
-        </div>
-    </div>
-</div>
-
-</div>
-<!-- statustic-card start -->
-{{--
+    <!-- statustic-card start -->
+    {{--
 <!-- income start -->
 <div class="col-xl-4 col-md-6">
     <div class="card">
@@ -605,157 +620,286 @@
 
 <!-- latest activity end -->
 --}}
-</div>
-
-
+    </div>
 @endsection
 
 @section('page_script')
+    <script>
+        function showMaterialWeightage() {
 
+            var latest_from = $('#latest_from').val();
 
-<script>
+            var latest_to = $('#latest_to').val();
 
-function showMaterialWeightage()
-{
+            var route = "{{ route('materialwisestats') }}";
 
-    var latest_from     = $('#latest_from').val();
+            var data_set = {
+                from: latest_from,
+                to: latest_to
+            };
 
-    var latest_to       = $('#latest_to').val();
+            $.get(route, data_set, function(data) {
 
-    var route = "{{route('materialwisestats')}}";
+                $('#material_weightage').html(data.transaction_view);
+                // $('#monthly_material_weightage').html(data.monthly_view);
+            });
+        }
 
-    var data_set = {from:latest_from,to:latest_to};
+        $(document).ready(function() {
 
-    $.get(route,data_set,function(data){
+            showMaterialWeightage();
 
-        $('#material_weightage').html(data.transaction_view);
-        // $('#monthly_material_weightage').html(data.monthly_view);
-    });
-}
+            showDashboardStats(true);
 
-$(document).ready(function(){
-
-    showMaterialWeightage();
-
-    showDashboardStats(true);
-
-});
-
-function showDashboardStats(flag = false)
-{
-
-    var latest_from     = $('#latest_from').val();
-
-    var latest_to       = $('#latest_to').val();
-
-
-    var route    = "{{route('latestdashboardstats')}}";
-
-    var data_set = {from:latest_from,to:latest_to};
-
-    addThemeLoader();
-
-    $.get(route,data_set,function(data){
-
-        $('.total_clients').html(data.total_clients);
-          $('.tickets').html(data.total_tickets);
-          $('.inbound').html(data.inbound_count);
-          $('.outbound').html(data.outbound_count); 
-
-            $('#latest_transactions').html(data.latest_transactions);
-
-            removeThemeLoader();
-
-
-    });
-
-}
-
-// Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
-// const apiKey = '204c22e7b8680f3836006973fc31a2f1';
-// const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=RAWALPINDI&units=metric&cnt=7&appid=${apiKey}`;
-
-// function displayWeatherData(data) {
-//     const weatherWidget = document.getElementById('weather-widget');
-//     weatherWidget.innerHTML = ''; // Clear previous content
-
-//     data.list.forEach(item => {
-
-//         const date = new Date(item.dt * 1000);
-
-//         const day = date.toLocaleDateString('en-US', { weekday: 'long' });
-
-//         const temp = Math.round(item.main.temp);
-//         const description = item.weather[0].description;
-        
-//         const card = document.createElement('div');
-//         card.classList.add('card', 'mb-2');
-        
-//         const cardBody = document.createElement('div');
-//         cardBody.classList.add('card-body');
-        
-//         const cardTitle = document.createElement('h6');
-//         cardTitle.classList.add('card-title');
-//         cardTitle.textContent = `${day}: ${temp}°C, ${description}`;
-        
-//         cardBody.appendChild(cardTitle);
-//         card.appendChild(cardBody);
-//         weatherWidget.appendChild(card);
-//     });
-// }
-
-// // Fetch weather data and display it
-// fetch(apiUrl)
-//     .then(response => response.json())
-//     .then(data => {
-//         displayWeatherData(data);
-//     })
-//     .catch(error => {
-//         console.error('Error fetching weather data:', error);
-//     });
-
-
-    $(document).ready(function() {
-        var key = "204c22e7b8680f3836006973fc31a2f1";
-        var city = "RAWALPINDI";
-        var url = "https://api.openweathermap.org/data/2.5/forecast";
-        $.ajax({
-            url: url, //API Call
-            dataType: "json",
-            type: "GET",
-            data: {
-                q: city,
-                appid: key,
-                units: "metric",
-                cnt: "42"
-            },
-            success: function(data) {
-                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                const timesToDisplay = [0, 8, 16, 24, 32, 40];
-                let d;
-                let dayName;
-                var wf = "";
-                wf += "<h2>" + data.city.name + "</h2>"; // City (displays once)
-                // alert(data.list)
-                $.each(data.list, function(index, val) {
-                  if(timesToDisplay.includes(index)){
-
-
-                    d = new Date(data.list[index].dt * 1000);
-                    dayName = days[d.getDay()];
-                    wf += "<p>" // Opening paragraph tag
-                    wf += "<b> "+dayName+"</b>: " // Day
-                    wf += val.main.temp + "&degC" // Temperature
-                    wf += "<span> " + val.weather[0].description + "</span>"; // Description
-                    wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
-                    wf += "</p>" // Closing paragraph tag
-                  }
-                });
-                $("#showWeatherForcast").html(wf);
-            }
         });
-    });
+
+        function showDashboardStats(flag = false) {
+
+            var latest_from = $('#latest_from').val();
+
+            var latest_to = $('#latest_to').val();
 
 
-</script>
+            var route = "{{ route('latestdashboardstats') }}";
+
+            var data_set = {
+                from: latest_from,
+                to: latest_to
+            };
+
+            addThemeLoader();
+
+            $.get(route, data_set, function(data) {
+
+                $('.total_clients').html(data.total_clients);
+                $('.tickets').html(data.total_tickets);
+                $('.inbound').html(data.inbound_count);
+                $('.outbound').html(data.outbound_count);
+
+                $('#latest_transactions').html(data.latest_transactions);
+
+                removeThemeLoader();
+
+
+            });
+
+        }
+
+        // Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
+        // const apiKey = '204c22e7b8680f3836006973fc31a2f1';
+        // const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=RAWALPINDI&units=metric&cnt=7&appid=${apiKey}`;
+
+        // function displayWeatherData(data) {
+        //     const weatherWidget = document.getElementById('weather-widget');
+        //     weatherWidget.innerHTML = ''; // Clear previous content
+
+        //     data.list.forEach(item => {
+
+        //         const date = new Date(item.dt * 1000);
+
+        //         const day = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+        //         const temp = Math.round(item.main.temp);
+        //         const description = item.weather[0].description;
+
+        //         const card = document.createElement('div');
+        //         card.classList.add('card', 'mb-2');
+
+        //         const cardBody = document.createElement('div');
+        //         cardBody.classList.add('card-body');
+
+        //         const cardTitle = document.createElement('h6');
+        //         cardTitle.classList.add('card-title');
+        //         cardTitle.textContent = `${day}: ${temp}°C, ${description}`;
+
+        //         cardBody.appendChild(cardTitle);
+        //         card.appendChild(cardBody);
+        //         weatherWidget.appendChild(card);
+        //     });
+        // }
+
+        // // Fetch weather data and display it
+        // fetch(apiUrl)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         displayWeatherData(data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching weather data:', error);
+        //     });
+
+
+        // $(document).ready(function() {
+        //     var key = "204c22e7b8680f3836006973fc31a2f1";
+        //     var city = "RAWALPINDI";
+        //     var url = "https://api.openweathermap.org/data/2.5/forecast";
+        //     $.ajax({
+        //         url: url, //API Call
+        //         dataType: "json",
+        //         type: "GET",
+        //         data: {
+        //             q: city,
+        //             appid: key,
+        //             units: "metric",
+        //             cnt: "42"
+        //         },
+        //         success: function(data) {
+        //             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        //             const timesToDisplay = [0, 8, 16, 24, 32, 40];
+        //             let d;
+        //             let dayName;
+        //             var wf = "";
+        //             wf += "<h2>" + data.city.name + "</h2>"; // City (displays once)
+        //             // alert(data.list)
+        //             $.each(data.list, function(index, val) {
+        //               if(timesToDisplay.includes(index)){
+
+
+        //                 d = new Date(data.list[index].dt * 1000);
+        //                 dayName = days[d.getDay()];
+        //                 wf += "<p>" // Opening paragraph tag
+        //                 wf += "<b> "+dayName+"</b>: " // Day
+        //                 wf += val.main.temp + "&degC" // Temperature
+        //                 wf += "<span> " + val.weather[0].description + "</span>"; // Description
+        //                 wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
+        //                 wf += "</p>" // Closing paragraph tag
+        //               }
+        //             });
+        //             $("#showWeatherForcast").html(wf);
+        //         }
+        //     });
+        // });
+        $(document).ready(function() {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            let dateObj = new Date();
+            let month = monthNames[dateObj.getUTCMonth()];
+            let day = dateObj.getUTCDate() - 1;
+            let year = dateObj.getUTCFullYear();
+
+            let newdate = `${month} ${day}, ${year}`;
+
+            const app = document.querySelector('.showWeatherForcast');
+
+            fetch(
+                    'https://api.openweathermap.org/data/2.5/weather?q=Ontario,ca&APPID=2d48b1d7080d09ea964e645ccd1ec93f&units=metric')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+
+                    app.insertAdjacentHTML('afterbegin', `
+        
+    <div class="titlebar">
+    <p class="date">${newdate}</p>
+    <h4 class="city">${data.name}</h4>
+    <p class="description">${data.weather[0].description}</p>
+</div>
+<div class="temperature">
+    <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+    <h2>${Math.round(data.main.temp)}°C</h2>
+</div>
+<div class="extra">
+    <div class="col">
+        <div class="info">
+            <h5>Wind Status</h5>
+            <p>${data.wind.speed}mps</p>
+        </div>
+        <div class="info">
+            <h5>Visibility</h5>
+            <p>${data.visibility} m</p>
+        </div>
+    </div>
+    
+    <div class="col">
+        <div class="info">
+            <h5>Humidity</h5>
+            <p>${data.main.humidity}%</p>
+        </div>
+        <div class="info">
+            <h5>Air pressure</h5>
+            <p>${data.main.pressure} mph</p>
+        </div>
+    </div>
+</div>
+`)
+// Fetch 5-day weather forecast data
+fetch('https://api.openweathermap.org/data/2.5/forecast?q=Ontario,ca&APPID=2d48b1d7080d09ea964e645ccd1ec93f&units=metric')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+                    const timesToDisplay = [0, 8, 16, 24, 32, 40];
+        //             let d;
+                    let dayName;
+        //             var wf = "";
+        //             wf += "<h2>" + data.city.name + "</h2>"; // City (displays once)
+        //             // alert(data.list)
+        let nextFiveDaysHTML = '<div class="dataweather"><div class="table">';
+
+                    $.each(data.list, function(index, val) {
+                      if(timesToDisplay.includes(index)){
+                        d = new Date(data.list[index].dt * 1000);
+                        dayName = days[d.getDay()];
+
+                        // Add the daily forecast to the HTML
+                        nextFiveDaysHTML += `
+                            <div class="tempday">
+                                <p>${dayName}</p>
+                                <div class="box">
+                                    <p>${val.main.temp}°C</p>
+                                    <img src="http://openweathermap.org/img/wn/${val.weather[0].icon}.png" />
+                                </div>
+                            </div>
+                        `;
+
+
+        //                 d = new Date(data.list[index].dt * 1000);
+        //                 dayName = days[d.getDay()];
+        //                 wf += "<p>" // Opening paragraph tag
+        //                 wf += "<b> "+dayName+"</b>: " // Day
+        //                 wf += val.main.temp + "&degC" // Temperature
+        //                 wf += "<span> " + val.weather[0].description + "</span>"; // Description
+        //                 wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
+        //                 wf += "</p>" // Closing paragraph tag
+                      }
+                    });
+
+                    // // Extract the next five days' forecast data
+                    // const dailyForecasts = data.list.slice(0, 5);
+
+                    // // Initialize HTML for the next five days
+
+                    // // Loop through each day's forecast and update the HTML
+                    // dailyForecasts.forEach((forecast, index) => {
+                    //     // Extract the date, temperature, and weather icon
+                    //     const forecastDate = new Date(forecast.dt * 1000);
+                    //     const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][forecastDate.getUTCDay()];
+                    //     const temperature = Math.round(forecast.main.temp);
+                    //     const iconCode = forecast.weather[0].icon;
+
+                    //     // Add the daily forecast to the HTML
+                    //     nextFiveDaysHTML += `
+                    //         <div class="tempday">
+                    //             <p>${dayOfWeek}</p>
+                    //             <div class="box">
+                    //                 <i class="fas fa-wind"></i>
+                    //                 <p>${temperature}°C</p>
+                    //                 <img src="http://openweathermap.org/img/wn/${iconCode}.png" />
+                    //             </div>
+                    //         </div>
+                    //     `;
+                    // });
+
+                    // Close the HTML for the next five days
+                    nextFiveDaysHTML += '</div></div>';
+
+                    // Insert the next five days' forecast HTML into the document
+                    app.insertAdjacentHTML('beforeend', nextFiveDaysHTML);
+                });
+
+                });
+        });
+    </script>
 @endsection
