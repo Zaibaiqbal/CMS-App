@@ -104,6 +104,9 @@ class PermissionSeeder extends Seeder
 
         $data[++$count] = [ "module" => "User", "name" => "Report Ticket Issue", "guard_name" => "web"];
 
+
+        $data[++$count] = [ "module" => "Reports", "name" => "View Reports", "guard_name" => "web"];
+
         Permission::insert($data);
     }
 }

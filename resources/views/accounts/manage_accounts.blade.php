@@ -20,18 +20,19 @@ Accounts Management
               <div class="card-header">
                 <h3 class="card-title text-uppercase">Accounts List
 
+                @if(Auth::user()->hasAnyPermission(['All']))
+          
+                <a onclick="formModal(event,'{{route('import.accounts')}}','#md_import_data_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                Import Accounts</a>
+                @endif
+
                 @if(Auth::user()->hasAnyPermission(['All','Add Account']))
           
-                    <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                    <a onclick="formModal(event,'{{route('store.account')}}','#modal_add_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase mr-2" style="float: right;">
                         Add Account</a>
                     @endif
 
 
-                @if(Auth::user()->hasAnyPermission(['All']))
-          
-                <a onclick="formModal(event,'{{route('import.accounts')}}','#md_import_data_account','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
-          Import Accounts</a>
-          @endif
                 </h3>
 
               
