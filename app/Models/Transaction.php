@@ -56,6 +56,41 @@ class Transaction extends Model
         ->get();
     }
 
+    public function viewWeeklyCustomerReport($condition = [])
+    {
+
+        $start_date = now()->startOfWeek(); 
+        $end_date = now()->endOfWeek(); 
+// dd($start_date,$end_date);
+        // return Transaction::join('users as c','c.id','=','transactions.client_id')
+        // ->join('payments as p','p.transaction_id','=','transactions.id')
+        // ->join('material_types as mt','mt.id','=','transactions.material_type_id')
+        // ->whereIn('c.client_group',$condition)
+        // ->where('transactions.status','Processed')
+        // ->whereDate('transactions.created_at','>',$start_date)
+        // ->whereDate('transactions.created_at','<',$end_date)
+        // ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
+        // ->get();
+
+        return Transaction::join('users as c','c.id','=','transactions.client_id')
+        ->join('payments as p','p.transaction_id','=','transactions.id')
+        ->join('material_types as mt','mt.id','=','transactions.material_type_id')
+        
+        ->selectRaw("c.name,
+            SUM(CASE WHEN transactions.operation_type = 'Inbound' THEN (transactions.gross_weight - transactions.tare_weight) ELSE 0 END) as inbound_net_weight,
+            SUM(CASE WHEN transactions.operation_type = 'Outbound' THEN (transactions.gross_weight - transactions.tare_weight) ELSE 0 END) as outbound_net_weight")
+
+            ->whereIn('c.client_group',$condition)
+            ->where('transactions.status','Processed')
+
+            ->whereDate('transactions.created_at','>',$start_date)
+            ->whereDate('transactions.created_at','<',$end_date)->get();
+
+
+    }
+
+    
+
     public function getTransactionsByClientId($id)
     {
         return Transaction::where('client_id',$id)->get();

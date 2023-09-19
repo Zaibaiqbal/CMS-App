@@ -135,8 +135,8 @@
                                             <div class="card">
                                                 <div class="card-header text-center">
 
-                                                    <img alt="Logo" src="{{ asset('logos/logo.png') }}"
-                                                        width="35%" />
+                                                    <img alt="Logo" src="{{ asset('logos/ezzton_light.png') }}"
+                                                        width="60%" />
 
 
                                                 </div>

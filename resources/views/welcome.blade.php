@@ -59,7 +59,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
                 <a href="../../index2.html" class="h1">
-                     <img alt="Logo" src="{{asset('logos/logo.png')}}" width="50px" />
+                     <img alt="Logo" src="{{asset('logos/ezzton_light.png')}}" width="50px" />
                </a>
                 </div>
                 <div class="card-body">

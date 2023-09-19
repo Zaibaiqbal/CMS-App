@@ -18,7 +18,7 @@
     <div class="card-header text-center">
       <a href="#" class="h1">
 
-      <img alt="Logo" src="{{asset('logos/logo.png')}}" width="50px" />
+      <img alt="Logo" src="{{asset('logos/ezzton_light.png')}}" width="50px" />
 
       </a>
     </div>

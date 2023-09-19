@@ -26,6 +26,44 @@ class ReportController extends Controller
     }
 
     
+    public function viewWeeklyCustomerReport(Request $request)
+    {
+        try
+        {
+            $condition = [];
+
+            if($request->type == 'TOPPS')
+            {
+                $condition += ['Numbered Clients','TSC','Cash Account'];
+            }
+          
+            if($request->type == 'GFL')
+            {
+                $condition += ['GFL'];
+            }
+            $transaction = new Transaction;
+            $transaction_list = $transaction->viewWeeklyCustomerReport($condition);
+            // dd($transaction_list);
+            $start_date = now()->startOfWeek(); 
+            $end_date = now()->endOfWeek(); 
+            $pdf = PDF::loadView('reports.view_weekly_customer_report', [
+
+                'transaction_list'  =>   $transaction_list,
+                'start_date'        =>   $start_date,
+                'end_date'          =>   $end_date,
+             
+            ]);
+         
+            return $pdf->setPaper('a4', 'landscape')->stream('Weekly Customer Report.pdf');
+            // return redirect('users');
+
+        }
+ 
+        catch(Exception $e)
+        {
+dd($e);
+        }
+    }
 
     public function viewDailyCustomerReport(Request $request)
     {

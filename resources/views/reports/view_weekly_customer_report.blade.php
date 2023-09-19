@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Daily Customer Activity Report</title>
+<title>Summary Customer Activity Report</title>
 
 <style type="text/css">
 	
@@ -64,9 +64,9 @@
             </td>
             <td style="width: 80%;"> 
                 <center>
-                <p> <b style="font-size: 15px;">Detail Customer Activity Report</b> 
+                <p> <b style="font-size: 15px;">Summary Customer Activity Report</b> 
                 <br>
-                    {{date_format(now(),'M d Y')}}
+                    {{date_format($start_date,'M d Y')}},{{date_format($end_date,'M d Y')}}
                     <br>
                     All Facilities
                  </p>
@@ -91,18 +91,32 @@
         </div>
         <table border="0" style="border-collapse: collapse; text-align: center; width:100%; font-size: 12px;">
            <thead border="0" style="">
+           <tr>
+            <td></td>
+            <td colspan="2">Weight</td>
+            <td colspan="2">Volume</td>
+            <td colspan="2">Count</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+           </tr>
             <tr >
-                <th>Ticket Date</th>
-                <th>Facility & Ticket Number</th>
-                <th>Contract</th>
-                <th>Truck #</th>
-                <th>Container</th>
-                <th>Material</th>
-                <th>Material Rate</th>
-                <th>Billing Quantity</th>
+                <th>Customer</th>
+                <th>Inbound</th>
+                <th>Outbound</th>
+                <th>Inbound</th>
+                <th>Outbound</th>
+                <th>Inbound</th>
+                <th>Outbound</th>
+                <th>Billing Qty</th>
                 <th>Material Total</th>
                 <th>Tax Total</th>
                 <th>Total</th>
+                <th>Item Count</th>
+                <th>Ticket Count</th>
             </tr>
           </thead>
           <tbody>
