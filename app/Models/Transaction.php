@@ -84,7 +84,9 @@ class Transaction extends Model
             ->where('transactions.status','Processed')
 
             ->whereDate('transactions.created_at','>',$start_date)
-            ->whereDate('transactions.created_at','<',$end_date)->get();
+            ->whereDate('transactions.created_at','<',$end_date)
+            ->groupby('')
+            ->get();
 
 
     }

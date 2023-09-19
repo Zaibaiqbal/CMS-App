@@ -173,31 +173,31 @@ function importData(event,form_obj,message)
         processData:false,
         success: function(result){
 
-            $(form_obj).get(0).reset();
-
-            $(form_obj).closest('.modal').modal('hide');
-            
-            // messageToaster(result.status,result.message,result.status);
-
-            toastr.options =
-            {
-                "closeButton" : true,
-                "progressBar" : true
+            if (result.status) {
+                // Only hide the modal and display success message if the response is successful
+                $(form_obj).closest('.modal').modal('hide');
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true
+                }
+                toastr.success(result.message);
+            } else {
+                // Handle other cases here, e.g., displaying an error message
+                toastr.error(result.message);
             }
-            toastr.success(result.message);
-
+            location.reload();
             removeThemeLoader();
         },
         error: function(result)
         {
             // console.log(result.responseJSON);
             // messageToaster(result.responseJSON.status,result.responseJSON.message,result.responseJSON.status);
-            toastr.options =
-            {
-                "closeButton" : true,
-                "progressBar" : true
-            }
-            toastr.success(result.message);
+            var errors = result.responseJSON.errors;
+            $.each(errors, function (key, val) {
+
+                $("#" + key + "_error").text(val[0]);
+            });
+            toastr.error("An error occurred while processing your request.");
 
             removeThemeLoader();
         }

@@ -24,6 +24,11 @@ class Truck extends Model
 
     }
 
+    public function getTruckByCondition($plate_no,$client_id)
+    {
+        return Truck::where('is_deleted', 0)->where('client_id',$client_id)->where('plate_no',$plate_no)->first();
+
+    }
     public function getTruckById($id)
     {
         return Truck::where('is_deleted', 0)->where('id',$id)->first();

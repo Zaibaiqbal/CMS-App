@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Truck;
 use App\Models\User;
 use App\Models\UserAccount;
+use App\Rules\PlateNoRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -88,7 +89,8 @@ class TruckController extends Controller
 
             $request->validate([
 
-                'plate_no'              => 'required',
+                'plate_no'              => ['required',new PlateNoRule(decrypt($request->client),$request->plate_no)],
+
                 // 'vin_no'                => 'required|unique:trucks,plate_no',
                 'model'                 => 'required|max:255',
                 'tare_weight'           => 'required|gt:0',
@@ -313,6 +315,7 @@ class TruckController extends Controller
         try
         {
             $data = Truck::where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
+            ->distinct('trucks.plate_no')
                     ->get();
      
         return json_encode($data);

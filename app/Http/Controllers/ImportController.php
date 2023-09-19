@@ -40,16 +40,10 @@ class ImportController extends Controller
 
     public function importClientData(Request $request)
     {
-        try
-        {
+       
             if($request->isMethod('post'))
             {
-                $validator = Validator::make($request->all(),$this->getValidationList());
-                
-                if($validator->fails())
-                {
-                    $this->setErrorMessage(422,'error',$validator->errors()->first());
-                }
+                $request->validate($this->getValidationList());
 
                 DB::transaction(function() use ($request) {
         
@@ -104,7 +98,8 @@ class ImportController extends Controller
 
                     }            
         
-                    return $this->setErrorMessage(200,'success','Csv succssfully uploaded');
+                    return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
+
                 });
              
     
@@ -114,19 +109,12 @@ class ImportController extends Controller
                 return view('data-import.modals.client_import')->render();
     
             }
-        }
-        catch(Exception $e)
-        {
-            dd($e);
-        }
-     
+      
     }
 
     public function importAccountsData(Request $request)
     {
-        try
-        {
-            if($request->isMethod('post'))
+        if($request->isMethod('post'))
             {
                 $validator = Validator::make($request->all(),$this->getValidationList());
                 
@@ -211,7 +199,7 @@ class ImportController extends Controller
 
                     }            
         
-                    return $this->setErrorMessage(200,'success','Csv succssfully uploaded');
+                    return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
                 });
              
     
@@ -221,11 +209,7 @@ class ImportController extends Controller
                 return view('data-import.modals.accounts_import')->render();
     
             }
-        }
-        catch(Exception $e)
-        {
-            dd($e);
-        }
+    
      
     }
 

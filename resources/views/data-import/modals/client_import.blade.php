@@ -15,7 +15,8 @@
             
           <div class="col-sm-12 col-lg-12" id="file">
                 <label class="font-weight-bold col-form-label"> File <i style = "color:red;">*</i></label>
-            <small class="form-errors pull-right req" value="*">{{ $errors->first('file',":message") }}</small>
+                <small class="text-danger" id="file_error"></small>
+
 
             <div class="input-group mb-3">
 

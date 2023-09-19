@@ -179,14 +179,13 @@ function autoSearchTruck(event,obj)
 
                       return {
 
-                          label: item.identifier,
+                          label: item.plate_no,
                           label1: item.model,
                           val1:    item.color,
                           label2: item.company,
                           label3: item.vin_no,
                           label4: item.tare_weight,
                           label5: item.description,
-                          val2: item.plate_no,
                       }
                 
                   }))
@@ -207,7 +206,7 @@ function autoSearchTruck(event,obj)
 
           $('.company').val(i.item.label2).attr('readonly',true);
           $('input[name=color]').val(i.item.val1).attr('readonly',true);
-          $('.auto_search_truck').val(i.item.val2);
+          $('.auto_search_truck').val(i.item.label);
           $('.model').val(i.item.label1).attr('readonly',true);
           $('.vin_no').val(i.item.label3).attr('readonly',true);
           $('.tare_weight').val(i.item.label4).attr('readonly',true);
