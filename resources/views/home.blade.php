@@ -846,9 +846,9 @@ fetch('https://api.openweathermap.org/data/2.5/forecast?q=Ontario,ca&APPID=2d48b
                         // Add the daily forecast to the HTML
                         nextFiveDaysHTML += `
                             <div class="tempday">
-                                <p>${dayName}</p>
+                                <p class="alwaysBlack">${dayName}</p>
                                 <div class="box">
-                                    <p>${val.main.temp}°C</p>
+                                    <p class="alwaysBlack">${val.main.temp}°C</p>
                                     <img src="http://openweathermap.org/img/wn/${val.weather[0].icon}.png" />
                                 </div>
                             </div>

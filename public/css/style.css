@@ -25914,3 +25914,6 @@ p, h5 {
     padding-top: 20px;
     font-size: 12px;
 }
+.alwaysBlack{
+    color: black !important;
+}
