@@ -20,7 +20,7 @@ class SystemRoles extends Model
 
     public function getPermissionByModule($module)
     {
-        return Permission::where('module' , $module)->get();
+        return Permission::where('module' , $module)->orderby('name','asc')->get();
     }
 
     public function getDistinctModuleList()
