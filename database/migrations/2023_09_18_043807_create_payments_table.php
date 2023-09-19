@@ -16,9 +16,12 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('transaction_id');
-            $table->double('rate');
-            $table->double('quantity');
-            $table->double('total_cost');
+            $table->double('rate')->default(0)->nullable();
+            $table->double('quantity')->default(0)->nullable();
+            $table->double('amount')->default(0)->nullable();
+            $table->double('tax_amount')->default(0)->nullable();
+            $table->double('surcharge_amount')->default(0)->nullable();
+            $table->string('mode_of_payment')->nullable();
             $table->timestamps();
         });
     }

@@ -448,7 +448,7 @@
                                             <a href="{{ route('reports') }}">
                                                 <span class="pcoded-micon"><i class="feather icon-command"></i></span>
 
-                                                <span class="pcoded-mtext">Reports</span>
+                                                <span class="pcoded-mtext text-uppercase">Reports</span>
                                             </a>
 
                                         </li>

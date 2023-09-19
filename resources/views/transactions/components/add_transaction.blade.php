@@ -155,7 +155,8 @@
 <div class="row">
     <div class="col-md-12">
         <input type="hidden" value="" name="client_group" class="client_group">
-        <button type="submit" onclick="submitModalForm(event,this,'#form_create_transaction','')" class="btn btn-primary my-3" style="float: right;">Queue</button>
+        <button onclick="resetForm(event,this)" class="btn btn-danger my-3" style="float: right;">Reset</button>
+        <button type="submit" onclick="submitModalForm(event,this,'#form_create_transaction','')" class="btn btn-primary my-3 mx-2" style="float: right;">Queue</button>
 
     </div>
 
@@ -167,6 +168,13 @@
 @include('users.modals.add_client')
 
 <script>
+    function resetForm(event,obj)
+    {
+        event.preventDefault();
+        $('#form_create_transaction').trigger('reset');
+        $('.truck_id').val('');
+        $('.client_group').val('');
+    }
 
     function calculateNetWeight(event,obj)
     {

@@ -123,8 +123,8 @@
         <table border="0" style="width: 70%;border-collapse: collapse;font-size: 12pt;margin-left:10%;">
             <thead>
                     <tr>
-                        <th>Sold To</th>
-                        <th>Ship To</th>
+                        <td> Sold To</td>
+                        <td >Ship To</td>
                     </tr>
 
             </thead>
@@ -221,7 +221,24 @@
 
                 
             </tr>
-            <tr></tr>
+            <tr>
+            @php($tax_amount = 0)
+
+                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">@if(isset($surcharge_hst->id)) HST @ {{$surcharge_hst->hst_per}} @endif</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                @if(isset($surcharge_hst->id)) 
+                    @php($tax_per = $surcharge_hst->hst_per/100)
+                    @php($tax_amount = $tax_per * $transaction_list->sum('total_cost'))
+
+                @endif
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$tax_amount}}</td>
+
+                
+            </tr>
             <tfoot style="border:1px solid black;">
                 <tr rowspan="3">
                     <td>Shipped By:</td>
@@ -230,10 +247,9 @@
                     <td colspan="2"> Tracking Number</td>
                     <td></td>
                     <td style="border-left: 1px solid black;border-right: 1px solid black;">Total Amount</td>
-                    @php($sub_total = $surcharge_amount + $transaction_list->sum('total_cost'))
+                    @php($sub_total = $surcharge_amount + $transaction_list->sum('total_cost')+$tax_amount)
                     <td>{{($sub_total)}}</td>
                     
-                    <td></td>
                 </tr>
                 <tr>
 
@@ -244,7 +260,6 @@
                     <td></td>
                     <td style="border-left: 1px solid black;border-right: 1px solid black;">Amount Paid</td>
                     <td></td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Sold By:</td>
@@ -253,7 +268,6 @@
                     <td colspan="2"></td>
                     <td></td>
                     <td style="border-left: 1px solid black;border-right: 1px solid black;">Amount Owning</td>
-                    <td></td>
                     <td></td>
                 </tr>
 

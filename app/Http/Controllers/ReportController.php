@@ -96,7 +96,7 @@ dd($e);
                     $weekly_pdf_report = $pdf->output();
 
                     // Send the email with the PDF attached
-                    \Mail::to($user->email)->send(new \App\Mail\WeeklyInvoiceReportMail($weekly_pdf_report));
+                    // \Mail::to($user->email)->send(new \App\Mail\WeeklyInvoiceReportMail($weekly_pdf_report));
 
                     return $pdf->setPaper('a4', 'landscape')->stream($user->name.' Weekly Invoice Report.pdf');
                     // return redirect('users');

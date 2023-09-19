@@ -190,6 +190,9 @@ Route::get('viewticketissues', [App\Http\Controllers\HomeController::class, 'vie
 Route::get('dailycustomerreport', [App\Http\Controllers\ReportController::class, 'viewDailyCustomerReport'])->name('dailycustomerreport');
 
 
+Route::get('weeklycustomerreport', [App\Http\Controllers\ReportController::class, 'viewWeeklyCustomerReport'])->name('weeklycustomerreport');
+
+
 // Ticket Route End
 
 

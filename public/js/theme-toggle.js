@@ -25,6 +25,8 @@ $(document).ready(function () {
             $('.auth_name').addClass('text-dark');
             $('.notification-toggle').addClass('text-dark');
             $('.dropdown-icon').addClass('text-light');
+            $('.notification-msg').addClass('text-light');
+            $('.notification-time').addClass('text-light');
 
             $(themeToggle).html('Light Mode');
 

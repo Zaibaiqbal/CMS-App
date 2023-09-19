@@ -47,11 +47,12 @@ class Transaction extends Model
     public function viewDailyCustomerReport($condition = [])
     {
         return Transaction::join('users as c','c.id','=','transactions.client_id')
+        ->join('payments as p','p.transaction_id','=','transactions.id')
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         ->whereIn('c.client_group',$condition)
         ->where('transactions.status','Processed')
         ->whereDate('transactions.created_at',now())
-        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,transactions.total_cost")
+        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
         ->get();
     }
 
@@ -134,6 +135,8 @@ class Transaction extends Model
 
             $transaction = new Transaction;
           
+            $transaction->plate_no = $object['plate_no'];
+
             if(isset($object['truck_id']))
             {
                 $truck = Truck::find($object['truck_id']);
@@ -142,6 +145,7 @@ class Transaction extends Model
                 {
                     $transaction->truck_id = $truck->id;
                     $transaction->client_id = $truck->user->id;
+                    $transaction->plate_no = $truck->plate_no;
 
                 }
             }
@@ -150,7 +154,6 @@ class Transaction extends Model
                 $transaction->added_id = Auth::user()->id;
 
                 // dd($object);
-                $transaction->plate_no = $object['plate_no'];
 
                 if(isset($object['client']))
                 {
@@ -227,7 +230,6 @@ class Transaction extends Model
             if(isset($transaction->id))
             {
 
-
                 if(isset($object['truck_id']))
                 {
                     $truck = Truck::find($object['truck_id']);
@@ -236,6 +238,7 @@ class Transaction extends Model
                     {
                         $transaction->truck_id = $truck->id;
                         $transaction->client_id = $truck->user->id;
+                        $transaction->plate_no = $truck->plate_no;
 
                     }
 
@@ -298,12 +301,19 @@ class Transaction extends Model
 
                 $this->getMaterialRate($transaction);
 
-                // $material_rate =  $transaction->materialType->board_rate;
+                $payment = new Payment;
 
-                // $transaction->material_rate = $material_rate;
-                // $transaction->total_cost = $total_price;
+                $payment_info['transaction_id'] =  $transaction->id; 
+                $payment_info['amount'] =  $transaction->total_cost; 
+                $payment_info['rate']  =  $transaction->material_rate; 
+                $payment_info['net_weight']  =  $transaction->net_weight; 
+                $payment_info['tax_amount']  =  $this->calculateSurchargeHstTax($transaction)['tax_amount']; 
+                $payment_info['surcharge_amount']  =  $this->calculateSurchargeHstTax($transaction)['surcharge_amount']; 
+
+                $payment->storePayment($payment_info);
 
                 $transaction->driver_id  = $driver->id;
+                
 
                 $transaction->update();
 
@@ -415,6 +425,27 @@ class Transaction extends Model
         });
 
     }
+
+    public function calculateSurchargeHstTax($transaction)
+    {
+        $surcharge_hst = new SurchargeHstPercentage;
+        $surcharge_hst = $surcharge_hst->getSurchargeHstPer();
+
+        $data = ['tax_amount' => 0 , 'surcharge_amount' => 0];
+        
+        if(isset($surcharge_hst->id))
+        {
+            $hst_per = $surcharge_hst->hst_per;
+
+            $data['tax_amount'] = ($hst_per/100) * $transaction->total_cost;
+
+            $surcharge_per = $surcharge_hst->surcharge_per;
+
+            $data['surcharge_amount'] = ($surcharge_per/100) * $transaction->total_cost;
+        }
+        return $data;
+    }
+
     public function getMaterialRate(Transaction $transaction)
     {
         $material_rate = 0;

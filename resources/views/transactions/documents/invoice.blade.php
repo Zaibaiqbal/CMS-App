@@ -41,8 +41,13 @@
                 @csrf
                 <input type="hidden" value="{{$transaction->id}}" name="transaction">
                 <input type="hidden" value="pdf" name="format">
+                <div style="">
+                <a href="{{route('transactions.list')}}" style=""><img src="{{asset('images/back.png')}}" width="2%"></a>
+
                 <button style="margin-left: 96% !important;border:none;background-color:transparent;" type="submit" class="pdf" title="Generate PDF" name="pdf" value="pdf"><img src="{{asset('images/pdf-icon.png')}}" width="60%"></button>
-                <a href="{{route('transactions.list')}}"><img src="{{asset('images/back.png')}}" width="60%"></a>
+
+                </div>
+               
             </form>
         </div>
         @endif
