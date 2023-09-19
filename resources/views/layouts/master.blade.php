@@ -142,12 +142,12 @@
                 <nav class="navbar header-navbar pcoded-header">
                     <div class="navbar-wrapper">
 
-                        <div class="navbar-logo" style="height: 72px !important;">
+                        <div class="navbar-logo" style="height: 56px !important;">
                             <a class="mobile-menu" id="mobile-collapse" href="#!">
                                 <i class="feather icon-menu"></i>
                             </a>
                             <a href="{{ route('home') }}" class="my-4">
-                                <img class="img-fluid" src="{{ asset('logos/logo.png') }}" width="30%"
+                                <img class="img-fluid" src="{{ asset('logos/ezzton_dark_initials.png') }}" width="40%"
                                     alt="Theme-Logo">
                             </a>
                             <a class="mobile-options">
@@ -258,7 +258,7 @@
                     </div>
                 </nav>
 
-                <div class="pcoded-main-container mt-3">
+                <div class="pcoded-main-container">
                     <div class="pcoded-wrapper">
                         <nav class="pcoded-navbar">
                             <div class="pcoded-inner-navbar main-menu">

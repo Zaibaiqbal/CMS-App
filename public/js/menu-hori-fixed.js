@@ -41,7 +41,7 @@ $( document ).ready(function() {
             var value = $(this).attr("fream-type");
             $('.pcoded').attr('fream-type', value);
 
-            $('.pcoded-header').attr("header-theme", "themelight"+value);
+            $('.pcoded-header').attr("header-theme", "theme"+value);
             $('.pcoded-navbar').attr("navbar-theme", "theme" + value);
             $('.navbar-logo').attr("logo-theme", "theme" + value);
 
