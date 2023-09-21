@@ -21,7 +21,7 @@ class TransactionController extends Controller
         $transaction = new Transaction;
         if(!Auth::user()->hasRole(['Super Admin']))
         {
-            $transactions_list =  $transaction->getTransactionsByCondition(['client_id' => Auth::user()->id]);
+            $transactions_list =  $transaction->getTransactionsByCondition(['added_id' => Auth::user()->id]);
 
         }
         else

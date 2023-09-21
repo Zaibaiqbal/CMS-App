@@ -153,6 +153,8 @@ Route::match(['post','get'],'importclients', [App\Http\Controllers\ImportControl
 
 Route::match(['post','get'],'importaccounts', [App\Http\Controllers\ImportController::class, 'importAccountsData'])->name('import.accounts')->middleware('auth','permission:All');
 
+Route::match(['post','get'],'importtrucks', [App\Http\Controllers\ImportController::class, 'importTrucksData'])->name('import.trucks')->middleware('auth','permission:All');
+
 
 Route::get('sendemployeedailyprogress', [App\Http\Controllers\UserController::class, 'sendEmployeeDailyProgress'])->name('sendemployeedailyprogress')->middleware('auth');
 

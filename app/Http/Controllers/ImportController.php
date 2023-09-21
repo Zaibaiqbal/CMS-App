@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Truck;
 use App\Models\User;
 use App\Models\UserAccount;
 use Exception;
@@ -15,11 +16,6 @@ class ImportController extends Controller
 
     private $call_back;
     private $code;
- 
-
-
-
-
 
     public function __construct()
     {
@@ -98,9 +94,9 @@ class ImportController extends Controller
 
                     }            
         
-                    return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
 
                 });
+                return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
              
     
             }
@@ -194,9 +190,9 @@ class ImportController extends Controller
 
                     }            
         
-                    return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
                 });
              
+                return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
     
             }
             else
@@ -207,6 +203,105 @@ class ImportController extends Controller
     
      
     }
+
+    public function importTrucksData(Request $request)
+    {
+        try
+        {
+            $data = ['status' => false,'message' => ''];
+
+        if($request->isMethod('post'))
+            {
+                $request->validate($this->getValidationList());
+
+                DB::transaction(function() use ($request) {
+        
+        
+                    $path = $request->file('file')->getRealPath();
+        
+                    if($request->has('header')) 
+                    {
+                        $data = Excel::load($path, function($reader) {})->get()->toArray();
+                    }
+                    else 
+                    {
+                        $data = array_map('str_getcsv', file($path));
+                    }
+        
+                
+                    unset($data[0]);
+                    
+                    $user_info = [];
+        
+                    foreach($data as $key => $rows)
+                    {
+                        // dd($data[5]);
+        
+                        if(strlen(trim($rows[1])) > 0)
+                        {
+                            $account = new Account;
+
+                            $account = $account->getAccountByAccountNo(trim($rows[2]));
+
+                            if(isset($account->id))
+                            {
+                                $user = $account->user;
+
+                                $truck = new Truck;
+
+                                $truck = $truck->getTruckByPlateNo(trim($rows[1]));
+
+                                if(isset($truck->id) && $truck->user->id == $user->id)
+                                {
+                                    // dd("truck exist already ", $truck->plate_no .'-'.$user->name);
+                                    continue;
+                                 
+                                }
+                                else
+                                {
+                                    $truck = new Truck;
+
+                                    $truck->plate_no            =   trim($rows[1]);
+                                    $truck->client_id            =   $user->id;
+
+                                    // $truck->identifier          = trim($rows[2]).'-'.$user->name;
+
+                                    $truck->save();
+    
+                                }
+
+                            }
+                            else
+                            {
+                                // dd("account doesnot exist".$rows[2]);
+                            continue;
+                            }
+
+                        //  dd($user);
+                        }  
+
+                    }            
+        
+                });
+             
+                return $data = ['status' => true,'message' => 'Csv uploaded successfully'];
+    
+            }
+            else
+            {
+                return view('data-import.modals.trucks_import')->render();
+    
+            }
+            return $data;
+        }
+        catch(Exception $e)
+        {
+            dd($e);
+        }
+    
+     
+    }
+    
 
     public function setErrorMessage($code,$status,$msg)
     {

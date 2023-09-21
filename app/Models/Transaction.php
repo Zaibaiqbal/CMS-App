@@ -116,10 +116,17 @@ class Transaction extends Model
 
     public function getEmployeeProgressByCondition($id,$date)
     {
-        $startOfDay = now()->startOfDay();
-// dd($date,$startOfDay);
-        return Transaction::where('added_id',$id)->whereDate('created_at', '>=', $startOfDay)
-            ->whereDate('created_at', '<=', $date)->get();
+        $start_date = now()->startOfWeek(); 
+        $start_date = $start_date->format('Y-m-d H:i:s');
+// dd($start_date,$date);
+        return Transaction::join('payments as p','p.transaction_id','=','transactions.id')
+        ->join('material_types as mt','mt.id','=','transactions.material_type_id')
+        ->where('transactions.added_id',$id)
+        ->where('transactions.status','Processed')
+        ->whereDate('transactions.created_at','>=',$start_date)
+        ->whereDate('transactions.created_at','<=',$date)
+        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
+        ->get();
     }
     
     public function getDailyMaterialWiseStats($condition = [],$from = "",$to ="")

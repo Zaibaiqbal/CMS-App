@@ -110,14 +110,9 @@ class UserController extends Controller
             $transaction = new Transaction;
 
             $transaction_list = $transaction->getEmployeeProgressByCondition($user_id,$request->date);
-// dd($transaction);
+// dd($transaction_list);
             $user = new User;
             $user = $user->getUserById($user_id);
-
-            // return view('users.documents.print_employees_progress_pdf',[
-            //     'transaction_list'     =>  $transaction,
-            //     'date'          =>  $request->date
-            // ]);
 
             $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
             [ 
@@ -127,14 +122,7 @@ class UserController extends Controller
         ]);
                 return $pdf->setPaper('a4', 'portrait')->stream('Employee Progress.pdf');
 
-        //     $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
-        //     [ 
-        //         'transaction_list'      =>  $transaction_list,
-        //         'user'                  =>   $user
-        // ]);
 
-        //     // Return the PDF as a downloadable response
-        //     return $pdf->stream('transactions.pdf');
 
         }
         catch(Exception $e)

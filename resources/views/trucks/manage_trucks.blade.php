@@ -59,9 +59,16 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
               <div class="card-header">
                 <h3 class="card-title text-uppercase">All Fleet
 
+
+                  @if(Auth::user()->hasAnyPermission(['All']))
+            
+                  <a onclick="formModal(event,'{{route('import.trucks')}}','#md_import_trucks','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                  Import Trucks</a>
+                  @endif
+
                     @if(Auth::user()->hasAnyPermission(['All','Add Truck']))
             
-                    <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase" style="float: right;">
+                    <a onclick="formModal(event,'{{route('store.truck')}}','#modal_add_truck','#target_modal')" class="btn btn-primary text-white font-weight-bolder text-uppercase mr-2" style="float: right;">
                     Add Truck</a>
                     @endif
                 </h3>
