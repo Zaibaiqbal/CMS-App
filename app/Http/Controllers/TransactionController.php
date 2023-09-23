@@ -226,6 +226,8 @@ class TransactionController extends Controller
     
                 if($request->isMethod('post'))
                 {
+                    $payment_mode_list = implode(',', ['Cash','Pass','Debit/Credit']);
+
                     $transaction = new Transaction;
                     $transaction = $transaction->getTransactionById(decrypt($request->transaction_id));
                     
@@ -235,6 +237,13 @@ class TransactionController extends Controller
                     {
                         $validation += [
                             'account'    => 'required'
+                        ];
+
+                    }
+                    if($transaction->client_group == "Cash Account")
+                    {
+                        $validation += [
+                            'mode_of_payment'    => 'required|In:'.$payment_mode_list
                         ];
 
                     }

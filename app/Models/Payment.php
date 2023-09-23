@@ -22,6 +22,18 @@ class Payment extends Model
             $payment->rate           =          $object['rate'];
             $payment->quantity       =          $object['net_weight'];
 
+            if(isset($object['mode_of_payment']))
+            {
+                $payment->mode_of_payment       =          $object['mode_of_payment'];
+
+            }
+
+            if(isset($object['pass_no']))
+            {
+                $payment->pass_no       =          $object['pass_no'];
+
+            }
+
             $payment->save();
 
             return with($payment);

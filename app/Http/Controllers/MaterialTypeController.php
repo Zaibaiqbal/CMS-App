@@ -85,18 +85,28 @@ class MaterialTypeController extends Controller
 
     public function storeMaterialType(Request $request)
     {
-        try
-        {
+     
 
             $data = ['status' => false, 'message' => ''];
-        
-            $request->validate([
+            $validation = [];
 
-                // 'type'                            => 'required|max:255',
-                // 'board_rate'                      => 'required',
-                // 'slab_rate'                      => 'required',
-                // 'slab_weight'                      => 'required',
-                // 'weight_break'                      => 'required',
+            if($request->is_slab_rate)
+            {
+                $validation = [
+              
+                'slab_rate'                      => 'required',
+                'slab_weight'                      => 'required',
+                'weight_break'                      => 'required',
+               
+               
+                ];
+            }
+        
+            $request->validate($validation+[
+
+                'type'                            => 'required',
+                'board_rate'                      => 'required',
+              
                
                
 
@@ -116,13 +126,8 @@ class MaterialTypeController extends Controller
            
             return $data;
 
-        }
-        catch(Exception $e)
-        {
 
-        }
-
-        return redirect()->back();
+        // return redirect()->back();
       
     }
 

@@ -195,6 +195,13 @@ class HomeController extends Controller
                     }
 
                 }
+                else
+                {
+                    // dd('here');
+                    
+                    return view('add_ticket_issue');
+                    
+                }
                
             }
 

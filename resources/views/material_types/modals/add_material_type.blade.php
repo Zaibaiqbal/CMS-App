@@ -44,8 +44,15 @@
                                 </div>
 
                             </div>
+                            <div class="col-md-12">
+                                    <input type="checkbox" name="is_slab_rate" class="" value="1" onclick="checkSlabSection(event,this)">
+                                    <label for="">Slab Rate for Material</label>
+                                    <small id="is_slab_rate_error" class="text-danger"></small>
 
-                            <div class="col-md-4">
+                                  
+                            </div>
+
+                            <div class="col-md-4 slab_section" style="display: none;">
                               @php($label = 'Slab Weight')
                               @php($name = 'slab_weight')
                                 <div class="form-group">
@@ -58,7 +65,7 @@
 
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 slab_section" style="display: none;">
                               @php($label = 'Slab Rate')
                               @php($name = 'slab_rate')
                                 <div class="form-group">
@@ -71,7 +78,7 @@
 
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 slab_section" style="display: none;">
                               @php($label = 'Weight Break')
                               @php($name = 'weight_break')
                                 <div class="form-group">
@@ -104,3 +111,22 @@
     </div>
   </div>
 </div>
+
+<script>
+   function checkSlabSection(event,obj)
+    {
+        var obj = $(obj);
+
+
+		if(obj.prop('checked'))
+		{
+			$('.slab_section').show();
+        }
+        else{
+
+            $('.slab_section').hide();
+        }
+
+    }
+
+</script>

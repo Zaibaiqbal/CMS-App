@@ -294,7 +294,7 @@ class TruckController extends Controller
         try
         {
             $data = Truck::join('users as u','u.id','=','trucks.client_id')
-                    ->selectRaw('trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id,u.client_group,trucks.identifier')
+                    ->selectRaw("trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id,u.client_group,concat(trucks.plate_no,'-',u.name) as identifier")
                     ->where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
                     ->get();
      

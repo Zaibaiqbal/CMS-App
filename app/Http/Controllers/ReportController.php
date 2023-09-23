@@ -25,7 +25,6 @@ class ReportController extends Controller
 
     }
 
-    
     public function viewWeeklyCustomerReport(Request $request)
     {
         try
@@ -42,16 +41,19 @@ class ReportController extends Controller
                 $condition += ['GFL'];
             }
             $transaction = new Transaction;
-            $transaction_list = $transaction->viewWeeklyCustomerReport($condition);
+            $client_list = $transaction->getTransactionsClientList();
+            // $transaction_list = $transaction->viewWeeklyCustomerReport($condition);
+
             // dd($transaction_list);
             $start_date = now()->startOfWeek(); 
             $end_date = now()->endOfWeek(); 
+
             $pdf = PDF::loadView('reports.view_weekly_customer_report', [
 
-                'transaction_list'  =>   $transaction_list,
+                'client_list'       =>   $client_list,
                 'start_date'        =>   $start_date,
                 'end_date'          =>   $end_date,
-             
+                'transaction'       =>  $transaction
             ]);
          
             return $pdf->setPaper('a4', 'landscape')->stream('Weekly Customer Report.pdf');
@@ -82,7 +84,6 @@ dd($e);
             $transaction = new Transaction;
             $transaction_list = $transaction->viewDailyCustomerReport($condition);
 
-            // dd($transaction_list);
             $pdf = PDF::loadView('reports.view_daily_customer_report', [
 
                 'transaction_list'  =>   $transaction_list,

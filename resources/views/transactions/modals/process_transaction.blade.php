@@ -197,7 +197,37 @@
 
 
                 </div>
+                @if($transaction->client_group == "Cash Account")
 
+                <div class="col-md-4 mb-2">
+
+                    @php($label = 'Mode of Payment')
+                    @php($name = 'mode_of_payment')
+                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                   <select name="{{$name}}" class="form-control form-control-sm" id="" onchange="showModeofPayment(event,this)">
+                        
+                        <option value="0">{{$label}}</option>
+
+                        @foreach(['Cash','Pass','Debit/Credit'] as $rows)
+                        <option value="{{$rows}}">{{$rows}}</option>
+                        @endforeach
+                   </select>
+
+
+                </div>
+
+                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
+
+                @php($label = 'Pass No.')
+                @php($name = 'pass_no')
+                <label for="">{{$label}} <span class="text-danger"></span> </label>
+                <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                </div>
+                @endif
 
                 <div class="col-md-12">
                     @php($label = 'Driver Name')
@@ -390,5 +420,27 @@ function calculateNetWeight(event,obj)
         });
 
     }
+
+
+
+    function showModeofPayment(event,obj)
+    {
+        event.preventDefault();
+
+        var mode_of_payment = $(obj).val();
+
+        if(mode_of_payment == 'Pass')
+        {
+            $('.pass_no_section').show();
+        }
+       else
+       {
+        $('.pass_no_section').hide();
+
+       }
+
+    }
+    
+    
 
 </script>

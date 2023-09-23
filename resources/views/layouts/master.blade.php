@@ -457,6 +457,15 @@
 
                                         </li>
                                     @endif
+                                    @if (Auth::user()->hasAnyPermission(['All', 'Ticket Issue']))
+                                        <li class="">
+                                            <a href="{{ route('ticketissue') }}">
+                                                <span class="pcoded-micon"><i class="feather icon-command"></i></span>
+                                                <span class="pcoded-mtext text-uppercase">Report Ticket Issue</span>
+                                            </a>
+
+                                        </li>
+                                    @endif
 
                                 </ul>
 

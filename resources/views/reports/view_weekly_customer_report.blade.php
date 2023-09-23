@@ -120,26 +120,56 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($transaction_list as $rows)
-            <tr>
-                <td>{{date_format($rows->created_at,'m/d/Y')}}</td>
-                <td>{{$rows->ticket_no}}</td>
-                <td>TOPPS</td>
-                <td>{{$rows->plate_no}}</td>
-                <td></td>
-                <td>{{$rows->material_name}}</td>
-                <td>{{$rows->material_rate}}</td>
-                <td>{{$rows->quantity}}</td>
-                <td>{{$rows->amount}}</td>
-                <td>{{$rows->tax_amount}}</td>
-                <td>{{$rows->amount + $rows->tax_amount}}</td>
 
+            @foreach($client_list as $client)
+            <tr>
+                <td colspan="14" style="text-align: left;width:20px;">{{$client->name}}</td>
+                
             </tr>
+            @php($transaction_list = $transaction->getMaterialWiseClientTransactions($client->id))
+                @foreach($transaction_list as $rows)
+
+                    <tr>
+                        <td>{{$rows->name}}</td>
+                        <td>{{$rows->inbound_net_weight}}</td>
+                        <td>{{$rows->outbound_net_weight}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{$rows->inbound_net_weight}}</td>
+                        <td>${{$rows->amount}}</td>
+                        <td>${{$rows->tax_amount}}</td>
+                        <td>${{$rows->tax_amount + $rows->amount}}</td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    
+
+                @endforeach
          
+                <tr>
+
+                        <td>Customer Totals</td>
+                        <td>{{$transaction_list->sum('inbound_net_weight')}}</td>
+                        <td>{{$transaction_list->sum('outbound_net_weight')}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{$transaction_list->sum('inbound_net_weight')}}</td>
+                        <td>${{$transaction_list->sum('amount')}}</td>
+                        <td>${{$transaction_list->sum('tax_amount')}}</td>
+                        <td>${{$transaction_list->sum('tax_amount') + $transaction_list->sum('amount')}}</td>
+                        <td></td>
+                        <td></td>
+
+                </tr>
             @endforeach
             </tbody>
         
-      
+      {{--
             <tfoot style="margin-top:20%;">
             <tr>
                 <td><br></td>
@@ -172,9 +202,9 @@
                 <td></td>
                 <td></td>
                 <td>Customer Totals:</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
-                <td>{{$transaction_list->sum('tax_amount')}}</td>
-                <td>{{$transaction_list->sum('amount')+$transaction_list->sum('tax_amount')}}</td>
+                <td>${{$transaction_list->sum('amount')}}</td>
+                <td>${{$transaction_list->sum('tax_amount')}}</td>
+                <td>${{$transaction_list->sum('amount')+$transaction_list->sum('tax_amount')}}</td>
 
                 
             </tr>
@@ -191,26 +221,12 @@
                 <td>Tax Total</td>
                 <td>Total</td>
             </tr>
-            <tr>
-                <td>CD - CONST. & DEMO. </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{{$transaction_list->sum('quantity')}}</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
-                <td>{{$transaction_list->sum('tax_amount')}}</td>
-                <td>{{$transaction_list->sum('amount')+$transaction_list->sum('tax_amount')}}</td>
-            
-                
-            </tr>
+         
 
             </tfoot>
 
                 
-           
+            --}}
          </table>
 
 

@@ -22,7 +22,10 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
     border: 1px solid #ccc;
     list-style: none;
     padding: 0;
-    width: 16% !important;
+    width: 20% !important;
+    height: 200px;
+    z-index: 1000;
+    overflow: scroll;
   }
 
   .custom-autocomplete-list li {

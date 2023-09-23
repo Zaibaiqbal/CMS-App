@@ -184,6 +184,9 @@ Route::get('surchargeinfo', [App\Http\Controllers\HomeController::class, 'surcha
 Route::post('ticketissue', [App\Http\Controllers\HomeController::class, 'storeTicketIssue'])->name('ticketissue')->middleware('auth','permission:All|Report Ticket Issue');
 
 
+Route::match(['get','post'],'ticketissue', [App\Http\Controllers\HomeController::class, 'storeTicketIssue'])->name('ticketissue')->middleware('auth','permission:All|Ticket Issue');
+
+
 Route::get('autosearchticketnumber', [App\Http\Controllers\TransactionController::class, 'autoSearchTicketNumber'])->name('autosearchticketnumber');
 
 

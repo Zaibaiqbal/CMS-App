@@ -44,52 +44,61 @@ class Transaction extends Model
          return $query->orderby('id','desc')->get();
     }
 
+    public function getTransactionsClientList()
+    {
+        return User::join('transactions as t','t.client_id','=','users.id')->selectRaw("users.name as name,users.id")->groupby('users.id')->get();
+
+    }
+
+    
+
     public function viewDailyCustomerReport($condition = [])
     {
-        return Transaction::join('users as c','c.id','=','transactions.client_id')
+        return Transaction::leftjoin('users as c','c.id','=','transactions.client_id')
         ->join('payments as p','p.transaction_id','=','transactions.id')
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
-        ->whereIn('c.client_group',$condition)
+        ->whereIn('transactions.client_group',$condition)
         ->where('transactions.status','Processed')
         ->whereDate('transactions.created_at',now())
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
         ->get();
     }
 
-    public function viewWeeklyCustomerReport($condition = [])
+    public function getMaterialWiseClientTransactions($id)
     {
 
         $start_date = now()->startOfWeek(); 
         $end_date = now()->endOfWeek(); 
-// dd($start_date,$end_date);
-        // return Transaction::join('users as c','c.id','=','transactions.client_id')
-        // ->join('payments as p','p.transaction_id','=','transactions.id')
+
+        return MaterialType::selectRaw("material_types.name,
+        SUM(CASE WHEN t.operation_type = 'Inbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as inbound_net_weight,
+        SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight,sum(p.rate) as material_rate,sum(p.tax_amount) as tax_amount,sum(p.amount) as amount")
+        ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
+        ->join('payments as p', 't.id', '=', 'p.transaction_id')
+        ->where('t.client_id',$id)
+        ->where('t.status','Processed')
+        ->whereDate('t.created_at', '>=', $start_date)->whereDate('t.created_at', '<=', $end_date)->groupBy('material_types.id')->get();
+
+
+        // return Transaction::join('payments as p','p.transaction_id','=','transactions.id')
         // ->join('material_types as mt','mt.id','=','transactions.material_type_id')
-        // ->whereIn('c.client_group',$condition)
-        // ->where('transactions.status','Processed')
-        // ->whereDate('transactions.created_at','>',$start_date)
-        // ->whereDate('transactions.created_at','<',$end_date)
-        // ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
-        // ->get();
-
-        return Transaction::join('users as c','c.id','=','transactions.client_id')
-        ->join('payments as p','p.transaction_id','=','transactions.id')
-        ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         
-        ->selectRaw("c.name,
-            SUM(CASE WHEN transactions.operation_type = 'Inbound' THEN (transactions.gross_weight - transactions.tare_weight) ELSE 0 END) as inbound_net_weight,
-            SUM(CASE WHEN transactions.operation_type = 'Outbound' THEN (transactions.gross_weight - transactions.tare_weight) ELSE 0 END) as outbound_net_weight")
+        // ->selectRaw("SUM(CASE WHEN transactions.operation_type = 'Inbound' THEN (transactions.gross_weight - transactions.tare_weight) ELSE 0 END) as inbound_net_weight,
+        //     SUM(CASE WHEN transactions.operation_type = 'Outbound' THEN (transactions.gross_weight - transactions.tare_weight) ELSE 0 END) as outbound_net_weight")
 
-            ->whereIn('c.client_group',$condition)
-            ->where('transactions.status','Processed')
+        //     ->whereIn('transactions.client_group',$condition)
+        //     ->where('transactions.status','Processed')
 
-            ->whereDate('transactions.created_at','>',$start_date)
-            ->whereDate('transactions.created_at','<',$end_date)
-            ->groupby('')
-            ->get();
-
+        //     ->whereDate('transactions.created_at','>',$start_date)
+        //     ->whereDate('transactions.created_at','<',$end_date)
+        //     ->groupby('c.id')
+        //     ->get();
 
     }
+
+
+
+
 
     
 
@@ -193,6 +202,7 @@ class Transaction extends Model
 
                 }
             }
+            // dd($transaction);
             
          
                 $transaction->added_id = Auth::user()->id;
@@ -326,12 +336,12 @@ class Transaction extends Model
 
                 if(isset($object['client']))
                 {
-                $transaction->client_name = $object['client'];
+                    $transaction->client_name = $object['client'];
                 }
 
                 if(isset($object['contact_no']))
                 {
-                $transaction->contact_no = $object['contact_no'];
+                    $transaction->contact_no = $object['contact_no'];
                 }
                 
                 // dd($transaction);
@@ -354,6 +364,16 @@ class Transaction extends Model
                 $payment_info['tax_amount']  =  $this->calculateSurchargeHstTax($transaction)['tax_amount']; 
                 $payment_info['surcharge_amount']  =  $this->calculateSurchargeHstTax($transaction)['surcharge_amount']; 
 
+                if(!isset($transaction->client_id) && $transaction->client_group == "Cash Account")
+                {
+                    $payment_info['mode_of_payment']  =  $object['mode_of_payment']; 
+
+                    if($object['mode_of_payment'] == 'Pass')
+                    {
+                        $payment_info['pass_no']    =   $object['pass_no'];
+                    }
+
+                }
                 $payment->storePayment($payment_info);
 
                 $transaction->driver_id  = $driver->id;
@@ -531,11 +551,20 @@ class Transaction extends Model
 
        $net_weight = $transaction->net_weight*1000;
        $board_rate = $transaction->materialType->board_rate;
-       $slab_rate = $transaction->materialType->slab_rate;
-       $slab_weight = $transaction->materialType->slab_weight;
 
+       if(isset($transaction->materialType->slab_rate) && $transaction->materialType->slab_rate > 0)
+       {
+        $slab_rate = $transaction->materialType->slab_rate;
+        $slab_weight = $transaction->materialType->slab_weight;
+        $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
 
-       $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
+       }
+       else
+       {
+         $totalPrice = $board_rate +  $transaction->net_weight;
+
+       }
+
 
        return $totalPrice;
     }
