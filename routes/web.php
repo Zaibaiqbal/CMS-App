@@ -197,6 +197,8 @@ Route::get('dailycustomerreport', [App\Http\Controllers\ReportController::class,
 
 Route::get('weeklycustomerreport', [App\Http\Controllers\ReportController::class, 'viewWeeklyCustomerReport'])->name('weeklycustomerreport')->middleware('auth','permission:All|View Weekly Customer Activity');
 
+Route::match(['get','post'],'clientgroupreport', [App\Http\Controllers\ReportController::class, 'clientGroupReport'])->name('clientgroupreport')->middleware('auth','permission:All|View Client Group Report');
+
 
 // Ticket Route End
 

@@ -83,10 +83,13 @@ dd($e);
             }
             $transaction = new Transaction;
             $transaction_list = $transaction->viewDailyCustomerReport($condition);
+            $material_wise_list = $transaction->getMaterialWiseStats($condition);
 
+            
             $pdf = PDF::loadView('reports.view_daily_customer_report', [
 
-                'transaction_list'  =>   $transaction_list,
+                'transaction_list'    =>   $transaction_list,
+                'material_wise_list'  =>   $material_wise_list,
              
             ]);
          
@@ -97,9 +100,57 @@ dd($e);
  
         catch(Exception $e)
         {
-dd($e);
+            dd($e);
         }
     }
+
+
+    public function clientGroupReport(Request $request)
+    {
+        try
+        {
+
+            if($request->isMethod('post'))
+            {
+                $form_data = $request->input();
+
+                $client_group = $form_data['client_group'];
+dd($client_group);
+                $transaction = new Transaction;
+                $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group);
+    
+                $pdf = PDF::loadView('reports.view_daily_customer_report', [
+    
+                    'transaction_list'    =>   $transaction_list,
+                 
+                ]);
+             
+                return $pdf->setPaper('a4', 'landscape')->stream('Daily Customer Report.pdf');
+                // return redirect('users');
+            }
+            else
+            {
+                $user = new User;
+
+                $group_list = $user->getDistinctClientGroupList()->pluck('client_group')->toArray();
+
+                return view('reports.modals.client_group_report',[
+
+                    'group_list'        =>   $group_list
+                
+                ])->render();
+            }
+    
+
+        }
+ 
+        catch(Exception $e)
+        {
+            dd($e);
+        }
+    }
+
+    
 
     public function generateWeeklyInvoice(Request $request)
     {

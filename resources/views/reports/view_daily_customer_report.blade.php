@@ -92,11 +92,11 @@
         <table border="0" style="border-collapse: collapse; text-align: center; width:100%; font-size: 12px;">
            <thead border="0" style="">
             <tr >
-                <th>Ticket Date</th>
-                <th>Facility & Ticket Number</th>
-                <th>Contract</th>
+                <th>Date</th>
+                <th>Ticket Number</th>
+                <th>Client</th>
+                <th>Group</th>
                 <th>Truck #</th>
-                <th>Container</th>
                 <th>Material</th>
                 <th>Material Rate</th>
                 <th>Billing Quantity</th>
@@ -110,9 +110,9 @@
             <tr>
                 <td>{{date_format($rows->created_at,'m/d/Y')}}</td>
                 <td>{{$rows->ticket_no}}</td>
-                <td>TOPPS</td>
+                <td>{{$rows->client_name}}</td>
+                <td>{{$rows->client_group}}</td>
                 <td>{{$rows->plate_no}}</td>
-                <td></td>
                 <td>{{$rows->material_name}}</td>
                 <td>{{$rows->material_rate}}</td>
                 <td>{{$rows->quantity}}</td>
@@ -164,35 +164,28 @@
 
                 
             </tr>
+            @if(isset($material_wise_list) && $material_wise_list->count() > 0 )
             <tr>
-                <td>Material Summary</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan="7" style="text-align: left;">Material Summary</td>
+           
                 <td>Billing Quantity</td>
                 <td>Material Total</td>
                 <td>Tax Total</td>
                 <td>Total</td>
             </tr>
+            @foreach($material_wise_list as $rows)
             <tr>
-                <td>CD - CONST. & DEMO. </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{{$transaction_list->sum('quantity')}}</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
-                <td>{{$transaction_list->sum('tax_amount')}}</td>
-                <td>{{$transaction_list->sum('amount')+$transaction_list->sum('tax_amount')}}</td>
+                <td colspan="7" style="text-align: left;">{{$rows->name}} </td>
+           
+                <td>{{$rows->net_weight}}</td>
+                <td>{{$rows->total_amount}}</td>
+                <td>{{$rows->tax_amount}}</td>
+                <td>{{$rows->total_amount+$rows->tax_amount}}</td>
             
                 
             </tr>
-
+            @endforeach
+    @endif
             </tfoot>
 
                 

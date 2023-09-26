@@ -164,8 +164,8 @@ class ImportController extends Controller
                                 else
                                 {
                                     $account = new Account;
-                                    $account->account_no        =   $rows[3];
-                                    $account->title             =   $rows[2];
+                                    $account->account_no        =   trim($rows[3]);
+                                    $account->title             =   trim($rows[2]);
                                     $account->added_id          =   $user->id;
 
                                     $account->approval_status    = 'Approved';
@@ -182,6 +182,11 @@ class ImportController extends Controller
                                     $user_account = new UserAccount;
                                     $user_account = $user_account->storeUserAccount($account_info);
                                 }
+
+                            }
+                            else
+                            {
+                                dd("user doesnot exist ".$rows[1]);
 
                             }
 

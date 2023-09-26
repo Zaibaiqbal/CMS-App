@@ -50,7 +50,16 @@ class Transaction extends Model
 
     }
 
-    
+    public function viewClientGroupWiseTransactions($condition)
+    {
+        return Transaction::leftjoin('users as c','c.id','=','transactions.client_id')
+        ->join('payments as p','p.transaction_id','=','transactions.id')
+        ->join('material_types as mt','mt.id','=','transactions.material_type_id')
+        ->where('transactions.client_group',$condition)
+        ->where('transactions.status','Processed')
+        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
+        ->get();
+    }
 
     public function viewDailyCustomerReport($condition = [])
     {
@@ -59,8 +68,8 @@ class Transaction extends Model
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         ->whereIn('transactions.client_group',$condition)
         ->where('transactions.status','Processed')
-        ->whereDate('transactions.created_at',now())
-        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
+        // ->whereDate('transactions.created_at',now())
+        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
         ->get();
     }
 
@@ -137,6 +146,22 @@ class Transaction extends Model
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
         ->get();
     }
+
+    public function getMaterialWiseStats($condition = [])
+    {
+
+
+        $query = MaterialType::selectRaw("material_types.name,
+            SUM(CASE WHEN t.operation_type = 'Inbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as inbound_net_weight,
+            SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight,sum(p.quantity) as net_weight,sum(p.amount) as total_amount,sum(p.tax_amount)")
+            ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
+            ->join('payments as p', 't.id', '=', 'p.transaction_id')
+            ->where('t.status','Processed')
+            ->whereIn('t.client_group',$condition);
+
+        return $query->groupBy('material_types.id')->get();
+
+    }
     
     public function getDailyMaterialWiseStats($condition = [],$from = "",$to ="")
     {
@@ -156,8 +181,12 @@ class Transaction extends Model
 
         $query = MaterialType::selectRaw("material_types.name,
             SUM(CASE WHEN t.operation_type = 'Inbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as inbound_net_weight,
-            SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight")
+            SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight,sum(p.quantity) as net_weight,sum(p.amount) as total_amount,sum(p.tax_amount)")
             ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
+            ->join('payments as p', 't.id', '=', 'p.transaction_id')
+            ->where('t.status','Processed')
+            // ->whereIn('t.client_group',$group_condition)
+
             ->where($condition);
 
         if (strlen(trim($from)) > 0 && strlen(trim($to)) > 0) {
@@ -368,7 +397,7 @@ class Transaction extends Model
                 {
                     $payment_info['mode_of_payment']  =  $object['mode_of_payment']; 
 
-                    if($object['mode_of_payment'] == 'Pass')
+                    if($object['mode_of_payment'] == 'Passes')
                     {
                         $payment_info['pass_no']    =   $object['pass_no'];
                     }
@@ -578,6 +607,10 @@ class Transaction extends Model
 
         return 'EZT-'.$year.'-'.str_pad(($max + 1), 5, '0', STR_PAD_LEFT).'-'.date('W').date('d');
         
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class,'transaction_id')->withDefault();
     }
     public function client()
     {

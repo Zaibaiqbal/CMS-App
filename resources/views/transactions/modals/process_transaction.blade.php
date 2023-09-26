@@ -210,7 +210,7 @@
                         
                         <option value="0">{{$label}}</option>
 
-                        @foreach(['Cash','Pass','Debit/Credit'] as $rows)
+                        @foreach(['Cash','Passes','Debit/Credit'] as $rows)
                         <option value="{{$rows}}">{{$rows}}</option>
                         @endforeach
                    </select>
@@ -218,7 +218,7 @@
 
                 </div>
 
-                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
+                <div class="col-md-12 mb-2 pass_no_section" style="display: none;">
 
                 @php($label = 'Pass No.')
                 @php($name = 'pass_no')

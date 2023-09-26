@@ -1,0 +1,57 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="md_client_group_report"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cleint Group Wise Transaction Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{ Form::open(array('route' => 'clientgroupreport', 'class' => '', 'id' => 'form_client_group_report')) }}
+
+
+      <div class="modal-body">
+               
+        <div class="card">
+
+          <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                @php($label = 'Select Client Group')
+
+                @php($name = 'client_group')
+                <div class="form-group">
+                    <label for="">{{$label}} <span class="text-danger"> *</span> </label>
+
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+                        <option value="">{{$label}}</option>
+                    @foreach($group_list as $rows)
+                        <option value="{{$rows}}">{{$rows}}</option>
+                    @endforeach
+                    </select>
+                </div>
+
+                </div>
+           
+              
+            </div>
+
+          </div>
+            <!-- /.card-body -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      {{ Form::close() }}
+
+    </div>
+  </div>
+</div>

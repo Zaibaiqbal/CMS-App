@@ -84,19 +84,6 @@
                     <td><input type="text" value="{{date_format(now(),'Y-m-d')}}" style="width: 70%;"></td>
                 </tr>
 
-                <tr>
-                    <td>Ship Date:</td>
-                    <td><input type="text" style="width: 60%;"></td>
-                </tr>
-
-                <tr>
-                    <td>Page:</td>
-                    <td><input type="text" style="width: 60%;"></td>
-                </tr>
-                <tr>
-                    <td>Re: Order No.</td>
-                    <td><input type="text" style="width: 60%;"></td>
-                </tr>
             </tbody>
 
           </table>
@@ -124,7 +111,6 @@
             <thead>
                     <tr>
                         <td> Sold To</td>
-                        <td >Ship To</td>
                     </tr>
 
             </thead>
@@ -144,101 +130,85 @@
 
                         </td>
 
-                        <td>
-                            <p> <b> {{$user->name}} </b>
-                            <br>
-                            {{$user->street}}
-                            <br>
-
-                            {{$user->city}}
-                            <br>
-
-                            {{$user->province}}, {{$user->postal_code}}</p>
-
-                        </td>
                     </tr>
             </tbody>
         </table>
     </div>
         <br>
         <div class="clear">
-            <p><b>Business No. </b></p>
+            <p><b>Business No. </b>125723353RT0001</p>
         </div>
         <table border="0" style="border-collapse: collapse; text-align: center; width:100%; font-size: 12pt;">
            <thead border="1" style="border: 1px solid black;">
             <tr >
-                <th>Item No</th>
-                <th>Unit</th>
-                <th>Quantity</th>
-                <th>Description</th>
-                <th>Tax</th>
-                <th>Unit Price</th>
+                <th>Sr #</th>
+                <th>License No.</th>
+                <th>Driver</th>
+                <th>Ticket No.</th>
+                <th>Net Weight</th>
+                <th>Rate</th>
                 <th>Amount</th>
             </tr>
           </thead>
           <tbody>
+          @php($surcharge_amount = 0)
+          @php($tax_amount = 0)
+
             @foreach($transaction_list as $rows)
-            <tr>
+            <tr style="border-bottom: 1px solid black;">
+                <th style="border-left: 1px solid black;">{{$loop->iteration}}</th>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->plate_no}}</td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->net_weight}}</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->driver->name}}</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->ticket_no}}</td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->total_cost}}</td>
+
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$rows->payment->quantity}}</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">${{$rows->payment->rate}}</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">${{$rows->payment->amount}}</td>
 
                 
 
             </tr>
-         
+            @php($surcharge_amount += $rows->payment->surcharge_amount)
+            @php($tax_amount += $rows->payment->tax_amount)
             @endforeach
-            <tr>
+            <tr style="border-bottom: 1px solid black;font-weight:bolder">
                  <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;">Total</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{($transaction_list->sum('total_cost'))}}</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">${{($transaction_list->sum('total_cost'))}}</td>
 
                 
             </tr>
-            <tr>
-            @php($surcharge_amount = 0)
+            <tr  style="border-bottom: 1px solid black;font-weight:bolder">
 
                  <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">@if(isset($surcharge_hst->id)) SURCHARGE @ {{$surcharge_hst->surcharge_per}} @endif</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"> SURCHARGE @ @if(isset($surcharge_hst->id)) {{$surcharge_hst->surcharge_per}} @endif</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                @if(isset($surcharge_hst->id)) 
-                    @php($surcharge = $surcharge_hst->surcharge_per/100)
-                    @php($surcharge_amount = $surcharge * $transaction_list->sum('total_cost'))
-
-                @endif
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$surcharge_amount}}</td>
+              
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">${{$surcharge_amount}}</td>
 
                 
             </tr>
-            <tr>
-            @php($tax_amount = 0)
+            <tr  style="border-bottom: 1px solid black;font-weight:bolder">
 
                  <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">@if(isset($surcharge_hst->id)) HST @ {{$surcharge_hst->hst_per}} @endif</td>
+                <td style="border-left: 1px solid black;border-right: 1px solid black;"> HST @ @if(isset($surcharge_hst->id)){{$surcharge_hst->hst_per}} @endif</td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                 <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                @if(isset($surcharge_hst->id)) 
-                    @php($tax_per = $surcharge_hst->hst_per/100)
-                    @php($tax_amount = $tax_per * $transaction_list->sum('total_cost'))
-
-                @endif
-                <td style="border-left: 1px solid black;border-right: 1px solid black;">{{$tax_amount}}</td>
+             
+                <td style="border-left: 1px solid black;border-right: 1px solid black;">${{$tax_amount}}</td>
 
                 
             </tr>
+            {{--
             <tfoot style="border:1px solid black;">
                 <tr rowspan="3">
                     <td>Shipped By:</td>
@@ -273,7 +243,7 @@
 
             </tfoot>
 
-                
+            --}}  
           </tbody>
            
          </table>
