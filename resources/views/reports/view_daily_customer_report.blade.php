@@ -92,7 +92,6 @@
         <table border="0" style="border-collapse: collapse; text-align: center; width:100%; font-size: 12px;">
            <thead border="0" style="">
             <tr >
-                <th>Date</th>
                 <th>Ticket Number</th>
                 <th>Client</th>
                 <th>Group</th>
@@ -108,7 +107,6 @@
           <tbody>
             @foreach($transaction_list as $rows)
             <tr>
-                <td>{{date_format($rows->created_at,'m/d/Y')}}</td>
                 <td>{{$rows->ticket_no}}</td>
                 <td>{{$rows->client_name}}</td>
                 <td>{{$rows->client_group}}</td>
@@ -136,11 +134,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
             </tr>
             <tr>
                 <td><br></td>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -156,7 +152,6 @@
                 <td>{{$transaction_list->count()}}</td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td>Customer Totals:</td>
                 <td>{{$transaction_list->sum('amount')}}</td>
                 <td>{{$transaction_list->sum('tax_amount')}}</td>
@@ -166,7 +161,7 @@
             </tr>
             @if(isset($material_wise_list) && $material_wise_list->count() > 0 )
             <tr>
-                <td colspan="7" style="text-align: left;">Material Summary</td>
+                <td colspan="6" style="text-align: left;">Material Summary</td>
            
                 <td>Billing Quantity</td>
                 <td>Material Total</td>
@@ -175,7 +170,7 @@
             </tr>
             @foreach($material_wise_list as $rows)
             <tr>
-                <td colspan="7" style="text-align: left;">{{$rows->name}} </td>
+                <td colspan="6" style="text-align: left;">{{$rows->name}} </td>
            
                 <td>{{$rows->net_weight}}</td>
                 <td>{{$rows->total_amount}}</td>

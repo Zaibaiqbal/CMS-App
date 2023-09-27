@@ -46,18 +46,27 @@ class Transaction extends Model
 
     public function getTransactionsClientList()
     {
-        return User::join('transactions as t','t.client_id','=','users.id')->selectRaw("users.name as name,users.id")->groupby('users.id')->get();
+        return User::join('transactions as t','t.client_id','=','users.id')
+        ->where('t.status','Processed')
+        ->selectRaw("users.name as name,users.id")->groupby('users.id')->get();
 
     }
 
-    public function viewClientGroupWiseTransactions($condition)
+    public function viewClientGroupWiseTransactions($client_group_condition,$condition)
     {
-        return Transaction::leftjoin('users as c','c.id','=','transactions.client_id')
+       
+        $query = Transaction::leftjoin('users as c','c.id','=','transactions.client_id')
         ->join('payments as p','p.transaction_id','=','transactions.id')
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
-        ->where('transactions.client_group',$condition)
-        ->where('transactions.status','Processed')
-        ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
+        
+        ->where($condition)
+        ->where('transactions.status','Processed');
+
+        if(strlen($client_group_condition) > 0)
+        {
+            $query->where('transactions.client_group',$client_group_condition);
+        }
+        return $query->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
         ->get();
     }
 
@@ -75,7 +84,6 @@ class Transaction extends Model
 
     public function getMaterialWiseClientTransactions($id)
     {
-
         $start_date = now()->startOfWeek(); 
         $end_date = now()->endOfWeek(); 
 
@@ -84,9 +92,10 @@ class Transaction extends Model
         SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight,sum(p.rate) as material_rate,sum(p.tax_amount) as tax_amount,sum(p.amount) as amount")
         ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
         ->join('payments as p', 't.id', '=', 'p.transaction_id')
-        ->where('t.client_id',$id)
+        ->where(['t.client_id' => $id])
         ->where('t.status','Processed')
-        ->whereDate('t.created_at', '>=', $start_date)->whereDate('t.created_at', '<=', $end_date)->groupBy('material_types.id')->get();
+        ->whereDate('t.created_at', '>=', $start_date)->whereDate('t.created_at', '<=', $end_date)->groupBy('material_types.id')
+        ->get();
 
 
         // return Transaction::join('payments as p','p.transaction_id','=','transactions.id')
@@ -147,7 +156,7 @@ class Transaction extends Model
         ->get();
     }
 
-    public function getMaterialWiseStats($condition = [])
+    public function getMaterialWiseStats($client_group_condition = [],$condition = [])
     {
 
 
@@ -157,11 +166,17 @@ class Transaction extends Model
             ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
             ->join('payments as p', 't.id', '=', 'p.transaction_id')
             ->where('t.status','Processed')
-            ->whereIn('t.client_group',$condition);
+            ->where($condition);
+
+            if(@count($client_group_condition))
+            {
+                $query->whereIn('t.client_group',$client_group_condition);
+            }
 
         return $query->groupBy('material_types.id')->get();
 
     }
+
     
     public function getDailyMaterialWiseStats($condition = [],$from = "",$to ="")
     {

@@ -110,13 +110,16 @@ class UserController extends Controller
             $transaction = new Transaction;
 
             $transaction_list = $transaction->getEmployeeProgressByCondition($user_id,$request->date);
-// dd($transaction_list);
+            $material_wise_list = $transaction->getMaterialWiseStats([],['added_id' => $user_id]);
+
+                
             $user = new User;
             $user = $user->getUserById($user_id);
 
             $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
             [ 
                 'transaction_list'      =>  $transaction_list,
+                'material_wise_list'      =>  $material_wise_list,
                 'user'                  =>   $user,
                 'date'                  =>   $request->date
         ]);

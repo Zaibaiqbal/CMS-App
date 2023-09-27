@@ -56,12 +56,7 @@
         <table style=" width:100%;font-size:12px;">
       
         <tr>
-            <td style="width: 30%;">
-                <p>All Ticket Types
-                    <br>
-                    History and Waiting
-                </p>
-            </td>
+            
             <td style="width: 80%;"> 
                 <center>
                 <p> <b style="font-size: 15px;">Operator Summary</b> 
@@ -74,12 +69,8 @@
          
         
             </td>
-            <td style="width: 25%;float:right;">
-                <p>Confirmed Qty Applied to Billing
-                   
-                
-                </p>
-            </td>
+        
+        
         </tr>
         </table>
     </div>
@@ -89,29 +80,23 @@
         <div class="clear">
             <!-- <p><b>Business No. </b></p> -->
         </div>
-        <table border="0" style="border-collapse: collapse; text-align: center; width:100%; font-size: 12px;">
-           <thead border="0" style="">
-            <tr >
-                <th>Ticket Date</th>
-                <th>Facility & Ticket Number</th>
-                <th>Contract</th>
-                <th>Truck #</th>
-                <th>Container</th>
-                <th>Material</th>
-                <th>Material Rate</th>
-                <th>Billing Quantity</th>
-                <th>Material Total</th>
+        <table border="0" style="border-collapse: collapse; text-align: left; width:100%; font-size: 12px;">
+           <thead border="0" style="text-align: left;">
+            <tr>
+                <th style="text-align: left;">Ticket Number</th>
+                <th style="text-align: left;">Truck #</th>
+                <th style="text-align: left;">Material</th>
+                <th style="text-align: left;">Material Rate</th>
+                <th style="text-align: left;">Billing Quantity</th>
+                <th style="text-align: left;">Material Total</th>
                 
             </tr>
           </thead>
           <tbody>
             @foreach($transaction_list as $rows)
             <tr>
-                <td>{{date_format($rows->created_at,'m/d/Y')}}</td>
                 <td>{{$rows->ticket_no}}</td>
-                <td>TOPPS</td>
                 <td>{{$rows->plate_no}}</td>
-                <td></td>
                 <td>{{$rows->material_name}}</td>
                 <td>{{$rows->material_rate}}</td>
                 <td>{{$rows->quantity}}</td>
@@ -126,65 +111,44 @@
       
             <tfoot style="margin-top:20%;">
             <tr>
-                <td><br></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan="6"><br></td>
+               
         
             </tr>
             <tr>
-                <td><br></td>
-        
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan="6"><br></td>
+
             </tr>
             <tr>
                  <td>Tickets Reported</td>
                 <td>{{$transaction_list->count()}}</td>
                 <td>Items Reported</td>
                 <td>{{$transaction_list->count()}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              
                 <td>Customer Totals:</td>
                 <td>{{$transaction_list->sum('amount')}}</td>
             
 
                 
             </tr>
+            @if(isset($material_wise_list) && $material_wise_list->count() > 0 )
             <tr>
-                <td>Material Summary</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan="4" style="text-align: left;">Material Summary</td>
+           
                 <td>Billing Quantity</td>
                 <td>Material Total</td>
-           
             </tr>
+            @foreach($material_wise_list as $rows)
             <tr>
-                <td>CD - CONST. & DEMO. </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{{$transaction_list->sum('quantity')}}</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
-            
+                <td colspan="4" style="text-align: left;">{{$rows->name}} </td>
+           
+                <td>{{$rows->net_weight}}</td>
+                <td>{{$rows->total_amount}}</td>
             
                 
             </tr>
+            @endforeach
+            @endif
 
             </tfoot>
 

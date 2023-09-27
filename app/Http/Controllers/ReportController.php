@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class ReportController extends Controller
@@ -71,19 +72,19 @@ dd($e);
     {
         try
         {
-            $condition = [];
+            $client_group_condition = [];
             if($request->type == 'TOPPS')
             {
-                $condition += ['Numbered Clients','TSC','Cash Account'];
+                $client_group_condition += ['Numbered Clients','TSC','Cash Account'];
             }
           
             if($request->type == 'GFL')
             {
-                $condition += ['GFL'];
+                $client_group_condition += ['GFL'];
             }
             $transaction = new Transaction;
-            $transaction_list = $transaction->viewDailyCustomerReport($condition);
-            $material_wise_list = $transaction->getMaterialWiseStats($condition);
+            $transaction_list = $transaction->viewDailyCustomerReport($client_group_condition);
+            $material_wise_list = $transaction->getMaterialWiseStats($client_group_condition);
 
             
             $pdf = PDF::loadView('reports.view_daily_customer_report', [
@@ -115,10 +116,19 @@ dd($e);
                 $form_data = $request->input();
 
                 $client_group = $form_data['client_group'];
-dd($client_group);
+
+                if(Auth::user()->hasRole('Super Admin'))
+                {
+                    $condition = [];
+                }
+                else
+                {
+                    $condition = ['added_id' => Auth::user()->id];
+                }
+
                 $transaction = new Transaction;
-                $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group);
-    
+                $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group,$condition);
+
                 $pdf = PDF::loadView('reports.view_daily_customer_report', [
     
                     'transaction_list'    =>   $transaction_list,
