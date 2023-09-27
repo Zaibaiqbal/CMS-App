@@ -85,7 +85,7 @@ Transaction Management
                               @if($rows->status == 'Processed' && Auth::user()->hasAnyPermission(['All','Print Ticket']))
 
 
-                              <a href="{{route('transaction.invoice',['transaction' => ($rows->id),'pdf' => 'true'])}}" class="dropdown-item py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp; Print</a>
+                              <a href="{{route('transaction.invoice',['transaction' => ($rows->id),'pdf' => 'true'])}}" target="_blank" class="dropdown-item py-0"><i class="dropdown-icon fa fa-file "></i>&nbsp;&nbsp;&nbsp; Print</a>
                               @endif
                           
                           </div>

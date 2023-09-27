@@ -197,12 +197,41 @@ class TransactionController extends Controller
 
                         $transaction = new Transaction;
                         $transaction = $transaction->getTransactionById($request->transaction);
-                     
-                        $pdf = PDF::loadView('transactions.documents.invoice', [
-                        'format'        => false,
-                        'transaction'     =>   $transaction
-                        ]);
-                        return $pdf->setPaper('a4', 'landscape')->stream('Invoice.pdf');
+
+                        if($transaction->client_group == 'Numbered Clients')
+                        {
+ 
+                            $pdf = PDF::loadView('transactions.documents.numbered_clients_invoice', [
+                                'format'        => false,
+                                'transaction'     =>   $transaction
+                                ]);
+
+                            return $pdf->setPaper('a4', 'portrait')->stream('Invoice.pdf');
+
+                        }
+                        elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Cash')
+                        {
+
+                            $pdf = PDF::loadView('transactions.documents.cash_payment_invoice', [
+                                'format'        => false,
+                                'transaction'     =>   $transaction
+                                ]);
+
+                            return $pdf->setPaper('a4', 'portrait')->stream('Invoice.pdf');
+ 
+                        }
+                        elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Passes')
+                        {
+
+                            $pdf = PDF::loadView('transactions.documents.pass_payment_invoice', [
+                                'format'        => false,
+                                'transaction'     =>   $transaction
+                                ]);
+
+                            return $pdf->setPaper('a4', 'portrait')->stream('Pass Payment .pdf');
+ 
+                        }
+                    
                     }
                
 
@@ -226,7 +255,7 @@ class TransactionController extends Controller
     
                 if($request->isMethod('post'))
                 {
-                    $payment_mode_list = implode(',', ['Cash','Pass','Debit/Credit']);
+                    $payment_mode_list = implode(',', ['Cash','Passes','Debit/Credit']);
 
                     $transaction = new Transaction;
                     $transaction = $transaction->getTransactionById(decrypt($request->transaction_id));
@@ -247,6 +276,14 @@ class TransactionController extends Controller
                         ];
 
                     }
+                    if($request->mode_of_payment == 'Passes')
+                    {
+                        $validation += [
+                            'pass_no'           => 'required',
+                            'no_of_passes'      =>   'required'
+                        ];
+                    }
+
                     if($transaction->is_identified > 0)
                     {
                         $validation += [
@@ -292,13 +329,40 @@ class TransactionController extends Controller
                             return redirect()->back()->with('success','Transaction closed successfully');
 
                        }
-                          
-                        return view('transactions.documents.invoice', [
+                       elseif(isset($transaction->client->id) && $transaction->client->client_group == 'Numbered Clients')
+                       {
 
-                            'transaction'  =>   $transaction,
-                            'format'    =>    true
+                            return view('transactions.documents.numbered_clients_invoice', [
 
-                        ])->render();
+                                'transaction'  =>   $transaction,
+                                'format'    =>    true
+
+                            ])->render();
+
+                       }
+                       elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Cash')
+                       {
+
+
+                            return view('transactions.documents.cash_payment_invoice', [
+
+                                'transaction'  =>   $transaction,
+                                'format'    =>    true
+
+                            ])->render();
+                       }
+                       elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Passes')
+                       {
+
+
+                            return view('transactions.documents.pass_payment_invoice', [
+
+                                'transaction'  =>   $transaction,
+                                'format'    =>    true
+
+                            ])->render();
+                       }
+
         
     
     

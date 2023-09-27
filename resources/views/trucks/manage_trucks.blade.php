@@ -78,7 +78,7 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
               <!-- /.card-header -->
               <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table class="table table-striped table-bordered nowrap truck_table text-uppercase">
+                    <table id="table_datatable" class="table table-striped table-bordered nowrap truck_table text-uppercase">
                   <thead>
                     <tr>
                       <th>#</th>

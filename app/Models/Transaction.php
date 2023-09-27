@@ -372,7 +372,11 @@ class Transaction extends Model
                 {
                     $transaction->contact_no = $object['contact_no'];
                 }
-                
+
+                if(isset($object['no_of_passes']))
+                {
+                    $transaction->no_of_passes = $object['no_of_passes'];
+                }                
                 // dd($transaction);
                 $transaction->update();
 

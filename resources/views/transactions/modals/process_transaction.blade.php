@@ -63,7 +63,7 @@
                     </div>
                 @endif
                 @if($transaction->client_group != 'Cash Account')
-                <div class="col-md-4">
+                <div class="col-md-6">
                     @php($label = 'Select Account')
                     @php($name = 'account')
 
@@ -218,11 +218,21 @@
 
                 </div>
 
-                <div class="col-md-12 mb-2 pass_no_section" style="display: none;">
+                <div class="col-md-6 mb-2 pass_no_section" style="display: none;">
 
                 @php($label = 'Pass No.')
                 @php($name = 'pass_no')
-                <label for="">{{$label}} <span class="text-danger"></span> </label>
+                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                </div>
+                
+                <div class="col-md-6 mb-2 pass_no_section" style="display: none;">
+
+                @php($label = 'No. of Passes Used:')
+                @php($name = 'no_of_passes')
+                <label for="">{{$label}} <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
@@ -429,7 +439,7 @@ function calculateNetWeight(event,obj)
 
         var mode_of_payment = $(obj).val();
 
-        if(mode_of_payment == 'Pass')
+        if(mode_of_payment == 'Passes')
         {
             $('.pass_no_section').show();
         }
