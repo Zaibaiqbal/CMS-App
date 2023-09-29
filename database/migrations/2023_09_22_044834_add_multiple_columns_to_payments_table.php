@@ -15,7 +15,9 @@ class AddMultipleColumnsToPaymentsTable extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
 
-            $table->string('pass_no')->nullable()->after('net_weight');
+            $table->json('pass_no')->nullable()->after('net_weight');
+            $table->double('passes_amount')->default(0)->nullable()->after('net_weight');
+            $table->double('passes_weight')->default(0)->nullable()->after('net_weight');
             
         });
     }
@@ -29,6 +31,8 @@ class AddMultipleColumnsToPaymentsTable extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             $table->dropColumn('pass_no');
+            $table->dropColumn('passes_amount');
+            $table->dropColumn('passes_weight');
 
         });
     }

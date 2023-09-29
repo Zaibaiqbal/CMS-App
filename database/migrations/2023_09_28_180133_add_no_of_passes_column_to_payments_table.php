@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class NoOfPassesColumnToTransactionsTable extends Migration
+class AddNoOfPassesColumnToPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class NoOfPassesColumnToTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('payments', function (Blueprint $table) {
+
             $table->integer('no_of_passes')->nullable();
+           
         });
     }
 
@@ -25,7 +27,7 @@ class NoOfPassesColumnToTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('payments', function (Blueprint $table) {
             $table->dropColumn('no_of_passes');
         });
     }

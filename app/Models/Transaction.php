@@ -401,15 +401,15 @@ class Transaction extends Model
 
                 $driver->save();
 
-                $this->getMaterialRate($transaction);
+                $this->getMaterialRate($transaction,$object);
 
                 $payment = new Payment;
 
-                $payment_info['transaction_id'] =  $transaction->id; 
-                $payment_info['amount'] =  $transaction->total_cost; 
-                $payment_info['rate']  =  $transaction->material_rate; 
-                $payment_info['net_weight']  =  $transaction->net_weight; 
-                $payment_info['tax_amount']  =  $this->calculateSurchargeHstTax($transaction)['tax_amount']; 
+                $payment_info['transaction_id']    =  $transaction->id; 
+                $payment_info['amount']            =  $transaction->total_cost; 
+                $payment_info['rate']              =  $transaction->material_rate; 
+                $payment_info['net_weight']        =  $transaction->net_weight; 
+                $payment_info['tax_amount']        =  $this->calculateSurchargeHstTax($transaction)['tax_amount']; 
                 $payment_info['surcharge_amount']  =  $this->calculateSurchargeHstTax($transaction)['surcharge_amount']; 
 
                 if(!isset($transaction->client_id) && $transaction->client_group == "Cash Account")
@@ -418,8 +418,31 @@ class Transaction extends Model
 
                     if($object['mode_of_payment'] == 'Passes')
                     {
-                        $payment_info['pass_no']    =   $object['pass_no'];
+                            $passes_no = [];
+            
+                            if($object['no_of_passes'] > 0)
+                            {
+                                if(isset($object['pass_no']))
+                                {
+                                    array_push($passes_no,$object['pass_no']);
+            
+                                }
+            
+                                if(isset($object['optional_pass_no']))
+                                {
+                                    array_push($passes_no,$object['optional_pass_no']);
+            
+                                }
+            
+                                $payment_info['pass_no'] = json_encode($passes_no);
+                                
+                            }
+                            $payment_info['passes_weight']   =  ($object['no_of_passes'] * 250) / 1000;
+                            $payment_info['no_of_passes']   =  $object['no_of_passes'];
+
+            
                     }
+
 
                 }
                 $payment->storePayment($payment_info);
@@ -447,7 +470,7 @@ class Transaction extends Model
           
             $transaction = Transaction::find($object['transaction_id']);
           
-// dd($object);
+
             if(isset($transaction->id))
             {
 
@@ -516,7 +539,7 @@ class Transaction extends Model
 
                 // $driver->save();
 
-                $this->getMaterialRate($transaction);
+                $this->getMaterialRate($transaction,$object);
 
                 // $material_rate =  $transaction->materialType->board_rate;
 
@@ -558,7 +581,7 @@ class Transaction extends Model
         return $data;
     }
 
-    public function getMaterialRate(Transaction $transaction)
+    public function getMaterialRate(Transaction $transaction,$object)
     {
         $material_rate = 0;
 
@@ -578,6 +601,8 @@ class Transaction extends Model
         }
         if($transaction->client_group == "Cash Account")
         {
+         
+
             $material_rate =  $transaction->materialType->board_rate;
 
             $total_price =  $this->calculateRateBySlab($transaction);
@@ -598,6 +623,7 @@ class Transaction extends Model
         $totalPrice = 0;
 
        $net_weight = $transaction->net_weight*1000;
+
        $board_rate = $transaction->materialType->board_rate;
 
        if(isset($transaction->materialType->slab_rate) && $transaction->materialType->slab_rate > 0)

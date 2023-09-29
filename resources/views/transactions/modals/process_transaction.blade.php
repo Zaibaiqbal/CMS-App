@@ -218,25 +218,37 @@
 
                 </div>
 
-                <div class="col-md-6 mb-2 pass_no_section" style="display: none;">
+                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
 
-                @php($label = 'Pass No.')
-                @php($name = 'pass_no')
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
-                <small class="text-danger" id="{{$name}}_error"></small>
+                    @php($label = 'No. of Passes Used:')
+                    @php($name = 'no_of_passes')
+                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                </div>
+
+                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
+
+                    @php($label = 'Pass No. 1')
+                    @php($name = 'pass_no')
+                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                </div>
+
+                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
+
+                    @php($label = 'Pass No. 2')
+                    @php($name = 'optional_pass_no')
+                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
                 </div>
                 
-                <div class="col-md-6 mb-2 pass_no_section" style="display: none;">
-
-                @php($label = 'No. of Passes Used:')
-                @php($name = 'no_of_passes')
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
-                <small class="text-danger" id="{{$name}}_error"></small>
-
-                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
-                </div>
+                
                 @endif
 
                 <div class="col-md-12">

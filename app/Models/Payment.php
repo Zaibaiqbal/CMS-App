@@ -34,6 +34,22 @@ class Payment extends Model
 
             }
 
+            if(isset($object['no_of_passes']))
+            {
+                $payment->no_of_passes       =          $object['no_of_passes'];
+
+            }
+
+            if(isset($object['passes_amount']))
+            {
+                $payment->passes_amount       =         $object['passes_amount'];
+
+            }
+            if(isset($object['passes_weight']))
+            {
+                $payment->passes_weight       =         $object['passes_weight'];
+
+            }
             $payment->save();
 
             return with($payment);

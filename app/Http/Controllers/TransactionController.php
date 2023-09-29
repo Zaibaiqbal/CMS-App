@@ -217,19 +217,36 @@ class TransactionController extends Controller
                                 'transaction'     =>   $transaction
                                 ]);
 
-                            return $pdf->setPaper('a4', 'portrait')->stream('Invoice.pdf');
+                            return $pdf->setPaper('a4', 'portrait')->stream('Cash Payment Invoice.pdf');
  
                         }
                         elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Passes')
                         {
+                            $balance_weight = $transaction->payment->quantity-$transaction->payment->passes_weight;
+                            if($balance_weight > 0)
+                            {
 
-                            $pdf = PDF::loadView('transactions.documents.pass_payment_invoice', [
-                                'format'        => false,
-                                'transaction'     =>   $transaction
-                                ]);
+                                $pdf = PDF::loadView('transactions.documents.cash_pass_payment_invoice', [
+                                    'format'            => false,
+                                    'transaction'       =>   $transaction
+                                    ]);
+    
+                                return $pdf->setPaper('a4', 'portrait')->stream('Cash Pass Payment .pdf');
+     
 
-                            return $pdf->setPaper('a4', 'portrait')->stream('Pass Payment .pdf');
- 
+                            }
+                            else
+                            {
+
+                                $pdf = PDF::loadView('transactions.documents.pass_payment_invoice', [
+                                    'format'            => false,
+                                    'transaction'       =>   $transaction
+                                    ]);
+    
+                                return $pdf->setPaper('a4', 'portrait')->stream('Pass Payment .pdf');
+     
+                            }
+
                         }
                     
                     }
@@ -279,8 +296,9 @@ class TransactionController extends Controller
                     if($request->mode_of_payment == 'Passes')
                     {
                         $validation += [
-                            'pass_no'           => 'required',
-                            'no_of_passes'      =>   'required'
+                            'pass_no'                   => 'required|min:0|max:15',
+                            'optional_pass_no'          => 'nullable|min:0|max:15',
+                            'no_of_passes'              => 'required|lte:2|gte:1'
                         ];
                     }
 
@@ -292,9 +310,9 @@ class TransactionController extends Controller
                     }
                     $request->validate($validation+[
     
-                        'transaction_id'                  => 'required',
-                        'material'                     => 'required',
-                        'driver_name'                   => 'required|max:255|min:0',
+                        'transaction_id'                    => 'required',
+                        'material'                          => 'required',
+                        'driver_name'                       => 'required|max:255|min:0',
 
                        
                     ]);
@@ -354,13 +372,29 @@ class TransactionController extends Controller
                        elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Passes')
                        {
 
+                            $balance_weight = $transaction->payment->quantity-$transaction->payment->passes_weight;
+                            if($balance_weight > 0)
+                            {
+                                
+                                return view('transactions.documents.cash_pass_payment_invoice', [
+                                    'format'            => true,
+                                    'transaction'       =>   $transaction
+                                    ]);
+    
+     
+                            }
+                            else
+                            {
+                                return view('transactions.documents.pass_payment_invoice', [
 
-                            return view('transactions.documents.pass_payment_invoice', [
+                                    'transaction'  =>   $transaction,
+                                    'format'    =>    true
+    
+                                ])->render();
 
-                                'transaction'  =>   $transaction,
-                                'format'    =>    true
+                            }
 
-                            ])->render();
+                           
                        }
 
         

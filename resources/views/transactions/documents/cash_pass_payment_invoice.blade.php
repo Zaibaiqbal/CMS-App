@@ -158,19 +158,19 @@
             <td class="customer_info">Gross Weight:</td>
             <td><input type="text" value="{{$transaction->gross_weight}}"></td>
 
-            <td class="customer_info">Net Weight:</td>
-            <td><input type="text" value="{{$transaction->payment->quantity}}"></td>
+            <td class="customer_info">Passes Used:</td>
+            <td><input type="text" value="{{$transaction->payment->no_of_passes}}"></td>
 
           </tr>
          
           <tr>
 
-          <td class="customer_info">Passes Used:</td>
-          <td><input type="text" value="{{$transaction->payment->no_of_passes}}"></td>
+         
+            <td class="customer_info">Total Weight Covered:</td>
+            <td><input type="text" value="{{$transaction->payment->passes_weight}}"></td>
 
-          @php($total_weight = $transaction->payment->passes_weight)
-          <td class="customer_info">Total Weight Covered:</td>
-          <td><input type="text" value="{{$total_weight}}"></td>
+            <td class="customer_info">Weight Due:</td>
+            <td><input type="text" value="{{$transaction->payment->quantity - $transaction->payment->passes_weight}}"></td>
 
           </tr>
 
@@ -178,6 +178,19 @@
         
             <td class="customer_info">Payment Method:</td>
             <td><input type="text" value="Pass Only"></td>
+
+            <td class="customer_info">Amount Due:</td>
+            <td><input type="text" value=""></td>
+
+          </tr>
+
+          <tr>
+        
+            <td class="customer_info">Amount Paid:</td>
+            <td><input type="text" value=""></td>
+
+            <td class="customer_info">Change:</td>
+            <td><input type="text" value=""></td>
 
           </tr>
          
