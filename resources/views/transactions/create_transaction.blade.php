@@ -49,11 +49,15 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 
 
 @section('page_body')
-
+@php
+    $path = 'theme';
+    $change_view = null;
+    $change_view = (session()->get('change_view')) ? session()->get('change_view') :  'false'
+@endphp
 <div class="row">
-    <div class="col-5">
-    <div class="card p-2">
-        <div class="card-header">
+    <div class="col-sm-12 col-md-12">
+    <div class="card">
+        <div class="card-header p-2">
         <h3 class="card-title">ezWeigh</h3>
 
         <div class="card-toolbar">
@@ -62,33 +66,42 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
         
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-2">
+        <div class="card-body table-responsive pb-0">
           @include('transactions.components.add_transaction')
 
         </div>
+     
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
     </div>
+    <div class="col-md-12">
+        <a href="#" onclick="changeView(event)" class="btn btn-link float-right text-white ml-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect></svg>
+        </a>
+    </div>
 
-
-    <div class="col-7">
-    <div class="card">
+    <div class="col-sm-12 col-md-12">
+      <div class="card">
         <div class="card-header">
-        <h3 class="card-title text-uppercase">QUEUED</h3>
+          <h3 class="card-title text-uppercase">QUEUED</h3>
 
-        <div class="card-toolbar">
+          <div class="card-toolbar">
+                
               
-            
-        </div>
+          </div>
         
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
-        @include('transactions.components.view_transactions')
+        <div class="card-body table-responsive p-0 table_view"  style="display: none;">
+          @include('transactions.components.view_transactions')
+        </div>
+
+        <div class="card-body p-0 grid_view" >
+          @include('transactions.components.view_transactions_grid_view')
         </div>
         <!-- /.card-body -->
-    </div>
+      </div>
     <!-- /.card -->
     </div>
 </div>
@@ -100,151 +113,50 @@ ul .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
 
 @endsection
 @section('page_script')
+
+@include('transactions.scripts.transaction_script')
+
 <script>
+    var change_view = '{{$change_view}}';
 
-    function autoSearchPlateNo(event,tag)
-    {
-        event.preventDefault();
+function changeView(event)
+{
+    event.preventDefault();
 
-        var route = "{{ route('searchplateno') }}";
-
-        var formData = {}
-
-        $('input.auto_search_plate_no').autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: route,
-                    type: "GET",
-                    data: {
-                        search: request.term,
-                    },
-                    contentType: "json",
-                    success: function (data) {
-
-                        var parsedData = JSON.parse(data);
-                        if (parsedData.length === 0) {
-
-                            $('.client_group').val('Cash Account');
-                            $('.truck_id').val('');
-                            $('.client_name').val('').attr('readonly',false);
-                            $('input[name=user_id]').val('');
-                            $('input[name=contact_no]').val('').attr('readonly',false);;
-
-                        } else {
-
-                        response($.map(JSON.parse(data), function (item) {
-                            return {
-                                label: item.identifier,
-                                val2: item.plate_no,
-                                val:    item.id,
-                                label1: item.name,
-                                val1:    item.user_id,
-                                label2: item.contact,
-                                label3: item.client_group,
-                            }
-                       
-                        }))
-                    }
-                     
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    },
-                    failure: function (response) {
-                        console.log("fve");
-
-                        alert(response.responseText);
-                    }
-                });
-            },
-            select: function (e, i) {
-              
-                $('.truck_id').val(i.item.val);
-                $('.auto_search_plate_no').val(i.item.value);
-                $('.plate_no').val(i.item.val2);
-                $('.client_name').val(i.item.label1).attr('readonly',true);
-                $('input[name=user_id]').val(i.item.val1);
-                $('input[name=contact_no]').val(i.item.label2).attr('readonly',true);
-                $('.client_group').val(i.item.label3);
-
-
-                // getClientAccountList(i.item.val1);
-            },
-            open: function() {
-        // Get the autocomplete list element
-                var autocompleteList = $(this).autocomplete("widget");
-
-                // Add custom CSS class to the list element
-                autocompleteList.addClass("custom-autocomplete-list");
-            },
-            minLength: 1
-        });
+    if(change_view === 'false'){
+        change_view = 'true';
     }
-
-
-    function autoSearchClientName(event,tag)
-    {
-        event.preventDefault();
-
-        var route = "{{ route('searchclientbyname') }}";
-
-        $('input.auto_search_client_name').autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: route,
-                    type: "GET",
-                    data: {
-                        search: request.term,
-                    },
-                    contentType: "json",
-                    success: function (data) {
-
-                        response($.map(JSON.parse(data), function (item) {
-                            return {
-                                label: item.client_name,
-                                label1: item.contact_no,
-
-                              
-                            }
-                        }))
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            },
-            select: function (e, i) {
-              
-                $('.auto_search_client_name').val(i.item.label).attr('readonly',true);
-                $('.contact').val(i.item.label1).attr('readonly',true);
-            },
-            open: function() {
-        // Get the autocomplete list element
-                var autocompleteList = $(this).autocomplete("widget");
-
-                // Add custom CSS class to the list element
-                autocompleteList.addClass("custom-autocomplete-list");
-            },
-            minLength: 1
-        });
+    else if(change_view === 'true'){
+        change_view = 'false';
     }
-
-    function getClientAccountList(client_id)
-    {
-        var route = "{{url('getclientaccountlist')}}";
-
-        $.get(route,{client_id:client_id},function(data)
-        {
-            $('.account_list').html(data);
-
-            document.querySelector('.account_list').fstdropdown.rebind();
+addThemeLoader();
 
 
-        });
+$.post( "{{route('tableview') }}", { "change_view": change_view, "_token": "{{ csrf_token() }}" },function(data){
+    // success message.
+    removeThemeLoader();
+    if(data === 'true'){
+      
+      $('.table_view').show();
+      $('.grid_view').hide();
+  }
+  else if(data === 'false'){
+      $('.grid_view').show();
+      $('.table_view').hide();
+  }
+
+} );
+
+    if(change_view === 'true'){
+      
+        $('.table_view').show();
+        $('.grid_view').hide();
     }
-
+    else if(change_view === 'false'){
+        $('.grid_view').show();
+        $('.table_view').hide();
+    }
+    
+}
 </script>
 @endsection

@@ -138,7 +138,7 @@
                 </div>
 
 
-                @if($transaction->client_group == "Cash Account")
+                @if($transaction->client_group == 'Cash Account')
                 <div class="col-md-4 mb-2">
 
                 @php($label = 'Material Rate')
@@ -147,7 +147,7 @@
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" readonly name="{{$name}}" class="form-control material_rate"  placeholder="{{$label}}" >
-
+                    <input type="hidden" name="slab_rate" class="slab_rate">
                 </div>
                 @endif
 
@@ -251,6 +251,30 @@
                 
                 @endif
 
+                <div class="col-md-6">
+                    @php($label = 'Amount')
+                    @php($name = 'amount')
+                    <div class="form-group">
+                        <label for="">{{$label}}</label>
+                        <span><i class="text-danger"></i></span>
+                        <small id="{{$name}}_error" class="text-danger">*</small>
+
+                        <input type="text" value="" readonly name="{{$name}}" class="form-control total_amount" placeholder="{{$label}}">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    @php($label = 'Received Amount')
+                    @php($name = 'received_amount')
+                    <div class="form-group">
+                        <label for="">{{$label}}</label>
+                        <span><i class="text-danger"></i></span>
+                        <small id="{{$name}}_error" class="text-danger">*</small>
+
+                        <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                    </div>
+                </div>
+
                 <div class="col-md-12">
                     @php($label = 'Driver Name')
                     @php($name = 'driver_name')
@@ -352,11 +376,8 @@ function calculateNetWeight(event,obj)
         var outweight =  $("input[name=outweight]").val();
 
         var net_weight = 0;
-
-      
         net_weight =  inweight - outweight;
             
-
         if(net_weight < 0)
         {
             $('.operation_type').val('Outbound');
@@ -370,7 +391,28 @@ function calculateNetWeight(event,obj)
         }
             $('.net_weight').val(net_weight);
 
+// alert(net_weight*1000);
+            calculateMaterialPrice(net_weight*1000)
+
     }
+
+    function calculateMaterialPrice(weightInKgs) {
+
+        var slab_rate = $('.slab_rate').val();
+        var rate = $('.material_rate').val();
+        
+        // alert(slab_rate+" "+rate);
+        // Calculate the total price, including the first 250 kg and any extra weight
+        const totalPrice = parseFloat(rate) + Math.ceil((weightInKgs - 250) / 50) * parseFloat(slab_rate);
+        
+            $('.total_amount').val(Math.abs(totalPrice));
+
+        }
+
+        // const weightInKgs = 301;
+        // const totalPrice = calculateMaterialPrice(weightInKgs);
+        // console.log(`Total price for ${weightInKgs} kg of material is $${totalPrice}`);
+
 
     function getMaterialRate(event,obj)
     {
@@ -384,8 +426,11 @@ function calculateNetWeight(event,obj)
         $.get("{{route('materialinfo')}}",{material:material,client_type,client_type,account_id,account_id},function(data){
 
             $('.material_rate').val(data.rate);
+            $('.slab_rate').val(data.slab_rate);
+
 
             removeThemeLoader();
+
 
         });
 

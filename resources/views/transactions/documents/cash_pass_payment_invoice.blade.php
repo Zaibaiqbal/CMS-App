@@ -180,14 +180,14 @@
             <td><input type="text" value="Pass Only"></td>
 
             <td class="customer_info">Amount Due:</td>
-            <td><input type="text" value=""></td>
+            <td><input type="text" value="{{$transaction->payment->amount-$transaction->payment->received_amount}}"></td>
 
           </tr>
 
           <tr>
         
             <td class="customer_info">Amount Paid:</td>
-            <td><input type="text" value=""></td>
+            <td><input type="text" value="{{$transaction->payment->received_amount}}"></td>
 
             <td class="customer_info">Change:</td>
             <td><input type="text" value=""></td>

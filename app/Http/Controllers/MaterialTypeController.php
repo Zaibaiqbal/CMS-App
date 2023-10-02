@@ -49,8 +49,9 @@ class MaterialTypeController extends Controller
     {
         try
         {
+
             // dd($request->input());
-            $data = [];
+            $data = ['rate' => 0 , 'slab_rate' => 0];
 
             $material_id = decrypt($request->material);
             if(isset($request->account_id))
@@ -70,6 +71,12 @@ class MaterialTypeController extends Controller
             {
                $material_rate =  $material->getMaterialTypeById($material_id);
                $data['rate'] = $material_rate->board_rate;
+
+               if(isset($material_rate->slab_rate) && $material_rate->slab_rate > 0)
+                {
+                    $data['slab_rate'] = $material_rate->slab_rate;
+                }
+             
 
             }
             

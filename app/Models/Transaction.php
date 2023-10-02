@@ -407,6 +407,7 @@ class Transaction extends Model
 
                 $payment_info['transaction_id']    =  $transaction->id; 
                 $payment_info['amount']            =  $transaction->total_cost; 
+                $payment_info['received_amount']            =  $object['received_amount']; 
                 $payment_info['rate']              =  $transaction->material_rate; 
                 $payment_info['net_weight']        =  $transaction->net_weight; 
                 $payment_info['tax_amount']        =  $this->calculateSurchargeHstTax($transaction)['tax_amount']; 
@@ -630,8 +631,9 @@ class Transaction extends Model
        {
         $slab_rate = $transaction->materialType->slab_rate;
         $slab_weight = $transaction->materialType->slab_weight;
-        $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
 
+        $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
+// dd($totalPrice,$slab_rate,$board_rate,$net_weight);
        }
        else
        {

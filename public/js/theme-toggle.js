@@ -33,8 +33,10 @@ $(document).ready(function () {
             $('.notification-time').addClass('text-light');
             // $('.notification-toggle').addClass('text-light');
             $('.notification-view').addClass('text-light');
+            $('.modal-content').addClass('text-light');
+            $('.modal-content').addClass('bg-dark');
 
-
+            
 
             $(themeToggle).html('<i class="feather icon-sun f-50 text-c-dark"></i> Light mode');
 

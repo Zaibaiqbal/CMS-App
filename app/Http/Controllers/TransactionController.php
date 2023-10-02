@@ -289,8 +289,11 @@ class TransactionController extends Controller
                     if($transaction->client_group == "Cash Account")
                     {
                         $validation += [
-                            'mode_of_payment'    => 'required|In:'.$payment_mode_list
+                            'mode_of_payment'    => 'required|In:'.$payment_mode_list,
+                            'amount'             =>   'required|gt:0',
+                            'received_amount'             =>   'required|gt:0|lte:'.$request->amount,
                         ];
+
 
                     }
                     if($request->mode_of_payment == 'Passes')
@@ -574,6 +577,14 @@ class TransactionController extends Controller
 
         }
 
+    }
+
+    public function tableViewSession(Request $request)
+    {
+      
+        $request->session()->put('change_view',$request->change_view);
+
+        return $request->change_view;
     }
 
 }

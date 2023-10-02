@@ -75,12 +75,18 @@ Transaction Management
 
                               @endif
 
-                                @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Update Transaction']))
+                              @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Update Transaction']))
 
-                                <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
-                                <div class="dropdown-divider"></div>
+                              <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Update</a>
+                              <div class="dropdown-divider"></div>
 
-                                @endif
+                              @endif
+                              @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Update Transaction']))
+
+                              <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Void</a>
+                              <div class="dropdown-divider"></div>
+
+                              @endif
 
                               @if($rows->status == 'Processed' && Auth::user()->hasAnyPermission(['All','Print Ticket']))
 

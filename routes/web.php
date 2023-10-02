@@ -200,6 +200,8 @@ Route::get('weeklycustomerreport', [App\Http\Controllers\ReportController::class
 Route::match(['get','post'],'clientgroupreport', [App\Http\Controllers\ReportController::class, 'clientGroupReport'])->name('clientgroupreport')->middleware('auth','permission:All|View Client Group Report');
 
 
+Route::post('tableview',[App\Http\Controllers\TransactionController::class, 'tableViewSession'])->name('tableview')->middleware('auth');
+
 // Ticket Route End
 
 

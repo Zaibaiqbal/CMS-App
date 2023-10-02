@@ -18,6 +18,7 @@ class AddMultipleColumnsToPaymentsTable extends Migration
             $table->json('pass_no')->nullable()->after('net_weight');
             $table->double('passes_amount')->default(0)->nullable()->after('net_weight');
             $table->double('passes_weight')->default(0)->nullable()->after('net_weight');
+            $table->double('received_amount')->default(0)->nullable()->after('amount');
             
         });
     }
@@ -33,6 +34,7 @@ class AddMultipleColumnsToPaymentsTable extends Migration
             $table->dropColumn('pass_no');
             $table->dropColumn('passes_amount');
             $table->dropColumn('passes_weight');
+            $table->dropColumn('received_amount');
 
         });
     }
