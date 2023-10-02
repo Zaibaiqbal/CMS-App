@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserAccount;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -585,6 +586,30 @@ class TransactionController extends Controller
         $request->session()->put('change_view',$request->change_view);
 
         return $request->change_view;
+    }
+
+    public function voidTransaction(Request $request)
+    {
+        try
+        {
+            $transaction = new Transaction;
+            $transaction = $transaction->getTransactionById(decrypt($request->id));
+
+            if(isset($transaction->id) && $transaction->is_void == 0)
+            {
+                $transaction->is_void = 1;
+                $transaction->update();
+
+            }
+        return redirect()->back()->with('Transaction updated successfully');
+
+
+        }
+        catch(Exception $e)
+        {
+
+        }
+
     }
 
 }

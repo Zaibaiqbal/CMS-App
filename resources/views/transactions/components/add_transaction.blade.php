@@ -21,14 +21,8 @@
                 <textarea type="text" name="{{$name}}" class="form-control" cols="40" rows="2" placeholder="{{$label}}"></textarea>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <input type="checkbox" name="is_identified" value="1" id="">
-                <label for="">Not Identified Yet</label>
-
-            </div>
-        </div>
-        <div class="col-md-6">
+        
+        <div class="col-md-4">
                 @php($label = 'Client')
                 @php($name = 'client')
 
@@ -42,7 +36,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
 
                 @php($label = 'Contact')
                 @php($name = 'contact_no')
@@ -55,6 +49,23 @@
         </div>
 
         
+        <div class="col-md-4 mb-2">
+
+            @php($label = 'In-weight')
+                @php($name = 'inweight')
+                <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
+                <small class="text-danger" id="{{$name}}_error"></small>
+
+                <input type="text" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">
+
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="checkbox" name="is_identified" value="1" id="">
+                <label for="">Not Identified Yet</label>
+
+            </div>
+        </div>
         {{--
 
         <div class="col-md-6">
@@ -109,16 +120,6 @@
         </div>
         --}}
 
-        <div class="col-md-12 mb-2">
-
-            @php($label = 'In-weight')
-                @php($name = 'inweight')
-                <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
-                <small class="text-danger" id="{{$name}}_error"></small>
-
-                <input type="text" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">
-
-        </div>
         {{--
         <div class="col-md-6 mb-2">
 

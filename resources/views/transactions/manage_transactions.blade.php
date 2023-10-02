@@ -81,9 +81,9 @@ Transaction Management
                               <div class="dropdown-divider"></div>
 
                               @endif
-                              @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Update Transaction']))
+                              @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Void Transaction']))
 
-                              <a href="#" target="_blank" onclick="formModal(event,'{{route('update.transaction',['id' => encrypt($rows->id)])}}','#modal_update_transaction','#target_modal')" class="dropdown-item py-0"><i class="dropdown-icon fa fa-edit "></i>&nbsp;&nbsp;&nbsp; Void</a>
+                              <a href="{{route('void.transaction',['id' => encrypt($rows->id)])}}" onclick="formSubmission(event,this)" content="cancel this transaction" class="dropdown-item py-0 "><i class="dropdown-icon fa fa-multiply "></i>&nbsp;&nbsp;&nbsp; Void</a>
                               <div class="dropdown-divider"></div>
 
                               @endif

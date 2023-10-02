@@ -202,6 +202,9 @@ Route::match(['get','post'],'clientgroupreport', [App\Http\Controllers\ReportCon
 
 Route::post('tableview',[App\Http\Controllers\TransactionController::class, 'tableViewSession'])->name('tableview')->middleware('auth');
 
+
+Route::get('voidtransaction',[App\Http\Controllers\TransactionController::class, 'voidTransaction'])->name('void.transaction')->middleware('auth');
+
 // Ticket Route End
 
 

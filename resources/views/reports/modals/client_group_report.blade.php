@@ -31,6 +31,8 @@
 
                     <select name="{{$name}}" id="" class="form-control fstdropdown-select">
                         <option value="">{{$label}}</option>
+                        <option value="Cash Account">Cash Account</option>
+
                     @foreach($group_list as $rows)
                         <option value="{{$rows}}">{{$rows}}</option>
                     @endforeach

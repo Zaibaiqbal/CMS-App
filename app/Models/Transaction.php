@@ -15,25 +15,25 @@ class Transaction extends Model
     public function getTransactionByAddedId()
     {
 
-        return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id])->orderby('id','DESC')->get();
+        return Transaction::where(['is_deleted' => 0,'is_void' => 0,'added_id' => Auth::user()->id])->orderby('id','DESC')->get();
     }
 
     public function getTransactionById($id)
     {
 
-        return Transaction::where(['is_deleted' => 0,'added_id' => Auth::user()->id,'id' => $id])->first();
+        return Transaction::where(['is_deleted' => 0,'is_void' => 0,'added_id' => Auth::user()->id,'id' => $id])->first();
     }
 
     public function getTransactionsByCondition($condition = [])
     {
 
-        return Transaction::where('is_deleted' , 0)->where($condition)->orderby('id','desc')->get();
+        return Transaction::where('is_deleted' , 0)->where('is_void',0)->where($condition)->orderby('id','desc')->get();
     }
 
     public function getDashboardTransactionsByCondition($condition,$from,$to)
     {
 
-        $query = Transaction::where('is_deleted' , 0)->where($condition);
+        $query = Transaction::where('is_deleted' , 0)->where('is_void',0)->where($condition);
 
 // dd($query->get());
         if(strlen(trim($from)) > 0 && strlen(trim($to)) > 0)
@@ -47,7 +47,7 @@ class Transaction extends Model
     public function getTransactionsClientList()
     {
         return User::join('transactions as t','t.client_id','=','users.id')
-        ->where('t.status','Processed')
+        ->where('t.status','Processed')->where('t.is_void',0)
         ->selectRaw("users.name as name,users.id")->groupby('users.id')->get();
 
     }
@@ -60,7 +60,8 @@ class Transaction extends Model
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         
         ->where($condition)
-        ->where('transactions.status','Processed');
+        ->where('transactions.status','Processed')
+        ->where('transactions.is_void',0);
 
         if(strlen($client_group_condition) > 0)
         {
@@ -77,6 +78,7 @@ class Transaction extends Model
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         ->whereIn('transactions.client_group',$condition)
         ->where('transactions.status','Processed')
+        ->where('transactions.is_void',0)
         // ->whereDate('transactions.created_at',now())
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
         ->get();
@@ -94,6 +96,7 @@ class Transaction extends Model
         ->join('payments as p', 't.id', '=', 'p.transaction_id')
         ->where(['t.client_id' => $id])
         ->where('t.status','Processed')
+        ->where('t.is_void',0)
         ->whereDate('t.created_at', '>=', $start_date)->whereDate('t.created_at', '<=', $end_date)->groupBy('material_types.id')
         ->get();
 
@@ -122,7 +125,7 @@ class Transaction extends Model
 
     public function getTransactionsByClientId($id)
     {
-        return Transaction::where('client_id',$id)->get();
+        return Transaction::where('client_id',$id)->where('is_void',0)->get();
         
         // join('accounts as a','a.id','=','transactions.account_id')
         // ->join('user_accounts as ua','ua.account_id','=','a.id')
@@ -134,7 +137,7 @@ class Transaction extends Model
     public function getTransactionsByUserId($id)
     {
 
-        return Transaction::whereHas('userAccount' , function($query) use ($id){
+        return Transaction::where('is_void',0)->whereHas('userAccount' , function($query) use ($id){
 
             $query->where('user_id',$id)->orWhere('parent_id',$id);
 
@@ -150,6 +153,7 @@ class Transaction extends Model
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         ->where('transactions.added_id',$id)
         ->where('transactions.status','Processed')
+        ->where('transactions.is_void',0)
         ->whereDate('transactions.created_at','>=',$start_date)
         ->whereDate('transactions.created_at','<=',$date)
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
@@ -166,6 +170,8 @@ class Transaction extends Model
             ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
             ->join('payments as p', 't.id', '=', 'p.transaction_id')
             ->where('t.status','Processed')
+            ->where('t.is_void',0)
+
             ->where($condition);
 
             if(@count($client_group_condition))
@@ -200,6 +206,8 @@ class Transaction extends Model
             ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
             ->join('payments as p', 't.id', '=', 'p.transaction_id')
             ->where('t.status','Processed')
+            ->where('t.is_void',0)
+
             // ->whereIn('t.client_group',$group_condition)
 
             ->where($condition);
@@ -218,6 +226,7 @@ class Transaction extends Model
         return MaterialType::join('transactions as t','material_types.id','=','t.material_type_id')
         ->whereMonth('t.created_at', Carbon::now()->month)
         ->where($condition)
+        ->where('t.is_void',0)
 
         ->selectRaw("material_types.name,sum(t.gross_weight) as gross_weight,sum(t.tare_weight) as tare_weight")
         ->groupby('material_types.id')->get();
