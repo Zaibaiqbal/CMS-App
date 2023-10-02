@@ -338,7 +338,6 @@ class TransactionController extends Controller
                         $form_data['truck_id']   = $form_data['truck'];
 
                     }
-    // dd($form_data);
                     $transaction = new Transaction;
     
                     $transaction = $transaction->processTransaction($form_data);
@@ -442,7 +441,7 @@ class TransactionController extends Controller
         
         catch(Exception $e)
             {
-    
+    dd($e);
             }
     
         

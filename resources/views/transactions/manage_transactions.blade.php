@@ -81,7 +81,7 @@ Transaction Management
                               <div class="dropdown-divider"></div>
 
                               @endif
-                              @if(Auth::user()->hasRole(['Super Admin','Employee']) && Auth::user()->hasAnyPermission(['All','Void Transaction']))
+                              @if($rows->status == 'Processed' && Auth::user()->hasRole(['Super Admin']) && Auth::user()->hasAnyPermission(['All','Void Transaction']))
 
                               <a href="{{route('void.transaction',['id' => encrypt($rows->id)])}}" onclick="formSubmission(event,this)" content="cancel this transaction" class="dropdown-item py-0 "><i class="dropdown-icon fa fa-multiply "></i>&nbsp;&nbsp;&nbsp; Void</a>
                               <div class="dropdown-divider"></div>

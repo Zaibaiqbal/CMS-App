@@ -17,7 +17,10 @@ class Payment extends Model
             $payment = new Payment;
             $payment->transaction_id =          $object['transaction_id'];
             $payment->amount         =          $object['amount'];
-            $payment->received_amount         =          $object['received_amount'];
+            if(isset($object['received_amount']))
+            {
+                $payment->received_amount         =          $object['received_amount'];
+            }
             $payment->tax_amount    =          $object['tax_amount'];
             $payment->surcharge_amount    =          $object['surcharge_amount'];
             $payment->rate           =          $object['rate'];

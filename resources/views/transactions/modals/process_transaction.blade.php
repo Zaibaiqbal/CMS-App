@@ -249,7 +249,6 @@
                 </div>
                 
                 
-                @endif
 
                 <div class="col-md-6">
                     @php($label = 'Amount')
@@ -274,6 +273,7 @@
                         <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
                     </div>
                 </div>
+                @endif
 
                 <div class="col-md-12">
                     @php($label = 'Driver Name')
@@ -400,6 +400,7 @@ function calculateNetWeight(event,obj)
 
         var slab_rate = $('.slab_rate').val();
         var rate = $('.material_rate').val();
+
         
         // alert(slab_rate+" "+rate);
         // Calculate the total price, including the first 250 kg and any extra weight
@@ -427,7 +428,6 @@ function calculateNetWeight(event,obj)
 
             $('.material_rate').val(data.rate);
             $('.slab_rate').val(data.slab_rate);
-
 
             removeThemeLoader();
 

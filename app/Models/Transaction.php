@@ -416,7 +416,12 @@ class Transaction extends Model
 
                 $payment_info['transaction_id']    =  $transaction->id; 
                 $payment_info['amount']            =  $transaction->total_cost; 
-                $payment_info['received_amount']            =  $object['received_amount']; 
+                
+                if(isset($object['received_amount']))
+                {
+                    $payment_info['received_amount']            =  $object['received_amount']; 
+
+                }
                 $payment_info['rate']              =  $transaction->material_rate; 
                 $payment_info['net_weight']        =  $transaction->net_weight; 
                 $payment_info['tax_amount']        =  $this->calculateSurchargeHstTax($transaction)['tax_amount']; 
