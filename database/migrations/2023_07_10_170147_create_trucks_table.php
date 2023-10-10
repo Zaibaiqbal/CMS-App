@@ -15,8 +15,8 @@ class CreateTrucksTable extends Migration
     {
         Schema::create('trucks', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('client_id')->nullable();
-            $table->bigInteger('added_id')->nullable();
+            // $table->bigInteger('client_id')->nullable();
+            // $table->bigInteger('added_id')->nullable();
 
             $table->string('plate_no')->nullable();
             $table->string('model')->nullable();

@@ -32,6 +32,7 @@ class PermissionSeeder extends Seeder
         $data[++$count] = [ "module" => "Truck", "name" => "View Trucks", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "Truck", "name" => "Update Truck", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Truck", "name" => "Truck Assignment", "guard_name" => "web"];
 
 
         $data[++$count] = [ "module" => "Location", "name" => "Add Category", "guard_name" => "web"];

@@ -1,43 +1,16 @@
-function applyDarkModeToModals() {
-    $('.modal-content, .card, .card-body').addClass('dark-mode');
-}
+function formModal(event,route,form_modal,target_modal)
+{
 
-function formModal(event, route, form_modal, target_modal) {
     event.preventDefault();
 
-    // Function to apply dark mode to modal content
-    function applyDarkModeToModalContent() {
-        const currentTheme = document.getElementById('pcoded').getAttribute('layout-type');
-        if (currentTheme === 'dark') {
-            applyDarkModeToModals();
-        }
-    }
-
-    $.get(route, function (data) {
+    $.get(route,function(data)
+    {
         $(target_modal).html(data);
-
-        // Apply dark mode styles immediately after loading content
-        applyDarkModeToModalContent();
-
-        // Show the modal after it has been loaded
         $(form_modal).modal('show');
+
     });
+
 }
-
-
-// function formModal(event,route,form_modal,target_modal)
-// {
-
-//     event.preventDefault();
-
-//     $.get(route,function(data)
-//     {
-//         $(target_modal).html(data);
-//         $(form_modal).modal('show');
-
-//     });
-
-// }
 
 
 
@@ -151,13 +124,6 @@ function submitModalForm(event,obj,form_id,form_modal_id)
                 removeThemeLoader();
 
             } else {
-
-                toastr.options =
-                {
-                    "closeButton" : true,
-                    "progressBar" : true
-                }
-                toastr.error(result.message);
 
                 removeThemeLoader();
 

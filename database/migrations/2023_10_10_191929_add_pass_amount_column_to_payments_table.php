@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIdentifierColumnToTrucksTable extends Migration
+class AddPassAmountColumnToPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddIdentifierColumnToTrucksTable extends Migration
      */
     public function up()
     {
-        Schema::table('trucks', function (Blueprint $table) {
-           $table->string('identifier')->nullable()->unique();
+        Schema::table('payments', function (Blueprint $table) {
+            $table->double('pass_amount')->default(0)->nullable();
+            
         });
     }
 
@@ -25,8 +26,8 @@ class AddIdentifierColumnToTrucksTable extends Migration
      */
     public function down()
     {
-        Schema::table('trucks', function (Blueprint $table) {
-            $table->dropColumn('identifier');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->dropColumn('pass_amount');
         });
     }
 }

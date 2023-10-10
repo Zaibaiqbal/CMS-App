@@ -89,24 +89,6 @@
             z-index: 1052;
         }
 
-       /* Add this to your CSS file */
-
-        .dark-mode {
-            /* Add styles for dark mode here */
-            background-color: #333; /* Change this to your dark background color */
-            color: #fff; /* Change this to your dark text color */
-        }
-
-        .text-dark {
-            /* Add styles for dark text here */
-            color: #333 !important; /* Change this to your dark text color */
-        }
-
-        .text-light {
-            /* Add styles for light text here */
-            color: #fff !important; /* Change this to your light text color */
-        }
-        
     </style>
     @yield('page_style')
 </head>
@@ -230,7 +212,6 @@
                                             @if (!Auth::user()->hasRole(['Super Admin']))
                                                 <li>
                                                     <a class="notification-menu" content="sign off"
-                                                        onclick="formSubmission(event,this)"
                                                         href="{{ route('sendemployeedailyprogress') }}"> <i
                                                             class="fa fa-lock"></i></i>
                                                         Sign Off
@@ -679,6 +660,10 @@
         
     </script>
         <script type="module" src="{{ asset('js/theme-toggle.js') }}"></script>
+
+
+
+
     @yield('page_script')
 
     @include('users.modals.change_password')

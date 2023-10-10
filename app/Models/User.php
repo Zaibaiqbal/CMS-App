@@ -442,6 +442,13 @@ class User extends Authenticatable
 
         return $this->belongsToMany(Role::class,'model_has_roles','model_id');
     }
+
+    public function trucks()
+    {
+        return $this->belongsToMany(Truck::class, 'truck_assignment');
+    }
+
+
     public function client()
     {
 

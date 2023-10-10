@@ -22,7 +22,7 @@
                 <div class="col-md-12 job_id" style="display: none;">
                         @php($label = 'Job Id / PO Number')
                         @php($name = 'job_id')
-                        <label for="">{{$label}} <span class="text-danger"></span> </label>
+                        <label for="">{{$label}}: <span class="text-danger"></span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
@@ -34,7 +34,7 @@
                 <div @if($transaction->is_identified > 0) class="col-md-6" @else class="col-md-6" @endif>
                         @php($label = 'License No')
                         @php($name = 'plate_no')
-                        <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                        <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
@@ -47,7 +47,7 @@
                     <div class="col-md-6">
                             @php($label = 'Select Client')
                             @php($name = 'truck')
-                            <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                            <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                             <small class="text-danger" id="{{$name}}_error"></small>
                             <div class="input-group">
 
@@ -55,7 +55,7 @@
                                 <option value="">{{$label}}</option>
                                 
                                 @foreach($truck_list as $rows)
-                                    <option value="{{$rows->id}}">{{$rows->identifier}}</option>
+                                    <option value="{{$rows->id}}">{{$rows->user->name}} - {{$rows->truck->plate_no}}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -67,7 +67,7 @@
                     @php($label = 'Select Account')
                     @php($name = 'account')
 
-                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
                     <div class="input-group">
 
@@ -87,7 +87,7 @@
                         @php($label = 'Client')
                         @php($name = 'client')
 
-                        <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                        <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
                         <div class="input-group">
                         <input type="text" name="{{$name}}" class="form-control name auto_search_client_name client" onkeyup="autoSearchClientName(event,'client_name_tag')" value="{{$transaction->client_name}}" id="" placeholder="{{$label}}">
@@ -100,7 +100,7 @@
 
                         @php($label = 'Contact')
                         @php($name = 'contact_no')
-                        <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                        <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
                         <input type="text" name="{{$name}}" value="{{$transaction->contact_no}}" class="form-control contact_no" id="" placeholder="0000-0000000" data-mask="0000-000000">
@@ -112,7 +112,7 @@
 
                 @php($label = 'Group Type')
                 @php($name = 'client_group')
-                <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
                 <input type="text" name="{{$name}}" value="{{$transaction->client_group}}" class="form-control client_group" id="" readonly >
@@ -124,7 +124,7 @@
 
                     @php($label = 'Select Material')
                     @php($name = 'material')
-                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <select name="{{$name}}" id="" class="form-control material_list" onchange="getMaterialRate(event,this)">
@@ -143,7 +143,7 @@
 
                 @php($label = 'Material Rate')
                     @php($name = 'material_rate')
-                    <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <label id="gross_label" for="">{{$label}}: <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" readonly name="{{$name}}" class="form-control material_rate"  placeholder="{{$label}}" >
@@ -155,7 +155,7 @@
 
                     @php($label = 'Operation')
                     @php($name = 'operation_type')
-                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <label for="">{{$label}}: <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" value="" readonly class="form-control operation_type">
@@ -168,7 +168,7 @@
 
                     @php($label = 'In-Weight')
                         @php($name = 'inweight')
-                        <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
+                        <label id="gross_label" for="">{{$label}} (MT): <span class="text-danger">*</span> </label>
                         <small class="text-danger" id="{{$name}}_error"></small>
 
                         <input type="text" onchange="calculateNetWeight(event,this)" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}" value="{{$transaction->gross_weight}}">
@@ -178,7 +178,7 @@
 
                     @php($label = 'Out-Weight')
                     @php($name = 'outweight')
-                    <label for="" id="tare_label">{{$label}} <span class="text-danger">*</span> </label>
+                    <label for="" id="tare_label">{{$label}} (MT): <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" name="{{$name}}" class="form-control" onchange="calculateNetWeight(event,this)" id="tare_input" placeholder="{{$label}}" value="{{$transaction->tare_weight}}">
@@ -190,7 +190,7 @@
 
                     @php($label = 'Net-weight')
                     @php($name = 'net_weight')
-                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <label for="">{{$label}} (MT): <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" readonly name="{{$name}}" value="{{$transaction->net_weight}}" class="form-control net_weight" id="" placeholder="{{$label}}">
@@ -203,21 +203,21 @@
 
                     @php($label = 'Mode of Payment')
                     @php($name = 'mode_of_payment')
-                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <label for="">{{$label}}: <span class="text-danger"></span>*</label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                    <select name="{{$name}}" class="form-control form-control-sm" id="" onchange="showModeofPayment(event,this)">
                         
                         <option value="0">{{$label}}</option>
 
-                        @foreach(['Cash','Passes','Debit/Credit'] as $rows)
+                        @foreach(['Cash','Pass','Debit/Credit','Cash + Pass'] as $rows)
                         <option value="{{$rows}}">{{$rows}}</option>
                         @endforeach
                    </select>
 
 
                 </div>
-
+<!-- 
                 <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
 
                     @php($label = 'No. of Passes Used:')
@@ -226,47 +226,70 @@
                     <small class="text-danger" id="{{$name}}_error"></small>
 
                     <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
-                </div>
+                </div> -->
 
-                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
+                <div class="col-md-6 mb-2 pass_no_section" style="display: none;">
 
                     @php($label = 'Pass No. 1')
                     @php($name = 'pass_no')
-                    <label for="">{{$label}} <span class="text-danger">*</span> </label>
+                    <label for="">{{$label}}: <span class="text-danger">*</span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                    <input type="text" value="" onkeyup="calculatePassAmount(event)" name="{{$name}}" class="form-control" placeholder="{{$label}}">
                 </div>
 
-                <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
+                <div class="col-md-6 mb-2 pass_no_section" style="display: none;">
 
                     @php($label = 'Pass No. 2')
                     @php($name = 'optional_pass_no')
-                    <label for="">{{$label}} <span class="text-danger"></span> </label>
+                    <label for="">{{$label}}: <span class="text-danger"></span> </label>
                     <small class="text-danger" id="{{$name}}_error"></small>
 
-                    <input type="text" value="" name="{{$name}}" class="form-control" placeholder="{{$label}}">
+                    <input type="text" value="" onkeyup="calculatePassAmount(event)" name="{{$name}}" class="form-control" placeholder="{{$label}}">
                 </div>
                 
                 
 
-                <div class="col-md-6">
+                <div class="col-md-4 total_amount_section" style="display: none;">
                     @php($label = 'Amount')
-                    @php($name = 'amount')
                     <div class="form-group">
-                        <label for="">{{$label}}</label>
-                        <span><i class="text-danger"></i></span>
-                        <small id="{{$name}}_error" class="text-danger">*</small>
+                        <label for="">{{$label}}:
+                        
+                        <p class="total_amount font-weight-bold">$0</p>
+                         <input type="hidden" name="total_amount" value="">
 
-                        <input type="text" value="" readonly name="{{$name}}" class="form-control total_amount" placeholder="{{$label}}">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-4 cash_amount_section" style="display: none;">
+                    @php($label = 'Total Pass Amount')
+                    <div class="form-group">
+                        <label for="">{{$label}}
+                    
+                        <p class="pass_amount font-weight-bold">$0</p>
+                        <input type="hidden" name="pass_amount" value="">
+                        
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-4 cash_amount_section" style="display: none;">
+                    @php($label = 'Remaining Cash Payment')
+                    <div class="form-group">
+                    <label for="">{{$label}}
+                    
+                        <p class="remaining_cash_amount font-weight-bold">$0</p>
+                        <input type="hidden" name="remaining_cash_amount" value="">
+
+                    </label>
+
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 received_amount_section" style="display: none;">
                     @php($label = 'Received Amount')
                     @php($name = 'received_amount')
                     <div class="form-group">
-                        <label for="">{{$label}}</label>
+                        <label for="">{{$label}} ($)</label>
                         <span><i class="text-danger"></i></span>
                         <small id="{{$name}}_error" class="text-danger">*</small>
 
@@ -275,7 +298,7 @@
                 </div>
                 @endif
 
-                <div class="col-md-12">
+                <div class="col-md-12 driver_section">
                     @php($label = 'Driver Name')
                     @php($name = 'driver_name')
                     <div class="form-group">
@@ -315,6 +338,7 @@
 </div>
 
 <script>
+
     setFstDropdown();
 
     function autoSearchClientName(event,tag)
@@ -357,26 +381,27 @@
                 $('.contact_no').val(i.item.label1).attr('readonly',true);
             },
             open: function() {
-        // Get the autocomplete list element
+                // Get the autocomplete list element
                 var autocompleteList = $(this).autocomplete("widget");
 
                 // Add custom CSS class to the list element
                 autocompleteList.addClass("custom-autocomplete-list");
             },
+
             minLength: 1
         });
     }
 
 
-function calculateNetWeight(event,obj)
-    {
+    function calculateNetWeight(event,obj)
+        {
         event.preventDefault();
 
         var inweight =  $("input[name=inweight]").val();
         var outweight =  $("input[name=outweight]").val();
 
         var net_weight = 0;
-        net_weight =  inweight - outweight;
+        net_weight =  Math.abs(inweight - outweight);
             
         if(net_weight < 0)
         {
@@ -389,24 +414,37 @@ function calculateNetWeight(event,obj)
             $('.operation_type').val('Inbound');
             $('.job_id').show();
         }
-            $('.net_weight').val(net_weight);
+        $('.net_weight').val(net_weight);
 
-// alert(net_weight*1000);
-            calculateMaterialPrice(net_weight*1000)
+        totalPrice = calculateMaterialPrice(net_weight)
+
+        $('.total_amount').html("$"+totalPrice);
+        $('input[name=total_amount]').val(totalPrice);
 
     }
 
-    function calculateMaterialPrice(weightInKgs) {
+    function calculateMaterialPrice(net_weight) {
 
         var slab_rate = $('.slab_rate').val();
         var rate = $('.material_rate').val();
 
-        
-        // alert(slab_rate+" "+rate);
+        var totalPrice = 0;
+
+        if(slab_rate > 0)
+        {
+            var weightInKgs = net_weight * 1000;
+
+            totalPrice = parseFloat(rate) + Math.ceil((weightInKgs - 250) / 50) * parseFloat(slab_rate);
+
+
+        }
+        else
+        {
+            totalPrice = parseFloat(rate) * net_weight;
+
+        }
         // Calculate the total price, including the first 250 kg and any extra weight
-        const totalPrice = parseFloat(rate) + Math.ceil((weightInKgs - 250) / 50) * parseFloat(slab_rate);
-        
-            $('.total_amount').val(Math.abs(totalPrice));
+        return totalPrice;
 
         }
 
@@ -414,6 +452,57 @@ function calculateNetWeight(event,obj)
         // const totalPrice = calculateMaterialPrice(weightInKgs);
         // console.log(`Total price for ${weightInKgs} kg of material is $${totalPrice}`);
 
+    function calculatePassAmount(event,obj)
+    {
+        event.preventDefault();
+
+        if($('select[name=mode_of_payment]').val() == 'Cash + Pass')
+        {
+            var val1 = $('input[name=pass_no]').val();
+            var val2 = $('input[name=optional_pass_no]').val();
+
+            // Initialize the total_weight variable to 0
+            var total_pass_weight = 0;
+            var remaining_weight = 0;
+            var remainign_amount = 0;
+            var total_amount = 0;
+
+            // Check if both fields have values
+            if (val1 !== "" && val2 !== "") {
+                total_pass_weight = 500;
+            }
+            // Check if at least one field is filled
+            else if (val1 !== "" || val2 !== "") {
+                total_pass_weight = 250;
+            }
+
+            var net_weight =   ($('.net_weight').val())*1000;
+
+            remaining_weight =  net_weight - total_pass_weight;
+
+            total_amount = $('input[name=total_amount]').val();
+            remaining_amount = calculateMaterialPrice(remaining_weight/1000);
+
+            var pass_amount = total_amount - remaining_amount;
+            $('.pass_amount').html("$"+pass_amount);
+            $('.remaining_cash_amount').html("$"+remaining_amount);
+
+            $('input[name=remaining_cash_amount]').val(remaining_amount);
+            $('input[name=pass_amount]').val(pass_amount);
+
+            
+        }
+        else
+        {
+            $('.remaining_cash_amount').html(0);
+            $('input[name=remaining_cash_amount]').val(0);
+            $('.pass_amount').html(0);
+            $('input[name=pass_amount]').val(0);
+
+            $('input[name=total_amount]').val(0);
+
+        }
+    }
 
     function getMaterialRate(event,obj)
     {
@@ -496,18 +585,64 @@ function calculateNetWeight(event,obj)
 
         var mode_of_payment = $(obj).val();
 
-        if(mode_of_payment == 'Passes')
+        if(mode_of_payment == 'Pass')
         {
             $('.pass_no_section').show();
+            $('.total_amount_section').hide();
+            $('.cash_amount_section').hide();
+            $('.received_amount_section').hide();
+            
+            $('.driver_section').removeClass('col-md-6');
+            $('.driver_section').addClass('col-md-12');
         }
-       else
-       {
-        $('.pass_no_section').hide();
+        else if(mode_of_payment == 'Cash + Pass')
+        {
+            $('.pass_no_section').show();
+            $('.total_amount_section').show();
+            $('.cash_amount_section').show();
+            $('.received_amount_section').show();
+            $('.driver_section').removeClass('col-md-12');
+            $('.driver_section').addClass('col-md-6');
+            $('.total_amount_section').removeClass('col-md-6');
+            $('.total_amount_section').addClass('col-md-4');
+            $('.received_amount_section').removeClass('col-md-4');
+            $('.received_amount_section').addClass('col-md-6');
 
-       }
+            
+        }
+        else if(mode_of_payment == 'Cash')
+        {
+            $('.total_amount_section').show();
+            $('.received_amount_section').show();
 
+            $('.total_amount_section').removeClass('col-md-4');
+            $('.total_amount_section').addClass('col-md-6');
+         
+            $('.pass_no_section').hide();
+            $('.cash_amount_section').hide();
+
+            $('.driver_section').removeClass('col-md-6');
+            $('.driver_section').addClass('col-md-12');
+        }
+        else
+        {
+            $('.pass_no_section').hide();
+
+        }
+
+        // resetAmountSection();
     }
     
-    
+    function resetAmountSection()
+    {
+            $('.remaining_cash_amount').html(0);
+            $('input[name=remaining_cash_amount]').val(0);
+            $('.total_amount').html(0);
+            $('.pass_amount').html(0);
+            $('input[name=pass_amount]').val(0);
+            $('input[name=pass_no]').val('');
+            $('input[name=optional_pass_no]').val('');
+            $('input[name=total_amount]').val(0);
+    }
 
 </script>

@@ -209,6 +209,13 @@ Route::get('voidtransaction',[App\Http\Controllers\TransactionController::class,
 
 
 Route::get('reports', [App\Http\Controllers\ReportController::class, 'index'])->name('reports')->middleware('auth','permission:All|View Reports');
+
+Route::match(['get','post'],'truckassignment', [App\Http\Controllers\TruckAssignmentController::class, 'storeTruckAssignment'])->name('trucks.assignment')->middleware('auth','permission:All|Truck Assignment');
+
+
+Route::get('clienttrucklist', [App\Http\Controllers\TruckController::class, 'getClientTruckList'])->name('clienttrucklist')->middleware('auth');
+
+
 // CLIENT ROUTES
 
 

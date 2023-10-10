@@ -5,6 +5,15 @@
 Roles & Permissions Management
 
 @endsection
+@section('page_stle')
+
+<style>
+
+.dark-modal-background {
+            background-color: #4A5A77 !important;
+    }
+</style>
+@endsection
 
 @section('page_breadcrumbs')
 

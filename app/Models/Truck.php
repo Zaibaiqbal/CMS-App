@@ -39,7 +39,10 @@ class Truck extends Model
     {
         
 
-        return Truck::where('is_deleted', 0)->where('plate_no', 'LIKE', '%'. $plate_no. '%')->get();
+        return TruckAssignment::whereHas('truck', function($query) use ($plate_no)
+        {
+            $query->where('is_deleted', 0)->where('plate_no', 'LIKE', '%'. $plate_no. '%');
+        })->get();
 
     }
 
@@ -56,9 +59,9 @@ class Truck extends Model
                 $truck->vin_no          = $object['vin_no'];
 
             }
-            $truck->added_id        = Auth::user()->id;
+            // $truck->added_id        = Auth::user()->id;
 
-            $truck->client_id        = $object['client_id'];
+            // $truck->client_id        = $object['client_id'];
 
             $truck->company         = $object['company'];
             $truck->model           = $object['model'];
@@ -77,8 +80,14 @@ class Truck extends Model
             }
 
             $truck->save();
-            $this->generateIdentifier($truck);
+            // $this->generateIdentifier($truck);
 
+            $truck_assignment = new TruckAssignment;
+            $truck_assignment->storeTruckAssignment([
+                'client_id'     =>   $object['client_id'],
+                'added_id'      =>   Auth::user()->id,
+                'truck_id'      =>   $truck->id,
+            ]);
 
             return with($truck);
         });
@@ -101,9 +110,9 @@ class Truck extends Model
                 $truck->vin_no          = $object['vin_no'];
 
             }
-            $truck->added_id        = Auth::user()->id;
+            // $truck->added_id        = Auth::user()->id;
 
-            $truck->client_id        = $object['client_id'];
+            // $truck->client_id        = $object['client_id'];
 
             $truck->company         = $object['company'];
             $truck->model           = $object['model'];
@@ -122,7 +131,7 @@ class Truck extends Model
             }
 
             $truck->update();
-            $this->generateIdentifier($truck);
+            // $this->generateIdentifier($truck);
 
         }
 
@@ -137,6 +146,20 @@ class Truck extends Model
 
          $truck->update();
     }
+
+    public function getClientTruckList($id)
+    {
+        return TruckAssignment::whereHas('user',function($query){
+            
+        })->where('client_id',$id)->get();
+
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'truck_assignment');
+    }
+
 
     public function user()
     {

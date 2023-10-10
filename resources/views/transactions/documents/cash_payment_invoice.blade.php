@@ -156,10 +156,10 @@
           <tr>
 
             <td class="customer_info">Gross Weight:</td>
-            <td><input type="text" value="{{$transaction->gross_weight}}"></td>
+            <td><input type="text" value="{{$transaction->gross_weight}} MT"></td>
 
             <td class="customer_info">Net Weight:</td>
-            <td><input type="text" value="{{$transaction->net_weight}}"></td>
+            <td><input type="text" value="{{$transaction->net_weight}} MT"></td>
 
           </tr>
          
@@ -169,13 +169,13 @@
             <td><input type="text" value="{{$transaction->payment->mode_of_payment}}"></td>
 
             <td class="customer_info">Amount Due:</td>
-            <td><input type="text" value=""></td>
+            <td><input type="text" value="${{$transaction->payment->amount - $transaction->payment->received_amount}}"></td>
 
           </tr>
           <tr>
         
             <td class="customer_info">Amount Paid:</td>
-            <td><input type="text" value="{{$transaction->payment->amount}}"></td>
+            <td><input type="text" value="${{$transaction->payment->received_amount}}"></td>
 
             <td class="customer_info">Change:</td>
             <td><input type="text" value=""></td>

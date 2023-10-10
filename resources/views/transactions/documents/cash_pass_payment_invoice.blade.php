@@ -156,7 +156,7 @@
           <tr>
 
             <td class="customer_info">Gross Weight:</td>
-            <td><input type="text" value="{{$transaction->gross_weight}}"></td>
+            <td><input type="text" value="{{$transaction->gross_weight}} MT"></td>
 
             <td class="customer_info">Passes Used:</td>
             <td><input type="text" value="{{$transaction->payment->no_of_passes}}"></td>
@@ -167,27 +167,27 @@
 
          
             <td class="customer_info">Total Weight Covered:</td>
-            <td><input type="text" value="{{$transaction->payment->passes_weight}}"></td>
+            <td><input type="text" value="{{$transaction->payment->passes_weight}} MT"></td>
 
             <td class="customer_info">Weight Due:</td>
-            <td><input type="text" value="{{$transaction->payment->quantity - $transaction->payment->passes_weight}}"></td>
+            <td><input type="text" value="{{$transaction->payment->quantity - $transaction->payment->passes_weight}} MT"></td>
 
           </tr>
 
           <tr>
         
             <td class="customer_info">Payment Method:</td>
-            <td><input type="text" value="Pass Only"></td>
+            <td><input type="text" value="{{$transaction->payment->mode_of_payment}}"></td>
 
             <td class="customer_info">Amount Due:</td>
-            <td><input type="text" value="{{$transaction->payment->amount-$transaction->payment->received_amount}}"></td>
+            <td><input type="text" value="${{$transaction->payment->remaining_cash_amount}}"></td>
 
           </tr>
 
           <tr>
         
             <td class="customer_info">Amount Paid:</td>
-            <td><input type="text" value="{{$transaction->payment->received_amount}}"></td>
+            <td><input type="text" value="${{$transaction->payment->received_amount}}"></td>
 
             <td class="customer_info">Change:</td>
             <td><input type="text" value=""></td>

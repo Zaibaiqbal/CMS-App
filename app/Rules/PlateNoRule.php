@@ -18,9 +18,9 @@ class PlateNoRule implements Rule
 
    public function __construct($client_id,$plate_no)
    {
-       $this->client_id = $client_id;
-       $this->plate_no = $plate_no;
-       $this->message    = 'Required Validation.';
+       $this->client_id     = $client_id;
+       $this->plate_no      = $plate_no;
+       $this->message       = 'Required Validation.';
    }
     /**
      * Determine if the validation rule passes.

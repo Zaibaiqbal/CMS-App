@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Truck;
+use App\Models\TruckAssignment;
 use App\Models\User;
 use App\Models\UserAccount;
 use App\Rules\PlateNoRule;
@@ -14,7 +15,7 @@ class TruckController extends Controller
     public function index()
     {
 
-        $trucks_list = Truck::get();
+        $trucks_list = TruckAssignment::whereHas('user')->whereHas('truck')->get();
         return view('trucks.manage_trucks',[
             'trucks_list'  =>  $trucks_list
         ]);
@@ -51,11 +52,9 @@ class TruckController extends Controller
     {
         $data = ['view' => '' ];
 
-        $truck = new Truck;
+        $truck = new TruckAssignment;
 
-        $truck = $truck->getTruckById($request->truck_id);
-      
-        // dd($trucks_list);
+        $truck = $truck->getTruckAssignmentByCondition(['id' => $request->truck_id]);
         if(isset($truck->id))
         {
             $user_account = new UserAccount;
@@ -92,9 +91,9 @@ class TruckController extends Controller
                 'plate_no'              => ['required',new PlateNoRule(decrypt($request->client),$request->plate_no)],
 
                 // 'vin_no'                => 'required|unique:trucks,plate_no',
-                'model'                 => 'required|max:255',
-                'tare_weight'           => 'required|gt:0',
-                'company'               => 'required|max:255',
+                // 'model'                 => 'required|max:255',
+                // 'tare_weight'           => 'required|gt:0',
+                // 'company'               => 'required|max:255',
 
                 ]);
                 $form_data = $request->input();
@@ -293,9 +292,10 @@ class TruckController extends Controller
 
         try
         {
-            $data = Truck::join('users as u','u.id','=','trucks.client_id')
-                    ->selectRaw("trucks.plate_no,trucks.id,u.name,u.contact,u.id as user_id,u.client_group,concat(trucks.plate_no,'-',u.name) as identifier")
-                    ->where('trucks.plate_no', 'LIKE', '%'. $request->search. '%')
+            $data = TruckAssignment::join('users as u','u.id','=','truck_assignments.client_id')
+                    ->join('trucks as t','t.id','=','truck_assignments.truck_id')
+                    ->selectRaw("t.plate_no,t.id,u.name,u.contact,u.id as user_id,u.client_group,concat(t.plate_no,'-',u.name) as identifier")
+                    ->where('t.plate_no', 'LIKE', '%'. $request->search. '%')
                     ->get();
      
         return json_encode($data);
@@ -320,6 +320,34 @@ class TruckController extends Controller
      
         return json_encode($data);
 
+        }
+        catch(Exception $e)
+        {
+
+        }
+
+    }
+
+    public function getClientTruckList(Request $request)
+    {
+
+        try
+        {
+            $option = '';
+
+            $client_id = decrypt($request->client_id);
+// dd($client_id);
+            $truck = new Truck;
+
+            $trucks_list = $truck->getClientTruckList($client_id);
+
+            foreach($trucks_list as $rows)
+            {
+                $option .=  '<option value="'.encrypt($rows->truck->id).'">'.$rows->truck->plate_no.'</option>';
+
+            }
+
+            return $option;
         }
         catch(Exception $e)
         {

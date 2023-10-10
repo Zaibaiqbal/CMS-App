@@ -156,10 +156,10 @@
           <tr>
 
             <td class="customer_info">Gross Weight:</td>
-            <td><input type="text" value="{{$transaction->gross_weight}}"></td>
+            <td><input type="text" value="{{$transaction->gross_weight}} MT"></td>
 
             <td class="customer_info">Net Weight:</td>
-            <td><input type="text" value="{{$transaction->payment->quantity}}"></td>
+            <td><input type="text" value="{{$transaction->payment->quantity}} MT"></td>
 
           </tr>
          
@@ -170,7 +170,7 @@
 
           @php($total_weight = $transaction->payment->passes_weight)
           <td class="customer_info">Total Weight Covered:</td>
-          <td><input type="text" value="{{$total_weight}}"></td>
+          <td><input type="text" value="{{$total_weight}} MT"></td>
 
           </tr>
 

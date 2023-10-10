@@ -1,3 +1,8 @@
+
+<style>
+
+
+</style>
 <div class="modal fade" id="md_import_data_client" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 {{ Form::open(array('route' => 'import.clients', 'id' => 'form_import_client', 'class' => 'cls_from', 'enctype' => 'multipart/form-data')) }}
 

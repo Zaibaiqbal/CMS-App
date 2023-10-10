@@ -53,7 +53,7 @@
 
             @php($label = 'In-weight')
                 @php($name = 'inweight')
-                <label id="gross_label" for="">{{$label}} <span class="text-danger">*</span> </label>
+                <label id="gross_label" for="">{{$label}} (MT) <span class="text-danger">*</span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
                 <input type="text" name="{{$name}}" class="form-control" id="gross_input" placeholder="{{$label}}">

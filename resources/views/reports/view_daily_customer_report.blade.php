@@ -112,11 +112,11 @@
                 <td>{{$rows->client_group}}</td>
                 <td>{{$rows->plate_no}}</td>
                 <td>{{$rows->material_name}}</td>
-                <td>{{$rows->material_rate}}</td>
-                <td>{{$rows->quantity}}</td>
-                <td>{{$rows->amount}}</td>
-                <td>{{$rows->tax_amount}}</td>
-                <td>{{$rows->amount + $rows->tax_amount}}</td>
+                <td>${{$rows->material_rate}}</td>
+                <td>{{$rows->quantity}} MT</td>
+                <td>${{$rows->amount}}</td>
+                <td>${{$rows->tax_amount}}</td>
+                <td>${{$rows->amount + $rows->tax_amount}}</td>
 
             </tr>
          
@@ -153,9 +153,9 @@
                 <td></td>
                 <td></td>
                 <td>Customer Totals:</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
-                <td>{{$transaction_list->sum('tax_amount')}}</td>
-                <td>{{$transaction_list->sum('amount')+$transaction_list->sum('tax_amount')}}</td>
+                <td>${{$transaction_list->sum('amount')}}</td>
+                <td>${{$transaction_list->sum('tax_amount')}}</td>
+                <td>${{$transaction_list->sum('amount')+$transaction_list->sum('tax_amount')}}</td>
 
                 
             </tr>
@@ -172,10 +172,10 @@
             <tr>
                 <td colspan="6" style="text-align: left;">{{$rows->name}} </td>
            
-                <td>{{$rows->net_weight}}</td>
-                <td>{{$rows->total_amount}}</td>
-                <td>{{$rows->tax_amount}}</td>
-                <td>{{$rows->total_amount+$rows->tax_amount}}</td>
+                <td>{{$rows->net_weight}} MT</td>
+                <td>${{$rows->total_amount}}</td>
+                <td>${{$rows->tax_amount}}</td>
+                <td>${{$rows->total_amount+$rows->tax_amount}}</td>
             
                 
             </tr>

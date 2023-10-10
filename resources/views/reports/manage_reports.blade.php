@@ -16,6 +16,8 @@ System Reports
 
 <div class="row">
      <!-- task, page, download counter  start -->
+     @if(Auth::user()->hasAnyPermission(['All','View Daily Customer Activity']))
+
     <div class="col-xl-3 col-md-6">
         <div class="card">
             <div class="card-block">
@@ -42,6 +44,9 @@ System Reports
             </div>
         </div>
     </div>
+    @endif
+    @if(Auth::user()->hasAnyPermission(['All','View Daily Customer Activity']))
+
     <div class="col-xl-3 col-md-6">
         <div class="card">
             <div class="card-block">
@@ -67,6 +72,8 @@ System Reports
             </div>
         </div>
     </div>
+    @endif
+    @if(Auth::user()->hasAnyPermission(['All','View Weekly Customer Activity']))
    
     <div class="col-xl-3 col-md-6">
         <div class="card">
@@ -93,7 +100,9 @@ System Reports
             </div>
         </div>
     </div>
-    
+    @endif
+    @if(Auth::user()->hasAnyPermission(['All','View Client Group Report']))
+
     <div class="col-xl-3 col-md-6">
         <div class="card">
             <div class="card-block">
@@ -120,7 +129,7 @@ System Reports
             </div>
         </div>
     </div>
-    
+    @endif
     <!-- task, page, download counter  end -->
 
 </div>

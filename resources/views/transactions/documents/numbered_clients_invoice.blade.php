@@ -156,16 +156,16 @@
           <tr>
 
             <td class="customer_info">Gross Weight:</td>
-            <td><input type="text" value="{{$transaction->gross_weight}}"></td>
+            <td><input type="text" value="{{$transaction->gross_weight}} MT"></td>
 
             <td class="customer_info">Tare Weight:</td>
-            <td><input type="text" value="{{$transaction->tare_weight}}"></td>
+            <td><input type="text" value="{{$transaction->tare_weight}} MT"></td>
 
           </tr>
 
           <tr>
             <td class="customer_info">Net Weight:</td>
-            <td><input type="text" value="{{$transaction->net_weight}}"></td>
+            <td><input type="text" value="{{$transaction->net_weight}} MT"></td>
 
 
             <td class="customer_info">Payment Method:</td>

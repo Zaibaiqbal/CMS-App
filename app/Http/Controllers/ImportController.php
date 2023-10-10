@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Truck;
+use App\Models\TruckAssignment;
 use App\Models\User;
 use App\Models\UserAccount;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class ImportController extends Controller
 {
@@ -256,24 +258,31 @@ class ImportController extends Controller
 
                                 $truck = $truck->getTruckByPlateNo(trim($rows[1]));
 
-                                if(isset($truck->id) && $truck->user->id == $user->id)
+                                if(isset($truck->id))
                                 {
-                                    // dd("truck exist already ", $truck->plate_no .'-'.$user->name);
                                     continue;
-                                 
                                 }
                                 else
                                 {
                                     $truck = new Truck;
 
                                     $truck->plate_no            =   trim($rows[1]);
-                                    $truck->client_id            =   $user->id;
+                                    // $truck->client_id            =   $user->id;
 
                                     // $truck->identifier          = trim($rows[2]).'-'.$user->name;
 
                                     $truck->save();
-    
+
                                 }
+
+
+                                $truck_assignment = new TruckAssignment;
+                                $truck_assignment->storeTruckAssignment([
+                                    'client_id'     =>   $user->id,
+                                    'added_id'      =>   Auth::user()->id,
+                                    'truck_id'      =>   $truck->id,
+                                ]);
+
 
                             }
                             else

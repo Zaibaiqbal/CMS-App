@@ -32,23 +32,29 @@ class Payment extends Model
 
             }
 
-            if(isset($object['pass_no']))
-            {
-                $payment->pass_no       =          $object['pass_no'];
-
-            }
-
             if(isset($object['no_of_passes']))
             {
                 $payment->no_of_passes       =          $object['no_of_passes'];
 
             }
 
-            if(isset($object['passes_amount']))
+            if(isset($object['pass_no']))
             {
-                $payment->passes_amount       =         $object['passes_amount'];
+                $payment->pass_no       =          $object['pass_no'];
 
             }
+
+            if(isset($object['pass_amount']))
+            {
+                $payment->pass_amount       =         $object['pass_amount'];
+
+            }
+            if(isset($object['remaining_cash_amount']))
+            {
+                $payment->remaining_cash_amount       =         $object['remaining_cash_amount'];
+
+            }
+            
             if(isset($object['passes_weight']))
             {
                 $payment->passes_weight       =         $object['passes_weight'];

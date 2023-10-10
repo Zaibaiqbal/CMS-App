@@ -16714,6 +16714,34 @@ body.dark .card code {
     background-color: #546686
 }
 
+
+/* Dark theme styles for Bootstrap modals */
+.pcoded[layout-type="dark"] .modal-content,
+body.dark .modal-content {
+    background-color: #4a5a77;
+    color: #fff;
+}
+
+.pcoded[layout-type="dark"] .modal-header,
+body.dark .modal-header {
+    background-color: #546686;
+    color: #fff;
+}
+
+.pcoded[layout-type="dark"] .modal-title,
+body.dark .modal-title {
+    color: #fff;
+}
+
+.pcoded[layout-type="dark"] .modal-body,
+body.dark .modal-body {
+    color: #fff;
+}
+
+
+
+
+
 .pcoded[layout-type="dark"] .card .card-header h5,
 body.dark .card .card-header h5 {
     color: #fff

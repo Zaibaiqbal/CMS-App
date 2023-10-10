@@ -126,8 +126,11 @@ dd($e);
                     $condition = ['added_id' => Auth::user()->id];
                 }
 
+                $from = $request->from;
+                $to = $request->to;
+
                 $transaction = new Transaction;
-                $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group,$condition);
+                $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group,$condition,$from,$to);
 
                 $pdf = PDF::loadView('reports.view_daily_customer_report', [
     

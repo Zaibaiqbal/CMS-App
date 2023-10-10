@@ -131,13 +131,13 @@
 
                     <tr>
                         <td>{{$rows->name}}</td>
-                        <td>{{$rows->inbound_net_weight}}</td>
-                        <td>{{$rows->outbound_net_weight}}</td>
+                        <td>{{$rows->inbound_net_weight}} MT</td>
+                        <td>{{$rows->outbound_net_weight}} MT</td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{{$rows->inbound_net_weight}}</td>
+                        <td>{{$rows->inbound_net_weight}} MT</td>
                         <td>${{$rows->amount}}</td>
                         <td>${{$rows->tax_amount}}</td>
                         <td>${{$rows->tax_amount + $rows->amount}}</td>
@@ -152,13 +152,13 @@
                 <tr>
 
                         <td>Customer Totals</td>
-                        <td>{{$transaction_list->sum('inbound_net_weight')}}</td>
-                        <td>{{$transaction_list->sum('outbound_net_weight')}}</td>
+                        <td>{{$transaction_list->sum('inbound_net_weight')}} MT</td>
+                        <td>{{$transaction_list->sum('outbound_net_weight')}} MT</td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{{$transaction_list->sum('inbound_net_weight')}}</td>
+                        <td>{{$transaction_list->sum('inbound_net_weight')}} MT</td>
                         <td>${{$transaction_list->sum('amount')}}</td>
                         <td>${{$transaction_list->sum('tax_amount')}}</td>
                         <td>${{$transaction_list->sum('tax_amount') + $transaction_list->sum('amount')}}</td>

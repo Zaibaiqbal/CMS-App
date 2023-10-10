@@ -859,19 +859,33 @@ class UserController extends Controller
             $date = now();
 
             $user_obj = new User;
+            $transaction = new Transaction;
             $user_ids = $user_obj->getUserIdsByPermissions(['All']);
 
             $employee = $user_obj->getUserById(Auth::user()->id);
 
             event(new SendNotification($employee->id,$user_ids,'','viewemployeeprogress',$employee->id,$employee->name. ' has signed off from system at ' .$date,$date));
 
-            Auth::logout();
+            $transaction_list = $transaction->getEmployeeProgressByCondition($employee->id,$date);
+            $material_wise_list = $transaction->getMaterialWiseStats([],['added_id' => $employee->id]);
 
-            return redirect('/login'); 
+// dd($transaction_list);
+            $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
+            [ 
+                'transaction_list'      =>  $transaction_list,
+                'material_wise_list'      =>  $material_wise_list,
+                'user'                  =>   $employee,
+                'date'                  =>   $request->date
+            ]);
+            return $pdf->setPaper('a4', 'portrait')->stream('Employee Progress.pdf');
+
+            // Auth::logout();
+
+            // return redirect('/login'); 
         }
         catch(Exception $e)
         {
-dd($e);
+            dd($e);
         }
     }
 

@@ -52,7 +52,7 @@ class Transaction extends Model
 
     }
 
-    public function viewClientGroupWiseTransactions($client_group_condition,$condition)
+    public function viewClientGroupWiseTransactions($client_group_condition,$condition,$from,$to)
     {
        
         $query = Transaction::leftjoin('users as c','c.id','=','transactions.client_id')
@@ -67,6 +67,22 @@ class Transaction extends Model
         {
             $query->where('transactions.client_group',$client_group_condition);
         }
+
+        if(strlen($client_group_condition) > 0)
+        {
+            $query->where('transactions.client_group',$client_group_condition);
+        }
+
+        if(strlen($from) > 0)
+        {
+            $query->whereDate('transactions.created_at','>=',$from);
+        }
+
+        if(strlen($to) > 0)
+        {
+            $query->whereDate('transactions.created_at','<=',$to);
+        }
+
         return $query->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
         ->get();
     }
@@ -79,7 +95,7 @@ class Transaction extends Model
         ->whereIn('transactions.client_group',$condition)
         ->where('transactions.status','Processed')
         ->where('transactions.is_void',0)
-        // ->whereDate('transactions.created_at',now())
+        ->whereDate('transactions.created_at',now())
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity,transactions.client_name,transactions.client_group")
         ->get();
     }
@@ -148,7 +164,6 @@ class Transaction extends Model
     {
         $start_date = now()->startOfWeek(); 
         $start_date = $start_date->format('Y-m-d H:i:s');
-// dd($start_date,$date);
         return Transaction::join('payments as p','p.transaction_id','=','transactions.id')
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
         ->where('transactions.added_id',$id)
@@ -397,10 +412,14 @@ class Transaction extends Model
                     $transaction->contact_no = $object['contact_no'];
                 }
 
-                if(isset($object['no_of_passes']))
+                if(isset($object['note']))
                 {
-                    $transaction->no_of_passes = $object['no_of_passes'];
-                }                
+                    $transaction->note = $object['note'];
+                }
+                // if(isset($object['no_of_passes']))
+                // {
+                //     $transaction->no_of_passes = $object['no_of_passes'];
+                // }                
                 // dd($transaction);
                 $transaction->update();
 
@@ -431,33 +450,34 @@ class Transaction extends Model
                 {
                     $payment_info['mode_of_payment']  =  $object['mode_of_payment']; 
 
-                    if($object['mode_of_payment'] == 'Passes')
+                    if($object['mode_of_payment'] == 'Pass' || $object['mode_of_payment'] == 'Cash + Pass')
                     {
                             $passes_no = [];
             
-                            if($object['no_of_passes'] > 0)
+                            if(isset($object['pass_no']))
                             {
-                                if(isset($object['pass_no']))
-                                {
-                                    array_push($passes_no,$object['pass_no']);
-            
-                                }
-            
-                                if(isset($object['optional_pass_no']))
-                                {
-                                    array_push($passes_no,$object['optional_pass_no']);
-            
-                                }
-            
-                                $payment_info['pass_no'] = json_encode($passes_no);
-                                
+                                array_push($passes_no,$object['pass_no']);
+        
                             }
-                            $payment_info['passes_weight']   =  ($object['no_of_passes'] * 250) / 1000;
-                            $payment_info['no_of_passes']   =  $object['no_of_passes'];
-
+        
+                            if(isset($object['optional_pass_no']))
+                            {
+                                array_push($passes_no,$object['optional_pass_no']);
+        
+                            }
             
+                            $payment_info['pass_no'] = json_encode($passes_no);
+                            $payment_info['no_of_passes'] = @count($passes_no);
+                                
+                            $payment_info['passes_weight']   =  (@count($passes_no) * 250) / 1000;
                     }
+                    if($object['mode_of_payment'] == 'Cash + Pass')
+                    {
 
+                        $payment_info['pass_amount']             =  $object['pass_amount'];
+                        $payment_info['remaining_cash_amount']   =  $object['remaining_cash_amount'];
+
+                    }
 
                 }
                 $payment->storePayment($payment_info);
@@ -643,15 +663,15 @@ class Transaction extends Model
 
        if(isset($transaction->materialType->slab_rate) && $transaction->materialType->slab_rate > 0)
        {
-        $slab_rate = $transaction->materialType->slab_rate;
-        $slab_weight = $transaction->materialType->slab_weight;
+            $slab_rate = $transaction->materialType->slab_rate;
+            $slab_weight = $transaction->materialType->slab_weight;
 
-        $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
-// dd($totalPrice,$slab_rate,$board_rate,$net_weight);
-       }
+            $totalPrice = $board_rate + ceil(($net_weight - 250) / 50) * $slab_rate;
+
+        }
        else
        {
-         $totalPrice = $board_rate +  $transaction->net_weight;
+         $totalPrice = $board_rate * $transaction->net_weight;
 
        }
 
