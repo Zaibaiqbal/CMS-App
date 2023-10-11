@@ -178,14 +178,14 @@ class Transaction extends Model
     public function getMaterialWiseStats($client_group_condition = [],$condition = [])
     {
 
-
         $query = MaterialType::selectRaw("material_types.name,
             SUM(CASE WHEN t.operation_type = 'Inbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as inbound_net_weight,
-            SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight,sum(p.quantity) as net_weight,sum(p.amount) as total_amount,sum(p.tax_amount)")
+            SUM(CASE WHEN t.operation_type = 'Outbound' THEN (t.gross_weight - t.tare_weight) ELSE 0 END) as outbound_net_weight,sum(p.quantity) as net_weight,sum(p.amount) as total_amount,sum(p.tax_amount) as tax_amount")
             ->join('transactions as t', 'material_types.id', '=', 't.material_type_id')
             ->join('payments as p', 't.id', '=', 'p.transaction_id')
             ->where('t.status','Processed')
             ->where('t.is_void',0)
+            ->whereDate('t.created_at',now())
 
             ->where($condition);
 

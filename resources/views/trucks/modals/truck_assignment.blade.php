@@ -104,16 +104,15 @@ function showClientTruckList(event,obj)
     event.preventDefault();
     var route = "{{route('clienttrucklist')}}";
 
-
-
     $.get(route,{client_id:$(obj).val()},function(data){
      
         $('.truck_section').show();
         $('.client_section').show();
         $('.truck_list').html(data);
+
         document.querySelector('.truck_list').fstdropdown.rebind();
 
-     
+        applyDarkModeToModalContent();
         
     });
 

@@ -374,12 +374,11 @@ class TransactionController extends Controller
                        }
                        elseif($transaction->client_group == 'Cash Account' && $transaction->payment->mode_of_payment == 'Pass')
                        {
-
                                 
-                                return view('transactions.documents.pass_payment_invoice', [
-                                    'format'            => true,
-                                    'transaction'       =>   $transaction
-                                    ]);
+                        return view('transactions.documents.pass_payment_invoice', [
+                            'format'            => true,
+                            'transaction'       =>   $transaction
+                        ]);
     
      
                            
@@ -393,7 +392,6 @@ class TransactionController extends Controller
 
                         ])->render();
                        }
-        
     
     
                     }

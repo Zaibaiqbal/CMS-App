@@ -73,6 +73,7 @@ dd($e);
         try
         {
             $client_group_condition = [];
+            
             if($request->type == 'TOPPS')
             {
                 $client_group_condition += ['Numbered Clients','TSC','Cash Account'];

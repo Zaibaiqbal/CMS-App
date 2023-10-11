@@ -1,5 +1,23 @@
 function applyDarkModeToModals() {
     $('.modal-content, .card, .card-body').addClass('dark-mode');
+
+     // Set modal input fields background to transparent
+     $('.modal-content input').css('background', 'transparent');
+
+     // Set modal input fields text color to white
+     $('.modal-content input').css('color', 'white');
+
+      // Set select option background to transparent
+      $('.modal-content select option').css('background', 'transparent');
+
+      // Set select option text color to white
+      $('.modal-content select option').css('color', 'white');
+
+         // Style FST Dropdown select options
+        $('.fstdropdown').css({
+        'background': '#333',
+        'color': '#fff',
+        });
 }
 
 function formModal(event, route, form_modal, target_modal) {

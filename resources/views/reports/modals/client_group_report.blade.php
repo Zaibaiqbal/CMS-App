@@ -82,3 +82,8 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  setFstDropdown();
+</script>
