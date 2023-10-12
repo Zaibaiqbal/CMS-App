@@ -130,6 +130,35 @@ System Reports
         </div>
     </div>
     @endif
+    @if(Auth::user()->hasAnyPermission(['All','View Client Wise Transaction Report']))
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-blue f-w-600">Transactions</h4>
+                        <h6 class="text-muted m-b-0">Client Report</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-download f-28"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-c-blue">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <a onclick="formModal(event,'{{route('client.report')}}','#md_client_report','#target_modal')" class="btn btn-sm btn-outline-secondary text-white m-b-0"><i class="fa fa-eye">&nbsp;View</i></a>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="feather icon-trending-up text-white f-16"></i>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     <!-- task, page, download counter  end -->
 
 </div>

@@ -889,5 +889,23 @@ class UserController extends Controller
         }
     }
 
+    public function getGroupWiseClients(Request $request)
+    {
+        $option = '';
+        $client_group = $request->client_group;
+
+        $user = new User;
+
+        $user_list = $user->getUserListByCondition(['client_group' => $client_group]);
+
+        foreach($user_list as $rows)
+        {
+            $option .= '<option value="'.encrypt($rows->id).'">'.$rows->name.'</option>';
+        }
+
+        return $option;
+
+    }
+
     
 }

@@ -112,7 +112,6 @@ function showClientTruckList(event,obj)
 
         document.querySelector('.truck_list').fstdropdown.rebind();
 
-        applyDarkModeToModalContent();
         
     });
 

@@ -16,14 +16,14 @@ class ReportController extends Controller
 
     public function index()
     {
-        try{
+        try
+        {
             return view('reports.manage_reports');
         }
         catch(Exception $e)
         {
 
         }
-
     }
 
     public function viewWeeklyCustomerReport(Request $request)
@@ -64,7 +64,7 @@ class ReportController extends Controller
  
         catch(Exception $e)
         {
-dd($e);
+            dd($e);
         }
     }
 
@@ -109,11 +109,17 @@ dd($e);
 
     public function clientGroupReport(Request $request)
     {
-        try
-        {
-
+      
             if($request->isMethod('post'))
             {
+                $request->validate([
+
+                    'client_group'                   => ['nullable'],
+
+                    'from'                    => 'nullable|date|before_or_equal:'.$request->to,
+                    'to'             => 'nullable|date|after_or_equal:'.$request->from,
+
+                    ]);
                 $form_data = $request->input();
 
                 $client_group = $form_data['client_group'];
@@ -133,7 +139,7 @@ dd($e);
                 $transaction = new Transaction;
                 $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group,$condition,$from,$to);
 
-                $pdf = PDF::loadView('reports.view_daily_customer_report', [
+                $pdf = PDF::loadView('reports.view_client_group_wise_report', [
     
                     'transaction_list'    =>   $transaction_list,
                  
@@ -155,13 +161,6 @@ dd($e);
                 ])->render();
             }
     
-
-        }
- 
-        catch(Exception $e)
-        {
-            dd($e);
-        }
     }
 
     
@@ -242,4 +241,79 @@ dd($e);
 
         }
     }
+
+    public function viewClientWiseTransactionReport(Request $request)
+    {
+        try
+        {
+            if($request->isMethod('post'))
+            {
+                $request->validate([
+
+                    'client_group'              => ['nullable'],
+
+                    'from'                      => 'nullable|date|before_or_equal:'.$request->to,
+                    'to'                        => 'nullable|date|after_or_equal:'.$request->from,
+
+                    ]);
+
+                    $form_data = $request->input();
+
+                    $client_group = $form_data['client_group'];
+                    
+                    if(isset($form_data['client']))
+                    {
+                        $form_data['client_id']   = decrypt($form_data['client']);
+
+                    }
+
+                    $condition = [];
+
+                    if(isset($form_data['client']) && $form_data['client_id'] > 0)
+                    {
+                        $condition += ['transactions.client_id' => $form_data['client_id']]; 
+                    }
+                    if(!Auth::user()->hasRole('Super Admin'))
+                    {
+
+                        $condition += ['added_id' => Auth::user()->id];
+                    }
+    
+                    $from = $request->from;
+                    $to = $request->to;
+    
+                    // dd($condition,$client_group);
+                    $transaction = new Transaction;
+                    $transaction_list = $transaction->viewClientGroupWiseTransactions($client_group,$condition,$from,$to);
+    
+                    $pdf = PDF::loadView('reports.view_client_group_wise_report', [
+    
+                        'transaction_list'    =>   $transaction_list,
+                     
+                    ]);
+                 
+                    return $pdf->setPaper('a4', 'landscape')->stream('Daily Customer Report.pdf');
+                    // return redirect('users');
+            }
+            else
+            {
+                $user = new User;
+
+                $group_list = $user->getDistinctClientGroupList()->pluck('client_group')->toArray();
+
+                return view('reports.modals.client_report',[
+
+                    'group_list'        =>   $group_list
+                
+                ])->render();
+            }
+
+        }
+        catch(Exception $e)
+        {
+            dd($e);
+        }
+
+    }
+
 }

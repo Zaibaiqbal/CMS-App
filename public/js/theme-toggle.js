@@ -32,6 +32,10 @@ $(document).ready(function () {
                 'background-color': '#333',
                 'color': 'white',
             });
+            $('.fstdropdown fstselected').css({
+                'color': 'white',
+            });
+            
 
             $(themeToggle).html('<i class="feather icon-sun f-50 text-c-dark"></i> Light mode');
 
@@ -67,6 +71,9 @@ $(document).ready(function () {
             // Style FST Dropdown select options
             $('.fstdropdown').css({
                 'background-color': '',
+                'color': '',
+            });
+            $('.fstdropdown fstselected').css({
                 'color': '',
             });
 

@@ -19,6 +19,26 @@
 
           <div class="card-body">
             <div class="row">
+              <div class="col-md-12">
+                @php($label = 'Select Client Group')
+
+                @php($name = 'client_group')
+                <div class="form-group">
+                    <label for="">{{$label}} <span class="text-danger"> </span> </label>
+
+                    <small class="text-danger" id="{{$name}}_error"></small>
+
+                    <select name="{{$name}}" id="" class="form-control fstdropdown-select">
+                        <option value="">{{$label}}</option>
+                        <option value="Cash Account">Cash Account</option>
+
+                    @foreach($group_list as $rows)
+                        <option value="{{$rows}}">{{$rows}}</option>
+                    @endforeach
+                    </select>
+                </div>
+
+              </div>
 
               <div class="col-md-6">
                 @php($label = 'From')
@@ -45,26 +65,7 @@
 
               </div>
 
-              <div class="col-md-12">
-                @php($label = 'Select Client Group')
-
-                @php($name = 'client_group')
-                <div class="form-group">
-                    <label for="">{{$label}} <span class="text-danger"> *</span> </label>
-
-                    <small class="text-danger" id="{{$name}}_error"></small>
-
-                    <select name="{{$name}}" id="" class="form-control fstdropdown-select">
-                        <option value="">{{$label}}</option>
-                        <option value="Cash Account">Cash Account</option>
-
-                    @foreach($group_list as $rows)
-                        <option value="{{$rows}}">{{$rows}}</option>
-                    @endforeach
-                    </select>
-                </div>
-
-              </div>
+            
            
               
             </div>

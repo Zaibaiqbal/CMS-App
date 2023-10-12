@@ -205,6 +205,8 @@ Route::post('tableview',[App\Http\Controllers\TransactionController::class, 'tab
 
 Route::get('voidtransaction',[App\Http\Controllers\TransactionController::class, 'voidTransaction'])->name('void.transaction')->middleware('auth');
 
+Route::match(['get','post'],'clientreport', [App\Http\Controllers\ReportController::class, 'viewClientWiseTransactionReport'])->name('client.report')->middleware('auth','permission:All|View Client Wise Transaction Report');
+
 // Ticket Route End
 
 
@@ -214,6 +216,9 @@ Route::match(['get','post'],'truckassignment', [App\Http\Controllers\TruckAssign
 
 
 Route::get('clienttrucklist', [App\Http\Controllers\TruckController::class, 'getClientTruckList'])->name('clienttrucklist')->middleware('auth');
+
+Route::get('groupwiseclients', [App\Http\Controllers\UserController::class, 'getGroupWiseClients'])->name('groupwiseclients')->middleware('auth');
+
 
 
 // CLIENT ROUTES
