@@ -24,7 +24,7 @@
 
                     @php($name = 'client_group')
                     <div class="form-group">
-                        <label for="">{{$label}} <span class="text-danger"> *</span> </label>
+                        <label for="">{{$label}} <span class="text-danger"></span> </label>
 
                         <small class="text-danger" id="{{$name}}_error"></small>
 
@@ -45,7 +45,7 @@
 
                     @php($name = 'client')
                     <div class="form-group">
-                        <label for="">{{$label}} <span class="text-danger"> *</span> </label>
+                        <label for="">{{$label}} <span class="text-danger"></span> </label>
 
                         <small class="text-danger" id="{{$name}}_error"></small>
 

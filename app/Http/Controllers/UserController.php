@@ -102,26 +102,29 @@ class UserController extends Controller
     {
         try
         {
-            
             // dd($request->input());
 
             $user_id = decrypt($request->id);
 
             $transaction = new Transaction;
 
-            $transaction_list = $transaction->getEmployeeProgressByCondition($user_id,$request->date);
+
+            $gfl_transaction_list = $transaction->getEmployeeProgressByCondition($user_id,$request->date,['GFL']);
+        //    dd($gfl_transaction_list);
+            $topps_transaction_list = $transaction->getEmployeeProgressByCondition($user_id,$request->date,['Numbered Clients','TSC','Cash Account']);
+
             $material_wise_list = $transaction->getMaterialWiseStats([],['added_id' => $user_id]);
 
-                
             $user = new User;
             $user = $user->getUserById($user_id);
 
             $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
             [ 
-                'transaction_list'      =>  $transaction_list,
-                'material_wise_list'      =>  $material_wise_list,
-                'user'                  =>   $user,
-                'date'                  =>   $request->date
+                'gfl_transaction_list'          =>  $gfl_transaction_list,
+                'topps_transaction_list'        =>  $topps_transaction_list,
+                'material_wise_list'            =>  $material_wise_list,
+                'user'                          =>   $user,
+                'date'                          =>   $request->date
         ]);
                 return $pdf->setPaper('a4', 'portrait')->stream('Employee Progress.pdf');
 
@@ -866,13 +869,18 @@ class UserController extends Controller
 
             event(new SendNotification($employee->id,$user_ids,'','viewemployeeprogress',$employee->id,$employee->name. ' has signed off from system at ' .$date,$date));
 
-            $transaction_list = $transaction->getEmployeeProgressByCondition($employee->id,$date);
+            // $transaction_list = $transaction->getEmployeeProgressByCondition($employee->id,$date);
+                $gfl_transaction_list = $transaction->getEmployeeProgressByCondition($employee->id,$date,['GFL']);
+            //    dd($gfl_transaction_list);
+                $topps_transaction_list = $transaction->getEmployeeProgressByCondition($employee->id,$date,['Numbered Clients','TSC','Cash Account']);
+    
+            
             $material_wise_list = $transaction->getMaterialWiseStats([],['added_id' => $employee->id]);
 
-// dd($transaction_list);
             $pdf = PDF::loadView('users.documents.print_employees_progress_pdf', 
             [ 
-                'transaction_list'      =>  $transaction_list,
+                'gfl_transaction_list'      =>  $gfl_transaction_list,
+                'topps_transaction_list'      =>  $topps_transaction_list,
                 'material_wise_list'      =>  $material_wise_list,
                 'user'                  =>   $employee,
                 'date'                  =>   $request->date

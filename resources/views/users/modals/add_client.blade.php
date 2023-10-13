@@ -38,8 +38,8 @@
 </div>
 
 <script type="text/javascript">
-$('.cnic').mask("00000-0000000-0");
-$('.contact').mask("0000-0000000");
+// $('.cnic').mask("00000-0000000-0");
+// $('.contact').mask("0000-0000000");
 
 
 function storeClient(event,obj,form_id,modal_id)

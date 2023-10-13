@@ -43,7 +43,7 @@
                 <label for="">{{$label}} <span class="text-danger"></span> </label>
                 <small class="text-danger" id="{{$name}}_error"></small>
 
-                <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="0000-0000000" data-mask="0000-000000">
+                <input type="text" name="{{$name}}" class="form-control contact" id="" placeholder="{{$label}} No.">
 
 
         </div>

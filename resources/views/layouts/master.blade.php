@@ -469,7 +469,7 @@
                                     @if (Auth::user()->hasAnyPermission(['All', 'View Reports']))
                                         <li class="">
                                             <a href="{{ route('reports') }}">
-                                                <span class="pcoded-micon"><i class="feather icon-command"></i></span>
+                                                <span class="pcoded-micon"><i class="fa fa-file"></i></span>
 
                                                 <span class="pcoded-mtext text-uppercase">Reports</span>
                                             </a>
@@ -479,7 +479,7 @@
                                     @if (Auth::user()->hasAnyPermission(['All', 'Ticket Issue']))
                                         <li class="">
                                             <a href="{{ route('ticketissue') }}">
-                                                <span class="pcoded-micon"><i class="feather icon-command"></i></span>
+                                                <span class="pcoded-micon"><i class="fa fa-ticket"></i></span>
                                                 <span class="pcoded-mtext text-uppercase">Report Ticket Issue</span>
                                             </a>
 

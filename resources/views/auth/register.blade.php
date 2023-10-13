@@ -7,7 +7,7 @@
 <script type="text/javascript">
   
 $('.cnic').mask("00000-0000000-0");
-$('.contact').mask("0000-0000000");
+// $('.contact').mask("0000-0000000");
 
 </script>
 
@@ -121,7 +121,7 @@ $('.contact').mask("0000-0000000");
                                                             <i class="fa fa-mobile"></i>
                                                         </label>
 
-                                                        <input  type="text" placeholder="00000000000"  class="form-control @error('contact') is-invalid @enderror contact" name="contact" value="{{ old('contact') }}" required >
+                                                        <input  type="text" placeholder="Contact No."  class="form-control @error('contact') is-invalid @enderror contact" name="contact" value="{{ old('contact') }}" required >
                                                     </div>
                                                 </div>
                                             </div>

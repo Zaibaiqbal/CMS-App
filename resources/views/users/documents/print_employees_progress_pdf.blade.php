@@ -97,14 +97,14 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($transaction_list as $rows)
+            @foreach($gfl_transaction_list as $rows)
             <tr>
                 <td>{{$rows->ticket_no}}</td>
                 <td>{{$rows->plate_no}}</td>
                 <td>{{$rows->material_name}}</td>
-                <td>{{$rows->material_rate}}</td>
-                <td>{{$rows->quantity}}</td>
-                <td>{{$rows->amount}}</td>
+                <td>${{$rows->material_rate}}</td>
+                <td>{{$rows->quantity}} MT</td>
+                <td>${{$rows->amount}}</td>
               
 
             </tr>
@@ -125,12 +125,12 @@
             </tr>
             <tr>
                  <td>Tickets Reported</td>
-                <td>{{$transaction_list->count()}}</td>
+                <td>{{$gfl_transaction_list->count()}}</td>
                 <td>Items Reported</td>
-                <td>{{$transaction_list->count()}}</td>
+                <td>{{$gfl_transaction_list->count()}}</td>
               
                 <td>Customer Totals:</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
+                <td>${{$gfl_transaction_list->sum('amount')}}</td>
             
 
                 
@@ -146,8 +146,8 @@
             <tr>
                 <td colspan="4" style="text-align: left;">{{$rows->name}} </td>
            
-                <td>{{$rows->net_weight}}</td>
-                <td>{{$rows->total_amount}}</td>
+                <td>{{$rows->net_weight}} MT</td>
+                <td>${{$rows->total_amount}}</td>
             
                 
             </tr>
@@ -181,14 +181,14 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($transaction_list as $rows)
+            @foreach($topps_transaction_list as $rows)
             <tr>
                 <td>{{$rows->ticket_no}}</td>
                 <td>{{$rows->plate_no}}</td>
                 <td>{{$rows->material_name}}</td>
-                <td>{{$rows->material_rate}}</td>
-                <td>{{$rows->quantity}}</td>
-                <td>{{$rows->amount}}</td>
+                <td>${{$rows->material_rate}}</td>
+                <td>{{$rows->quantity}} MT</td>
+                <td>${{$rows->amount}}</td>
               
 
             </tr>
@@ -209,12 +209,12 @@
             </tr>
             <tr>
                  <td>Tickets Reported</td>
-                <td>{{$transaction_list->count()}}</td>
+                <td>{{$topps_transaction_list->count()}}</td>
                 <td>Items Reported</td>
-                <td>{{$transaction_list->count()}}</td>
+                <td>{{$topps_transaction_list->count()}}</td>
               
                 <td>Customer Totals:</td>
-                <td>{{$transaction_list->sum('amount')}}</td>
+                <td>${{$topps_transaction_list->sum('amount')}}</td>
             
 
                 
@@ -230,8 +230,8 @@
             <tr>
                 <td colspan="4" style="text-align: left;">{{$rows->name}} </td>
            
-                <td>{{$rows->net_weight}}</td>
-                <td>{{$rows->total_amount}}</td>
+                <td>{{$rows->net_weight}} MT</td>
+                <td>${{$rows->total_amount}}</td>
             
                 
             </tr>

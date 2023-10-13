@@ -160,15 +160,18 @@ class Transaction extends Model
         })->get();
     }
 
-    public function getEmployeeProgressByCondition($id,$date)
+    public function getEmployeeProgressByCondition($id,$date,$condition = [])
     {
         $start_date = now()->startOfWeek(); 
         $start_date = $start_date->format('Y-m-d H:i:s');
+
         return Transaction::join('payments as p','p.transaction_id','=','transactions.id')
         ->join('material_types as mt','mt.id','=','transactions.material_type_id')
+        ->leftjoin('users as u','u.id','=','transactions.client_id')
         ->where('transactions.added_id',$id)
         ->where('transactions.status','Processed')
         ->where('transactions.is_void',0)
+        ->whereIn('transactions.client_group',$condition)
         ->whereDate('transactions.created_at','>=',$start_date)
         ->whereDate('transactions.created_at','<=',$date)
         ->selectRaw("transactions.created_at,transactions.ticket_no,transactions.plate_no,mt.name as material_name,transactions.material_rate,p.amount,p.tax_amount,p.surcharge_amount,p.quantity")
