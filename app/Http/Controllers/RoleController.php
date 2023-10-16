@@ -232,6 +232,39 @@ class RoleController extends Controller
 
     }
 
+
+    public function assignModulePermissions(Request $request)
+    {
+        try
+        {
+            $data = ['status' => false , 'message' => 'Something went Wrong!'];
+
+                // $request->validate($this->getValidationList());
+    
+                $form_data = $request->input();
+                $form_data['role']       = decrypt($form_data['role']);
+                $role = new SystemRoles;
+        
+                $role = $role->assignModulePermissions($form_data);
+
+               
+                return $role;
+                
+        
+            
+           
+            return $data;
+           
+        }
+        catch(Exception $e)
+        {
+
+
+        }       
+
+    }
+
+    
     
 
 

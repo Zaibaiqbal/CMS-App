@@ -15,6 +15,12 @@ System Reports
 @section('page_body')
 
 <div class="row">
+
+    <div class="col-md-12">
+
+        <h4 class="text-muted f-w-600 text-uppercase">  Daily Reports</h4>
+
+    </div>
      <!-- task, page, download counter  start -->
      @if(Auth::user()->hasAnyPermission(['All','View Daily Customer Activity']))
 
@@ -73,6 +79,11 @@ System Reports
         </div>
     </div>
     @endif
+    <div class="col-md-12">
+
+    <h4 class="text-muted f-w-600 text-uppercase">  Weekly Reports</h4>
+
+    </div>
     @if(Auth::user()->hasAnyPermission(['All','View Weekly Customer Activity']))
    
     <div class="col-xl-3 col-md-6">
@@ -101,6 +112,11 @@ System Reports
         </div>
     </div>
     @endif
+    <div class="col-md-12">
+
+        <h4 class="text-muted f-w-600 text-uppercase">  Other Reports</h4>
+
+    </div>
     @if(Auth::user()->hasAnyPermission(['All','View Client Group Report']))
 
     <div class="col-xl-3 col-md-6">

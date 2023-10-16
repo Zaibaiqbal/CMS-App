@@ -219,6 +219,7 @@ Route::get('clienttrucklist', [App\Http\Controllers\TruckController::class, 'get
 
 Route::get('groupwiseclients', [App\Http\Controllers\UserController::class, 'getGroupWiseClients'])->name('groupwiseclients')->middleware('auth');
 
+Route::post('assignmodulepermissions', [App\Http\Controllers\RoleController::class, 'assignModulePermissions'])->name('assign.module.permissions')->middleware('auth');
 
 
 // CLIENT ROUTES

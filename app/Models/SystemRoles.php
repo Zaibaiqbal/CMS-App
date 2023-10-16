@@ -112,6 +112,51 @@ class SystemRoles extends Model
         });
     }
 
+    public function assignModulePermissions($object)
+    {
+
+        return DB::transaction(function () use ($object){
+
+            $data = ['status' => false , 'message' => ''];
+
+    		$role = new SystemRoles;
+
+    		$role = $role->getRoleById($object['role']);
+
+            $flag = $object['flag'];
+            if(isset($role->id))
+    		{
+    			$permission_list = $this->getPermissionByModule($object['module']);
+
+                foreach($permission_list as $rows)
+                {
+                    if($flag == "true")
+                    {
+                       if(!$role->hasAnyPermission($rows->id))
+                       {
+                          $role->givePermissionTo($rows->id);
+                        $data = ['status' => true, 'message' => 'Permissions granted'];
+
+                       }
+                    }
+                    else if($flag == "false")
+                    {
+                        $role->revokePermissionTo($rows->id);
+                        $data = ['status' => true, 'message' => 'Permissions revoked'];
+
+
+                    }
+                }
+
+
+                $flag = 'true';
+            }
+
+    		return with($data);
+
+        });
+    }
+    
 
     public function assignRolesToUser($object)
     {
