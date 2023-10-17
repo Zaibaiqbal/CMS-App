@@ -142,7 +142,7 @@ class SystemRoles extends Model
                     else if($flag == "false")
                     {
                         $role->revokePermissionTo($rows->id);
-                        $data = ['status' => true, 'message' => 'Permissions revoked'];
+                        $data = ['status' => false, 'message' => 'Permissions revoked'];
 
 
                     }

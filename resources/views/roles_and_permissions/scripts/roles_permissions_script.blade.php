@@ -32,11 +32,9 @@
 
         });
     }
-    function assignModuleAllPermission(event,obj,role,module_name)
+    function assignModuleAllPermission(event,obj,role,module_name,key_pair)
     {
         var token  =  "{{Session::token()}}";
-
-                
 
         var flag = false;
 
@@ -51,12 +49,19 @@
         {
             if(result.status)
             {
+                $(".permissions_list_"+key_pair).each(function() {
+                    $(this).prop("checked", "true");
+
+                });
+
                 toastr.options =
                 {
                     "closeButton" : true,
                     "progressBar" : true
                 }
                 toastr.success(result.message);
+
+
             }
             else
             {
@@ -66,6 +71,11 @@
                     "progressBar" : true
                 }
                 toastr.warning(result.message);
+                $(".permissions_list_"+key_pair).each(function() {
+
+                        $(this).prop("checked", false);
+
+                    });
             }
 
 

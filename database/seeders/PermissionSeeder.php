@@ -88,13 +88,13 @@ class PermissionSeeder extends Seeder
 
         $data[++$count] = [ "module" => "Client", "name" => "Generate Weekly Invoice", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Add Role", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Roles and Permissions", "name" => "Add Role", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Update Role", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Roles and Permissions", "name" => "Update Role", "guard_name" => "web"];
 
-        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Assign Role", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Roles and Permissions", "name" => "Assign Role", "guard_name" => "web"];
         
-        $data[++$count] = [ "module" => "Roles & Permissions", "name" => "Assign Permissions", "guard_name" => "web"];
+        $data[++$count] = [ "module" => "Roles and Permissions", "name" => "Assign Permissions", "guard_name" => "web"];
 
         $data[++$count] = [ "module" => "User", "name" => "Change Password", "guard_name" => "web"];
 
