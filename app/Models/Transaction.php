@@ -565,7 +565,12 @@ class Transaction extends Model
 
                 if(isset($object['contact_no']))
                 {
-                $transaction->contact_no = $object['contact_no'];
+                    $transaction->contact_no = $object['contact_no'];
+                }
+
+                if(isset($object['note']))
+                {
+                    $transaction->note = $object['note'];
                 }
            
                 // dd($transaction);
@@ -577,14 +582,7 @@ class Transaction extends Model
 
                 // $driver->save();
 
-                $this->getMaterialRate($transaction,$object);
-
-                // $material_rate =  $transaction->materialType->board_rate;
-
-                // $transaction->material_rate = $material_rate;
-                // $transaction->total_cost = $total_price;
-
-                // $transaction->driver_id  = $driver->id;
+                // $this->getMaterialRate($transaction,$object);
 
                 $transaction->update();
 

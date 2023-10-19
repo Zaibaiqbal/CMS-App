@@ -216,8 +216,8 @@
                    </select>
 
 
-                </div>
-<!-- 
+                </div>  
+            <!-- 
                 <div class="col-md-4 mb-2 pass_no_section" style="display: none;">
 
                     @php($label = 'No. of Passes Used:')
@@ -584,7 +584,6 @@
         event.preventDefault();
 
         var mode_of_payment = $(obj).val();
-
         if(mode_of_payment == 'Pass')
         {
             $('.pass_no_section').show();

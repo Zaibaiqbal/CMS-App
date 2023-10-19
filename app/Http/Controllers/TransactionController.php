@@ -444,9 +444,10 @@ class TransactionController extends Controller
                     $transaction = new Transaction;
                     $transaction = $transaction->getTransactionById(decrypt($request->transaction_id));
                     
+                    // dd($transaction);
                     $validation = [];
 
-                    if($transaction->client_group == "Numbered")
+                    if($transaction->client_group == "Numbered Clients")
                     {
                         $validation += [
                             'account'    => 'required'
@@ -467,7 +468,7 @@ class TransactionController extends Controller
                     ]);
     
                     $form_data   =  $request->input();
-    
+    // dd($form_data);
                     $form_data['material_type']   = decrypt($form_data['material']);
                    
                     $form_data['transaction_id']   = decrypt($form_data['transaction_id']);
@@ -537,7 +538,7 @@ class TransactionController extends Controller
         
         catch(Exception $e)
             {
-    
+    dd($e);
             }
     
         
